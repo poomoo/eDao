@@ -48,7 +48,7 @@ public class Main_GridViewAdapter extends BaseAdapter {
 		System.out.println("getview");
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.acticity_main_item, parent,
+			convertView = inflater.inflate(R.layout.activity_main_item, parent,
 					false);
 			viewHolder = new ViewHolder();
 			viewHolder.imageView = (ImageView) convertView
