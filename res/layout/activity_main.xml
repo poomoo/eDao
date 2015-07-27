@@ -44,7 +44,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal" >
@@ -95,21 +95,24 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
+                        android:gravity="center|bottom|left"
                         android:text="意币"
                         android:textSize="14sp" >
                     </TextView>
 
                     <TextView
                         android:id="@+id/main_textView_ecoin"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:gravity="center|top|left"
                         android:text="867"
                         android:textColor="@color/orange"
                         android:textSize="10sp" >
@@ -145,15 +148,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
+                        android:gravity="center|bottom|left"
                         android:text="金币"
                         android:textSize="14sp" >
                     </TextView>
 
                     <TextView
                         android:id="@+id/main_textView_goldcoin"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:gravity="center|top|left"
                         android:text="86556"
                         android:textColor="@color/orange"
                         android:textSize="10sp" >
@@ -183,21 +188,24 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:orientation="vertical" >
+                    android:orientation="vertical" 
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
+                        android:gravity="center|bottom|left"
                         android:text="积分"
                         android:textSize="14sp" >
                     </TextView>
 
                     <TextView
                         android:id="@+id/main_textView_point"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:gravity="center|top|left"
                         android:text="865566567"
                         android:textColor="@color/orange"
                         android:textSize="10sp" >
