@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
 		gridView = (GridView) findViewById(R.id.main_gridVeiw);
 
 		gridViewAdapter = new Main_GridViewAdapter(this, list_name, list_image);
-//		gridView.setAdapter(gridViewAdapter);
+		gridView.setAdapter(gridViewAdapter);
 
 	}
 }
