@@ -1,0 +1,73 @@
+package com.poomoo.edao.adapter;
+
+import java.util.List;
+
+import com.poomoo.edao.R;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class Main_GridViewAdapter extends BaseAdapter {
+
+	private List<String> list_name;
+	private int[] list_image;
+	private LayoutInflater inflater;
+
+	public Main_GridViewAdapter(Context context, List<String> list_name,
+			int[] list_image) {
+		super();
+		this.list_name = list_name;
+		this.list_image = list_image;
+		inflater = LayoutInflater.from(context);
+	}
+
+	@Override
+	public int getCount() {
+		// TODO 自动生成的方法存根
+		return list_name.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO 自动生成的方法存根
+		return list_name.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO 自动生成的方法存根
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// TODO 自动生成的方法存根
+		ViewHolder viewHolder = null;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.acticity_main_item, parent,
+					false);
+			viewHolder = new ViewHolder();
+			viewHolder.imageView = (ImageView) convertView
+					.findViewById(R.id.item_main_imageView);
+			viewHolder.textView = (TextView) convertView
+					.findViewById(R.id.item_main_textView);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder=(ViewHolder) convertView.getTag();
+		}
+		return null;
+	}
+
+	private class ViewHolder {
+		private TextView textView;
+		private ImageView imageView;
+
+	}
+
+}
