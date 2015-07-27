@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,12 +17,15 @@ public class Main_GridViewAdapter extends BaseAdapter {
 	private String[] list_name;
 	private int[] list_image;
 	private LayoutInflater inflater;
+	private int height = 0;
+	private GridView gridView;
 
 	public Main_GridViewAdapter(Context context, String[] list_name,
-			int[] list_image) {
+			int[] list_image, GridView gridView) {
 		super();
 		this.list_name = list_name;
 		this.list_image = list_image;
+		this.gridView = gridView;
 		inflater = LayoutInflater.from(context);
 	}
 
@@ -45,7 +50,6 @@ public class Main_GridViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
-		System.out.println("getview");
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.activity_main_item, parent,
@@ -61,7 +65,14 @@ public class Main_GridViewAdapter extends BaseAdapter {
 		}
 		viewHolder.textView.setText(list_name[position]);
 		viewHolder.imageView.setBackgroundResource(list_image[position]);
-		return null;
+
+		// 设置gridview的item的高度,与屏幕适配
+		AbsListView.LayoutParams param = new AbsListView.LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				gridView.getHeight() / 3);
+		convertView.setLayoutParams(param);
+
+		return convertView;
 	}
 
 	private class ViewHolder {
