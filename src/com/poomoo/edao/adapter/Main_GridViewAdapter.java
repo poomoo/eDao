@@ -2,16 +2,15 @@ package com.poomoo.edao.adapter;
 
 import java.util.List;
 
-import com.poomoo.edao.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.poomoo.edao.R;
 
 public class Main_GridViewAdapter extends BaseAdapter {
 
@@ -59,15 +58,16 @@ public class Main_GridViewAdapter extends BaseAdapter {
 					.findViewById(R.id.item_main_textView);
 			convertView.setTag(viewHolder);
 		} else {
-			viewHolder=(ViewHolder) convertView.getTag();
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		viewHolder.textView.setText(list_name.get(position));
+		viewHolder.imageView.setBackgroundResource(list_image[position]);
 		return null;
 	}
 
 	private class ViewHolder {
 		private TextView textView;
 		private ImageView imageView;
-
 	}
 
 }
