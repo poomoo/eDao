@@ -1,14 +1,11 @@
 package com.poomoo.edao.activity;
 
-import com.poomoo.edao.R;
-import com.poomoo.edao.R.id;
-import com.poomoo.edao.R.layout;
-import com.poomoo.edao.R.menu;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.poomoo.edao.R;
 
 
 public class MainActivity extends Activity {
