@@ -1,13 +1,8 @@
-package com.poomoo.edao.activity.common;
+package com.poomoo.edao.activity;
 
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
@@ -45,46 +40,11 @@ public class MainActivity extends BaseActivity {
 		textView_point = (TextView) findViewById(R.id.main_textView_point);
 		imageView_user = (ImageView) findViewById(R.id.main_imageView_user);
 		imageView_position = (ImageView) findViewById(R.id.main_imageView_position);
-		gridView = (GridView) findViewById(R.id.main_gridVeiw);
-
+		gridView = (GridView) findViewById(R.id.main_gridView);
 
 		height = gridView.getMeasuredHeight();
 		gridViewAdapter = new Main_GridViewAdapter(this, list_name, list_image,
 				gridView);
 		gridView.setAdapter(gridViewAdapter);
-
-		setGridViewHeightBasedOnChildren(gridView);
-		gridViewAdapter.notifyDataSetChanged();
-
 	}
-
-	private void setGridViewHeightBasedOnChildren(GridView gridView) {
-		// 获取listview的adapter
-		if (gridViewAdapter == null) {
-			return;
-		}
-		// 固定列宽，有多少列
-		int col = 3;// listView.getNumColumns();
-		int totalHeight = 0;
-		// i每次加4，相当于listAdapter.getCount()小于等于4时 循环一次，计算一次item的高度，
-		// listAdapter.getCount()小于等于8时计算两次高度相加
-		for (int i = 0; i < gridViewAdapter.getCount(); i += col) {
-			// 获取listview的每一个item
-			View listItem = gridViewAdapter.getView(i, null, gridView);
-			listItem.measure(0, 0);
-			// 获取item的高度和
-			totalHeight += listItem.getMeasuredHeight();
-			System.out.println("totalHeight:" + totalHeight);
-		}
-
-		// 获取listview的布局参数
-		ViewGroup.LayoutParams params = gridView.getLayoutParams();
-		// 设置高度
-		params.height = totalHeight;
-		// 设置margin
-		// ((MarginLayoutParams) params).setMargins(10, 10, 10, 10);
-		// 设置参数
-		gridView.setLayoutParams(params);
-	}
-
 }

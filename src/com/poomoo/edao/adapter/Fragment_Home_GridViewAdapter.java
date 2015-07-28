@@ -12,14 +12,14 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 
-public class Main_GridViewAdapter extends BaseAdapter {
+public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 
 	private String[] list_name;
 	private int[] list_image;
 	private LayoutInflater inflater;
 	private GridView gridView;
 
-	public Main_GridViewAdapter(Context context, String[] list_name,
+	public Fragment_Home_GridViewAdapter(Context context, String[] list_name,
 			int[] list_image, GridView gridView) {
 		super();
 		this.list_name = list_name;
@@ -51,13 +51,13 @@ public class Main_GridViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.activity_main_gridview_item, parent,
-					false);
+			convertView = inflater.inflate(
+					R.layout.fragment_home_gridview_item, parent, false);
 			viewHolder = new ViewHolder();
 			viewHolder.imageView = (ImageView) convertView
-					.findViewById(R.id.item_main_imageView);
+					.findViewById(R.id.item_fragment_home_imageView);
 			viewHolder.textView = (TextView) convertView
-					.findViewById(R.id.item_main_textView);
+					.findViewById(R.id.item_fragment_home_textView);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -66,10 +66,10 @@ public class Main_GridViewAdapter extends BaseAdapter {
 		viewHolder.imageView.setBackgroundResource(list_image[position]);
 
 		// 设置gridview的item的高度,与屏幕适配
-		AbsListView.LayoutParams param = new AbsListView.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				gridView.getHeight() / 3);
-		convertView.setLayoutParams(param);
+		// AbsListView.LayoutParams param = new AbsListView.LayoutParams(
+		// android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+		// gridView.getHeight() / 5);
+		// convertView.setLayoutParams(param);
 
 		return convertView;
 	}

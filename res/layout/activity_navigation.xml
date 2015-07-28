@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/navigation_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightgray" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:padding="5dp" >
+
+        <RadioGroup
+            android:id="@+id/navigation_radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/navigation_radioButton_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="首页"
+                android:textColor="#1995EB"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/navigation_radioButton_shop"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="店铺"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/navigation_radioButton_myown"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="我的"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/navigation_radioButton_more"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/arrow"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="更多"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

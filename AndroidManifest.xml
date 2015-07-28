@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.common.MainActivity"
+            android:name="com.poomoo.edao.activity.NavigationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.common.PassWordManageActivity" >
+        <activity android:name="com.poomoo.edao.activity.PassWordManageActivity" >
         </activity>
-        <activity android:name=".activity.common.UploadPicsActivity" >
+        <activity android:name="com.poomoo.edao.activity.UploadPicsActivity" >
+        </activity>
+        <activity android:name="com.poomoo.edao.activity.MainActivity" >
         </activity>
     </application>
 
