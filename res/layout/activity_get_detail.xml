@@ -5,6 +5,12 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

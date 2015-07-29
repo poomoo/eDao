@@ -12,61 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#1995EB"
-            android:padding="5dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="账户名:"
-                        android:textColor="#ffffff"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/personalcenter_textView_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="张三"
-                        android:textColor="#ffffff"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/personalcenter_textView_tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="18198559920"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        layout="@layout/layout_user_info" />
 
     <LinearLayout
         android:id="@+id/personalcenter_layout_credit_manage"

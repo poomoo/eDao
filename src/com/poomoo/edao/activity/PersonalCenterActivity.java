@@ -33,8 +33,8 @@ public class PersonalCenterActivity extends BaseActivity implements
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_name = (TextView) findViewById(R.id.personalcenter_textView_username);
-		textView_tel = (TextView) findViewById(R.id.personalcenter_textView_tel);
+		textView_name = (TextView) findViewById(R.id.layout_userinfo_textView_username);
+		textView_tel = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
 		layout_credit = (LinearLayout) findViewById(R.id.personalcenter_layout_credit_manage);
 		layout_bankaccount = (LinearLayout) findViewById(R.id.personalcenter_layout_bankaccount_manage);
 		layout_accountpassword = (LinearLayout) findViewById(R.id.personalcenter_layout_accountpassword_manage);
