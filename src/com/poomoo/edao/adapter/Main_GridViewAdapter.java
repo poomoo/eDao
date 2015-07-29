@@ -51,7 +51,7 @@ public class Main_GridViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.activity_main_gridview_item, parent,
+			convertView = inflater.inflate(R.layout.item_gridview_main, parent,
 					false);
 			viewHolder = new ViewHolder();
 			viewHolder.imageView = (ImageView) convertView

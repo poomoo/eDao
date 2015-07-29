@@ -12,6 +12,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/commoditylist_layout_sort"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/style_background"
@@ -41,13 +42,20 @@
             android:id="@+id/commoditylist_layout_sales"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="销量" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_xiala_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,13 +68,19 @@
             android:id="@+id/commoditylist_layout_prices"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:gravity="center" >
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="价格" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_xiala_small" />
         </LinearLayout>
     </LinearLayout>
 

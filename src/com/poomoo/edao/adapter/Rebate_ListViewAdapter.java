@@ -8,17 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
 
-public class CommodityList_ListViewAdapter extends BaseAdapter {
+public class Rebate_ListViewAdapter extends BaseAdapter {
 
 	private List<HashMap<String, String>> list;
 	private LayoutInflater inflater;
 
-	public CommodityList_ListViewAdapter(Context context,
+	public Rebate_ListViewAdapter(Context context,
 			List<HashMap<String, String>> list) {
 		super();
 		this.list = list;
@@ -48,15 +47,17 @@ public class CommodityList_ListViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(
-					R.layout.item_listview_commoditylist, parent, false);
+			convertView = inflater.inflate(R.layout.item_listview_rebate,
+					parent, false);
 			holder = new ViewHolder();
-			holder.imageView = (ImageView) convertView
-					.findViewById(R.id.commoditylist_item_imageView);
 			holder.textView_name = (TextView) convertView
-					.findViewById(R.id.commoditylist_item_textView_name);
-			holder.textView_price = (TextView) convertView
-					.findViewById(R.id.commoditylist_item_textView_price);
+					.findViewById(R.id.rebate_item_textView_name);
+			holder.textView_tel = (TextView) convertView
+					.findViewById(R.id.rebate_item_textView_tel);
+			holder.textView_money = (TextView) convertView
+					.findViewById(R.id.rebate_item_textView_money);
+			holder.textView_date = (TextView) convertView
+					.findViewById(R.id.rebate_item_textView_date);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -65,8 +66,8 @@ public class CommodityList_ListViewAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		private ImageView imageView;
-		private TextView textView_name, textView_price;
+		private TextView textView_name, textView_tel, textView_money,
+				textView_date;
 
 	}
 

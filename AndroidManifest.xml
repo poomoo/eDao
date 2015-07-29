@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.poomoo.edao.activity.NavigationActivity"
+            android:name="com.poomoo.edao.activity.CommodityListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,8 @@
         <activity android:name="com.poomoo.edao.activity.UploadPicsActivity" >
         </activity>
         <activity android:name="com.poomoo.edao.activity.MainActivity" >
+        </activity>
+        <activity android:name="com.poomoo.edao.activity.Navigation" >
         </activity>
     </application>
 

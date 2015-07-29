@@ -42,14 +42,35 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <Spinner
-                android:id="@+id/registration_spinner_province"
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/registration_layout_province"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
-                android:hint="请输入旧密码"
-                android:paddingLeft="8dp" />
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+
+                <TextView
+                    android:id="@+id/registration_textView_province"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center"
+                    android:hint="银行"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_xiala" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -68,14 +89,35 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <Spinner
-                android:id="@+id/registration_spinner_city"
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/registration_layout_city"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
-                android:hint="请输入新密码"
-                android:paddingLeft="8dp" />
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+
+                <TextView
+                    android:id="@+id/registration_textView_city"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center"
+                    android:hint="银行"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_xiala" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -94,14 +136,35 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <Spinner
-                android:id="@+id/registration_spinner_bank"
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/registration_layout_bank"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
-                android:hint="中国建设银行"
-                android:paddingLeft="8dp" />
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+
+                <TextView
+                    android:id="@+id/registration_textView_bank"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center"
+                    android:hint="银行"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_xiala" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -119,6 +182,10 @@
                 android:text="开户银行:"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
 
             <EditText
                 android:id="@+id/registration_editText_openaccountbank"
@@ -146,6 +213,10 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
             <EditText
                 android:id="@+id/registration_editText_accountnum"
                 android:layout_width="0dp"
@@ -171,6 +242,10 @@
                 android:text="确认账号:"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
 
             <EditText
                 android:id="@+id/registration_editText_accountnumagain"

@@ -27,7 +27,7 @@ public class PersonalCenterActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_personalcenter);
+		setContentView(R.layout.activity_personal_center);
 		init();
 	}
 
