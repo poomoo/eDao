@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.CreditPayActivity"
+            android:name=".activity.AboutUsActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +54,18 @@
         <activity android:name=".activity.CreditCollectionActivity" >
         </activity>
         <activity android:name=".activity.CreditManageActivity" >
+        </activity>
+        <activity android:name=".activity.CreditPayActivity" >
+        </activity>
+        <activity android:name=".activity.CreditPayByPhoneActivity" >
+        </activity>
+        <activity android:name=".activity.CooperationActivity" >
+        </activity>
+        <activity android:name=".activity.DealerApplyActivity" >
+        </activity>
+        <activity android:name=".activity.PartnerApplyActivity" >
+        </activity>
+        <activity android:name=".activity.AllianceApplyActivity" >
         </activity>
     </application>
 

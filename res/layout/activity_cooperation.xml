@@ -33,61 +33,40 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp" >
 
-            <LinearLayout
-                android:id="@+id/credit_pay_layout_payby_phonenum"
+            <Button
+                android:id="@+id/cooperation_btn_alliance_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_btn_background"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_xiala" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="手机号支付"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                android:text="加盟商申请"
+                android:textColor="#80D2FF"
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
 
-            <LinearLayout
-                android:id="@+id/credit_pay_layout_payby_2dimencode"
+            <Button
+                android:id="@+id/cooperation_btn_dealer_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_btn_background"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp" >
+                android:text="经销商申请"
+                android:textColor="#80D2FF"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_xiala" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="二维码支付"
-                    android:textSize="20sp" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/cooperation_btn_partner_apply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_btn_background"
+                android:text="合作商户申请"
+                android:textColor="#80D2FF"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -26,24 +26,24 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 
 /**
  * 
- * @ClassName CreditCollectionActivity
- * @Description TODO 信用收款
+ * @ClassName DealerApplyActivity
+ * @Description TODO 经销商申请
  * @author 李苜菲
- * @date 2015-7-30 下午3:30:21
+ * @date 2015年7月30日 下午11:45:57
  */
-public class CreditCollectionActivity extends BaseActivity implements
+public class DealerApplyActivity extends BaseActivity implements
 		OnClickListener {
-	private TextView textView_username, textView_phonenum,
-			textView_collection_limit, textView_payee_name, textView_channel;
-	private EditText editText_bank, editText_bankaccount,
-			editText_collection_money, editText_remark;
-	private LinearLayout layout_channle;
+	private TextView textView_username, textView_phonenum, textView_zone,
+			textView_merchant_type;
+	private EditText editText_money, editText_secret_key,
+			editText_merchant_name;
+	private LinearLayout layout_zone, layout_merchant_type;
 	private Button button_confirm;
 
 	private PopupWindow popupWindow;
-	private View layout, layout_all;
-	private ChannelSpinnerAdapter adapter;
-	private List<HashMap<String, String>> list;
+	private View layout;
+	private ChannelSpinnerAdapter adapter_zone, adapter_merchant_type;
+	private List<HashMap<String, String>> list_zone, list_merchant_type;
 	private ListView listView;
 
 	@Override
@@ -52,7 +52,7 @@ public class CreditCollectionActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		setContentView(R.layout.activity_credit_collection);
+		setContentView(R.layout.activity_dealer_apply);
 		init();
 	}
 
@@ -60,45 +60,60 @@ public class CreditCollectionActivity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
 		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_payee_name = (TextView) findViewById(R.id.credit_collection_textView_payee_name);
-		textView_collection_limit = (TextView) findViewById(R.id.credit_collection_textView_collection_limit);
-		textView_channel = (TextView) findViewById(R.id.credit_collection_textView_channel);
+		textView_zone = (TextView) findViewById(R.id.dealer_textView_zone);
+		textView_merchant_type = (TextView) findViewById(R.id.dealer_textView_merchant_type);
 
-		editText_bank = (EditText) findViewById(R.id.credit_collection_editText_bank);
-		editText_bankaccount = (EditText) findViewById(R.id.credit_collection_editText_bankaccount);
-		editText_collection_money = (EditText) findViewById(R.id.credit_collection_editText_collection_money);
-		editText_remark = (EditText) findViewById(R.id.credit_collection_editText_remark);
+		editText_money = (EditText) findViewById(R.id.dealer_editText_money);
+		editText_secret_key = (EditText) findViewById(R.id.dealer_editText_secret_key);
+		editText_merchant_name = (EditText) findViewById(R.id.dealer_editText_merchant_name);
 
-		layout_channle = (LinearLayout) findViewById(R.id.credit_collection_layout_channel);
-		layout_all = (LinearLayout) findViewById(R.id.credit_collection_layout);
+		layout_zone = (LinearLayout) findViewById(R.id.dealer_layout_zone);
+		layout_merchant_type = (LinearLayout) findViewById(R.id.dealer_layout_merchant_type);
 
-		button_confirm = (Button) findViewById(R.id.credit_collection_btn_confirm);
+		button_confirm = (Button) findViewById(R.id.dealer_btn_confirm);
 
-		layout_channle.setOnClickListener(this);
+		layout_zone.setOnClickListener(this);
+		layout_merchant_type.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
-		list = new ArrayList<HashMap<String, String>>();
+		list_zone = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> hashMap_sale = new HashMap<String, String>();
 		for (int i = 0; i < 5; i++) {
 			hashMap_sale = new HashMap<String, String>();
-			hashMap_sale.put("name", "意道：费率0.0050");
-			hashMap_sale.put("value", "channel");
-			list.add(hashMap_sale);
+			hashMap_sale.put("name", "贵州" + i);
+			hashMap_sale.put("value", "zone");
+			list_zone.add(hashMap_sale);
 		}
-		textView_channel.setText(list.get(0).get("name"));
+		textView_zone.setText(list_zone.get(0).get("name"));
+		adapter_zone = new ChannelSpinnerAdapter(this, list_zone);
 
-		adapter = new ChannelSpinnerAdapter(this, list);
+		list_merchant_type = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> hashMap_sale1 = new HashMap<String, String>();
+		for (int i = 0; i < 5; i++) {
+			System.out.println("i:" + i);
+			hashMap_sale1 = new HashMap<String, String>();
+			hashMap_sale1.put("name", "电商" + i);
+			hashMap_sale1.put("value", "type");
+			list_merchant_type.add(hashMap_sale1);
+		}
+		textView_merchant_type.setText(list_merchant_type.get(0).get("name"));
+		adapter_merchant_type = new ChannelSpinnerAdapter(this,
+				list_merchant_type);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.credit_collection_layout_channel:
-			showWindow(layout_channle, listView, list, textView_channel,
-					adapter);
+		case R.id.dealer_layout_zone:
+			showWindow(layout_zone, listView, list_zone, textView_zone,
+					adapter_zone);
 			break;
-		case R.id.credit_collection_btn_confirm:
+		case R.id.dealer_layout_merchant_type:
+			showWindow(layout_merchant_type, listView, list_merchant_type,
+					textView_merchant_type, adapter_merchant_type);
+			break;
+		case R.id.dealer_btn_confirm:
 			break;
 		}
 

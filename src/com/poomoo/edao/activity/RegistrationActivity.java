@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +11,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.RegistrationSpinnerAdapter;

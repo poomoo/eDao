@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="收款人姓名:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/credit_pay_by_phone_textView_payee_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.4"
+                    android:gravity="left|center"
+                    android:text="张三"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="收款人手机号:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/credit_pay_by_phone_textView_payee_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.4"
+                    android:gravity="left|center"
+                    android:text="18198668810"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="金额:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/credit_pay_by_phone_editText_money"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/style_background"
+                    android:gravity="center_vertical"
+                    android:hint="1000.00"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="8dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="备注:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/credit_pay_by_phone_editText_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:hint="备注"
+                    android:inputType="text"
+                    android:paddingLeft="8dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp" >
+
+        <Button
+            android:id="@+id/credit_pay_by_phone_btn_pay"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:text="支    付" />
+    </LinearLayout>
+
+</LinearLayout>
