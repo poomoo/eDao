@@ -25,18 +25,20 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 
 /**
  * 
- * @ClassName MywalletActivity
- * @Description TODO 我的钱包
+ * @ClassName TransferOfPaymentActivity2
+ * @Description TODO 转账支付2
  * @author 李苜菲
- * @date 2015-7-29 下午4:31:49
+ * @date 2015-7-30 上午11:02:41
  */
-public class MywalletActivity extends BaseActivity implements OnClickListener {
-	private TextView textView_username, textView_phonenum, textView_balance,
-			textView_hangding_charge, textView_hangding_toplimit,
-			textView_bankname, textView_branch_bankname, textView_bankaccount,textView_channel;
-	private EditText editText_handing_money;
-	private LinearLayout layout_channle;
-	private Button button_recharge, button_handing;
+public class TransferOfPaymentActivity2 extends BaseActivity implements
+		OnClickListener {
+
+	private TextView textView_payee_name, textView_payee_phonenum,
+			textView_balance, textView_channel;
+	private EditText editText_pay_money, editText_pay_password,
+			editText_remark;
+	private LinearLayout layout_channel;
+	private Button button_pay;
 
 	private PopupWindow popupWindow;
 	private View layout;
@@ -50,32 +52,23 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		setContentView(R.layout.activity_mywallet);
+		setContentView(R.layout.activity_transfer_of_payment2);
 		init();
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
-		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_balance = (TextView) findViewById(R.id.mywallet_textView_balance);
-		textView_hangding_charge = (TextView) findViewById(R.id.mywallet_textView_handing_charge);
-		textView_hangding_toplimit = (TextView) findViewById(R.id.mywallet_textView_handing_toplimit);
-		textView_bankname = (TextView) findViewById(R.id.mywallet_textView_bankname);
-		textView_branch_bankname = (TextView) findViewById(R.id.mywallet_textView_branchbankname);
-		textView_bankaccount = (TextView) findViewById(R.id.mywallet_textView_bankaccount);
-		textView_channel = (TextView) findViewById(R.id.mywallet_textView_channel);
+		textView_payee_name = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_name);
+		textView_payee_phonenum = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_phonenum);
+		textView_balance = (TextView) findViewById(R.id.transfer_of_payment2_textView_balance);
+		textView_channel = (TextView) findViewById(R.id.transfer_of_payment2_textView_channel);
 
-		editText_handing_money = (EditText) findViewById(R.id.mywallet_editText_handing_money);
+		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_channel);
 
-		layout_channle = (LinearLayout) findViewById(R.id.mywallet_layout_channel);
+		button_pay = (Button) findViewById(R.id.transfer_of_payment2_btn_pay);
 
-		button_recharge = (Button) findViewById(R.id.mywallet_btn_recharge);
-		button_handing = (Button) findViewById(R.id.mywallet_btn_handing);
-
-		layout_channle.setOnClickListener(this);
-		button_recharge.setOnClickListener(this);
-		button_handing.setOnClickListener(this);
+		layout_channel.setOnClickListener(this);
+		button_pay.setOnClickListener(this);
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}
@@ -84,12 +77,11 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.mywallet_layout_channel:
-			showWindow(layout_channle, listView, list, textView_channel, adapter);
+		case R.id.transfer_of_payment2_layout_channel:
+			showWindow(layout_channel, listView, list, textView_channel,
+					adapter);
 			break;
-		case R.id.mywallet_btn_recharge:
-			break;
-		case R.id.mywallet_btn_handing:
+		case R.id.transfer_of_payment2_btn_pay:
 			break;
 		}
 

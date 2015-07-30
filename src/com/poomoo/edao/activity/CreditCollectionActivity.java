@@ -1,5 +1,6 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,13 +9,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
@@ -25,21 +29,22 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 
 /**
  * 
- * @ClassName MywalletActivity
- * @Description TODO 我的钱包
+ * @ClassName CreditCollectionActivity
+ * @Description TODO 信用收款
  * @author 李苜菲
- * @date 2015-7-29 下午4:31:49
+ * @date 2015-7-30 下午3:30:21
  */
-public class MywalletActivity extends BaseActivity implements OnClickListener {
-	private TextView textView_username, textView_phonenum, textView_balance,
-			textView_hangding_charge, textView_hangding_toplimit,
-			textView_bankname, textView_branch_bankname, textView_bankaccount,textView_channel;
-	private EditText editText_handing_money;
+public class CreditCollectionActivity extends BaseActivity implements
+		OnClickListener {
+	private TextView textView_username, textView_phonenum,
+			textView_collection_limit, textView_payee_name, textView_channel;
+	private EditText editText_bank, editText_bankaccount,
+			editText_collection_money, editText_remark;
 	private LinearLayout layout_channle;
-	private Button button_recharge, button_handing;
+	private Button button_confirm;
 
 	private PopupWindow popupWindow;
-	private View layout;
+	private View layout, layout_all;
 	private ChannelSpinnerAdapter adapter;
 	private List<HashMap<String, String>> list;
 	private ListView listView;
@@ -50,7 +55,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		setContentView(R.layout.activity_mywallet);
+		setContentView(R.layout.activity_credit_collection);
 		init();
 	}
 
@@ -58,24 +63,30 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
 		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_balance = (TextView) findViewById(R.id.mywallet_textView_balance);
-		textView_hangding_charge = (TextView) findViewById(R.id.mywallet_textView_handing_charge);
-		textView_hangding_toplimit = (TextView) findViewById(R.id.mywallet_textView_handing_toplimit);
-		textView_bankname = (TextView) findViewById(R.id.mywallet_textView_bankname);
-		textView_branch_bankname = (TextView) findViewById(R.id.mywallet_textView_branchbankname);
-		textView_bankaccount = (TextView) findViewById(R.id.mywallet_textView_bankaccount);
-		textView_channel = (TextView) findViewById(R.id.mywallet_textView_channel);
+		textView_payee_name = (TextView) findViewById(R.id.credit_collection_textView_payee_name);
+		textView_collection_limit = (TextView) findViewById(R.id.credit_collection_textView_collection_limit);
+		textView_channel = (TextView) findViewById(R.id.credit_collection_textView_channel);
 
-		editText_handing_money = (EditText) findViewById(R.id.mywallet_editText_handing_money);
+		editText_bank = (EditText) findViewById(R.id.credit_collection_editText_bank);
+		editText_bankaccount = (EditText) findViewById(R.id.credit_collection_editText_bankaccount);
+		editText_collection_money = (EditText) findViewById(R.id.credit_collection_editText_collection_money);
+		editText_remark = (EditText) findViewById(R.id.credit_collection_editText_remark);
 
-		layout_channle = (LinearLayout) findViewById(R.id.mywallet_layout_channel);
+		layout_channle = (LinearLayout) findViewById(R.id.credit_collection_layout_channel);
+		layout_all = (LinearLayout) findViewById(R.id.credit_collection_layout);
 
-		button_recharge = (Button) findViewById(R.id.mywallet_btn_recharge);
-		button_handing = (Button) findViewById(R.id.mywallet_btn_handing);
+		button_confirm = (Button) findViewById(R.id.credit_collection_btn_confirm);
 
 		layout_channle.setOnClickListener(this);
-		button_recharge.setOnClickListener(this);
-		button_handing.setOnClickListener(this);
+		button_confirm.setOnClickListener(this);
+
+		list = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> hashMap_sale = new HashMap<String, String>();
+		for (int i = 0; i < 5; i++) {
+			hashMap_sale.put("name", "意道：费率0.0050");
+			hashMap_sale.put("value", "channel");
+			list.add(hashMap_sale);
+		}
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}
@@ -84,12 +95,11 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.mywallet_layout_channel:
-			showWindow(layout_channle, listView, list, textView_channel, adapter);
+		case R.id.credit_collection_layout_channel:
+			showWindow(layout_channle, listView, list, textView_channel,
+					adapter);
 			break;
-		case R.id.mywallet_btn_recharge:
-			break;
-		case R.id.mywallet_btn_handing:
+		case R.id.credit_collection_btn_confirm:
 			break;
 		}
 
@@ -103,6 +113,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		listView = (ListView) layout
 				.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
+
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
 		popupWindow.setWidth(spinnerlayout.getWidth());

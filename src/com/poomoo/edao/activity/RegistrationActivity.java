@@ -89,7 +89,7 @@ public class RegistrationActivity extends BaseActivity implements
 
 	public void showWindow(View position, final LinearLayout spinnerlayout,
 			ListView listView, final List<HashMap<String, String>> list,
-			final TextView txt, RegistrationSpinnerAdapter adapter) {
+			final TextView text, RegistrationSpinnerAdapter adapter) {
 
 		layout = (LinearLayout) LayoutInflater.from(this).inflate(
 				R.layout.myspinner_dropdown, null);
@@ -125,7 +125,7 @@ public class RegistrationActivity extends BaseActivity implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				txt.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
+				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;

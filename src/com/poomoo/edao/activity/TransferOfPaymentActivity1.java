@@ -25,18 +25,20 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 
 /**
  * 
- * @ClassName MywalletActivity
- * @Description TODO 我的钱包
+ * @ClassName TransferOfPaymentActivity1
+ * @Description TODO 转账支付1
  * @author 李苜菲
- * @date 2015-7-29 下午4:31:49
+ * @date 2015-7-30 上午11:02:41
  */
-public class MywalletActivity extends BaseActivity implements OnClickListener {
+public class TransferOfPaymentActivity1 extends BaseActivity implements
+		OnClickListener {
+
 	private TextView textView_username, textView_phonenum, textView_balance,
-			textView_hangding_charge, textView_hangding_toplimit,
-			textView_bankname, textView_branch_bankname, textView_bankaccount,textView_channel;
-	private EditText editText_handing_money;
-	private LinearLayout layout_channle;
-	private Button button_recharge, button_handing;
+			textView_channel;
+	private EditText editText_payee_phonenum;
+	private LinearLayout layout_channel, layout_payby_address_book,
+			layout_payby_2dimencode;
+	private Button button_confirm;
 
 	private PopupWindow popupWindow;
 	private View layout;
@@ -50,7 +52,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		setContentView(R.layout.activity_mywallet);
+		setContentView(R.layout.activity_transfer_of_payment1);
 		init();
 	}
 
@@ -58,24 +60,19 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
 		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_balance = (TextView) findViewById(R.id.mywallet_textView_balance);
-		textView_hangding_charge = (TextView) findViewById(R.id.mywallet_textView_handing_charge);
-		textView_hangding_toplimit = (TextView) findViewById(R.id.mywallet_textView_handing_toplimit);
-		textView_bankname = (TextView) findViewById(R.id.mywallet_textView_bankname);
-		textView_branch_bankname = (TextView) findViewById(R.id.mywallet_textView_branchbankname);
-		textView_bankaccount = (TextView) findViewById(R.id.mywallet_textView_bankaccount);
-		textView_channel = (TextView) findViewById(R.id.mywallet_textView_channel);
+		textView_balance = (TextView) findViewById(R.id.transfer_of_payment1_textView_balance);
+		textView_channel = (TextView) findViewById(R.id.transfer_of_payment1_textView_channel);
 
-		editText_handing_money = (EditText) findViewById(R.id.mywallet_editText_handing_money);
+		editText_payee_phonenum = (EditText) findViewById(R.id.transfer_of_payment1_editText_phonenum);
 
-		layout_channle = (LinearLayout) findViewById(R.id.mywallet_layout_channel);
+		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment1_layout_channel);
+		layout_payby_address_book = (LinearLayout) findViewById(R.id.transfer_of_payment1_layout_payby_addressbook);
+		layout_payby_2dimencode = (LinearLayout) findViewById(R.id.transfer_of_payment1_layout_payby_2dimencode);
 
-		button_recharge = (Button) findViewById(R.id.mywallet_btn_recharge);
-		button_handing = (Button) findViewById(R.id.mywallet_btn_handing);
+		button_confirm = (Button) findViewById(R.id.transfer_of_payment1_btn_confirm);
 
-		layout_channle.setOnClickListener(this);
-		button_recharge.setOnClickListener(this);
-		button_handing.setOnClickListener(this);
+		layout_channel.setOnClickListener(this);
+		button_confirm.setOnClickListener(this);
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}
@@ -84,12 +81,11 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.mywallet_layout_channel:
-			showWindow(layout_channle, listView, list, textView_channel, adapter);
+		case R.id.transfer_of_payment1_layout_channel:
+			showWindow(layout_channel, listView, list, textView_channel,
+					adapter);
 			break;
-		case R.id.mywallet_btn_recharge:
-			break;
-		case R.id.mywallet_btn_handing:
+		case R.id.transfer_of_payment1_btn_confirm:
 			break;
 		}
 

@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myspinner_dropdown_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="35dp"
+        android:background="#E2E2E2" />
 
     <LinearLayout
-        android:id="@+id/myspinner_dropdown_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="35dp"
+        android:layout_weight="1"
         android:background="#ffffff"
-        android:gravity="left|center"
+        android:gravity="left"
+        android:orientation="horizontal"
         android:padding="8dp" >
 
         <TextView
@@ -20,5 +28,10 @@
             android:textColor="@color/gray"
             android:textSize="15sp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="35dp"
+        android:background="#E2E2E2" />
 
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.MywalletActivity"
+            android:name=".activity.CreditPayActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +32,28 @@
         <activity android:name=".activity.NavigationActivity" >
         </activity>
         <activity android:name=".activity.CommodityListActivity" >
+        </activity>
+        <activity android:name=".activity.TransferOfPaymentActivity1" >
+        </activity>
+        <activity android:name=".activity.TransferOfPaymentActivity2" >
+        </activity>
+        <activity android:name=".activity.GetDetailActivity" >
+        </activity>
+        <activity android:name=".activity.PersonalCenterActivity" >
+        </activity>
+        <activity android:name=".activity.PurchaseHistoryActivity" >
+        </activity>
+        <activity android:name=".activity.RegistrationActivity" >
+        </activity>
+        <activity android:name=".activity.SplashActivity" >
+        </activity>
+        <activity android:name=".activity.RebateActivity" >
+        </activity>
+        <activity android:name=".activity.MywalletActivity" >
+        </activity>
+        <activity android:name=".activity.CreditCollectionActivity" >
+        </activity>
+        <activity android:name=".activity.CreditManageActivity" >
         </activity>
     </application>
 

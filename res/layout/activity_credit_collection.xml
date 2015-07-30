@@ -24,6 +24,7 @@
         android:paddingRight="10dp" >
 
         <LinearLayout
+            android:id="@+id/credit_collection_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
@@ -35,8 +36,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -44,13 +44,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="通道名称:"
+                    android:text="通道选择:"
                     android:textSize="16sp" />
 
                 <LinearLayout
-                    android:id="@+id/mywallet_layout_channel"
+                    android:id="@+id/credit_collection_layout_channel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
@@ -60,12 +60,12 @@
                     android:paddingRight="8dp" >
 
                     <TextView
-                        android:id="@+id/mywallet_textView_channel"
+                        android:id="@+id/credit_collection_textView_channel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="left|center"
-                        android:text="通道名称"
+                        android:hint="意道:费率0.0050"
                         android:textSize="13sp" />
 
                     <ImageView
@@ -82,8 +82,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -91,19 +90,18 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="通道余额:"
+                    android:text="收款人姓名:"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/mywallet_textView_balance"
+                    android:id="@+id/credit_collection_textView_payee_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="1.8"
                     android:gravity="left|center"
-                    android:text="￥8000.00"
-                    android:textColor="@color/orange"
+                    android:text="张三"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -113,76 +111,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingRight="2dp"
-                        android:text="提现手续:"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/mywallet_textView_handing_charge"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="left|center"
-                        android:text="20.00元/次"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingRight="2dp"
-                        android:text="提现上限:"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/mywallet_textView_handing_toplimit"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="left|center"
-                        android:text="5000元/次"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -190,113 +119,148 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="收款银行:"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/mywallet_textView_bankname"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp"
-                    android:text="招商银行"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="支行名称:"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/mywallet_textView_branchbankname"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp"
-                    android:text="金阳招商银行支行"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="银行账号:"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/mywallet_textView_bankaccount"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp"
-                    android:text="978479359069059069"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="提现金额:"
-                    android:textSize="16sp" />
-
                 <EditText
-                    android:id="@+id/mywallet_editText_handing_money"
+                    android:id="@+id/credit_collection_editText_bank"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
-                    android:hint="提现金额"
+                    android:hint="招商银行"
+                    android:paddingLeft="8dp"
+                    android:textSize="13sp" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="银行账号:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/credit_collection_editText_bankaccount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:hint="111122223333456"
+                    android:inputType="number"
+                    android:paddingLeft="8dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="收款限额:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/credit_collection_textView_collection_limit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="left|center"
+                    android:paddingLeft="8dp"
+                    android:text="20000.00元/笔"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="收款金额:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/credit_collection_editText_collection_money"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/style_background"
+                    android:gravity="center_vertical"
+                    android:hint="1000.00"
                     android:inputType="numberDecimal"
+                    android:paddingLeft="8dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:text="备注:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/credit_collection_editText_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:hint="备注"
+                    android:inputType="text"
                     android:paddingLeft="8dp"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -310,24 +274,12 @@
         android:padding="15dp" >
 
         <Button
-            android:id="@+id/mywallet_btn_recharge"
+            android:id="@+id/credit_collection_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/gray"
             android:gravity="center"
-            android:text="充    值" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <Button
-            android:id="@+id/mywallet_btn_handing"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/gray"
-            android:gravity="center"
-            android:text="提    现" />
+            android:text="确    定" />
     </LinearLayout>
 
 </LinearLayout>
