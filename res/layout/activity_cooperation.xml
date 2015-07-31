@@ -37,7 +37,7 @@
                 android:id="@+id/cooperation_btn_alliance_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/style_btn_background"
+                android:background="@drawable/style_btn_filletview"
                 android:text="加盟商申请"
                 android:textColor="#80D2FF"
                 android:textSize="20sp" />
@@ -50,7 +50,7 @@
                 android:id="@+id/cooperation_btn_dealer_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/style_btn_background"
+                android:background="@drawable/style_btn_filletview"
                 android:text="经销商申请"
                 android:textColor="#80D2FF"
                 android:textSize="20sp" />
@@ -63,7 +63,7 @@
                 android:id="@+id/cooperation_btn_partner_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/style_btn_background"
+                android:background="@drawable/style_btn_filletview"
                 android:text="合作商户申请"
                 android:textColor="#80D2FF"
                 android:textSize="20sp" />
