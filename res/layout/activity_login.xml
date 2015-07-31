@@ -5,16 +5,11 @@
     android:background="#efefef"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
         android:layout_width="match_parent"
-        android:layout_height="40dp" >
-
-        <fragment
-            android:id="@+id/fragment1"
-            android:name="com.poomoo.edao.navigation.ReturnNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,8 +25,14 @@
             android:layout_width="15dp"
             android:layout_height="wrap_content" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_xiala" />
+
         <EditText
-            android:id="@+id/registration2_editText_phone"
+            android:id="@+id/login_editText_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -40,75 +41,45 @@
             android:hint="请输入手机号码"
             android:inputType="phone"
             android:maxLength="11"
+            android:paddingLeft="10dp"
             android:textSize="15sp" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/registration2_btn_identitynum"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/style_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="15dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_xiala" />
+
+        <EditText
+            android:id="@+id/login_editText_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/style_identy_button_frame"
-            android:text="获取验证码"
-            android:textColor="#0079ff"
-            android:textSize="11sp" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/style_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="15dp"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/registration2_editText_identitynum"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_weight="3"
             android:background="@null"
             android:gravity="center|start"
-            android:hint="验证码"
-            android:inputType="number|textCapCharacters"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/style_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="15dp"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/registration2_editText_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center|start"
-            android:hint="姓名"
-            android:inputType="text"
+            android:hint="请输入密码"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:paddingLeft="10dp"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -117,15 +88,60 @@
         android:layout_height="10dp" />
 
     <Button
-        android:id="@+id/registration2_btn_regist"
+        android:id="@+id/login_btn_regist"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/style_btn_background"
         android:gravity="center"
-        android:text="注册"
+        android:text="登录"
         android:textColor="#ffffff"
         android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/login_textView_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册账号"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/login_textView_forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" >
+        </TextView>
+    </LinearLayout>
 
 </LinearLayout>

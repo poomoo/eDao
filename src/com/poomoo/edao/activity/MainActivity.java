@@ -17,11 +17,11 @@ public class MainActivity extends BaseActivity {
 	private Main_GridViewAdapter gridViewAdapter;
 	private final String[] list_name = { "全国返利", "消费领取", "我的钱包", "交易明细",
 			"信用管理", "转账支付", "合作加盟", "爱心基金", "意道商城" };
-	private final int[] list_image = { R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher };
+	private final int[] list_image = { R.drawable.ic_rebate,
+			R.drawable.ic_get_detail, R.drawable.ic_my_wallet,
+			R.drawable.ic_purchase_history, R.drawable.ic_credit_manage,
+			R.drawable.ic_transfer_payment, R.drawable.ic_cooperation,
+			R.drawable.ic_love_fund, R.drawable.ic_shop };
 	private int height = 0;
 
 	@Override

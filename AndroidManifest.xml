@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.AboutUsActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".activity.UploadPicsActivity" >
         </activity>
-        <activity android:name=".activity.MainActivity" >
+        <activity android:name=".activity.CommdityInfomationActivity" >
         </activity>
         <activity android:name=".activity.NavigationActivity" >
         </activity>
@@ -66,6 +66,12 @@
         <activity android:name=".activity.PartnerApplyActivity" >
         </activity>
         <activity android:name=".activity.AllianceApplyActivity" >
+        </activity>
+        <activity android:name=".activity.AboutUsActivity" >
+        </activity>
+        <activity android:name=".activity.Registration2Activity" >
+        </activity>
+        <activity android:name=".activity.LoginActivity" >
         </activity>
     </application>
 
