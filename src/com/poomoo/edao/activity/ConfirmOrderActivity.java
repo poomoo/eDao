@@ -11,6 +11,13 @@ import android.widget.RadioGroup;
 
 import com.poomoo.edao.R;
 
+/**
+ * 
+ * @ClassName ConfirmOrderActivity
+ * @Description TODO确认订单
+ * @author 李苜菲
+ * @date 2015-8-3 上午9:48:19
+ */
 public class ConfirmOrderActivity extends BaseActivity implements
 		OnClickListener, OnCheckedChangeListener {
 	private CheckBox checkBox_bill;
