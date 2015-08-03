@@ -14,10 +14,11 @@
   ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~  * See the License for the specific language governing permissions and
   ~  * limitations under the License.
-  ~  */
-  -->
+  ~  */
+-->
 
 <resources>
+
     <declare-styleable name="FlexibleRatingBar">
         <attr name="colorOutlineOn" format="color" />
         <attr name="colorOutlineOff" format="color" />
@@ -30,4 +31,10 @@
         <attr name="polygonRotation" format="integer" />
         <attr name="strokeWidth" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color"></attr>
+    </declare-styleable>
+
 </resources>

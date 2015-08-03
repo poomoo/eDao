@@ -3,17 +3,15 @@ package com.poomoo.edao.activity;
 import android.os.Bundle;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.userDefined.FlexibleRatingBar;
 
 /**
  * 
- * @ClassName CommodityEvaluateActivity
- * @Description TODO 商品评价
+ * @ClassName StoreEvaluateActivity
+ * @Description TODO 店铺评价
  * @author 李苜菲
- * @date 2015-8-3 下午1:40:14
+ * @date 2015-8-3 下午4:02:36
  */
-public class CommodityEvaluateActivity extends BaseActivity {
-	private FlexibleRatingBar ratingBar_shop, ratingBar_commodity;
+public class StoreEvaluateActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,7 @@ public class CommodityEvaluateActivity extends BaseActivity {
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		// ratingBar_shop = (FlexibleRatingBar) findViewById(R.id.commodity_e);
+
 	}
 
 }

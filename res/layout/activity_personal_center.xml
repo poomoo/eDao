@@ -15,7 +15,7 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/layout_user_info" />
+        layout="@layout/pub_layout_user_info" />
 
     <LinearLayout
         android:id="@+id/personalcenter_layout_credit_manage"

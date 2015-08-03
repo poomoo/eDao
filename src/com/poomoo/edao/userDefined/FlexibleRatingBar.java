@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.poomoo.edao;
+package com.poomoo.edao.userDefined;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -29,6 +29,8 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.widget.RatingBar;
+
+import com.poomoo.edao.R;
 
 public class FlexibleRatingBar extends RatingBar {
 
