@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <com.poomoo.edao.userDefined.FlexibleRatingBar
+            <com.poomoo.edao.widget.FlexibleRatingBar
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"
@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <com.poomoo.edao.userDefined.FlexibleRatingBar
+            <com.poomoo.edao.widget.FlexibleRatingBar
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"

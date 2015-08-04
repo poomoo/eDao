@@ -1,13 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/ic_splash"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/splash_textView_site"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:scaleType="fitXY" />
+        android:gravity="center"
+        android:text="www.yidao7.com"
+        android:textColor="#87AEDA" />
+
+    <TextView
+        android:id="@+id/splash_textView_company_name_ch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splash_textView_site"
+        android:gravity="center"
+        android:text="贵州意道科技有限公司"
+        android:textColor="#87AEDA" />
+
+    <TextView
+        android:id="@+id/splash_textView_company_name_en"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splash_textView_company_name_ch"
+        android:gravity="center"
+        android:text="GUIZHOUYIDAOTECHNOLOGYCO.LTD"
+        android:textColor="#87AEDA" />
 
 </RelativeLayout>

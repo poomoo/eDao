@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 
-public class Fragment_Shop_ListViewAdapter extends BaseAdapter {
+public class Shop_List_ListViewAdapter extends BaseAdapter {
 
 	private List<HashMap<String, String>> list;
 	private LayoutInflater inflater;
 
-	public Fragment_Shop_ListViewAdapter(Context context,
+	public Shop_List_ListViewAdapter(Context context,
 			List<HashMap<String, String>> list) {
 		super();
 		this.list = list;
@@ -49,7 +49,7 @@ public class Fragment_Shop_ListViewAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(
-					R.layout.fragment_shop_listview_item, parent, false);
+					R.layout.item_listview_shop_list, parent, false);
 			holder = new ViewHolder();
 			holder.imageView = (ImageView) convertView
 					.findViewById(R.id.fragment_shop_listview_item_imageView);

@@ -1,4 +1,4 @@
-package com.poomoo.edao.userDefined;
+package com.poomoo.edao.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

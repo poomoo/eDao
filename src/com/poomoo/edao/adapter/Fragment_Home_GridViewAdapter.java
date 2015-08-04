@@ -52,7 +52,7 @@ public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(
-					R.layout.fragment_home_gridview_item, parent, false);
+					R.layout.fragment_store_gridview_item, parent, false);
 			viewHolder = new ViewHolder();
 			viewHolder.imageView = (ImageView) convertView
 					.findViewById(R.id.item_fragment_home_imageView);

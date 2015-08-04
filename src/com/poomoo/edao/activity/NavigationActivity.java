@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.fragment.Fragment_Home;
+import com.poomoo.edao.fragment.Fragment_Store;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
 
@@ -18,7 +18,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private RadioGroup radioGroup;
 	private RadioButton radioButton_home, radioButton_shop, radioButton_myown,
 			radioButton_more;
-	private Fragment_Home fragment_Home;
+	private Fragment_Store fragment_Store;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,9 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
-		fragment_Home = new Fragment_Home();
-		fragmentTransaction.replace(R.id.navigation_frameLayout, fragment_Home);
+		fragment_Store = new Fragment_Store();
+		fragmentTransaction
+				.replace(R.id.navigation_frameLayout, fragment_Store);
 		fragmentTransaction.commit();
 	}
 
@@ -59,16 +60,15 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 				.beginTransaction();
 		switch (v.getId()) {
 		case R.id.navigation_radioButton_home:
-			if (fragment_Home == null)
-				fragment_Home = new Fragment_Home();
-			fragmentTransaction.replace(R.id.navigation_frameLayout,
-					fragment_Home);
+
 			break;
 		case R.id.navigation_radioButton_shop:
+			if (fragment_Store == null)
+				fragment_Store = new Fragment_Store();
+			fragmentTransaction.replace(R.id.navigation_frameLayout,
+					fragment_Store);
 			break;
 		case R.id.navigation_radioButton_myown:
-			break;
-		case R.id.navigation_radioButton_more:
 			break;
 		}
 		fragmentTransaction.commit();
