@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="#ffffff"
         android:padding="5dp" >
 
@@ -37,12 +37,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/ic_arrow"
+                android:checked="true"
+                android:drawableTop="@drawable/style_navigation_home_background"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="首页"
-                android:textColor="#1995EB"
-                android:textSize="13sp" />
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
 
             <RadioButton
                 android:id="@+id/navigation_radioButton_shop"
@@ -51,12 +52,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/ic_arrow"
+                android:drawableTop="@drawable/style_navigation_store_background"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="店铺"
-                android:textColor="@color/gray"
-                android:textSize="13sp" />
+                android:text="商城"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
 
             <RadioButton
                 android:id="@+id/navigation_radioButton_myown"
@@ -65,26 +66,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/ic_arrow"
+                android:drawableTop="@drawable/style_navigation_user_background"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="我的"
-                android:textColor="@color/gray"
-                android:textSize="13sp" />
-
-            <RadioButton
-                android:id="@+id/navigation_radioButton_more"
-                style="@null"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/ic_arrow"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="更多"
-                android:textColor="@color/gray"
-                android:textSize="13sp" />
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
         </RadioGroup>
     </LinearLayout>
 

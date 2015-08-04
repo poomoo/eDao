@@ -10,13 +10,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
+import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
 
 public class Fragment_Store extends Fragment {
 	private EditText editText_keywords;
 	private ImageView imageView_user, imageView_position;
 	private GridView gridView;
-	private Fragment_Home_GridViewAdapter gridViewAdapter;
+	private Fragment_Store_GridViewAdapter gridViewAdapter;
 	private final String[] list_name = { "金银珠宝", "酒店", "餐饮", "服装", "生活超市",
 			"旅游", "美容养生", "保健品", "家电", "皮具", "酒类", "娱乐", "汽车", "批发类", "农副产品",
 			"医药", "交通运输", "办公用品", "房产建材", "机械设备" };
@@ -64,7 +64,7 @@ public class Fragment_Store extends Fragment {
 		gridView = (GridView) getView().findViewById(
 				R.id.fragment_home_gridView);
 
-		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
+		gridViewAdapter = new Fragment_Store_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
 	}
