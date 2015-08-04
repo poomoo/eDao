@@ -55,18 +55,81 @@ public class ReturnNavigation extends Fragment {
 
 	public void setNavigationTitle() {
 		String[] thisactivity = getActivity().toString().split("@");
+		String[] activity_name = thisactivity[0].split("\\.");
+		switch (activity_name[4]) {
+		case "RebateActivity":
+			textView_title.setText("全国返利");
+			break;
+		case "PurchaseHistoryActivity":
+			textView_title.setText("消费记录");
+			break;
+		case "GetDetailActivity":
+			textView_title.setText("领取明细");
+			break;
+		case "MywalletActivity":
+			textView_title.setText("我的钱包");
+			break;
+		case "TransferOfPaymentActivity1":
+			textView_title.setText("转账支付");
+			break;
+		case "TransferOfPaymentActivity2":
+			textView_title.setText("转账支付");
+			break;
+		case "CommodityListActivity":
+			textView_title.setText("商品列表");
+			break;
+		case "CreditManageActivity":
+			textView_title.setText("信用管理");
+			break;
+		case "CreditCollectionActivity":
+			textView_title.setText("信用收益");
+			break;
+		case "CreditPayActivity":
+			textView_title.setText("信用支付");
+			break;
+		case "CreditPayByPhoneActivity":
+			textView_title.setText("信用支付");
+			break;
+		case "CooperationActivity":
+			textView_title.setText("合作加盟");
+			break;
+		case "AllianceApplyActivity":
+			textView_title.setText("加盟商申请");
+			break;
+		case "PartnerApplyActivity":
+			textView_title.setText("合作商户申请");
+			break;
+		case "DealerApplyActivity":
+			textView_title.setText("经销商申请");
+			break;
+		case "AboutUsActivity":
+			textView_title.setText("关于我们");
+			break;
+		case "PersonalCenterActivity":
+			textView_title.setText("个人中心");
+			break;
+		case "CommodityInfomationActivity":
+			textView_title.setText("商品详情");
+			break;
+		case "ConfirmOrderActivity":
+			textView_title.setText("确认订单");
+			break;
+		case "OrderInformationActivity":
+			textView_title.setText("订单详情");
+			break;
+		case "OrderListActivity":
+			textView_title.setText("全部订单");
+			break;
+		case "StoreInformationActivity":
+			textView_title.setText("店铺详情");
+			break;
+		case "StoreEvaluateActivity":
+			textView_title.setText("店铺评价");
+			break;
+		case "EvaluationListActivity":
+			textView_title.setText("评价");
+			break;
 
-		if (thisactivity[0]
-				.equals("com.poomoo.edao.activity.common.PassWordManageActivity")) {
-			textView_title.setText("密码管理");
-		}
-		if (thisactivity[0]
-				.equals("com.poomoo.edao.activity.common.RegistrationActivity")) {
-			textView_title.setText("注册");
-		}
-		if (thisactivity[0]
-				.equals("com.poomoo.edao.activity.common.UploadPicsActivity")) {
-			textView_title.setText("上传照片");
 		}
 
 	}

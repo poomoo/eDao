@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="贵州特产橘子  超级超级甜500g"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/textsize18" />
 
                     <TextView
                         android:layout_width="5dp"
@@ -68,14 +68,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_xiala" />
+                        android:src="@drawable/attention_selector" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="关注"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/textsize14" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -91,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/textsize20" />
 
                 <TextView
                     android:id="@+id/commodity_information_textView_current_price"
@@ -99,26 +98,19 @@
                     android:layout_height="wrap_content"
                     android:text="99"
                     android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/textsize20" />
 
                 <TextView
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@color/gray"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/commodity_information_textView_old_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="499.0"
+                    android:text="￥499.0"
                     android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/textsize12" />
             </LinearLayout>
 
             <LinearLayout
@@ -139,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:text="金币："
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:id="@+id/commodity_information_textView_gold_coin"
@@ -147,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:text="49"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:layout_width="5dp"
@@ -159,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:text="不禁用红包"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,14 +166,14 @@
                         android:layout_height="wrap_content"
                         android:text="10"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="人购买"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -204,7 +196,7 @@
                 android:padding="5dp"
                 android:text="  【特价优惠】 这里是商品说明这里是商品说明这里是商品说明这里是商品说明这里是商品说明"
                 android:textColor="@color/gray"
-                android:textSize="13sp" />
+                android:textSize="@dimen/textsize14" />
 
             <View
                 android:layout_width="match_parent"
@@ -222,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="商家信息"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <View
                     android:layout_width="match_parent"
@@ -247,14 +239,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="贵阳世纪城某某直销店"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="贵阳市乌当区金阳新区世纪城金源街200号"
                             android:textColor="@color/gray"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/textsize14" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -301,7 +293,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="评价"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize14" />
 
                         <TextView
                             android:layout_width="5dp"
@@ -312,7 +304,7 @@
                             android:layout_height="match_parent"
                             android:text="4.8分"
                             android:textColor="@color/orange"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize14" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -327,7 +319,7 @@
                             android:layout_height="match_parent"
                             android:text="20条评论"
                             android:textColor="#80D2FF"
-                            android:textSize="13sp" />
+                            android:textSize="@dimen/textsize14" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -351,14 +343,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="kejidan"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/textsize14" />
 
                     <TextView
                         android:id="@+id/commodity_information_buyer_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="服务很好，卖家很热情，还有送礼物，最满意的一次购物"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/textsize14" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -390,7 +382,7 @@
             android:gravity="center"
             android:text="加入购物车"
             android:textColor="#ffffff"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:layout_width="10dp"
@@ -405,7 +397,7 @@
             android:gravity="center"
             android:text="立即购买"
             android:textColor="#ffffff"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:layout_width="0dp"
@@ -416,8 +408,7 @@
             android:id="@+id/commodity_information_imageView_shopping_car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_arrow" />
+            android:src="@drawable/ic_shopping_cart" />
 
         <TextView
             android:layout_width="0dp"

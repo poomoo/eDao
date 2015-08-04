@@ -16,13 +16,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#1995EB"
+            android:gravity="center_vertical"
             android:padding="5dp" >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_include_logo" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:text="账户名:"
                         android:textColor="#ffffff"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:id="@+id/layout_userinfo_textView_username"
@@ -49,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:text="张三"
                         android:textColor="#ffffff"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
                 </LinearLayout>
 
                 <TextView
@@ -58,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:text="18198559920"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/textsize12" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -2,46 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
+    android:gravity="center_vertical"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/item_home_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/item_home_imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/item_home_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="全国返利" />
+            android:text="全国返利"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize12" />
     </LinearLayout>
 
     <View
         android:id="@+id/item_home_bottomline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/item_home_layout"
-        android:layout_margin="10dp"
-        android:background="#E6E6E6"
-        android:contentDescription="@null" />
-
-    <View
-        android:id="@+id/item_home_leftline"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/bottomline"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="#E6E6E6"
         android:contentDescription="@null" />
 
@@ -49,9 +44,11 @@
         android:id="@+id/item_home_rightline"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/bottomline"
+        android:layout_alignBottom="@+id/item_home_bottomline"
         android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:background="#E6E6E6"
         android:contentDescription="@null" />
 

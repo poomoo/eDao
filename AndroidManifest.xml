@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.NavigationActivity"
+            android:name=".activity.OrderInformationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,70 +23,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PassWordManageActivity" >
-        </activity>
-        <activity android:name=".activity.UploadPicsActivity" >
-        </activity>
-        <activity android:name=".activity.CommdityInfomationActivity" >
-        </activity>
-        <activity android:name=".activity.SplashActivity" >
-        </activity>
-        <activity android:name=".activity.CommodityListActivity" >
-        </activity>
-        <activity android:name=".activity.TransferOfPaymentActivity1" >
-        </activity>
-        <activity android:name=".activity.TransferOfPaymentActivity2" >
-        </activity>
-        <activity android:name=".activity.GetDetailActivity" >
-        </activity>
-        <activity android:name=".activity.PersonalCenterActivity" >
-        </activity>
-        <activity android:name=".activity.PurchaseHistoryActivity" >
-        </activity>
-        <activity android:name=".activity.RegistrationActivity" >
-        </activity>
-        <activity android:name=".activity.SideBarActivity" >
-        </activity>
-        <activity android:name=".activity.RebateActivity" >
-        </activity>
-        <activity android:name=".activity.MywalletActivity" >
-        </activity>
-        <activity android:name=".activity.CreditCollectionActivity" >
-        </activity>
-        <activity android:name=".activity.CreditManageActivity" >
-        </activity>
-        <activity android:name=".activity.CreditPayActivity" >
-        </activity>
-        <activity android:name=".activity.CreditPayByPhoneActivity" >
-        </activity>
-        <activity android:name=".activity.CooperationActivity" >
-        </activity>
-        <activity android:name=".activity.DealerApplyActivity" >
-        </activity>
-        <activity android:name=".activity.PartnerApplyActivity" >
-        </activity>
-        <activity android:name=".activity.AllianceApplyActivity" >
-        </activity>
-        <activity android:name=".activity.AboutUsActivity" >
-        </activity>
-        <activity android:name=".activity.Registration2Activity" >
-        </activity>
-        <activity android:name=".activity.LoginActivity" >
-        </activity>
-        <activity android:name=".activity.MainActivity" >
-        </activity>
-        <activity android:name=".activity.ConfirmOrderActivity" >
-        </activity>
-        <activity android:name=".activity.OrderInformationActivity" >
-        </activity>
-        <activity android:name=".activity.OrderListActivity" >
-        </activity>
-        <activity android:name=".activity.CommodityEvaluateActivity" >
-        </activity>
-        <activity android:name=".activity.StoreEvaluateActivity" >
-        </activity>
-        <activity android:name=".activity.StoreInformationActivity" >
-        </activity>
+        <activity android:name=".activity.AllianceApplyActivity" />
+        <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.CommodityInfomationActivity" />
+        <activity android:name=".activity.CommodityListActivity" />
+        <activity android:name=".activity.CreditCollectionActivity" />
+        <activity android:name=".activity.CreditManageActivity" />
+        <activity android:name=".activity.CreditPayActivity" />
+        <activity android:name=".activity.CreditPayByPhoneActivity" />
+        <activity android:name=".activity.CooperationActivity" />
+        <activity android:name=".activity.ConfirmOrderActivity" />
+        <activity android:name=".activity.CommodityEvaluateActivity" />
+        <activity android:name=".activity.DealerApplyActivity" />
+        <activity android:name=".activity.EvaluationListActivity" />
+        <activity android:name=".activity.GetDetailActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.MywalletActivity" />
+        <activity android:name=".activity.NavigationActivity" />
+        <activity android:name=".activity.OrderListActivity" />
+        <activity android:name=".activity.PassWordManageActivity" />
+        <activity android:name=".activity.PartnerApplyActivity" />
+        <activity android:name=".activity.PersonalCenterActivity" />
+        <activity android:name=".activity.PurchaseHistoryActivity" />
+        <activity android:name=".activity.Registration2Activity" />
+        <activity android:name=".activity.RegistrationActivity" />
+        <activity android:name=".activity.RebateActivity" />
+        <activity android:name=".activity.StoreEvaluateActivity" />
+        <activity android:name=".activity.StoreInformationActivity" />
+        <activity android:name=".activity.SideBarActivity" />
+        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".activity.TransferOfPaymentActivity1" />
+        <activity android:name=".activity.TransferOfPaymentActivity2" />
+        <activity android:name=".activity.UploadPicsActivity" />
     </application>
 
 </manifest>

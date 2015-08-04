@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
     <fragment
@@ -27,7 +27,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="30dp"
@@ -40,7 +39,7 @@
                 android:background="@drawable/style_btn_filletview"
                 android:text="加盟商申请"
                 android:textColor="#80D2FF"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="match_parent"
@@ -53,7 +52,7 @@
                 android:background="@drawable/style_btn_filletview"
                 android:text="经销商申请"
                 android:textColor="#80D2FF"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="match_parent"
@@ -66,7 +65,7 @@
                 android:background="@drawable/style_btn_filletview"
                 android:text="合作商户申请"
                 android:textColor="#80D2FF"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
         </LinearLayout>
     </LinearLayout>
 

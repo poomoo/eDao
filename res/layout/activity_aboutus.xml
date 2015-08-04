@@ -15,13 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_about_us_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="乐意道"
+            android:textSize="@dimen/textsize20" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="电话号码:"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="20dp"
@@ -53,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0851-85912547"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
         </LinearLayout>
 
         <View
@@ -75,7 +82,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:text="乐意道网址:"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="20dp"
@@ -85,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="www.yidao7.com"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
         </LinearLayout>
 
         <View
@@ -106,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="微博:"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="20dp"
@@ -116,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
         </LinearLayout>
 
         <View
@@ -137,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="微信公众号:"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
 
             <View
                 android:layout_width="20dp"
@@ -147,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize20" />
         </LinearLayout>
 
         <View

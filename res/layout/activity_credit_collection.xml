@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="7"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
@@ -36,7 +36,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -47,7 +48,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="通道选择:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <LinearLayout
                     android:id="@+id/credit_collection_layout_channel"
@@ -66,7 +67,7 @@
                         android:layout_weight="3"
                         android:gravity="left|center"
                         android:hint="意道:费率0.0050"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/textsize14" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -82,7 +83,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -93,7 +95,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="收款人姓名:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:id="@+id/credit_collection_textView_payee_name"
@@ -102,7 +104,7 @@
                     android:layout_weight="1.8"
                     android:gravity="left|center"
                     android:text="张三"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
@@ -111,7 +113,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -122,7 +125,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="收款银行:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <EditText
                     android:id="@+id/credit_collection_editText_bank"
@@ -133,7 +136,7 @@
                     android:gravity="left|center"
                     android:hint="招商银行"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" >
+                    android:textSize="@dimen/textsize14" >
 
                     <requestFocus />
                 </EditText>
@@ -145,7 +148,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -156,7 +160,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="银行账号:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <EditText
                     android:id="@+id/credit_collection_editText_bankaccount"
@@ -168,7 +172,7 @@
                     android:hint="111122223333456"
                     android:inputType="number"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
@@ -177,7 +181,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -188,7 +193,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="收款限额:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:id="@+id/credit_collection_textView_collection_limit"
@@ -198,7 +203,7 @@
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
                     android:text="20000.00元/笔"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
@@ -207,7 +212,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -218,7 +224,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="收款金额:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <EditText
                     android:id="@+id/credit_collection_editText_collection_money"
@@ -230,7 +236,7 @@
                     android:hint="1000.00"
                     android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
@@ -239,7 +245,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -250,7 +257,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="备注:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <EditText
                     android:id="@+id/credit_collection_editText_remark"
@@ -262,10 +269,15 @@
                     android:hint="备注"
                     android:inputType="text"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"

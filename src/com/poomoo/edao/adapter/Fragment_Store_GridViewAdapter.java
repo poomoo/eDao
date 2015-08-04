@@ -63,7 +63,7 @@ public class Fragment_Store_GridViewAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		viewHolder.textView.setText(list_name[position]);
-		viewHolder.imageView.setBackgroundResource(list_image[position]);
+		viewHolder.imageView.setImageResource(list_image[position]);
 
 		// 设置gridview的item的高度,与屏幕适配
 		// AbsListView.LayoutParams param = new AbsListView.LayoutParams(

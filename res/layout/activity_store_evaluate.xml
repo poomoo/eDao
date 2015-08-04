@@ -20,7 +20,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:text="贵阳特产水果"
-        android:textSize="20sp" />
+        android:textSize="@dimen/textsize20" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="店铺综合评分:"
                         android:textColor="@color/gray"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/textsize16" />
 
                     <TextView
                         android:layout_width="5dp"
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:text="5.0"
                         android:textColor="@color/red"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/textsize16" />
                 </LinearLayout>
 
                 <View
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:text="距离:"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:layout_width="5dp"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:text="345m"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
 
                     <TextView
                         android:layout_width="5dp"
@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:text="起送100元"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -149,7 +149,7 @@
             android:gravity="top"
             android:hint="亲,您的评价对其他买家有很大帮助"
             android:inputType="textMultiLine"
-            android:textSize="15sp" >
+            android:textSize="@dimen/textsize16" >
         </EditText>
 
         <TextView
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:text="卖家服务"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="0dp"
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:text="商品评价"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="0dp"
@@ -267,7 +267,7 @@
             android:background="@drawable/style_btn_background"
             android:text="提交评论"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
 </LinearLayout>

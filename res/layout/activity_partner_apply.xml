@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
     <fragment
@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
@@ -35,7 +35,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -46,7 +47,7 @@
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
                     android:text="区域:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <LinearLayout
                     android:id="@+id/partner_layout_zone"
@@ -65,7 +66,7 @@
                         android:layout_weight="3"
                         android:gravity="left|center"
                         android:hint=""
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/textsize14" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -81,7 +82,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -111,7 +113,7 @@
                         android:layout_weight="3"
                         android:gravity="left|center"
                         android:hint=""
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/textsize14" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -127,7 +129,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -150,7 +153,7 @@
                     android:hint=""
                     android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" >
+                    android:textSize="@dimen/textsize14" >
 
                     <requestFocus />
                 </EditText>
@@ -162,7 +165,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -185,7 +189,7 @@
                     android:hint=""
                     android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" >
+                    android:textSize="@dimen/textsize14" >
 
                     <requestFocus />
                 </EditText>
@@ -197,7 +201,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -220,7 +225,7 @@
                     android:hint="请输入服务商手机号:"
                     android:inputType="phone"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
@@ -229,7 +234,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -252,13 +258,19 @@
                     android:hint="跑马科技"
                     android:inputType="text"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
     </LinearLayout>
 
     <LinearLayout

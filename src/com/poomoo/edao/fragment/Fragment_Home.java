@@ -27,7 +27,7 @@ public class Fragment_Home extends Fragment {
 
 	private Fragment_Home_GridViewAdapter gridViewAdapter;
 	private final String[] list_name = { "全国返利", "消费领取", "我的钱包", "交易明细",
-			"信用管理", "转账支付", "合作加盟", "爱心基金", "意道商城" };
+			"信用管理", "转账支付", "合作加盟", "爱心基金", "乐意道商城" };
 	private final int[] list_image = { R.drawable.ic_rebate,
 			R.drawable.ic_get_detail, R.drawable.ic_my_wallet,
 			R.drawable.ic_purchase_history, R.drawable.ic_credit_manage,

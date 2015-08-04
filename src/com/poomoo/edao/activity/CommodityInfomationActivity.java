@@ -13,7 +13,7 @@ import com.poomoo.edao.R;
  * @author 李苜菲
  * @date 2015-7-31 下午2:39:23
  */
-public class CommdityInfomationActivity extends BaseActivity {
+public class CommodityInfomationActivity extends BaseActivity {
 	private TextView textView_old_price;
 
 	@Override

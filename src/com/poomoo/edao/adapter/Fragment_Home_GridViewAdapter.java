@@ -65,22 +65,24 @@ public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 					.findViewById(R.id.item_home_layout);
 			viewHolder.bottomLineView = (View) convertView
 					.findViewById(R.id.item_home_bottomline);
-			viewHolder.leftLineView = (View) convertView
-					.findViewById(R.id.item_home_leftline);
+			viewHolder.rightLineView = (View) convertView
+					.findViewById(R.id.item_home_rightline);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		viewHolder.textView.setText(list_name[position]);
-		viewHolder.imageView.setBackgroundResource(list_image[position]);
+		viewHolder.imageView.setImageResource(list_image[position]);
 
 		// 设置layout大小，以免出现下边框不显示的情况
-		viewHolder.linearLayout.setLayoutParams(new RelativeLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, (gridView.getHeight() - 10 )/ 3));
+		viewHolder.linearLayout
+				.setLayoutParams(new RelativeLayout.LayoutParams(
+						LayoutParams.MATCH_PARENT,
+						(gridView.getHeight() - 3) / 3));
 
-		// 最左边边就隐藏左边线
-		if (position == 0 || position == 3 || position == 6) {
-			viewHolder.leftLineView.setVisibility(View.GONE);
+		// 最右边就隐藏右边线
+		if (position == 2 || position == 5 || position == 8) {
+			viewHolder.rightLineView.setVisibility(View.GONE);
 		}
 		// 最下边隐藏下边线
 		if (position == 6 || position == 7 || position == 8) {
@@ -100,7 +102,7 @@ public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 
 		private TextView textView;
 		private ImageView imageView;
-		private View leftLineView, bottomLineView;
+		private View rightLineView, bottomLineView;
 		private LinearLayout linearLayout;
 	}
 

@@ -18,16 +18,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_navigation_return" />
+                android:src="@drawable/ic_return" />
 
             <TextView
                 android:id="@+id/navigation_textView_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="意道"
+                android:text="乐意道"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="@dimen/textsize20" />
         </RelativeLayout>
     </LinearLayout>
 

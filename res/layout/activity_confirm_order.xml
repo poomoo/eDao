@@ -27,21 +27,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="收货人:"
-                android:textSize="18sp" />
+                android:textSize="@dimen/textsize18" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="张三"
-                android:textSize="18sp" />
+                android:textSize="@dimen/textsize18" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="18199879987"
-                android:textSize="18sp" />
+                android:textSize="@dimen/textsize18" />
         </LinearLayout>
 
         <TextView
@@ -59,12 +59,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="收货地址:贵阳市观山湖区世纪城金源街中街12-879号"
-                android:textSize="13sp" />
+                android:textSize="@dimen/textsize14" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow" />
+                android:src="@drawable/ic_right_arrow" />
         </LinearLayout>
     </LinearLayout>
 
@@ -93,14 +93,18 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow" />
+                    android:src="@drawable/ic_store_name" />
+
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="某某店铺的名字"
                     android:textColor="@color/gray"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="贵阳特产水果超级甜"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/textsize16" />
 
                     <View
                         android:layout_width="match_parent"
@@ -149,14 +153,14 @@
                             android:layout_height="match_parent"
                             android:text="重量:"
                             android:textColor="@color/gray"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="500g"
                             android:textColor="@color/gray"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <TextView
                             android:layout_width="5dp"
@@ -167,14 +171,14 @@
                             android:layout_height="match_parent"
                             android:text="数量:"
                             android:textColor="@color/gray"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="3"
                             android:textColor="@color/gray"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
                     </LinearLayout>
 
                     <View
@@ -186,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:text="￥138.0"
                         android:textColor="@color/orange"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/textsize16" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -208,7 +212,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="配送方式"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -216,12 +220,12 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"
                     android:text="快递"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow" />
+                    android:src="@drawable/ic_right_arrow" />
             </LinearLayout>
 
             <LinearLayout
@@ -250,7 +254,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="快递费"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:layout_width="80dp"
@@ -258,7 +262,7 @@
                     android:gravity="center_vertical|left"
                     android:text="￥0.00"
                     android:textColor="@color/orange"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
             <LinearLayout
@@ -287,7 +291,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="商品金额"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:layout_width="80dp"
@@ -295,7 +299,7 @@
                     android:gravity="center_vertical|left"
                     android:text="￥138.00"
                     android:textColor="@color/orange"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
             <View
@@ -314,7 +318,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="意币支付"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
 
                 <View
                     android:layout_width="match_parent"
@@ -326,7 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="微信支付"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/textsize16" />
             </RadioGroup>
 
             <View
@@ -346,7 +350,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="开具发票"
-                    android:textSize="15sp" >
+                    android:textSize="@dimen/textsize16" >
                 </CheckBox>
 
                 <LinearLayout
@@ -378,7 +382,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="个人"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <View
                             android:layout_width="0dp"
@@ -400,7 +404,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="公司"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <View
                             android:layout_width="0dp"
@@ -424,7 +428,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="发票抬头:"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
 
                         <EditText
                             android:layout_width="0dp"
@@ -434,7 +438,7 @@
                             android:inputType="text"
                             android:singleLine="true"
                             android:text="张三"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize16" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -458,7 +462,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="共计:"
-            android:textSize="18sp" />
+            android:textSize="@dimen/textsize18" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -466,7 +470,7 @@
             android:gravity="center"
             android:text="￥598"
             android:textColor="@color/orange"
-            android:textSize="18sp" />
+            android:textSize="@dimen/textsize18" />
 
         <View
             android:layout_width="0dp"
@@ -480,8 +484,7 @@
             android:background="@drawable/style_btn_background"
             android:gravity="center"
             android:text="提交订单"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>
