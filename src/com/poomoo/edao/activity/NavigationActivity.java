@@ -1,8 +1,10 @@
 package com.poomoo.edao.activity;
 
+import org.litepal.tablemanager.Connector;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +29,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
+		SQLiteDatabase db=Connector.getDatabase();
 		init();
 	}
 

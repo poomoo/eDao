@@ -53,6 +53,8 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_transfer_of_payment2);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
 	}
 

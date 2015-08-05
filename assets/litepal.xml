@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="eDaoClient" >
+    </dbname>
+
+    <version value="1" >
+    </version>
+
+    <list>
+
+        <mapping class="com.poomoo.edao.model.Region" >
+        </mapping>
+    </list>
+
+</litepal>

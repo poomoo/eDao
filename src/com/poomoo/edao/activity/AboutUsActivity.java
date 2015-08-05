@@ -18,7 +18,8 @@ public class AboutUsActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_aboutus);
-
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.navigation_fragment));
 	}
 
 }

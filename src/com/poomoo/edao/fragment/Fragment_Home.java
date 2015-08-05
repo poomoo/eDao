@@ -1,10 +1,14 @@
 package com.poomoo.edao.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +55,9 @@ public class Fragment_Home extends Fragment {
 	public void onStart() {
 		// TODO 自动生成的方法存根
 		super.onStart();
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(getView().findViewById(R.id.fragment_home_layout));
+
 		init();
 	}
 
@@ -73,6 +80,28 @@ public class Fragment_Home extends Fragment {
 		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
+	}
+
+	protected void setImmerseLayout(View view) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Window window = getActivity().getWindow();
+			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+			int statusBarHeight = getStatusBarHeight(getActivity()
+					.getBaseContext());
+			view.setPadding(0, statusBarHeight, 0, 0);
+		}
+	}
+
+	protected int getStatusBarHeight(Context context) {
+		int result = 0;
+		int resourceId = context.getResources().getIdentifier(
+				"status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			result = context.getResources().getDimensionPixelSize(resourceId);
+		}
+		return result;
 	}
 
 }

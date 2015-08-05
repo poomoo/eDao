@@ -1,27 +1,12 @@
 package com.poomoo.edao.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
-import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.RegistrationSpinnerAdapter;
 
 /**
  * 
@@ -40,6 +25,8 @@ public class Registration2Activity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration2);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
 	}
 

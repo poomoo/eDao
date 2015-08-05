@@ -5,87 +5,89 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="#1995EB"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="10dp" >
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/fragment_store_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="贵阳"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize14" />
-
-            <ImageView
-                android:id="@+id/fragment_home_imageView_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_xiala" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="3.5"
-            android:background="@drawable/style_background"
-            android:gravity="center_vertical"
-            android:padding="5dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_reserch" />
-
-            <EditText
-                android:id="@+id/fragment_home_editText_keywords"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@null"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:hint="请输入商品关键词"
-                android:textSize="@dimen/textsize14" />
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="贵阳"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize14" />
+
+                <ImageView
+                    android:id="@+id/fragment_store_imageView_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_xiala" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:background="@drawable/style_background"
+                android:gravity="center_vertical"
+                android:padding="5dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_reserch" />
+
+                <EditText
+                    android:id="@+id/fragment_store_editText_keywords"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入商品关键词"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textsize14" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/fragment_store_imageView_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_position" />
         </LinearLayout>
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/fragment_home_imageView_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_position" />
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2" >
+        android:layout_weight="1" >
     </LinearLayout>
 
     <GridView
-        android:id="@+id/fragment_home_gridView"
+        android:id="@+id/fragment_store_gridView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="4"
         android:background="#E6E6E6"
         android:horizontalSpacing="1dp"
         android:numColumns="4"

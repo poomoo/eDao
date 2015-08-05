@@ -1,10 +1,14 @@
 package com.poomoo.edao.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -17,9 +21,9 @@ public class Fragment_Store extends Fragment {
 	private ImageView imageView_user, imageView_position;
 	private GridView gridView;
 	private Fragment_Store_GridViewAdapter gridViewAdapter;
-	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类", "生活超市",
-			"旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外", "汽车服务", "教育培训", "农副产品",
-			"医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
+	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
+			"生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
+			"汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
 	private final int[] list_image = { R.drawable.ic_store_jewelry,
 			R.drawable.ic_store_hotel, R.drawable.ic_store_food,
 			R.drawable.ic_store_clothing, R.drawable.ic_store_super_market,
@@ -49,6 +53,9 @@ public class Fragment_Store extends Fragment {
 	public void onStart() {
 		// TODO 自动生成的方法存根
 		super.onStart();
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
+		
 		init();
 	}
 
@@ -56,17 +63,38 @@ public class Fragment_Store extends Fragment {
 		// TODO 自动生成的方法存根
 
 		imageView_user = (ImageView) getView().findViewById(
-				R.id.fragment_home_imageView_user);
+				R.id.fragment_store_imageView_user);
 		imageView_position = (ImageView) getView().findViewById(
-				R.id.fragment_home_imageView_position);
+				R.id.fragment_store_imageView_position);
 		editText_keywords = (EditText) getView().findViewById(
-				R.id.fragment_home_editText_keywords);
+				R.id.fragment_store_editText_keywords);
 		gridView = (GridView) getView().findViewById(
-				R.id.fragment_home_gridView);
+				R.id.fragment_store_gridView);
 
 		gridViewAdapter = new Fragment_Store_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
 	}
 
+	protected void setImmerseLayout(View view) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Window window = getActivity().getWindow();
+			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+			int statusBarHeight = getStatusBarHeight(getActivity()
+					.getBaseContext());
+			view.setPadding(0, statusBarHeight, 0, 0);
+		}
+	}
+
+	protected int getStatusBarHeight(Context context) {
+		int result = 0;
+		int resourceId = context.getResources().getIdentifier(
+				"status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			result = context.getResources().getDimensionPixelSize(resourceId);
+		}
+		return result;
+	}
 }

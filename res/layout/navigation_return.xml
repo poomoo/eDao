@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="40dp" >
+    android:layout_height="wrap_content"
+    android:background="#1995EB" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#1995EB" >
+        android:gravity="center_vertical" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp" >
+        <ImageView
+            android:id="@+id/navigation_imageView_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_return" />
 
-            <ImageView
-                android:id="@+id/navigation_imageView_return"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_return" />
+        <TextView
+            android:id="@+id/navigation_textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="乐意道"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize20" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/navigation_textView_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="乐意道"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize20" />
-        </RelativeLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</FrameLayout>

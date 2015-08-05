@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.OrderInformationActivity"
+            android:name=".activity.NavigationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
         <activity android:name=".activity.GetDetailActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MywalletActivity" />
-        <activity android:name=".activity.NavigationActivity" />
+        <activity android:name=".activity.OrderInformationActivity" />
         <activity android:name=".activity.OrderListActivity" />
         <activity android:name=".activity.PassWordManageActivity" />
         <activity android:name=".activity.PartnerApplyActivity" />

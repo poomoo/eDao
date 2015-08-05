@@ -33,7 +33,8 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_balance,
 			textView_hangding_charge, textView_hangding_toplimit,
-			textView_bankname, textView_branch_bankname, textView_bankaccount,textView_channel;
+			textView_bankname, textView_branch_bankname, textView_bankaccount,
+			textView_channel;
 	private EditText editText_handing_money;
 	private LinearLayout layout_channle;
 	private Button button_recharge, button_handing;
@@ -51,6 +52,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_mywallet);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
 	}
 
@@ -85,7 +88,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.mywallet_layout_channel:
-			showWindow(layout_channle, listView, list, textView_channel, adapter);
+			showWindow(layout_channle, listView, list, textView_channel,
+					adapter);
 			break;
 		case R.id.mywallet_btn_recharge:
 			break;

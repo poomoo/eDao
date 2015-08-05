@@ -32,6 +32,8 @@ public class ShopListActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shop_list);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.shop_list_layout));
 		init();
 	}
 
@@ -39,12 +41,12 @@ public class ShopListActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 
 		imageView_back = (ImageView) this
-				.findViewById(R.id.fragment_shop_imageView_back);
+				.findViewById(R.id.shop_list_imageView_back);
 		textView_classify = (TextView) this
-				.findViewById(R.id.fragment_shop_textView_classify);
+				.findViewById(R.id.shop_list_textView_classify);
 		editText_keywords = (EditText) this
-				.findViewById(R.id.fragment_home_editText_keywords);
-		listView = (ListView) this.findViewById(R.id.fragment_shop_listView);
+				.findViewById(R.id.shop_list_editText_keywords);
+		listView = (ListView) this.findViewById(R.id.shop_list_listView);
 
 		adapter = new Shop_List_ListViewAdapter(this, list);
 		listView.setAdapter(adapter);

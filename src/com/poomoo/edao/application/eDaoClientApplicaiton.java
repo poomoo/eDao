@@ -1,13 +1,13 @@
 package com.poomoo.edao.application;
 
-import android.app.Application;
+import org.litepal.LitePalApplication;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.poomoo.edao.R;
 
-public class eDaoClientApplicaiton extends Application {
+public class eDaoClientApplicaiton extends LitePalApplication {
 
 	@Override
 	public void onCreate() {

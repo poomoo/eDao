@@ -19,6 +19,7 @@ public class SplashActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		setImmerseLayout();
 
 		sp = getSharedPreferences("index", Context.MODE_PRIVATE);
 		editor = sp.edit();
