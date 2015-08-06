@@ -2,6 +2,7 @@ package com.poomoo.edao.application;
 
 import org.litepal.LitePalApplication;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -13,6 +14,10 @@ public class eDaoClientApplicaiton extends LitePalApplication {
 	public void onCreate() {
 		// TODO 自动生成的方法存根
 		super.onCreate();
+
+		// 百度地图初始化
+		SDKInitializer.initialize(getApplicationContext());
+
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)

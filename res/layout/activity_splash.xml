@@ -2,34 +2,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_splash"
-    android:gravity="bottom"
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/splash_textView_site"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="www.yidao7.com"
-        android:textColor="#87AEDA" />
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/splash_textView_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="www.yidao7.com"
+            android:textColor="#87AEDA" />
+
+        <TextView
+            android:id="@+id/splash_textView_company_name_ch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/splash_textView_site"
+            android:gravity="center"
+            android:text="贵州意道科技有限公司"
+            android:textColor="#87AEDA" />
+
+        <TextView
+            android:id="@+id/splash_textView_company_name_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/splash_textView_company_name_ch"
+            android:gravity="center"
+            android:text="GUIZHOUYIDAOTECHNOLOGYCO.LTD"
+            android:textColor="#87AEDA" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/splash_textView_company_name_ch"
+        android:id="@+id/splash_textView_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/splash_textView_site"
-        android:gravity="center"
-        android:text="贵州意道科技有限公司"
-        android:textColor="#87AEDA" />
+        android:layout_centerInParent="true" />
 
-    <TextView
-        android:id="@+id/splash_textView_company_name_en"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/splash_textView_company_name_ch"
-        android:gravity="center"
-        android:text="GUIZHOUYIDAOTECHNOLOGYCO.LTD"
-        android:textColor="#87AEDA" />
+        android:layout_below="@+id/splash_textView_logo"
+        android:layout_centerHorizontal="true" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_splash_loading_bg" />
+
+        <ImageView
+            android:id="@+id/splash_loading_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ic_splash_loading_item" />
+    </RelativeLayout>
 
 </RelativeLayout>
