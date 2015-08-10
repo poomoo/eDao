@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.TableLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -57,6 +55,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	boolean isFirstLoc = true;// 是否首次定位
 
 	private ImageView imageView_center_dot, imageView_mylocation;
+	// 图层最大级别
+	private final float maxRoom = 18;
 
 	/**
 	 * 最新一次的经纬度
@@ -82,7 +82,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		imageView_mylocation.setOnClickListener(this);
 
 		mBaiduMap = mMapView.getMap();
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18);
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(maxRoom);
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
@@ -120,23 +120,27 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
-				// 获得marker中的数据
-				Store info = (Store) marker.getExtraInfo().get("info");
-				View linlayout = MapActivity.this.getLayoutInflater().inflate(
-						R.layout.popup_map_inform, null);
-				// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
 				// 将marker所在的经纬度的信息转化成屏幕上的坐标
 				final LatLng ll = marker.getPosition();
-				showCurrtenStroeOnMap(ll);
+				if (mBaiduMap.getMapStatus().zoom != maxRoom) {
+					showCurrtenStroeOnMap(ll);
+				} else {
+					// 获得marker中的数据
+					Store info = (Store) marker.getExtraInfo().get("info");
+					View linlayout = MapActivity.this.getLayoutInflater()
+							.inflate(R.layout.popup_map_inform, null);
+					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
+					Point p = mBaiduMap.getProjection().toScreenLocation(ll);
+					p.y -= 47;
+					LatLng llInfo = mBaiduMap.getProjection()
+							.fromScreenLocation(p);
+					// 为弹出的InfoWindow添加点击事件
+					mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
+							info), llInfo, 1);
+					// 显示InfoWindow
+					mBaiduMap.showInfoWindow(mInfoWindow);
+				}
 
-				Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-				p.y -= 47;
-				LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
-				// 为弹出的InfoWindow添加点击事件
-				mInfoWindow = new InfoWindow(
-						getInfoWindowView(linlayout, info), llInfo, 1);
-				// 显示InfoWindow
-				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
 			}
 		});
