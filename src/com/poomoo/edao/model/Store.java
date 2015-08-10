@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.poomoo.edao.R;
 
-public class Info implements Serializable {
+public class Store implements Serializable {
 	private static final long serialVersionUID = -758459502806858414L;
 	/**
 	 * 精度
@@ -29,34 +29,36 @@ public class Info implements Serializable {
 	 */
 	private String distance;
 	/**
-	 * 赞数量
+	 * 评分
 	 */
-	private int zan;
+	private float score;
+	/**
+	 * 信息
+	 */
+	private String info;
 
-	public static List<Info> infos = new ArrayList<Info>();
+	public static List<Store> infos = new ArrayList<Store>();
 
 	static {
-		infos.add(new Info(26.612562, 106.636244, R.drawable.a01, "龙禧苑1",
-				"距离209米", 1456));
-		infos.add(new Info(26.612433, 106.635911, R.drawable.a02, "龙禧苑2",
-				"距离897米", 456));
-		infos.add(new Info(26.612264, 106.637236, R.drawable.a03, "龙禧苑3",
-				"距离249米", 1456));
+		infos.add(new Store(26.612562, 106.636244, R.drawable.ic_store_pic,
+				"乐意道加盟商", "209米", 4.7f, "90起送"));
+		infos.add(new Store(26.612433, 106.635911, R.drawable.ic_store_pic,
+				"乐意道合作商", "897米", 4.8f, "100起送"));
+		infos.add(new Store(26.612264, 106.637236, R.drawable.ic_store_pic,
+				"乐意道经销商", "249米", 4.9f, "110起送"));
 
 	}
 
-	public Info() {
-	}
-
-	public Info(double latitude, double longitude, int imgId, String name,
-			String distance, int zan) {
+	public Store(double latitude, double longitude, int imgId, String name,
+			String distance, float score, String info) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.imgId = imgId;
 		this.name = name;
 		this.distance = distance;
-		this.zan = zan;
+		this.score = score;
+		this.info = info;
 	}
 
 	public double getLatitude() {
@@ -99,12 +101,20 @@ public class Info implements Serializable {
 		this.distance = distance;
 	}
 
-	public int getZan() {
-		return zan;
+	public float getScore() {
+		return this.score;
 	}
 
-	public void setZan(int zan) {
-		this.zan = zan;
+	public void setScore(float score) {
+		this.score = score;
+	}
+
+	public String getInfo() {
+		return this.info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 }
