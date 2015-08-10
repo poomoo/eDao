@@ -37,6 +37,9 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	// 首先在您的Activity中添加如下成员变量
 	final UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.share");
+	private static final String content = "乐意道。http://www.yidao7.com";
+	private static final String website = "http://www.yidao7.com";
+	private static final String title = "扫描二维码下载注册乐意道";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_share);
 		// 实现沉浸式状态栏效果
-		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		// setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
 		// 配置需要分享的相关平台
 		configPlatforms();
@@ -77,56 +80,55 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 
 	public void shareContent() {
 		// 本地图片
-		UMImage localImage = new UMImage(this, R.drawable.ic_2dimencode);
+		UMImage localImage = new UMImage(this, R.drawable.ic_leyidao);
 
 		// 配置SSO
 		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 
-		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
-				"100424468", "c7394704798a158208a74ab60104f0ba");
+		// QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
+		// "100424468", "c7394704798a158208a74ab60104f0ba");
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
-		weixinContent
-				.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能-微信。http://www.umeng.com/social");
-		weixinContent.setTitle("友盟社会化分享组件-微信");
-		weixinContent.setTargetUrl("http://www.umeng.com/social");
+		weixinContent.setShareContent(content);
+		weixinContent.setTitle("乐意道-微信");
+		weixinContent.setTargetUrl(website);
 		weixinContent.setShareMedia(localImage);
 		mController.setShareMedia(weixinContent);
 
 		// 设置朋友圈分享的内容
 		CircleShareContent circleMedia = new CircleShareContent();
-		circleMedia
-				.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能-朋友圈。http://www.umeng.com/social");
-		circleMedia.setTitle("友盟社会化分享组件-朋友圈");
+		circleMedia.setShareContent(content);
+		circleMedia.setTitle("乐意道-朋友圈");
 		circleMedia.setShareMedia(localImage);
-		circleMedia.setTargetUrl("http://www.umeng.com/social");
+		circleMedia.setTargetUrl(website);
+		mController.setShareMedia(circleMedia);
 
 		// 设置QQ空间分享内容
 		QZoneShareContent qzone = new QZoneShareContent();
-		qzone.setShareContent("share test");
-		qzone.setTargetUrl("http://www.umeng.com");
-		qzone.setTitle("QZone title");
+		qzone.setShareContent(content);
+		qzone.setTargetUrl(website);
+		qzone.setTitle("乐意道-QQ空间");
 		qzone.setShareMedia(localImage);
 		mController.setShareMedia(qzone);
 
 		// 设置QQ分享内容
 		QQShareContent qqShareContent = new QQShareContent();
-		qqShareContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
-		qqShareContent.setTitle("hello, title");
+		qqShareContent.setShareContent(content);
+		qqShareContent.setTitle("乐意道-QQ");
 		qqShareContent.setShareMedia(localImage);
-		qqShareContent.setTargetUrl("http://www.umeng.com/social");
+		qqShareContent.setTargetUrl(website);
 		mController.setShareMedia(qqShareContent);
 
 		// 设置短信分享内容
 		SmsShareContent sms = new SmsShareContent();
-		sms.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能-短信。http://www.umeng.com/social");
+		sms.setShareContent(content);
 		sms.setShareImage(localImage);
 		mController.setShareMedia(sms);
 
 		// 设置新浪微博分享内容
 		SinaShareContent sinaContent = new SinaShareContent();
 		sinaContent
-				.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能-新浪微博。http://www.umeng.com/social");
+				.setShareContent(content);
 		sinaContent.setShareImage(localImage);
 		mController.setShareMedia(sinaContent);
 
@@ -144,7 +146,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		String appKey = "c7394704798a158208a74ab60104f0ba";
 		// 添加QQ支持, 并且设置QQ分享内容的target url
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, appId, appKey);
-		qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
+		qqSsoHandler.setTargetUrl(website);
 		qqSsoHandler.addToSocialSDK();
 
 		// 添加QZone平台
@@ -173,7 +175,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	}
 
 	/**
-	 * 添加短信平台</br>
+	 * 添加短信平台
 	 */
 	private void addSMS() {
 		// 添加短信
@@ -191,9 +193,9 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		// 是否只有已登录用户才能打开分享选择页
-		mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-				SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
-				SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT);
+		mController.getConfig().setPlatforms(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
+				SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+				SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
 		mController.openShare(this, false);
 	}
 
