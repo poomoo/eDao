@@ -2,14 +2,15 @@ package com.poomoo.edao.activity;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TableLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -19,6 +20,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
+import com.baidu.mapapi.map.BaiduMap.OnMapStatusChangeListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -30,13 +32,15 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.poomoo.edao.R;
 import com.poomoo.edao.model.Store;
 
-public class MapActivity extends Activity implements OnMapClickListener {
+public class MapActivity extends BaseActivity implements OnMapClickListener,
+		OnMapStatusChangeListener, OnClickListener {
 	/**
 	 * MapView 是地图主控件
 	 */
@@ -52,6 +56,14 @@ public class MapActivity extends Activity implements OnMapClickListener {
 
 	boolean isFirstLoc = true;// 是否首次定位
 
+	private ImageView imageView_center_dot, imageView_mylocation;
+
+	/**
+	 * 最新一次的经纬度
+	 */
+	private double mCurrentLantitude;
+	private double mCurrentLongitude;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,11 +77,15 @@ public class MapActivity extends Activity implements OnMapClickListener {
 
 		bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
 		mMapView = (MapView) findViewById(R.id.bmapView);
+		imageView_center_dot = (ImageView) findViewById(R.id.map_imageView_center_dot);
+		imageView_mylocation = (ImageView) findViewById(R.id.map_imageView_mylocaiton);
+		imageView_mylocation.setOnClickListener(this);
 
 		mBaiduMap = mMapView.getMap();
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.0f);
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18);
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setOnMapClickListener(this);
+		mBaiduMap.setOnMapStatusChangeListener(this);
 		addInfosOverlay(Store.infos);
 		initMarkerClickEvent();
 	}
@@ -78,7 +94,7 @@ public class MapActivity extends Activity implements OnMapClickListener {
 	 * 初始化图层
 	 */
 	public void addInfosOverlay(List<Store> infos) {
-		System.out.println("info:" + infos.size());
+		;
 		mBaiduMap.clear();
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
@@ -108,6 +124,7 @@ public class MapActivity extends Activity implements OnMapClickListener {
 				Store info = (Store) marker.getExtraInfo().get("info");
 				View linlayout = MapActivity.this.getLayoutInflater().inflate(
 						R.layout.popup_map_inform, null);
+				// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
 				// 将marker所在的经纬度的信息转化成屏幕上的坐标
 				final LatLng ll = marker.getPosition();
 				showCurrtenStroeOnMap(ll);
@@ -117,8 +134,7 @@ public class MapActivity extends Activity implements OnMapClickListener {
 				LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
 				// 为弹出的InfoWindow添加点击事件
 				mInfoWindow = new InfoWindow(
-						getInfoWindowView(linlayout, info), llInfo, -10);
-
+						getInfoWindowView(linlayout, info), llInfo, 1);
 				// 显示InfoWindow
 				mBaiduMap.showInfoWindow(mInfoWindow);
 				return true;
@@ -230,6 +246,118 @@ public class MapActivity extends Activity implements OnMapClickListener {
 	// });
 	// }
 
+	private void initLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+		option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
+		int span = 1 * 10 * 1000;
+
+		option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+		option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
+		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
+		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+		option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+		option.setIsNeedLocationDescribe(true);// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+		option.setIsNeedLocationPoiList(true);// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+		mLocationClient.setLocOption(option);
+	}
+
+	public class MyLocationListener implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// map view 销毁后不在处理新接收的位置
+			if (location == null || mMapView == null)
+				return;
+			mCurrentLantitude = location.getLatitude();
+			mCurrentLongitude = location.getLongitude();
+
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(mCurrentLantitude)
+					.longitude(mCurrentLongitude).build();
+			// 设置定位数据
+			mBaiduMap.setMyLocationData(locData);
+			mBaiduMap.setMyLocationEnabled(true);
+			// 设置自定义图标
+			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
+					.fromResource(R.drawable.ic_maps_indicator_current_position);
+			MyLocationConfiguration config = new MyLocationConfiguration(
+					MyLocationConfiguration.LocationMode.NORMAL, false,
+					mCurrentMarker);
+			mBaiduMap.setMyLocationConfigeration(config);
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+			}
+
+		}
+	}
+
+	/**
+	 * 根据传入的经纬度在地图上显示
+	 * 
+	 * @param latitude
+	 * @param longitude
+	 */
+	private void showCurrtenStroeOnMap(LatLng cenpt) {
+		// 定义地图状态
+		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18)
+				.build();
+		// 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory
+				.newMapStatus(mMapStatus);
+		// 改变地图状态
+		mBaiduMap.setMapStatus(mMapStatusUpdate);
+	}
+
+	@Override
+	public void onMapClick(LatLng arg0) {
+		// TODO 自动生成的方法存根
+		mBaiduMap.hideInfoWindow();
+	}
+
+	@Override
+	public boolean onMapPoiClick(MapPoi arg0) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+
+	@Override
+	public void onMapStatusChange(MapStatus arg0) {
+		// TODO 自动生成的方法存根
+
+	}
+
+	@Override
+	public void onMapStatusChangeFinish(MapStatus arg0) {
+		// TODO 自动生成的方法存根
+
+	}
+
+	@Override
+	public void onMapStatusChangeStart(MapStatus arg0) {
+		// TODO 自动生成的方法存根
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.map_imageView_mylocaiton:
+			LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
+			break;
+		}
+
+	}
+
 	/**
 	 * 清除所有Overlay
 	 * 
@@ -266,87 +394,5 @@ public class MapActivity extends Activity implements OnMapClickListener {
 		mMapView.onDestroy();
 		super.onDestroy(); // 回收 bitmap 资源 bdA.recycle();
 		bdA.recycle();
-	}
-
-	private void initLocation() {
-		LocationClientOption option = new LocationClientOption();
-		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-		option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
-		int span = 1 * 10 * 1000;
-
-		option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-		option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
-		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
-		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-		option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-		option.setIsNeedLocationDescribe(true);// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-		option.setIsNeedLocationPoiList(true);// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-		mLocationClient.setLocOption(option);
-	}
-
-	public class MyLocationListener implements BDLocationListener {
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			// map view 销毁后不在处理新接收的位置
-			if (location == null || mMapView == null)
-				return;
-			double latitude = location.getLatitude();
-			double longitude = location.getLongitude();
-			// Toast.makeText(
-			// getApplicationContext(),
-			// "latitude:" + Double.toString(latitude) + "longitude:"
-			// + Double.toString(longitude), 1).show();
-			Log.i("latitude", Double.toString(latitude));
-			Log.i("longitude", Double.toString(longitude));
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(100).latitude(latitude).longitude(longitude)
-					.build();
-			LatLng ll = new LatLng(latitude, longitude);
-			OverlayOptions ooA = new MarkerOptions().position(ll).icon(bdA)
-					.zIndex(9).draggable(true);
-			// mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-			mBaiduMap.setMyLocationData(locData);
-			if (isFirstLoc) {
-				isFirstLoc = false;
-				Log.i("百度地图定位", ll.toString());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-			}
-
-		}
-	}
-
-	/**
-	 * 根据传入的经纬度在地图上显示
-	 * 
-	 * @param latitude
-	 * @param longitude
-	 */
-	private void showCurrtenStroeOnMap(LatLng cenpt) {
-		// 定义地图状态
-		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18)
-				.build();
-		// 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-
-		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory
-				.newMapStatus(mMapStatus);
-		// 改变地图状态
-		mBaiduMap.setMapStatus(mMapStatusUpdate);
-	}
-
-	@Override
-	public void onMapClick(LatLng arg0) {
-		// TODO 自动生成的方法存根
-		mBaiduMap.hideInfoWindow();
-	}
-
-	@Override
-	public boolean onMapPoiClick(MapPoi arg0) {
-		// TODO 自动生成的方法存根
-		return false;
 	}
 }

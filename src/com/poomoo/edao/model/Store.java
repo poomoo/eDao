@@ -41,7 +41,7 @@ public class Store implements Serializable {
 
 	static {
 		infos.add(new Store(26.612562, 106.636244, R.drawable.ic_store_pic,
-				"乐意道加盟商", "209米", 4.7f, "90起送"));
+				"乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商", "209米", 4.7f, "90起送"));
 		infos.add(new Store(26.612433, 106.635911, R.drawable.ic_store_pic,
 				"乐意道合作商", "897米", 4.8f, "100起送"));
 		infos.add(new Store(26.612264, 106.637236, R.drawable.ic_store_pic,
