@@ -90,7 +90,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setShareContent(content);
-		weixinContent.setTitle("乐意道-微信");
+		weixinContent.setTitle(title);
 		weixinContent.setTargetUrl(website);
 		weixinContent.setShareMedia(localImage);
 		mController.setShareMedia(weixinContent);
@@ -98,7 +98,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		// 设置朋友圈分享的内容
 		CircleShareContent circleMedia = new CircleShareContent();
 		circleMedia.setShareContent(content);
-		circleMedia.setTitle("乐意道-朋友圈");
+		circleMedia.setTitle(title);
 		circleMedia.setShareMedia(localImage);
 		circleMedia.setTargetUrl(website);
 		mController.setShareMedia(circleMedia);
@@ -107,14 +107,14 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		QZoneShareContent qzone = new QZoneShareContent();
 		qzone.setShareContent(content);
 		qzone.setTargetUrl(website);
-		qzone.setTitle("乐意道-QQ空间");
+		qzone.setTitle(title);
 		qzone.setShareMedia(localImage);
 		mController.setShareMedia(qzone);
 
 		// 设置QQ分享内容
 		QQShareContent qqShareContent = new QQShareContent();
 		qqShareContent.setShareContent(content);
-		qqShareContent.setTitle("乐意道-QQ");
+		qqShareContent.setTitle(title);
 		qqShareContent.setShareMedia(localImage);
 		qqShareContent.setTargetUrl(website);
 		mController.setShareMedia(qqShareContent);
