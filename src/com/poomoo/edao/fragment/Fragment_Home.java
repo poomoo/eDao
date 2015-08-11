@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.NavigationActivity;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
+import com.poomoo.edao.widget.SideBar;
 
 /**
  * 
@@ -23,11 +26,12 @@ import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
  * @author 李苜菲
  * @date 2015-8-4 下午3:59:10
  */
-public class Fragment_Home extends Fragment {
+public class Fragment_Home extends Fragment implements OnClickListener {
 	private TextView textView_inform, textView_ecoin, textView_goldcoin,
 			textView_point;
 	private ImageView imageView_user, imageView_position;
 	private GridView gridView;
+	private SideBar sidebar;
 
 	private Fragment_Home_GridViewAdapter gridViewAdapter;
 	private final String[] list_name = { "全国返利", "消费领取", "我的钱包", "交易明细",
@@ -80,6 +84,11 @@ public class Fragment_Home extends Fragment {
 		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
+
+		sidebar = NavigationActivity.sideBar;
+
+		imageView_user.setOnClickListener(this);
+		imageView_position.setOnClickListener(this);
 	}
 
 	protected void setImmerseLayout(View view) {
@@ -104,4 +113,13 @@ public class Fragment_Home extends Fragment {
 		return result;
 	}
 
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.main_imageView_user:
+			sidebar.toggle();
+			break;
+		}
+	}
 }

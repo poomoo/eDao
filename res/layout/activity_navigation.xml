@@ -1,78 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hyman="http://schemas.android.com/apk/res/com.poomoo.edao"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <FrameLayout
-        android:id="@+id/navigation_frameLayout"
+    <com.poomoo.edao.widget.SideBar
+        android:id="@+id/navigation_sidebar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-    </FrameLayout>
+        android:layout_height="match_parent"
+        hyman:rightPadding="80dp" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightgray" >
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:padding="5dp" >
-
-        <RadioGroup
-            android:id="@+id/navigation_radioGroup"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:background="#1995EB"
             android:orientation="horizontal" >
 
-            <RadioButton
-                android:id="@+id/navigation_radioButton_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/style_navigation_home_background"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="首页"
-                android:textColor="@drawable/style_navigation_text_background"
-                android:textSize="@dimen/textsize14" />
+            <include layout="@layout/activity_sidebar" />
 
-            <RadioButton
-                android:id="@+id/navigation_radioButton_shop"
-                style="@null"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/style_navigation_store_background"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="商城"
-                android:textColor="@drawable/style_navigation_text_background"
-                android:textSize="@dimen/textsize14" />
+                android:orientation="vertical" >
 
-            <RadioButton
-                android:id="@+id/navigation_radioButton_myown"
-                style="@null"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/style_navigation_user_background"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="我的"
-                android:textColor="@drawable/style_navigation_text_background"
-                android:textSize="@dimen/textsize14" />
-        </RadioGroup>
-    </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/navigation_frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightgray" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:padding="5dp" >
+
+                    <RadioGroup
+                        android:id="@+id/navigation_radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/navigation_radioButton_home"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:checked="true"
+                            android:drawableTop="@drawable/style_navigation_home_background"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="首页"
+                            android:textColor="@drawable/style_navigation_text_background"
+                            android:textSize="@dimen/textsize14" />
+
+                        <RadioButton
+                            android:id="@+id/navigation_radioButton_shop"
+                            style="@null"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableTop="@drawable/style_navigation_store_background"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="商城"
+                            android:textColor="@drawable/style_navigation_text_background"
+                            android:textSize="@dimen/textsize14" />
+
+                        <RadioButton
+                            android:id="@+id/navigation_radioButton_myown"
+                            style="@null"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableTop="@drawable/style_navigation_user_background"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="我的"
+                            android:textColor="@drawable/style_navigation_text_background"
+                            android:textSize="@dimen/textsize14" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.poomoo.edao.widget.SideBar>
 
 </LinearLayout>

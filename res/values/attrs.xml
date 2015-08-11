@@ -14,7 +14,7 @@
   ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~  * See the License for the specific language governing permissions and
   ~  * limitations under the License.
-  ~  */
+  ~  */
 -->
 
 <resources>
@@ -35,6 +35,9 @@
         <attr name="border_thickness" format="dimension" />
         <attr name="border_inside_color" format="color" />
         <attr name="border_outside_color" format="color"></attr>
+    </declare-styleable>
+    <declare-styleable name="SideBar">
+        <attr name="rightPadding" format="dimension"></attr>
     </declare-styleable>
 
 </resources>
