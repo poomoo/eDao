@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_uploadpics_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECECEC"
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_logo_name" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,13 +35,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal" >
 
             <FrameLayout
                 android:id="@+id/uploadpics_layout_identitycard_front"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -49,11 +50,12 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_front"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitXY" />
 
                 <TextView
+                    android:id="@+id/uploadpics_textView_identitycard_front"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -66,7 +68,7 @@
 
             <FrameLayout
                 android:id="@+id/uploadpics_layout_identitycard_back"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -75,11 +77,12 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_back"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitXY" />
 
                 <TextView
+                     android:id="@+id/uploadpics_textView_identitycard_back"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -93,13 +96,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal" >
 
             <FrameLayout
                 android:id="@+id/uploadpics_layout_identitycard_inhand"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -108,11 +111,12 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_inhand"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitXY" />
 
                 <TextView
+                     android:id="@+id/uploadpics_textView_identitycard_inhand"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -125,7 +129,7 @@
 
             <FrameLayout
                 android:id="@+id/uploadpics_layout_businesss_license"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -134,11 +138,12 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_businesss_license"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitXY" />
 
                 <TextView
+                     android:id="@+id/uploadpics_textView_businesss_license"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
