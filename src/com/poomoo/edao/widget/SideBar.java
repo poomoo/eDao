@@ -16,10 +16,10 @@ import com.poomoo.edao.R;
 
 /**
  * 
- * @ClassName SlidingMenu
- * @Description TODO
+ * @ClassName SideBar
+ * @Description TODO 侧边栏
  * @author 李苜菲
- * @date 2015年8月11日 下午11:38:02
+ * @date 2015年8月11日 下午11:50:36
  */
 public class SideBar extends HorizontalScrollView {
 	private LinearLayout mWapper;
