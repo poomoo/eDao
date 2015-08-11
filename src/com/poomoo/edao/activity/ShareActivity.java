@@ -127,8 +127,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 
 		// 设置新浪微博分享内容
 		SinaShareContent sinaContent = new SinaShareContent();
-		sinaContent
-				.setShareContent(content);
+		sinaContent.setShareContent(content);
 		sinaContent.setShareImage(localImage);
 		mController.setShareMedia(sinaContent);
 
