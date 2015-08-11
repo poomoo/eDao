@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -190,14 +189,6 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 					// 这个方法是根据Uri获取Bitmap图片的静态方法
 					photo = MediaStore.Images.Media.getBitmap(
 							this.getContentResolver(), mImageCaptureUri);
-					System.out.println("photo:" + photo);
-					// 将图片内容解析成字节数组
-					// ContentResolver resolver = getContentResolver();
-					// byte[] mContent;
-					// mContent = readStream(resolver.openInputStream(Uri
-					// .parse(mImageCaptureUri.toString())));
-					// // 将字节数组转换为ImageView可调用的Bitmap对象
-					// image = getPicFromBytes(mContent, null);
 
 					if (photo != null) {
 						System.out.println("进入setImage");
@@ -239,28 +230,4 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		}
 	}
 
-	public static Bitmap getPicFromBytes(byte[] bytes,
-			BitmapFactory.Options opts) {
-		if (bytes != null)
-			if (opts != null)
-				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,
-						opts);
-			else
-				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-		return null;
-	}
-
-	public static byte[] readStream(InputStream inStream) throws Exception {
-		byte[] buffer = new byte[1024];
-		int len = -1;
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		while ((len = inStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, len);
-		}
-		byte[] data = outStream.toByteArray();
-		outStream.close();
-		inStream.close();
-		return data;
-
-	}
 }
