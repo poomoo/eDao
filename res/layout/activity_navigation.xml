@@ -12,10 +12,12 @@
         android:layout_height="match_parent"
         hyman:rightPadding="80dp" >
 
+        <!-- #1995EB -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#1995EB"
+            android:background="@drawable/ic_sidebar_background"
             android:orientation="horizontal" >
 
             <include layout="@layout/activity_sidebar" />
