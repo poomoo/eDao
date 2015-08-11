@@ -17,7 +17,7 @@ import com.poomoo.edao.R;
  */
 public class Registration2Activity extends BaseActivity implements
 		OnClickListener {
-	private EditText editText_phone, editText_identity_code, editText_name;
+	private EditText editText_phone, editText_identity_code, editText_password1,editText_password2;
 	private Button button_identity_code, button_regist;
 
 	@Override
@@ -34,7 +34,8 @@ public class Registration2Activity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		editText_phone = (EditText) findViewById(R.id.registration2_editText_phone);
 		editText_identity_code = (EditText) findViewById(R.id.registration2_editText_identitynum);
-		editText_name = (EditText) findViewById(R.id.registration2_editText_name);
+		editText_password1 = (EditText) findViewById(R.id.registration2_editText_password);
+		editText_password2 = (EditText) findViewById(R.id.registration2_editText_password_again);
 
 		button_identity_code = (Button) findViewById(R.id.registration2_btn_identitynum);
 		button_regist = (Button) findViewById(R.id.registration2_btn_regist);

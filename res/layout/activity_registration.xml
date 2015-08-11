@@ -15,14 +15,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_logo_name" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,9 +44,82 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="开户省:"
+                android:text="真实姓名:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/registration_editText_realName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/style_background"
+                android:hint="请输入身份证名字"
+                android:inputType="textPersonName"
+                android:paddingLeft="8dp"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="身份证号:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize16" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/registration_editText_"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/style_background"
+                android:hint="请输入身份证号"
+                android:inputType="number"
+                android:digits="0123456789xyzXYZ"
+                android:paddingLeft="8dp"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="开  户  省:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -65,11 +138,11 @@
                 <TextView
                     android:id="@+id/registration_textView_province"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="left|center"
                     android:hint="银行"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -78,6 +151,10 @@
                     android:src="@drawable/ic_xiala" />
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,9 +168,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="开户市:"
+                android:text="开  户  市:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -112,11 +189,11 @@
                 <TextView
                     android:id="@+id/registration_textView_city"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="left|center"
                     android:hint="银行"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -125,6 +202,10 @@
                     android:src="@drawable/ic_xiala" />
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,7 +221,7 @@
                 android:gravity="center_vertical"
                 android:text="选择银行:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -159,11 +240,11 @@
                 <TextView
                     android:id="@+id/registration_textView_bank"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="left|center"
                     android:hint="银行"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -172,6 +253,10 @@
                     android:src="@drawable/ic_xiala" />
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,7 +272,7 @@
                 android:gravity="center_vertical"
                 android:text="开户银行:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -196,12 +281,17 @@
             <EditText
                 android:id="@+id/registration_editText_openaccountbank"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
                 android:hint="请输入开户银行"
-                android:paddingLeft="8dp" />
+                android:paddingLeft="8dp"
+                android:textSize="@dimen/textsize14" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -217,7 +307,7 @@
                 android:gravity="center_vertical"
                 android:text="银行账号:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -226,12 +316,18 @@
             <EditText
                 android:id="@+id/registration_editText_accountnum"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
                 android:hint="请输入银行账号"
-                android:paddingLeft="8dp" />
+                android:inputType="number"
+                android:paddingLeft="8dp"
+                android:textSize="@dimen/textsize14" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -247,7 +343,7 @@
                 android:gravity="center_vertical"
                 android:text="确认账号:"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textsize16" />
 
             <View
                 android:layout_width="2dp"
@@ -256,11 +352,13 @@
             <EditText
                 android:id="@+id/registration_editText_accountnumagain"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
                 android:hint="请确定银行账号"
-                android:paddingLeft="8dp" />
+                android:inputType="number"
+                android:paddingLeft="8dp"
+                android:textSize="@dimen/textsize14" />
         </LinearLayout>
     </LinearLayout>
 
@@ -280,8 +378,8 @@
             android:background="#55bb22"
             android:gravity="center"
             android:text="下一步"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
 </LinearLayout>

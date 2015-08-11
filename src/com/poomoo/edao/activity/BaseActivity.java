@@ -21,8 +21,7 @@ public class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-						| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		Window window = getWindow();
 		window.requestFeature(Window.FEATURE_NO_TITLE);

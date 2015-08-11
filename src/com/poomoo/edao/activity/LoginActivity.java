@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		editText_phone = (EditText) findViewById(R.id.login_editText_phone);
 		editText_password = (EditText) findViewById(R.id.login_editText_password);
 
-		button_login = (Button) findViewById(R.id.login_btn_regist);
+		button_login = (Button) findViewById(R.id.login_btn_login);
 
 		textView_regist = (TextView) findViewById(R.id.login_textView_regist);
 		textView_forget_password = (TextView) findViewById(R.id.login_textView_forget_password);
@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.login_btn_regist:
+		case R.id.login_btn_login:
 			break;
 		case R.id.login_textView_regist:
 			break;

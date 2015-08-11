@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/activity_uploadpics_layout"
+    android:id="@+id/activity_uploadpics_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECECEC"
@@ -82,7 +82,7 @@
                     android:scaleType="fitXY" />
 
                 <TextView
-                     android:id="@+id/uploadpics_textView_identitycard_back"
+                    android:id="@+id/uploadpics_textView_identitycard_back"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -116,7 +116,7 @@
                     android:scaleType="fitXY" />
 
                 <TextView
-                     android:id="@+id/uploadpics_textView_identitycard_inhand"
+                    android:id="@+id/uploadpics_textView_identitycard_inhand"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -143,7 +143,7 @@
                     android:scaleType="fitXY" />
 
                 <TextView
-                     android:id="@+id/uploadpics_textView_businesss_license"
+                    android:id="@+id/uploadpics_textView_businesss_license"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
