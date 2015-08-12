@@ -1,11 +1,9 @@
 package com.poomoo.edao.activity;
 
-import org.litepal.tablemanager.Connector;
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -15,6 +13,7 @@ import android.widget.RadioGroup;
 import com.poomoo.edao.R;
 import com.poomoo.edao.fragment.Fragment_Home;
 import com.poomoo.edao.fragment.Fragment_Store;
+import com.poomoo.edao.widget.SideBar;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
 
@@ -23,13 +22,13 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private RadioButton radioButton_home, radioButton_shop, radioButton_myown;
 	private Fragment_Home fragment_Home;
 	private Fragment_Store fragment_Store;
+	public static SideBar sideBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
-		SQLiteDatabase db=Connector.getDatabase();
 		init();
 	}
 
@@ -40,11 +39,13 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		radioButton_home = (RadioButton) findViewById(R.id.navigation_radioButton_home);
 		radioButton_shop = (RadioButton) findViewById(R.id.navigation_radioButton_shop);
 		radioButton_myown = (RadioButton) findViewById(R.id.navigation_radioButton_myown);
-		
+		sideBar = (SideBar) findViewById(R.id.navigation_sidebar);
+
+		frameLayout.setOnClickListener(this);
 		radioButton_home.setOnClickListener(this);
 		radioButton_shop.setOnClickListener(this);
 		radioButton_myown.setOnClickListener(this);
-		
+
 		setDefaultFragment();
 
 	}
@@ -66,6 +67,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
 		System.out.println("onClick");
+		sideBar.closeMenu();
 		switch (v.getId()) {
 		case R.id.navigation_radioButton_home:
 			System.out.println("onClick home");
@@ -88,4 +90,17 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		System.out.println("fragment提交后");
 
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO 自动生成的方法存根
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (sideBar.isOpen())
+				sideBar.closeMenu();
+			else
+				finish();
+		}
+		return true;
+	}
+
 }
