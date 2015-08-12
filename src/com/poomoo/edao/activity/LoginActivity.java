@@ -1,13 +1,27 @@
 package com.poomoo.edao.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.LoginResData;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
  * 
@@ -20,6 +34,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private EditText editText_phone, editText_password;
 	private Button button_login;
 	private TextView textView_regist, textView_forget_password;
+
+	private String phoneNum = "", passWord = "";
+
+	private Gson gson = new Gson();
+	private MessageBox_YES box_YES;
+	private ResponseData responseData = null;
+	private ProgressDialog progressDialog = null;
+	private LoginResData loginResData=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +73,179 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.login_btn_login:
+			login();
 			break;
 		case R.id.login_textView_regist:
+			startActivity(new Intent(this, Registration2Activity.class));
 			break;
 		case R.id.login_textView_forget_password:
+			startActivity(new Intent(this, PassWordManageActivity.class));
 			break;
 
 		}
 	}
 
+	private void login() {
+		if (checkInput()) {
+			Map<String, String> data = new HashMap<String, String>();
+			data.put("bizName", "10000");
+			data.put("method", "10001");
+			data.put("tel", phoneNum);
+			data.put("password", passWord);
+
+			showProgressDialog();
+			// RequestQueue mQueue = Volley.newRequestQueue(this);
+			// System.out.println("eDaoClientConfig.url:" +
+			// eDaoClientConfig.url);
+			// StringRequest stringRequest = new StringRequest(Method.POST,
+			// eDaoClientConfig.url, new Listener<String>() {
+			// @Override
+			// public void onResponse(String response) {
+			// // TODO 自动生成的方法存根
+			// closeProgressDialog();
+			// System.out.println("onResponse" + response);
+			// }
+			// }, new ErrorListener() {
+			// @Override
+			// public void onErrorResponse(VolleyError error) {
+			// // TODO 自动生成的方法存根
+			// closeProgressDialog();
+			// System.out.println("onErrorResponse"
+			// + error.getMessage());
+			// }
+			// }) {
+			// @Override
+			// protected Map<String, String> getParams()
+			// throws AuthFailureError {
+			// Map<String, String> data = new HashMap<String, String>();
+			// data.put("bizName", "10000");
+			// data.put("method", "10001");
+			// data.put("tel", phoneNum);
+			// data.put("password", passWord);
+			// Map<String, String> map = new HashMap<String, String>();
+			// map.put("jsonData", data.toString());
+			// System.out.println("map:" + map);
+			// return map;
+			// }
+			//
+			// };
+			//
+			// mQueue.add(stringRequest);
+
+			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+					new HttpCallbackListener() {
+						@Override
+						public void onFinish(final String response) {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+							System.out.println("进入onFinish");
+							responseData = new ResponseData();
+							responseData = gson.fromJson(response,
+									ResponseData.class);
+
+							if (responseData.getRsCode() != 1) {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										// TODO 自动生成的方法存根
+										if (responseData.getRsCode() != 1) {
+											box_YES = new MessageBox_YES(
+													LoginActivity.this);
+											box_YES.showDialog(responseData
+													.getMsg());
+										}else{
+											loginResData=new LoginResData();
+											loginResData=gson.fromJson(response, LoginResData.class);
+										}
+									}
+								});
+							}
+
+						}
+
+						@Override
+						public void onError(final Exception e) {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									Toast.makeText(getApplicationContext(),
+											e.getMessage(), Toast.LENGTH_SHORT)
+											.show();
+								}
+
+							});
+						}
+					});
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: checkInput
+	 * @Description: TODO 检查输入信息
+	 * @author 李苜菲
+	 * @return
+	 * @return boolean
+	 * @throws
+	 * @date 2015-8-12上午10:11:38
+	 */
+	private boolean checkInput() {
+		phoneNum = editText_phone.getText().toString().trim();
+		if (TextUtils.isEmpty(phoneNum) || phoneNum.length() != 11) {
+			editText_phone.setText("");
+			editText_phone.setFocusable(true);
+			editText_phone.requestFocus();
+			Toast.makeText(this, "手机号不正确,请重新输入", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		passWord = editText_password.getText().toString().trim();
+		if (TextUtils.isEmpty(passWord)) {
+			editText_password.setFocusable(true);
+			editText_password.requestFocus();
+			Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: showProgressDialog
+	 * @Description: TODO 显示进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:23:53
+	 */
+	private void showProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("登录中...");
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: closeProgressDialog
+	 * @Description: TODO 关闭进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:24:43
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
+	}
 }

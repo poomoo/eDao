@@ -8,7 +8,7 @@ package com.poomoo.edao.util;
  * @date 2015-7-24 下午3:08:02
  */
 public interface HttpCallbackListener {
-	void onFinish(String response);
+	void onFinish(final String response);
 
-	void onError(Exception e);
+	void onError(final Exception e);
 }

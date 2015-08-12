@@ -19,29 +19,32 @@ public class HttpUtil {
 	 * @throws
 	 * @date 2015-7-24下午3:07:36
 	 */
-	public void SendPostRequest(final String json, final String address,
+	public static void SendPostRequest(final String json, final String address,
 			final HttpCallbackListener listener) {
 		new Thread(new Runnable() {
 			public void run() {
 				HttpURLConnection connection = null;
 				try {
+					System.out.println("address:" + address);
+					System.out.println("json:" + json);
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
+					connection.setRequestMethod("POST");
+					connection.setReadTimeout(1 * 10 * 1000);
+					connection.setConnectTimeout(1 * 10 * 1000);
 					connection.setDoOutput(true);
 					connection.setDoInput(true);
-					connection.setRequestMethod("POST");
-					// connection.setReadTimeout(5000);
+					// Post 请求不能使用缓存
 					connection.setUseCaches(false);
 					connection.setInstanceFollowRedirects(true);
 					connection.setRequestProperty("Content-Type",
 							"application/json");
-					connection.setConnectTimeout(1 * 60 * 1000);
 					connection.connect();
 
 					if (json != null && json.trim().length() > 0) {
 						DataOutputStream out = new DataOutputStream(
 								connection.getOutputStream());
-						byte[] content = json.getBytes("utf-8");
+						byte[] content = json.toString().getBytes("utf-8");
 						out.write(content, 0, content.length);
 						out.flush();
 						out.close();
@@ -56,6 +59,7 @@ public class HttpUtil {
 					while ((line = bufferedReader.readLine()) != null) {
 						response.append(line);
 					}
+					System.out.println("response:"+response.toString());
 
 					if (listener != null) {
 						listener.onFinish(response.toString());
@@ -69,14 +73,14 @@ public class HttpUtil {
 						connection.disconnect();
 				}
 			}
-		});
+		}).start();
 	}
 
 	/**
 	 * 
 	 * 
 	 * @Title: SendGetRequest
-	 * @Description: TODO 
+	 * @Description: TODO
 	 * @author 李苜菲
 	 * @return
 	 * @return void
@@ -118,4 +122,5 @@ public class HttpUtil {
 			}
 		}).start();
 	}
+	
 }
