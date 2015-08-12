@@ -57,6 +57,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private ImageView imageView_center_dot, imageView_mylocation;
 	// 图层最大级别
 	private final float maxRoom = 18;
+	// 当前图层中心点经纬度
+	private LatLng curCenterLatLng = null;
 
 	/**
 	 * 最新一次的经纬度
@@ -335,13 +337,12 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	@Override
 	public void onMapStatusChange(MapStatus arg0) {
 		// TODO 自动生成的方法存根
-
+		curCenterLatLng = mBaiduMap.getMapStatus().target;
 	}
 
 	@Override
 	public void onMapStatusChangeFinish(MapStatus arg0) {
 		// TODO 自动生成的方法存根
-
 	}
 
 	@Override
