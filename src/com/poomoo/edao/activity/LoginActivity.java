@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
@@ -21,7 +23,9 @@ import com.poomoo.edao.model.LoginResData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 
 /**
  * 
@@ -39,9 +43,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
-	private ResponseData responseData = null;
+	private MessageBox_YESNO box_YESNO;
 	private ProgressDialog progressDialog = null;
-	private LoginResData loginResData=null;
+	private LoginResData loginResData = null;
+
+	private SharedPreferences loginsp;
+	private Editor editor = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		button_login.setOnClickListener(this);
 		textView_regist.setOnClickListener(this);
 		textView_forget_password.setOnClickListener(this);
+
+		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		editor = loginsp.edit();
+		if (!TextUtils.isEmpty(loginsp.getString("tel", ""))) {
+			startActivity(new Intent(LoginActivity.this,
+					NavigationActivity.class));
+			finish();
+		}
 	}
 
 	@Override
@@ -135,31 +150,40 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 					new HttpCallbackListener() {
 						@Override
-						public void onFinish(final String response) {
+						public void onFinish(final ResponseData responseData) {
 							// TODO 自动生成的方法存根
 							closeProgressDialog();
 							System.out.println("进入onFinish");
-							responseData = new ResponseData();
-							responseData = gson.fromJson(response,
-									ResponseData.class);
-
-							if (responseData.getRsCode() != 1) {
-								runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										// TODO 自动生成的方法存根
-										if (responseData.getRsCode() != 1) {
-											box_YES = new MessageBox_YES(
-													LoginActivity.this);
-											box_YES.showDialog(responseData
-													.getMsg());
-										}else{
-											loginResData=new LoginResData();
-											loginResData=gson.fromJson(response, LoginResData.class);
-										}
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									if (responseData.getRsCode() != 1) {
+										box_YESNO = new MessageBox_YESNO(
+												LoginActivity.this);
+										box_YESNO.showDialog(
+												responseData.getMsg(), null);
+									} else {
+										loginResData = new LoginResData();
+										loginResData = gson.fromJson(
+												responseData.getJsonData(),
+												LoginResData.class);
+										editor.putString("userId",
+												loginResData.getUserId());
+										editor.putString("realName",
+												loginResData.getRealName());
+										editor.putString("tel",
+												loginResData.getTel());
+										editor.commit();
+										LoginActivity.this
+												.startActivity(new Intent(
+														LoginActivity.this,
+														NavigationActivity.class));
+										LoginActivity.this.finish();
+										System.out.println("跳转");
 									}
-								});
-							}
+								}
+							});
 
 						}
 
@@ -171,9 +195,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								@Override
 								public void run() {
 									// TODO 自动生成的方法存根
-									Toast.makeText(getApplicationContext(),
-											e.getMessage(), Toast.LENGTH_SHORT)
-											.show();
 								}
 
 							});
@@ -199,7 +220,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			editText_phone.setText("");
 			editText_phone.setFocusable(true);
 			editText_phone.requestFocus();
-			Toast.makeText(this, "手机号不正确,请重新输入", Toast.LENGTH_SHORT).show();
+			Utity.showToast(getApplicationContext(), "手机号不正确,请重新输入");
 			return false;
 		}
 
@@ -207,7 +228,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		if (TextUtils.isEmpty(passWord)) {
 			editText_password.setFocusable(true);
 			editText_password.requestFocus();
-			Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+			Utity.showToast(getApplicationContext(), "请输入密码");
 			return false;
 		}
 		return true;

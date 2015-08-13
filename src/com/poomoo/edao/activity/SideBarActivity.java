@@ -25,6 +25,7 @@ public class SideBarActivity extends BaseActivity {
 
 	private void init() {
 		// TODO 自动生成的方法存根
+
 	}
 
 }

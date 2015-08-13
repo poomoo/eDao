@@ -1,5 +1,7 @@
 package com.poomoo.edao.util;
 
+import com.poomoo.edao.model.ResponseData;
+
 /**
  * 
  * @ClassName HttpCallbackListener
@@ -8,7 +10,7 @@ package com.poomoo.edao.util;
  * @date 2015-7-24 下午3:08:02
  */
 public interface HttpCallbackListener {
-	void onFinish(final String response);
+	void onFinish(final ResponseData responseData);
 
 	void onError(final Exception e);
 }

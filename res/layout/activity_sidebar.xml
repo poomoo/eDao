@@ -36,24 +36,26 @@
                 android:layout_height="5dp" />
 
             <TextView
+                android:id="@+id/sidebar_textView_userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="用户名"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
 
             <TextView
+                android:id="@+id/sidebar_textView_userTel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="18223339910"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize16" />
 
             <TextView
                 android:layout_width="match_parent"

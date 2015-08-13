@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.model.ResponseData;
+
 public class HttpUtil {
 	/**
 	 * 
@@ -30,8 +33,8 @@ public class HttpUtil {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestMethod("POST");
-					connection.setReadTimeout(1 * 10 * 1000);
-					connection.setConnectTimeout(1 * 10 * 1000);
+					connection.setReadTimeout(1 * 20 * 1000);
+					connection.setConnectTimeout(1 * 20 * 1000);
 					connection.setDoOutput(true);
 					connection.setDoInput(true);
 					// Post 请求不能使用缓存
@@ -59,10 +62,12 @@ public class HttpUtil {
 					while ((line = bufferedReader.readLine()) != null) {
 						response.append(line);
 					}
-					System.out.println("response:"+response.toString());
+					System.out.println("response:" + response.toString());
 
 					if (listener != null) {
-						listener.onFinish(response.toString());
+						Gson gson = new Gson();
+						listener.onFinish(gson.fromJson(response.toString(),
+								ResponseData.class));
 					}
 				} catch (Exception e) {
 					if (listener != null) {
@@ -108,7 +113,9 @@ public class HttpUtil {
 						response.append(line);
 					}
 					if (listener != null) {
-						listener.onFinish(response.toString());
+						Gson gson = new Gson();
+						listener.onFinish(gson.fromJson(response.toString(),
+								ResponseData.class));
 					}
 				} catch (Exception e) {
 					if (listener != null) {
@@ -122,5 +129,5 @@ public class HttpUtil {
 			}
 		}).start();
 	}
-	
+
 }

@@ -2,13 +2,17 @@ package com.poomoo.edao.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.fragment.Fragment_Home;
@@ -23,6 +27,10 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private Fragment_Home fragment_Home;
 	private Fragment_Store fragment_Store;
 	public static SideBar sideBar;
+	
+	//侧边栏
+	private TextView textView_userName, textView_userTel;
+	private SharedPreferences usersp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,15 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		radioButton_myown.setOnClickListener(this);
 
 		setDefaultFragment();
+		
+		textView_userName = (TextView) findViewById(R.id.sidebar_textView_userName);
+		textView_userTel = (TextView) findViewById(R.id.sidebar_textView_userTel);
+
+		usersp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		Log.i("usersp", usersp.getString("realName", "123"));
+		textView_userName.setText(usersp.getString("realName", "用户名"));
+		textView_userTel.setText(usersp.getString("tel", ""));
+		System.out.println("NavigationActivity init");
 
 	}
 
