@@ -67,7 +67,7 @@
         <activity android:name=".activity.StoreEvaluateActivity" />
         <activity android:name=".activity.StoreInformationActivity" />
         <activity android:name=".activity.SideBarActivity" />
-        <activity android:name=".activity." />
+        <activity android:name=".activity.ShopListActivity" />
         <activity android:name=".activity.TransferOfPaymentActivity1" />
         <activity android:name=".activity.TransferOfPaymentActivity2" />
         <activity android:name=".activity.UploadPicsActivity" />

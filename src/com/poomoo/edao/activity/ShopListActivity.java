@@ -48,8 +48,8 @@ public class ShopListActivity extends BaseActivity {
 				.findViewById(R.id.shop_list_editText_keywords);
 		listView = (ListView) this.findViewById(R.id.shop_list_listView);
 
-		adapter = new Shop_List_ListViewAdapter(this, list);
-		listView.setAdapter(adapter);
+		// adapter = new Shop_List_ListViewAdapter(this, list);
+		// listView.setAdapter(adapter);
 
 	}
 }

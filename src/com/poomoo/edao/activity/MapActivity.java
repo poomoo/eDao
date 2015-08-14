@@ -46,6 +46,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 
+	private TextView textView_curcity, textView_store;
+
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	private BitmapDescriptor bdA;
 
@@ -72,7 +74,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		setContentView(R.layout.activity_map);
 
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-
+		init();
 		initLocation();
 		mLocationClient.start();
 
@@ -89,6 +91,14 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		mBaiduMap.setOnMapStatusChangeListener(this);
 		addInfosOverlay(Store.infos);
 		initMarkerClickEvent();
+	}
+
+	private void init() {
+		// TODO 自动生成的方法存根
+		textView_curcity = (TextView) findViewById(R.id.map_textView_curcity);
+		textView_store = (TextView) findViewById(R.id.map_textView_store);
+
+		textView_store.setOnClickListener(this);
 	}
 
 	/**
@@ -357,6 +367,9 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
+			break;
+		case R.id.map_textView_store:
+			openActivity(ShopListActivity.class, null);
 			break;
 		}
 

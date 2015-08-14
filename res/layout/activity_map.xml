@@ -3,9 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="#1995EB" >
 
         <LinearLayout
@@ -20,36 +27,46 @@
                 android:layout_weight="1" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/map_textView_curcity"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="贵阳"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textsize18" />
+                    android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="地图"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize20" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="地图"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize20" />
+                android:gravity="center" >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_navigation_store_selected" />
+                <TextView
+                    android:id="@+id/map_textView_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="店铺"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize16" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true" />
 
     <ImageView
         android:id="@+id/map_imageView_center_dot"

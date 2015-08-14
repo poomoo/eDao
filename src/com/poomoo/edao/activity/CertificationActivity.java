@@ -23,12 +23,20 @@ import android.widget.TextView;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.RegistrationSpinnerAdapter;
 
-public class RegistrationActivity extends BaseActivity implements
+/**
+ * 
+ * @ClassName CertificationActivity
+ * @Description TODO 实名认证
+ * @author 李苜菲
+ * @date 2015-8-14 下午2:22:02
+ */
+public class CertificationActivity extends BaseActivity implements
 		OnClickListener {
 	private EditText editText_openaccountbank, editText_accountnum,
 			editText_accountnumagain;
 	private Button button_next;
-	private RegistrationSpinnerAdapter adapter_province, adapter_city, adapter_bank;
+	private RegistrationSpinnerAdapter adapter_province, adapter_city,
+			adapter_bank;
 	private PopupWindow popupWindow;
 	private LinearLayout layout_province, layout_city, layout_bank, layout;
 	private TextView textView_province, textView_city, textView_bank;
@@ -40,7 +48,7 @@ public class RegistrationActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration);
+		setContentView(R.layout.activity_certification);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();

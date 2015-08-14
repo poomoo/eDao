@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.LinearGradient;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -46,7 +48,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		OnItemClickListener {
 	private TextView textView_inform, textView_ecoin, textView_goldcoin,
 			textView_point;
-	private ImageView imageView_user, imageView_position;
+	private LinearLayout layout_user, layout_map;
 	private RadioButton radioButton_shop;
 	private GridView gridView;
 	private SideBar sidebar;
@@ -100,10 +102,10 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 				R.id.main_textView_goldcoin);
 		textView_point = (TextView) getView().findViewById(
 				R.id.main_textView_point);
-		imageView_user = (ImageView) getView().findViewById(
-				R.id.main_imageView_user);
-		imageView_position = (ImageView) getView().findViewById(
-				R.id.main_imageView_position);
+		layout_user = (LinearLayout) getView().findViewById(
+				R.id.main_layout_user);
+		layout_map = (LinearLayout) getView()
+				.findViewById(R.id.main_layout_map);
 		gridView = (GridView) getView().findViewById(R.id.main_gridView);
 
 		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
@@ -115,18 +117,18 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		fragment_Store = NavigationActivity.fragment_Store;
 		radioButton_shop = (RadioButton) NavigationActivity.radioButton_shop;
 
-		imageView_user.setOnClickListener(this);
-		imageView_position.setOnClickListener(this);
+		layout_user.setOnClickListener(this);
+		layout_map.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.main_imageView_user:
+		case R.id.main_layout_user:
 			sidebar.toggle();
 			break;
-		case R.id.main_imageView_position:
+		case R.id.main_layout_map:
 			startActivity(new Intent(getActivity(), MapActivity.class));
 			break;
 		}
