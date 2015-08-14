@@ -33,8 +33,8 @@ public class HttpUtil {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestMethod("POST");
-					connection.setReadTimeout(1 * 20 * 1000);
-					connection.setConnectTimeout(1 * 20 * 1000);
+					connection.setReadTimeout(1 * 30 * 1000);
+					connection.setConnectTimeout(1 * 30 * 1000);
 					connection.setDoOutput(true);
 					connection.setDoInput(true);
 					// Post 请求不能使用缓存

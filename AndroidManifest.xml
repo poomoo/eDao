@@ -38,6 +38,7 @@
         </activity>
         <activity android:name=".activity.AllianceApplyActivity" />
         <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.CertificationActivity" />
         <activity android:name=".activity.CommodityInfomationActivity" />
         <activity android:name=".activity.CommodityListActivity" />
         <activity android:name=".activity.CreditCollectionActivity" />
@@ -60,7 +61,6 @@
         <activity android:name=".activity.PartnerApplyActivity" />
         <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.PurchaseHistoryActivity" />
-        <activity android:name=".activity.Registration2Activity" />
         <activity android:name=".activity.RebateActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ShareActivity" />

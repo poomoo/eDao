@@ -76,10 +76,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		editor = loginsp.edit();
-		if (!TextUtils.isEmpty(loginsp.getString("tel", ""))) {
+		if (loginsp.getBoolean("isLogin", false)) {
 			startActivity(new Intent(LoginActivity.this,
 					NavigationActivity.class));
 			finish();
+		}else{
+			if(!TextUtils.isEmpty(loginsp.getString("tel", "")))
+				editText_phone.setText(loginsp.getString("tel", ""));
+			if(!TextUtils.isEmpty(loginsp.getString("password", "")))
+				editText_password.setText(loginsp.getString("password", ""));
 		}
 	}
 
@@ -174,6 +179,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												loginResData.getRealName());
 										editor.putString("tel",
 												loginResData.getTel());
+										editor.putString("passWord", passWord);
+										editor.putBoolean("isLogin", true);
 										editor.commit();
 										LoginActivity.this
 												.startActivity(new Intent(
@@ -195,6 +202,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								@Override
 								public void run() {
 									// TODO 自动生成的方法存根
+									Utity.showToast(getApplicationContext(),
+											eDaoClientConfig.checkNet);
 								}
 
 							});

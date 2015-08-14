@@ -1,11 +1,15 @@
 package com.poomoo.edao.activity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.fragment.Fragment_Home;
 import com.poomoo.edao.fragment.Fragment_Personal_Center;
 import com.poomoo.edao.fragment.Fragment_Store;
@@ -28,6 +33,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	public static Fragment_Store fragment_Store;
 	private Fragment_Personal_Center fragment_Personal_Center;
 	public static SideBar sideBar;
+	private int clo = 0;
 
 	// 侧边栏
 	private TextView textView_userName, textView_userTel;
@@ -60,8 +66,13 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		textView_userTel = (TextView) findViewById(R.id.sidebar_textView_userTel);
 
 		usersp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-		Log.i("usersp", usersp.getString("realName", "123"));
-		textView_userName.setText(usersp.getString("realName", "用户名"));
+		// 是否实名认证
+		if (TextUtils.isEmpty(usersp.getString("realName", ""))) {
+			System.out.println("进行实名认证");
+			textView_userName.setText(eDaoClientConfig.certificate);
+			spark();
+		} else
+			textView_userName.setText(usersp.getString("realName", "用户名"));
 		textView_userTel.setText(usersp.getString("tel", ""));
 		System.out.println("NavigationActivity init");
 
@@ -105,10 +116,42 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			fragmentTransaction.replace(R.id.navigation_frameLayout,
 					fragment_Personal_Center);
 			break;
+		case R.id.sidebar_textView_userName:
+			openActivity(CertificationActivity.class);
+			break;
 		}
 
 		fragmentTransaction.commit();
 
+	}
+
+	public void spark() {
+		Timer timer = new Timer();
+		TimerTask taskcc = new TimerTask() {
+			public void run() {
+				runOnUiThread(new Runnable() {
+
+					public void run() {
+						if (clo == 0) {
+							clo = 1;
+							textView_userName.setTextColor(Color.TRANSPARENT);
+						} else {
+							if (clo == 1) {
+								clo = 2;
+								textView_userName.setTextColor(Color.YELLOW);
+							} else if (clo == 2) {
+								clo = 3;
+								textView_userName.setTextColor(Color.RED);
+							} else {
+								clo = 0;
+								textView_userName.setTextColor(Color.BLUE);
+							}
+						}
+					}
+				});
+			}
+		};
+		timer.schedule(taskcc, 1, 100);
 	}
 
 	@Override

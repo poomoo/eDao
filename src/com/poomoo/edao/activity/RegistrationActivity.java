@@ -82,6 +82,7 @@ public class RegistrationActivity extends BaseActivity implements
 		button_identity_code.setOnClickListener(this);
 		button_regist.setOnClickListener(this);
 
+		button_identity_code.setClickable(false);
 	}
 
 	@Override
@@ -331,14 +332,14 @@ public class RegistrationActivity extends BaseActivity implements
 		if (hasFocus) {
 			editText_phone.setText("");
 			textView_isUsed.setText("");
+			button_identity_code.setClickable(false);
 		}
-		// if (!hasFocus && tel.length() != 11) {
-		// Toast.makeText(getApplicationContext(), "手机号长度不对",
-		// Toast.LENGTH_SHORT).show();
-		// editText_phone.setFocusable(true);
-		// editText_phone.setFocusableInTouchMode(true);
-		// editText_phone.requestFocus();
-		// }
+		if (!hasFocus && tel.length() != 11) {
+			Utity.showToast(getApplicationContext(), "手机号长度不对");
+			// v.setFocusable(true);
+			// v.setFocusableInTouchMode(true);
+			// v.requestFocus();
+		}
 		if (!hasFocus && tel.length() == 11) {
 			Map<String, String> data = new HashMap<String, String>();
 			data.put("bizName", "10000");
@@ -361,8 +362,9 @@ public class RegistrationActivity extends BaseActivity implements
 										button_identity_code.setTextColor(Color
 												.parseColor("#0079ff"));
 										button_identity_code.setClickable(true);
+										textView_isUsed.setText("可以使用");
 									} else {
-										textView_isUsed.setText("*该手机已注册");
+										textView_isUsed.setText("*已注册");
 									}
 								}
 							});
