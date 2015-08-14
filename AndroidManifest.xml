@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.Registration2Activity"
+            android:name=".activity.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,14 +60,14 @@
         <activity android:name=".activity.PartnerApplyActivity" />
         <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.PurchaseHistoryActivity" />
-        <activity android:name=".activity." />
+        <activity android:name=".activity.Registration2Activity" />
         <activity android:name=".activity.RebateActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ShareActivity" />
         <activity android:name=".activity.StoreEvaluateActivity" />
         <activity android:name=".activity.StoreInformationActivity" />
         <activity android:name=".activity.SideBarActivity" />
-        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".activity." />
         <activity android:name=".activity.TransferOfPaymentActivity1" />
         <activity android:name=".activity.TransferOfPaymentActivity2" />
         <activity android:name=".activity.UploadPicsActivity" />

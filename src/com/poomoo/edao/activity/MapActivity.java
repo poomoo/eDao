@@ -50,7 +50,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private BitmapDescriptor bdA;
 
 	public LocationClient mLocationClient = null;
-	public BDLocationListener myListener = new MyLocationListener();
+	public BDLocationListener myListener = new MyLocationListener();;
 
 	boolean isFirstLoc = true;// 是否首次定位
 
@@ -72,7 +72,6 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		setContentView(R.layout.activity_map);
 
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-		mLocationClient.registerLocationListener(myListener); // 注册监听函数
 
 		initLocation();
 		mLocationClient.start();
@@ -96,7 +95,6 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	 * 初始化图层
 	 */
 	public void addInfosOverlay(List<Store> infos) {
-		;
 		mBaiduMap.clear();
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
@@ -127,6 +125,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				if (mBaiduMap.getMapStatus().zoom != maxRoom) {
 					showCurrtenStroeOnMap(ll);
 				} else {
+					showCurrtenStroeOnMap(ll);
 					// 获得marker中的数据
 					Store info = (Store) marker.getExtraInfo().get("info");
 					View linlayout = MapActivity.this.getLayoutInflater()
@@ -386,12 +385,14 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	protected void onPause() {
 		mMapView.onPause();
 		super.onPause();
+		mLocationClient.unRegisterLocationListener(myListener); // 取消注册监听函数
 	}
 
 	@Override
 	protected void onResume() {
 		mMapView.onResume();
 		super.onResume();
+		mLocationClient.registerLocationListener(myListener); // 注册监听函数
 	}
 
 	@Override

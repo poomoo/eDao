@@ -11,24 +11,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.fragment.Fragment_Home;
+import com.poomoo.edao.fragment.Fragment_Personal_Center;
 import com.poomoo.edao.fragment.Fragment_Store;
 import com.poomoo.edao.widget.SideBar;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
 
 	private FrameLayout frameLayout;
-	private RadioGroup radioGroup;
-	private RadioButton radioButton_home, radioButton_shop, radioButton_myown;
+	private RadioButton radioButton_home, radioButton_myown;
+	public static RadioButton radioButton_shop;
 	private Fragment_Home fragment_Home;
-	private Fragment_Store fragment_Store;
+	public static Fragment_Store fragment_Store;
+	private Fragment_Personal_Center fragment_Personal_Center;
 	public static SideBar sideBar;
-	
-	//侧边栏
+
+	// 侧边栏
 	private TextView textView_userName, textView_userTel;
 	private SharedPreferences usersp;
 
@@ -43,7 +44,6 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private void init() {
 		// TODO 自动生成的方法存根
 		frameLayout = (FrameLayout) findViewById(R.id.navigation_frameLayout);
-		radioGroup = (RadioGroup) findViewById(R.id.navigation_radioGroup);
 		radioButton_home = (RadioButton) findViewById(R.id.navigation_radioButton_home);
 		radioButton_shop = (RadioButton) findViewById(R.id.navigation_radioButton_shop);
 		radioButton_myown = (RadioButton) findViewById(R.id.navigation_radioButton_myown);
@@ -55,7 +55,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		radioButton_myown.setOnClickListener(this);
 
 		setDefaultFragment();
-		
+
 		textView_userName = (TextView) findViewById(R.id.sidebar_textView_userName);
 		textView_userTel = (TextView) findViewById(R.id.sidebar_textView_userTel);
 
@@ -100,11 +100,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 					fragment_Store);
 			break;
 		case R.id.navigation_radioButton_myown:
+			if (fragment_Personal_Center == null)
+				fragment_Personal_Center = new Fragment_Personal_Center();
+			fragmentTransaction.replace(R.id.navigation_frameLayout,
+					fragment_Personal_Center);
 			break;
 		}
-		System.out.println("fragment提交前");
+
 		fragmentTransaction.commit();
-		System.out.println("fragment提交后");
 
 	}
 

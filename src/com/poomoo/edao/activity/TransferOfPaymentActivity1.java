@@ -50,8 +50,6 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_transfer_of_payment1);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));

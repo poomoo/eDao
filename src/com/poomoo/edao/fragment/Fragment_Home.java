@@ -1,7 +1,11 @@
 package com.poomoo.edao.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,12 +14,24 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.CooperationActivity;
+import com.poomoo.edao.activity.CreditManageActivity;
+import com.poomoo.edao.activity.GetDetailActivity;
+import com.poomoo.edao.activity.LoveFundActivity;
+import com.poomoo.edao.activity.MapActivity;
+import com.poomoo.edao.activity.MywalletActivity;
 import com.poomoo.edao.activity.NavigationActivity;
+import com.poomoo.edao.activity.PurchaseHistoryActivity;
+import com.poomoo.edao.activity.RebateActivity;
+import com.poomoo.edao.activity.TransferOfPaymentActivity1;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
 import com.poomoo.edao.widget.SideBar;
 
@@ -26,21 +42,30 @@ import com.poomoo.edao.widget.SideBar;
  * @author 李苜菲
  * @date 2015-8-4 下午3:59:10
  */
-public class Fragment_Home extends Fragment implements OnClickListener {
+public class Fragment_Home extends Fragment implements OnClickListener,
+		OnItemClickListener {
 	private TextView textView_inform, textView_ecoin, textView_goldcoin,
 			textView_point;
 	private ImageView imageView_user, imageView_position;
+	private RadioButton radioButton_shop;
 	private GridView gridView;
 	private SideBar sidebar;
+	private Fragment_Store fragment_Store;
 
 	private Fragment_Home_GridViewAdapter gridViewAdapter;
-	private final String[] list_name = { "全国返利", "消费领取", "我的钱包", "交易明细",
+	private static final String[] list_name = { "普惠全民", "消费领取", "我的钱包", "交易明细",
 			"信用管理", "转账支付", "合作加盟", "爱心基金", "乐意道商城" };
-	private final int[] list_image = { R.drawable.ic_rebate,
+	private static final int[] list_image = { R.drawable.ic_rebate,
 			R.drawable.ic_get_detail, R.drawable.ic_my_wallet,
 			R.drawable.ic_purchase_history, R.drawable.ic_credit_manage,
 			R.drawable.ic_transfer_payment, R.drawable.ic_cooperation,
 			R.drawable.ic_love_fund, R.drawable.ic_shop };
+
+	private static final Class[] outIntent = { RebateActivity.class,
+			GetDetailActivity.class, MywalletActivity.class,
+			PurchaseHistoryActivity.class, CreditManageActivity.class,
+			TransferOfPaymentActivity1.class, CooperationActivity.class,
+			LoveFundActivity.class, Fragment_Store.class };
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -84,11 +109,50 @@ public class Fragment_Home extends Fragment implements OnClickListener {
 		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
+		gridView.setOnItemClickListener(this);
 
 		sidebar = NavigationActivity.sideBar;
+		fragment_Store = NavigationActivity.fragment_Store;
+		radioButton_shop = (RadioButton) NavigationActivity.radioButton_shop;
 
 		imageView_user.setOnClickListener(this);
 		imageView_position.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.main_imageView_user:
+			sidebar.toggle();
+			break;
+		case R.id.main_imageView_position:
+			startActivity(new Intent(getActivity(), MapActivity.class));
+			break;
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO 自动生成的方法存根
+		showActivity(arg2);
+	}
+
+	private void showActivity(int arg2) {
+		// TODO 自动生成的方法存根
+		if (arg2 != 8)
+			startActivity(new Intent(getActivity(), outIntent[arg2]));
+		else {
+			FragmentManager fragmentManager = getFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager
+					.beginTransaction();
+			if (fragment_Store == null)
+				fragment_Store = new Fragment_Store();
+			fragmentTransaction.replace(R.id.navigation_frameLayout,
+					fragment_Store);
+			fragmentTransaction.commit();
+			radioButton_shop.setChecked(true);
+		}
 	}
 
 	protected void setImmerseLayout(View view) {
@@ -111,15 +175,5 @@ public class Fragment_Home extends Fragment implements OnClickListener {
 			result = context.getResources().getDimensionPixelSize(resourceId);
 		}
 		return result;
-	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO 自动生成的方法存根
-		switch (v.getId()) {
-		case R.id.main_imageView_user:
-			sidebar.toggle();
-			break;
-		}
 	}
 }

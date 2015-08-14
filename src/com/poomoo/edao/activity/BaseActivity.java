@@ -2,6 +2,7 @@ package com.poomoo.edao.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,41 @@ public class BaseActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		Window window = getWindow();
 		window.requestFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: openActivity
+	 * @Description: TODO 跳转Activity 并含有Bundle数据
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-14上午10:38:18
+	 */
+	protected void openActivity(Class<?> pClass, Bundle pBundle) {
+		Intent intent = new Intent(this, pClass);
+		if (pBundle != null) {
+			intent.putExtras(pBundle);
+		}
+		startActivity(intent);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: openActivity
+	 * @Description: TODO 跳转Activity
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-14上午10:39:33
+	 */
+	protected void openActivity(Class<?> pClass) {
+		Intent intent = new Intent(this, pClass);
+		startActivity(intent);
 	}
 
 	/**
