@@ -74,7 +74,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		} else
 			textView_userName.setText(usersp.getString("realName", "用户名"));
 		textView_userTel.setText(usersp.getString("tel", ""));
-		System.out.println("NavigationActivity init");
+		textView_userName.setOnClickListener(this);
 
 	}
 
@@ -117,6 +117,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 					fragment_Personal_Center);
 			break;
 		case R.id.sidebar_textView_userName:
+			System.out.println("点击userName");
 			openActivity(CertificationActivity.class);
 			break;
 		}
@@ -134,24 +135,16 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 					public void run() {
 						if (clo == 0) {
 							clo = 1;
-							textView_userName.setTextColor(Color.TRANSPARENT);
+							textView_userName.setTextColor(Color.WHITE);
 						} else {
-							if (clo == 1) {
-								clo = 2;
-								textView_userName.setTextColor(Color.YELLOW);
-							} else if (clo == 2) {
-								clo = 3;
-								textView_userName.setTextColor(Color.RED);
-							} else {
-								clo = 0;
-								textView_userName.setTextColor(Color.BLUE);
-							}
+							clo = 0;
+							textView_userName.setTextColor(Color.RED);
 						}
 					}
 				});
 			}
 		};
-		timer.schedule(taskcc, 1, 100);
+		timer.schedule(taskcc, 1, 1000);
 	}
 
 	@Override

@@ -50,10 +50,13 @@ public class CooperationActivity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.cooperation_btn_alliance_apply:
+			openActivity(AllianceApplyActivity.class);
 			break;
 		case R.id.cooperation_btn_dealer_apply:
+			openActivity(DealerApplyActivity.class);
 			break;
 		case R.id.cooperation_btn_partner_apply:
+			openActivity(PartnerApplyActivity.class);
 			break;
 		}
 	}
