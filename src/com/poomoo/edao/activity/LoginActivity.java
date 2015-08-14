@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			login();
 			break;
 		case R.id.login_textView_regist:
-			startActivity(new Intent(this, Registration2Activity.class));
+			startActivity(new Intent(this, RegistrationActivity.class));
 			break;
 		case R.id.login_textView_forget_password:
 			startActivity(new Intent(this, PassWordManageActivity.class));

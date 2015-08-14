@@ -41,7 +41,7 @@ import com.poomoo.edao.util.Utity;
  * @author 李苜菲
  * @date 2015-7-31 上午10:09:29
  */
-public class Registration2Activity extends BaseActivity implements
+public class RegistrationActivity extends BaseActivity implements
 		OnClickListener, OnFocusChangeListener {
 	private EditText editText_phone, editText_identity_code,
 			editText_password1, editText_password2;
@@ -60,7 +60,7 @@ public class Registration2Activity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration2);
+		setContentView(R.layout.activity_registration);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
@@ -112,7 +112,7 @@ public class Registration2Activity extends BaseActivity implements
 	private void sendSms() {
 		// TODO 自动生成的方法存根
 		TimeCountUtil timeCountUtil = new TimeCountUtil(
-				Registration2Activity.this, 60000, 1000, button_identity_code);
+				RegistrationActivity.this, 60000, 1000, button_identity_code);
 		timeCountUtil.start();
 
 		Map<String, String> data = new HashMap<String, String>();
@@ -149,7 +149,7 @@ public class Registration2Activity extends BaseActivity implements
 							public void run() {
 								// TODO 自动生成的方法存根
 								Utity.showToast(getApplicationContext(),
-										"验证码发送失败");
+										"请检查网络");
 							}
 						});
 					}
@@ -242,7 +242,7 @@ public class Registration2Activity extends BaseActivity implements
 												responseData.getMsg());
 									} else {
 										startActivity(new Intent(
-												Registration2Activity.this,
+												RegistrationActivity.this,
 												LoginActivity.class));
 										finish();
 									}
@@ -465,7 +465,7 @@ public class Registration2Activity extends BaseActivity implements
 	 */
 	public String getSMSBody() {
 		Uri uri = Uri.parse("content://sms");
-		ContentResolver cr = Registration2Activity.this.getContentResolver();
+		ContentResolver cr = RegistrationActivity.this.getContentResolver();
 		Cursor cursor = cr.query(uri, null, "address=? and type =1 and read=0",
 				new String[] { address }, null);
 		String smsbody = cursor.getString(cursor.getColumnIndex("body"));
