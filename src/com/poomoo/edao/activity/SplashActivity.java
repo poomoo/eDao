@@ -1,5 +1,9 @@
 package com.poomoo.edao.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -19,6 +23,9 @@ public class SplashActivity extends BaseActivity {
 	private SharedPreferences sp = null;
 	private Editor editor = null;
 	private String guide = "", index = "";
+
+	private static String DB_PATH = "/data/data/com.poomoo.edao/databases/";
+	private static String DB_NAME = "eDao.db";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,9 @@ public class SplashActivity extends BaseActivity {
 
 	private void init() {
 		// TODO 自动生成的方法存根
+		// 导入数据库文件
+		importDB();
+
 		imageView = (ImageView) findViewById(R.id.splash_loading_item);
 		Animation translate = AnimationUtils.loadAnimation(this,
 				R.anim.splash_loading);
@@ -69,5 +79,37 @@ public class SplashActivity extends BaseActivity {
 			}
 		});
 		imageView.setAnimation(translate);
+	}
+
+	private void importDB() {
+		// TODO 自动生成的方法存根
+		try {
+			// 获得.db文件的绝对路径
+			String databaseFilename = DB_PATH + DB_NAME;
+			File dir = new File(DB_PATH);
+			// 如果目录不存在，创建这个目录
+			if (!dir.exists())
+				dir.mkdir();
+			System.out.println();
+			boolean isExists=(new File(databaseFilename)).exists();
+			System.out.println("isExists:"+isExists);
+			// 如果在目录中不存在 .db文件，则从res\assets目录中复制这个文件到该目录
+			if (!isExists) {
+				System.out.println("文件不存在");
+				// 获得封装.db文件的InputStream对象
+				InputStream is = getAssets().open(DB_NAME);
+				FileOutputStream fos = new FileOutputStream(databaseFilename);
+				byte[] buffer = new byte[7168];
+				int count = 0;
+				// 开始复制.db文件
+				while ((count = is.read(buffer)) > 0) {
+					fos.write(buffer, 0, count);
+				}
+				fos.close();
+				is.close();
+			}
+			System.out.println("导入数据库文件结束");
+		} catch (Exception e) {
+		}
 	}
 }

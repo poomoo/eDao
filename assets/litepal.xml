@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
 
-    <dbname value="eDaoClient" >
+    <dbname value="eDao" >
     </dbname>
 
     <version value="1" >
@@ -9,8 +9,11 @@
 
     <list>
 
-        <mapping class="com.poomoo.edao.model.Region" >
-        </mapping>
+        <mapping class="com.poomoo.edao.model.database.ProvinceInfo" />
+
+        <mapping class="com.poomoo.edao.model.database.CityInfo" />
+
+        <mapping class="com.poomoo.edao.model.database.AreaInfo" />
     </list>
 
 </litepal>
