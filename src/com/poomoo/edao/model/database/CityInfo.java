@@ -3,6 +3,8 @@ package com.poomoo.edao.model.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * 
  * @ClassName CityInfo
@@ -10,7 +12,7 @@ import java.util.List;
  * @author 李苜菲
  * @date 2015年8月16日 下午10:50:54
  */
-public class CityInfo {
+public class CityInfo extends DataSupport{
 	private String city_id = "";
 	private String city_name = "";
 	private ProvinceInfo provinceInfo;

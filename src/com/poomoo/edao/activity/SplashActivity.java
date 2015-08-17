@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import org.litepal.tablemanager.Connector;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -14,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.database.ProvinceInfo;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;
@@ -51,6 +55,11 @@ public class SplashActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		// 导入数据库文件
 		importDB();
+//		SQLiteDatabase db = Connector.getDatabase();  
+//		ProvinceInfo provinceInfo=new ProvinceInfo();
+//		provinceInfo.setProvince_id("110000");
+//		provinceInfo.setProvince_name("北京市");
+//		provinceInfo.save();
 
 		imageView = (ImageView) findViewById(R.id.splash_loading_item);
 		Animation translate = AnimationUtils.loadAnimation(this,

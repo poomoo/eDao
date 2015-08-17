@@ -1,6 +1,5 @@
 package com.poomoo.edao.activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,31 +8,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.CityPicker;
 
 /**
  * 
@@ -43,7 +46,7 @@ import com.poomoo.edao.util.Utity;
  * @date 2015年7月30日 下午11:23:58
  */
 public class AllianceApplyActivity extends BaseActivity implements
-		OnClickListener, OnFocusChangeListener {
+		OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_zone,
 			textView_money, textView_merchant_name;
 	private EditText editText_merchant_num;
@@ -57,7 +60,12 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private ListView listView;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
-	private String merchant_num = "", referrerUserId = "";
+	private String zone = "", merchant_num = "", merchant_name = "",
+			referrerUserId = "", referrerName = "";
+	private Select_City_PopupWindow select_City_PopupWindow;
+
+	public LocationClient mLocationClient = null;
+	public BDLocationListener myListener = new MyLocationListener();;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +76,128 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
 
-		test();
+		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener);
+		initLocation();
+		mLocationClient.start();
 	}
 
-	private void test() {
+	private void init() {
 		// TODO 自动生成的方法存根
+		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
+		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
+		textView_zone = (TextView) findViewById(R.id.alliance_textView_zone);
+		textView_money = (TextView) findViewById(R.id.alliance_textView_money);
+		textView_merchant_name = (TextView) findViewById(R.id.alliance_textView_merchant_name);
+
+		editText_merchant_num = (EditText) findViewById(R.id.alliance_editText_merchant_num);
+
+		layout_zone = (LinearLayout) findViewById(R.id.alliance_layout_zone);
+
+		button_confirm = (Button) findViewById(R.id.alliance_btn_confirm);
+
+		layout_zone.setOnClickListener(this);
+		button_confirm.setOnClickListener(this);
+		textView_merchant_name.setOnClickListener(this);
+	}
+
+	private void initLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+		option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
+		int span = 1 * 10 * 1000;
+
+		option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+		option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
+		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
+		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+		option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+		option.setIsNeedLocationDescribe(true);// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+		option.setIsNeedLocationPoiList(true);// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+		mLocationClient.setLocOption(option);
+		System.out.println("initLocation");
+	}
+
+	public class MyLocationListener implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			location.getCity();
+			location.getProvince();
+			location.getStreet();
+			location.getCityCode();
+			System.out.println("onReceiveLocation:"+location.getProvince() + ":"
+					+ location.getCity() + ":" + location.getStreet() + ":"
+					+ location.getCityCode());
+			mLocationClient.unRegisterLocationListener(myListener);
+
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.alliance_layout_zone:
+			select_city();
+			break;
+		case R.id.alliance_textView_merchant_name:
+			getMerchantName();
+			break;
+		case R.id.alliance_btn_confirm:
+			if (checkInput()) {
+				apply();
+			}
+			break;
+		}
+
+	}
+
+	private void select_city() {
+		// 实例化SelectPicPopupWindow
+		select_City_PopupWindow = new Select_City_PopupWindow(
+				AllianceApplyActivity.this, itemsOnClick);
+		// 显示窗口
+		select_City_PopupWindow.showAtLocation(AllianceApplyActivity.this
+				.findViewById(R.id.activity_alliance_layout), Gravity.CENTER,
+				0, 0); // 设置layout在PopupWindow中显示的位置
+	}
+
+	// 为弹出窗口实现监听类
+	private OnClickListener itemsOnClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+			System.out.println("点击事件---" + view.getId());
+			if (view.getId() == R.id.popup_select_city_btn_confirm) {
+				select_City_PopupWindow.dismiss();
+				textView_zone.setText(CityPicker.getZone_string());
+				// getMoney();
+			}
+		}
+	};
+
+	/**
+	 * 
+	 * 
+	 * @Title: getMoney
+	 * @Description: TODO 查询加盟费用
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-17下午4:54:42
+	 */
+	private void getMoney() {
+		// TODO 自动生成的方法存根
+		progressDialog = null;
+		showProgressDialog("查询费用......");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20001");
 		data.put("joinType", "1");
-		data.put("areaId", "");
+		data.put("areaId", CityPicker.getArea_id());
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
 
@@ -89,6 +209,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 							@Override
 							public void run() {
 								// TODO 自动生成的方法存根
+								closeProgressDialog();
 								if (responseData.getRsCode() == 1) {
 									try {
 										JSONObject result = new JSONObject(
@@ -110,63 +231,196 @@ public class AllianceApplyActivity extends BaseActivity implements
 					@Override
 					public void onError(Exception e) {
 						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
 
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
 					}
 				});
 	}
 
-	private void init() {
-		// TODO 自动生成的方法存根
-		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
-		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_zone = (TextView) findViewById(R.id.alliance_textView_zone);
-		textView_money = (TextView) findViewById(R.id.alliance_textView_money);
-		textView_merchant_name = (TextView) findViewById(R.id.alliance_textView_merchant_name);
+	/**
+	 * 
+	 * 
+	 * @Title: apply
+	 * @Description: TODO 提交申请
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-17下午4:53:39
+	 */
+	private void apply() {
+		progressDialog = null;
+		showProgressDialog("提交申请中...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20003");
+		SharedPreferences sp = getSharedPreferences("userInfo",
+				Context.MODE_PRIVATE);
+		data.put("userId", sp.getString("userId", ""));
+		data.put("areaId", CityPicker.getArea_id());
+		data.put("joinType", "1");
+		data.put("address", "");
+		data.put("referrerTel", merchant_num);
+		data.put("referrerUserId", referrerUserId);
+		data.put("referrerName", referrerName);
 
-		editText_merchant_num = (EditText) findViewById(R.id.alliance_editText_merchant_num);
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
 
-		layout_zone = (LinearLayout) findViewById(R.id.alliance_layout_zone);
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
 
-		button_confirm = (Button) findViewById(R.id.alliance_btn_confirm);
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() == 1) {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
 
-		layout_zone.setOnClickListener(this);
-		button_confirm.setOnClickListener(this);
-		editText_merchant_num.setOnFocusChangeListener(this);
+							}
+						});
+					}
 
-		list_zone = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> hashMap_sale = new HashMap<String, String>();
-		for (int i = 0; i < 5; i++) {
-			hashMap_sale = new HashMap<String, String>();
-			hashMap_sale.put("name", "贵州" + i);
-			hashMap_sale.put("value", "zone");
-			list_zone.add(hashMap_sale);
-		}
-		textView_zone.setText(list_zone.get(0).get("name"));
-		adapter_zone = new ChannelSpinnerAdapter(this, list_zone);
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
 
-		list_merchant_type = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> hashMap_sale1 = new HashMap<String, String>();
-		for (int i = 0; i < 5; i++) {
-			System.out.println("i:" + i);
-			hashMap_sale1 = new HashMap<String, String>();
-			hashMap_sale1.put("name", "电商" + i);
-			hashMap_sale1.put("value", "type");
-			list_merchant_type.add(hashMap_sale1);
-		}
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
 	}
 
-	@Override
-	public void onClick(View v) {
+	/**
+	 * 
+	 * 
+	 * @Title: checkInput
+	 * @Description: TODO 检查输入项
+	 * @author 李苜菲
+	 * @return
+	 * @return boolean
+	 * @throws
+	 * @date 2015-8-17下午4:52:44
+	 */
+	private boolean checkInput() {
 		// TODO 自动生成的方法存根
-		switch (v.getId()) {
-		case R.id.alliance_layout_zone:
-			showWindow(layout_zone, listView, list_zone, textView_zone,
-					adapter_zone);
-			break;
-		case R.id.alliance_btn_confirm:
-			break;
+		zone = textView_zone.getText().toString().trim();
+		if (TextUtils.isEmpty(zone)) {
+			select_city();
+			Utity.showToast(getApplicationContext(), "请选择区域");
+			return false;
 		}
+		merchant_num = editText_merchant_num.getText().toString().trim();
+		if (TextUtils.isEmpty(merchant_num)) {
+			editText_merchant_num.setFocusable(true);
+			editText_merchant_num.setFocusableInTouchMode(true);
+			editText_merchant_num.requestFocus();
+			Utity.showToast(getApplicationContext(), "请输入服务商手机号");
+			return false;
+		}
+		merchant_name = textView_merchant_name.getText().toString().trim();
+		if (TextUtils.isEmpty(zone)) {
+			Utity.showToast(getApplicationContext(), "请查询服务商户名");
+			return false;
+		}
+		return true;
+	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: getMerchantName
+	 * @Description: TODO 查询服务商户名
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-17下午4:52:19
+	 */
+	private void getMerchantName() {
+		merchant_num = editText_merchant_num.getText().toString().trim();
+		if (merchant_num.length() != 11) {
+			Utity.showToast(getApplicationContext(), "手机号长度不对");
+			return;
+		}
+		progressDialog = null;
+		showProgressDialog("查询服务商户名");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20002");
+		data.put("referrerTel", merchant_num);
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() == 1) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+										referrerUserId = result
+												.getString("referrerUserId");
+										referrerName = result
+												.getString("referrerName");
+										textView_merchant_name
+												.setText(referrerName);
+									} catch (JSONException e) {
+									}
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
 	}
 
 	/**
@@ -180,10 +434,10 @@ public class AllianceApplyActivity extends BaseActivity implements
 	 * @throws
 	 * @date 2015-8-12下午1:23:53
 	 */
-	private void showProgressDialog() {
+	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
 			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("登录中...");
+			progressDialog.setMessage(msg);
 			progressDialog.setCanceledOnTouchOutside(false);
 		}
 		progressDialog.show();
@@ -204,115 +458,5 @@ public class AllianceApplyActivity extends BaseActivity implements
 		if (progressDialog != null)
 			progressDialog.dismiss();
 	}
-
-	public void showWindow(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
-		listView.setAdapter(adapter);
-
-		popupWindow = new PopupWindow(spinnerlayout);
-		// 设置弹框的宽度为布局文件的宽
-		popupWindow.setWidth(spinnerlayout.getWidth());
-		popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
-		// 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
-		ColorDrawable dw = new ColorDrawable(0xb0000000);
-		popupWindow.setBackgroundDrawable(dw);
-		// 设置点击弹框外部，弹框消失
-		popupWindow.setOutsideTouchable(true);
-		popupWindow.setFocusable(true);
-		popupWindow.setContentView(layout);
-		// 设置弹框出现的位置，在v的正下方横轴偏移textview的宽度，为了对齐~纵轴不偏移
-		popupWindow.showAsDropDown(spinnerlayout, 0, 0);
-		// 弹出动画
-		// popupWindow.setAnimationStyle(R.style.popwin_anim_style);
-		popupWindow.setOnDismissListener(new OnDismissListener() {
-			@Override
-			public void onDismiss() {
-				// TODO Auto-generated method stub
-				// spinnerlayout
-				// .setBackgroundResource(R.drawable.preference_single_item);
-			}
-
-		});
-		// listView的item点击事件
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
-				// 弹框消失
-				popupWindow.dismiss();
-				popupWindow = null;
-			}
-		});
-
-	}
-
-	@Override
-	public void onFocusChange(View v, boolean hasFocus) {
-		// TODO 自动生成的方法存根
-		merchant_num = editText_merchant_num.getText().toString().trim();
-		if (hasFocus) {
-			editText_merchant_num.setText("");
-		}
-		if (!hasFocus && merchant_num.length() != 11) {
-			Utity.showToast(getApplicationContext(), "手机号长度不对");
-			// v.setFocusable(true);
-			// v.setFocusableInTouchMode(true);
-			// v.requestFocus();
-		}
-		if (!hasFocus && merchant_num.length() == 11) {
-			Map<String, String> data = new HashMap<String, String>();
-			data.put("bizName", "20000");
-			data.put("method", "20002");
-			data.put("referrerTel", merchant_num);
-
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
-
-						@Override
-						public void onFinish(final ResponseData responseData) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											textView_merchant_name.setText(result
-													.getString("referrerName"));
-											referrerUserId = result
-													.getString("referrerUserId");
-										} catch (JSONException e) {
-										}
-									} else {
-										Utity.showToast(
-												getApplicationContext(),
-												responseData.getMsg());
-									}
-
-								}
-							});
-						}
-
-						@Override
-						public void onError(Exception e) {
-							// TODO 自动生成的方法存根
-
-						}
-					});
-
-		}
-
-	}
+	
 }

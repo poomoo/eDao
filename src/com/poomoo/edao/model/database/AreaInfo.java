@@ -1,5 +1,7 @@
 package com.poomoo.edao.model.database;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * 
  * @ClassName AreaInfo
@@ -7,7 +9,7 @@ package com.poomoo.edao.model.database;
  * @author 李苜菲
  * @date 2015年8月16日 下午10:45:03
  */
-public class AreaInfo {
+public class AreaInfo extends DataSupport{
 	private String area_id = "";
 	private String area_name = "";
 	private CityInfo cityInfo;

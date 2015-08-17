@@ -3,6 +3,8 @@ package com.poomoo.edao.model.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * 
  * @ClassName ProvinceInfo
@@ -10,7 +12,7 @@ import java.util.List;
  * @author 李苜菲
  * @date 2015年8月16日 下午10:50:26
  */
-public class ProvinceInfo {
+public class ProvinceInfo extends DataSupport{
 
 	private String province_id = "";
 	private String province_name = "";

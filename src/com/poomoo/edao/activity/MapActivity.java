@@ -74,9 +74,10 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		setContentView(R.layout.activity_map);
 
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-		init();
 		initLocation();
 		mLocationClient.start();
+		
+		init();
 
 		bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
 		mMapView = (MapView) findViewById(R.id.bmapView);
