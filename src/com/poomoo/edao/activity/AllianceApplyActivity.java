@@ -61,7 +61,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "",
-			referrerUserId = "", referrerName = "";
+			referrerUserId = "", referrerName = "", curProvince = "",
+			curCity = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
 
 	public LocationClient mLocationClient = null;
@@ -123,13 +124,11 @@ public class AllianceApplyActivity extends BaseActivity implements
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			location.getCity();
-			location.getProvince();
-			location.getStreet();
-			location.getCityCode();
-			System.out.println("onReceiveLocation:"+location.getProvince() + ":"
-					+ location.getCity() + ":" + location.getStreet() + ":"
-					+ location.getCityCode());
+			curCity = location.getCity();
+			curProvince = location.getProvince();
+			System.out.println("onReceiveLocation:" + location.getProvince()
+					+ ":" + location.getCity() + ":" + location.getStreet()
+					+ ":" + location.getCityCode());
 			mLocationClient.unRegisterLocationListener(myListener);
 
 		}
@@ -155,6 +154,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 	}
 
 	private void select_city() {
+		CityPicker.province_name=curProvince;
+		CityPicker.city_name=curCity;
 		// 实例化SelectPicPopupWindow
 		select_City_PopupWindow = new Select_City_PopupWindow(
 				AllianceApplyActivity.this, itemsOnClick);
@@ -458,5 +459,5 @@ public class AllianceApplyActivity extends BaseActivity implements
 		if (progressDialog != null)
 			progressDialog.dismiss();
 	}
-	
+
 }

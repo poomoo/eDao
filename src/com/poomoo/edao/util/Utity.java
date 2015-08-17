@@ -6,6 +6,7 @@ import java.util.List;
 import org.litepal.crud.DataSupport;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.widget.Toast;
 
 import com.poomoo.edao.model.database.AreaInfo;
@@ -88,4 +89,52 @@ public class Utity {
 		return (ArrayList<AreaInfo>) areaList;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: getProvincePosition
+	 * @Description: TODO 查找某省份所在表中位置
+	 * @author 李苜菲
+	 * @return
+	 * @return int
+	 * @throws
+	 * @date 2015年8月17日下午9:53:53
+	 */
+	public static int getProvincePosition(ArrayList<ProvinceInfo> provinceList,
+			String province) {
+		System.out.println("getProvincePosition:" + province);
+		int i = 0;
+		for (ProvinceInfo provinceInfo : provinceList) {
+			i++;
+			System.out.println("provinceInfo.getProvince_name():"
+					+ provinceInfo.getProvince_name() + "i:" + i);
+			if (provinceInfo.getProvince_name().equals(province))
+				return i - 1;
+		}
+		return 0;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: getCityPosition
+	 * @Description: TODO 查找某城市所在表中位置
+	 * @author 李苜菲
+	 * @return
+	 * @return int
+	 * @throws
+	 * @date 2015年8月17日下午9:57:59
+	 */
+	public static int getCityPosition(ArrayList<CityInfo> cityList, String city) {
+		System.out.println("getCityPosition:" + city);
+		int i = 0;
+		for (CityInfo cityInfo : cityList) {
+			i++;
+			System.out.println("cityInfo.getCity_name():"
+					+ cityInfo.getCity_name() + "i:" + i);
+			if (cityInfo.getCity_name().equals(city))
+				return i - 1;
+		}
+		return 0;
+	}
 }
