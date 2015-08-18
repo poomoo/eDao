@@ -1,11 +1,18 @@
 package com.poomoo.edao.util;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.litepal.crud.DataSupport;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
@@ -239,4 +246,47 @@ public class Utity {
 		});
 	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: revitionImageSize
+	 * @Description: TODO 缩小图片显示
+	 * @author 李苜菲
+	 * @return
+	 * @return Bitmap
+	 * @throws
+	 * @date 2015年8月18日下午10:45:00
+	 */
+	public static Bitmap revitionImageSize(String path) {
+		BufferedInputStream in;
+		Bitmap bitmap = null;
+		try {
+			in = new BufferedInputStream(new FileInputStream(new File(path)));
+
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(in, null, options);
+			in.close();
+			int i = 0;
+
+			while (true) {
+				if ((options.outWidth >> i <= 1000)
+						&& (options.outHeight >> i <= 1000)) {
+					in = new BufferedInputStream(new FileInputStream(new File(
+							path)));
+					options.inSampleSize = (int) Math.pow(2.0D, i);
+					options.inJustDecodeBounds = false;
+					bitmap = BitmapFactory.decodeStream(in, null, options);
+					break;
+				}
+				i += 1;
+			}
+
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		} finally {
+			return bitmap;
+		}
+	}
 }
