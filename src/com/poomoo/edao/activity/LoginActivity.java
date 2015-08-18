@@ -80,10 +80,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(new Intent(LoginActivity.this,
 					NavigationActivity.class));
 			finish();
-		}else{
-			if(!TextUtils.isEmpty(loginsp.getString("tel", "")))
+		} else {
+			if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
 				editText_phone.setText(loginsp.getString("tel", ""));
-			if(!TextUtils.isEmpty(loginsp.getString("password", "")))
+			if (!TextUtils.isEmpty(loginsp.getString("password", "")))
 				editText_password.setText(loginsp.getString("password", ""));
 		}
 	}
@@ -114,44 +114,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			data.put("password", passWord);
 
 			showProgressDialog();
-			// RequestQueue mQueue = Volley.newRequestQueue(this);
-			// System.out.println("eDaoClientConfig.url:" +
-			// eDaoClientConfig.url);
-			// StringRequest stringRequest = new StringRequest(Method.POST,
-			// eDaoClientConfig.url, new Listener<String>() {
-			// @Override
-			// public void onResponse(String response) {
-			// // TODO 自动生成的方法存根
-			// closeProgressDialog();
-			// System.out.println("onResponse" + response);
-			// }
-			// }, new ErrorListener() {
-			// @Override
-			// public void onErrorResponse(VolleyError error) {
-			// // TODO 自动生成的方法存根
-			// closeProgressDialog();
-			// System.out.println("onErrorResponse"
-			// + error.getMessage());
-			// }
-			// }) {
-			// @Override
-			// protected Map<String, String> getParams()
-			// throws AuthFailureError {
-			// Map<String, String> data = new HashMap<String, String>();
-			// data.put("bizName", "10000");
-			// data.put("method", "10001");
-			// data.put("tel", phoneNum);
-			// data.put("password", passWord);
-			// Map<String, String> map = new HashMap<String, String>();
-			// map.put("jsonData", data.toString());
-			// System.out.println("map:" + map);
-			// return map;
-			// }
-			//
-			// };
-			//
-			// mQueue.add(stringRequest);
-
 			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 					new HttpCallbackListener() {
 						@Override
@@ -179,6 +141,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												loginResData.getRealName());
 										editor.putString("tel",
 												loginResData.getTel());
+										editor.putString("type", loginResData.getType());
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();

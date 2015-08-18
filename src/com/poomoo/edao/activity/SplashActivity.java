@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.litepal.tablemanager.Connector;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -16,8 +14,12 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.database.ProvinceInfo;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;
@@ -30,6 +32,9 @@ public class SplashActivity extends BaseActivity {
 
 	private static String DB_PATH = "/data/data/com.poomoo.edao/databases/";
 	private static String DB_NAME = "eDao.db";
+
+	public LocationClient mLocationClient = null;
+	public BDLocationListener myListener = new MyLocationListener();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,11 +60,11 @@ public class SplashActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		// 导入数据库文件
 		importDB();
-//		SQLiteDatabase db = Connector.getDatabase();  
-//		ProvinceInfo provinceInfo=new ProvinceInfo();
-//		provinceInfo.setProvince_id("110000");
-//		provinceInfo.setProvince_name("北京市");
-//		provinceInfo.save();
+
+		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener);
+		initLocation();
+		mLocationClient.start();
 
 		imageView = (ImageView) findViewById(R.id.splash_loading_item);
 		Animation translate = AnimationUtils.loadAnimation(this,
@@ -100,8 +105,8 @@ public class SplashActivity extends BaseActivity {
 			if (!dir.exists())
 				dir.mkdir();
 			System.out.println();
-			boolean isExists=(new File(databaseFilename)).exists();
-			System.out.println("isExists:"+isExists);
+			boolean isExists = (new File(databaseFilename)).exists();
+			System.out.println("isExists:" + isExists);
 			// 如果在目录中不存在 .db文件，则从res\assets目录中复制这个文件到该目录
 			if (!isExists) {
 				System.out.println("文件不存在");
@@ -119,6 +124,36 @@ public class SplashActivity extends BaseActivity {
 			}
 			System.out.println("导入数据库文件结束");
 		} catch (Exception e) {
+		}
+	}
+
+	private void initLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+		option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
+		int span = 1 * 10 * 1000;
+
+		option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+		option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
+		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
+		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+		option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+		option.setIsNeedLocationDescribe(true);// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+		option.setIsNeedLocationPoiList(true);// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+		mLocationClient.setLocOption(option);
+	}
+
+	public class MyLocationListener implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			sp = getSharedPreferences("location", Context.MODE_PRIVATE);
+			editor = sp.edit();
+			editor.putString("province", location.getProvince());
+			editor.putString("city", location.getCity());
+			editor.commit();
+			mLocationClient.unRegisterLocationListener(myListener);
 		}
 	}
 }

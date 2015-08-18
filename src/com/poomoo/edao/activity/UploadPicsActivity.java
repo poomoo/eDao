@@ -1,15 +1,38 @@
 package com.poomoo.edao.activity;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
@@ -18,8 +41,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
 
 public class UploadPicsActivity extends BaseActivity implements OnClickListener {
@@ -43,6 +71,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private static final String IMAGE_UNSPECIFIED = "image/*";
 	private Bitmap photo;
 	private int flag = 0;
+
+	private String userId = "", path1 = "", path2 = "", path3 = "", path4 = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +109,10 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		frameLayout_business_license.setOnClickListener(this);
 		button_upload.setOnClickListener(this);
 
+		SharedPreferences sp = getSharedPreferences("userInfo",
+				Context.MODE_PRIVATE);
+		userId = sp.getString("userId", "");
+
 	}
 
 	@Override
@@ -102,6 +136,9 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			select_pics();
 			break;
 		case R.id.uploadpics_btn_upload:
+			// uploadUserInfo();
+			// upload();
+			doPost();
 			break;
 		}
 
@@ -189,45 +226,194 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 					// 这个方法是根据Uri获取Bitmap图片的静态方法
 					photo = MediaStore.Images.Media.getBitmap(
 							this.getContentResolver(), mImageCaptureUri);
-
+					String imagePath;
+					Cursor cursor = getContentResolver().query(
+							mImageCaptureUri,
+							new String[] { MediaStore.Images.Media.DATA },
+							null, null, null);
+					cursor.moveToFirst();
+					int columnIndex = cursor
+							.getColumnIndex(MediaStore.Images.Media.DATA);
+					imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
+					cursor.close();
 					if (photo != null) {
-						System.out.println("进入setImage");
-						setImage();
+						System.out.println("进入setImage:" + imagePath);
+						setImage(imagePath);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-				// Bundle extras = data.getExtras();
-				// if (extras != null) {
-				// photo = extras.getParcelable("data");
-				// setImage();
-				// }
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 
 	}
 
-	private void setImage() {
+	private void setImage(String path) {
 		switch (flag) {
 		case 1:
 			textView_identitycard_front.setText("");
 			imageView_identitycard_front.setImageBitmap(photo);
+			path1 = path;
 			break;
 		case 2:
 			textView_identitycard_back.setText("");
 			imageView_identitycard_back.setImageBitmap(photo);
+			path2 = path;
 			break;
 		case 3:
 			textView_identitycard_inhand.setText("");
 			imageView_identitycard_inhand.setImageBitmap(photo);
+			path3 = path;
 			break;
 		case 4:
 			textView_business_license.setText("");
 			imageView_business_license.setImageBitmap(photo);
+			path4 = path;
 			break;
 		}
 	}
+
+	private boolean uploadUserInfo() {
+		RequestParams params = new RequestParams();
+		JSONObject jsonObject = new JSONObject();
+
+		try {
+			// jsonObject.put("bizName", "10000");
+			// jsonObject.put("method", "10018");
+			// jsonObject.put("userId", userId);
+			// jsonObject.put("imageType", "1");
+			//
+			// String strJson = new String(jsonObject.toString().getBytes(),
+			// "UTF-8");
+
+			params.put("userId", userId);
+			File file1 = new File(path1);
+			File file2 = new File(path2);
+			params.put("file1", file1);
+			params.put("file2", file2);
+
+			System.out.println("url:" + eDaoClientConfig.imageurl + "\n"
+					+ "params:" + params);
+
+			// 异步的客户端对象
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.post(eDaoClientConfig.imageurl, params,
+					new AsyncHttpResponseHandler() {
+						Message message = new Message();
+
+						@Override
+						public void onFailure(Throwable arg0, String arg1) {
+							message.what = 2;
+							myHandler.sendMessage(message);
+						}
+
+						@Override
+						public void onSuccess(String arg0) {
+							message.what = 1;
+							myHandler.sendMessage(message);
+							System.out.println(arg0);
+						}
+
+					});
+		} catch (Exception e) {
+			System.out.println("异常" + e.getMessage().toString());
+		}
+		return true;
+	}
+
+	private void upload() {
+		HttpParams params = new BasicHttpParams(); // 实例化Post参数对象
+		HttpConnectionParams.setConnectionTimeout(params, 1 * 10 * 1000); // 设置请求超时
+		HttpConnectionParams.setSoTimeout(params, 1 * 10 * 1000); // 设置响应超时
+		HttpClient client = new DefaultHttpClient(params); // 实例化一个连接对象
+		HttpPost post = new HttpPost(eDaoClientConfig.imageurl); // 根据Post参数,实例化一个Post对象
+
+		MultipartEntity entity = new MultipartEntity(); // 实例化请求实体,请求正文
+		List<File> list = new ArrayList<File>();
+		list.add(new File(path1)); // 创建File
+		list.add(new File(path2)); // 创建File
+
+		for (int i = 0; i < list.size(); i++) {
+			ContentBody body = new FileBody(list.get(i));
+			entity.addPart("file", body); // 表单字段名
+		}
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
+		nameValuePair.add(new BasicNameValuePair("userId", userId));
+		Message message = new Message();
+		try {
+			HttpEntity entity1 = new UrlEncodedFormEntity(nameValuePair,
+					HTTP.UTF_8);
+			System.out.println("entity1:" + entity1.toString());
+			post.setEntity(entity1);
+			// post.setEntity(entity); // 将请求实体保存到Post的实体参数中
+			System.out.println("post:" + post.toString());
+
+			HttpResponse response = client.execute(post); // 执行Post方法
+			if (response.getStatusLine().getStatusCode() == 200)
+				message.what = 1;
+			else
+				message.what = 2;
+			// return EntityUtils.toString(response.getEntity(), "UTF-8"); //
+			// 根据字符编码返回字符串
+		} catch (Exception e) {
+			message.what = 2;
+			System.out.println("Exception:" + e.getMessage());
+		} finally {
+			client.getConnectionManager().shutdown(); // 释放连接所有资源
+			myHandler.sendMessage(message);
+		}
+	}
+
+	private void doPost() {
+		// 获取HttpClient对象
+		HttpClient httpClient = new DefaultHttpClient();
+		// 新建HttpPost对象
+		HttpPost httpPost = new HttpPost(eDaoClientConfig.imageurl);
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
+
+		nameValuePair.add(new BasicNameValuePair("userId", userId));
+		// 设置字符集
+		HttpEntity entity;
+		Message message = new Message();
+		try {
+			entity = new UrlEncodedFormEntity(nameValuePair, HTTP.UTF_8);
+
+			// 设置参数实体
+			httpPost.setEntity(entity);
+
+			HttpResponse httpResp = httpClient.execute(httpPost);
+			// 判断是够请求成功
+			if (httpResp.getStatusLine().getStatusCode() == 200) {
+				// 获取返回的数据
+				String result = EntityUtils.toString(httpResp.getEntity(),
+						"UTF-8");
+				message.what = 1;
+			} else {
+				// Log.i("HttpPost", "HttpPost方式请求失败");
+				message.what = 2;
+			}
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			message.what = 2;
+			System.out.println("Exception:" + e.getMessage());
+		}
+
+	}
+
+	Handler myHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			if (msg.what == 1) {
+
+				Toast.makeText(getApplicationContext(), "上传成功",
+						Toast.LENGTH_LONG).show();
+			} else {
+
+				Toast.makeText(getApplicationContext(), "上传失败",
+						Toast.LENGTH_LONG).show();
+			}
+			super.handleMessage(msg);
+		}
+	};
 
 }

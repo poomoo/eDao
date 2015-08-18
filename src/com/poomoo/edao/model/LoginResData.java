@@ -12,6 +12,7 @@ public class LoginResData {
 	private String userId = "";
 	private String realName = "";
 	private String tel = "";
+	private String type = "";
 
 	public String getUserId() {
 		return this.userId;
@@ -37,5 +38,12 @@ public class LoginResData {
 		this.tel = tel;
 	}
 
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

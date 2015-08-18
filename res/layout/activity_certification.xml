@@ -89,14 +89,14 @@
                 android:layout_height="match_parent" />
 
             <EditText
-                android:id="@+id/registration_editText_"
+                android:id="@+id/registration_editText_idNum"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/style_background"
+                android:digits="0123456789xyzXYZ"
                 android:hint="请输入身份证号"
                 android:inputType="number"
-                android:digits="0123456789xyzXYZ"
                 android:paddingLeft="8dp"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="left|center"
-                    android:hint="银行"
+                    android:hint="开户省"
                     android:textSize="@dimen/textsize14" />
 
                 <ImageView
@@ -192,7 +192,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="left|center"
-                    android:hint="银行"
+                    android:hint="开户市"
                     android:textSize="@dimen/textsize14" />
 
                 <ImageView
@@ -321,6 +321,7 @@
                 android:background="@drawable/style_background"
                 android:hint="请输入银行账号"
                 android:inputType="number"
+                android:maxLength="19"
                 android:paddingLeft="8dp"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
@@ -357,6 +358,7 @@
                 android:background="@drawable/style_background"
                 android:hint="请确定银行账号"
                 android:inputType="number"
+                android:maxLength="19"
                 android:paddingLeft="8dp"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>

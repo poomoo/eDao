@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/popup_select_pic_res_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/style_popup_select_pic_res_pressed"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="拍照"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/style_popup_select_pic_res_pressed"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="从相册中选择"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />

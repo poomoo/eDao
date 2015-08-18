@@ -129,6 +129,9 @@ public class ReturnNavigation extends Fragment {
 		case "EvaluationListActivity":
 			textView_title.setText("评价");
 			break;
+		case "CertificationActivity":
+			textView_title.setText("实名认证");
+			break;
 
 		}
 
