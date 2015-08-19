@@ -2,6 +2,7 @@ package com.poomoo.edao.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.LoginActivity;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 
 /**
  * 
@@ -29,6 +33,8 @@ public class Fragment_Personal_Center extends Fragment implements
 	private LinearLayout layout_credit, layout_bankaccount,
 			layout_accountpassword, layout_paypassword, layout_twodimencode;
 	private Button button_logout;
+
+	private MessageBox_YESNO box_YESNO;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -89,6 +95,20 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_layout_twodimencode:
 			break;
 		case R.id.personalcenter_btn_logout:
+			box_YESNO = new MessageBox_YESNO(getActivity());
+			box_YESNO.showDialog("确定退出？", new DialogResultListener() {
+
+				@Override
+				public void onFinishDialogResult(int result) {
+					// TODO 自动生成的方法存根
+					if (result == 1) {
+						startActivity(new Intent(getActivity(),
+								LoginActivity.class));
+						getActivity().finish();
+					}
+
+				}
+			});
 			break;
 		}
 

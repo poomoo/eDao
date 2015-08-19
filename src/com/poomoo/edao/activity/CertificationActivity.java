@@ -7,8 +7,8 @@ import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,7 +32,6 @@ import com.poomoo.edao.adapter.CitySpinnerAdapter;
 import com.poomoo.edao.adapter.ProvinceSpinnerAdapter;
 import com.poomoo.edao.adapter.RegistrationSpinnerAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.LoginResData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
@@ -40,7 +39,6 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
-import com.poomoo.edao.widget.MessageBox_YESNO;
 
 /**
  * 
@@ -51,8 +49,7 @@ import com.poomoo.edao.widget.MessageBox_YESNO;
  */
 public class CertificationActivity extends BaseActivity implements
 		OnClickListener {
-	private EditText editText_realName, editText_idNum,
-			editText_openaccountbank, editText_accountnum,
+	private EditText editText_realName, editText_idNum, editText_accountnum,
 			editText_accountnumagain;
 	private Button button_next;
 	private PopupWindow popupWindow;
@@ -67,16 +64,20 @@ public class CertificationActivity extends BaseActivity implements
 	private ArrayList<CityInfo> list_city;
 	private List<HashMap<String, String>> list_bank;
 	private ListView listView;
-	private String province_name = "", province_id = "", city_name = "";
 
-	private SharedPreferences sp = null;
+	private SharedPreferences sharedPreferences_location = null,
+			sharedPreferences_certificaitonInfo = null;
+	private Editor editor = null;
 	private final String[] strbank = new String[] { "中国建设银行", "中国工商银行",
-			"中国农业银行", "中国银行", "民生银行", "招商银行" };
+			"中国农业银行", "中国银行", "招商银行" };
+	private String province_name = "", province_id = "", city_name = "",
+			city_id = "";
 	private String realName = "", idNum = "", province = "", city = "",
-			bank = "", openbank = "", account1 = "", account2 = "";
+			bank = "", account1 = "", account2 = "";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
+	private boolean isUpload = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,6 @@ public class CertificationActivity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		editText_realName = (EditText) findViewById(R.id.registration_editText_realName);
 		editText_idNum = (EditText) findViewById(R.id.registration_editText_idNum);
-		editText_openaccountbank = (EditText) findViewById(R.id.registration_editText_openaccountbank);
 		editText_accountnum = (EditText) findViewById(R.id.registration_editText_accountnum);
 		editText_accountnumagain = (EditText) findViewById(R.id.registration_editText_accountnumagain);
 		textView_province = (TextView) findViewById(R.id.registration_textView_province);
@@ -103,17 +103,44 @@ public class CertificationActivity extends BaseActivity implements
 		layout_bank = (LinearLayout) findViewById(R.id.registration_layout_bank);
 		button_next = (Button) findViewById(R.id.registration_btn_confirm);
 
-		sp = getSharedPreferences("location", Context.MODE_PRIVATE);
-		province_name = sp.getString("province", "");
-		city_name = sp.getString("city", "");
-		textView_province.setText(province_name);
-		textView_city.setText(city_name);
-
+		sharedPreferences_certificaitonInfo = getSharedPreferences(
+				"certificaitonInfo", Context.MODE_PRIVATE);
+		if (sharedPreferences_certificaitonInfo.getBoolean("uploadStatus",
+				false)) {
+			province_name = sharedPreferences_certificaitonInfo.getString(
+					"bankProvince", "");
+			city_name = sharedPreferences_certificaitonInfo.getString(
+					"bankCity", "");
+			textView_province.setText(province_name);
+			textView_city.setText(city_name);
+			editText_realName.setText(sharedPreferences_certificaitonInfo
+					.getString("realName", ""));
+			editText_idNum.setText(sharedPreferences_certificaitonInfo
+					.getString("idCardNum", ""));
+			textView_bank.setText(sharedPreferences_certificaitonInfo
+					.getString("bankName", ""));
+			editText_accountnum.setText(sharedPreferences_certificaitonInfo
+					.getString("bankCardId", ""));
+			editText_accountnumagain
+					.setText(sharedPreferences_certificaitonInfo.getString(
+							"bankCardId", ""));
+			isUpload = true;
+		} else {
+			sharedPreferences_location = getSharedPreferences("location",
+					Context.MODE_PRIVATE);
+			province_name = sharedPreferences_location
+					.getString("province", "");
+			city_name = sharedPreferences_location.getString("city", "");
+			textView_province.setText(province_name);
+			textView_city.setText(city_name);
+		}
 		list_province = Utity.getProvinceList();
 		province_id = list_province.get(
 				Utity.getProvincePosition(list_province, province_name))
 				.getProvince_id();
 		list_city = Utity.getCityList(province_id);
+		city_id = list_city.get(Utity.getCityPosition(list_city, city_name))
+				.getCity_id();
 
 		list_bank = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> bank_data;
@@ -154,7 +181,10 @@ public class CertificationActivity extends BaseActivity implements
 					adapter_bank);
 			break;
 		case R.id.registration_btn_confirm:
-			if (checkInput()) {
+			if (isUpload) {
+				openActivity(UploadPicsActivity.class);
+				finish();
+			} else if (checkInput()) {
 				certificate();
 			}
 			break;
@@ -171,11 +201,10 @@ public class CertificationActivity extends BaseActivity implements
 		data.put("userId", sp.getString("userId", ""));
 		data.put("realName", realName);
 		data.put("idCardNum", idNum);
-		data.put("bankProvince", province);
-		data.put("bankCity", city);
+		data.put("bankProvince", province_id);
+		data.put("bankCity", city_id);
 		data.put("bankName", bank);
-		data.put("bankDetailsName", openbank);
-		data.put("bankCardId", account1);
+		data.put("bankCardId", Utity.trimAll(account1));
 
 		showProgressDialog();
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
@@ -193,6 +222,19 @@ public class CertificationActivity extends BaseActivity implements
 											CertificationActivity.this);
 									box_YES.showDialog(responseData.getMsg());
 								} else {
+									sharedPreferences_certificaitonInfo = getSharedPreferences(
+											"certificaitonInfo",
+											Context.MODE_PRIVATE);
+									editor = sharedPreferences_certificaitonInfo
+											.edit();
+									editor.putString("realName", realName);
+									editor.putString("idCardNum", idNum);
+									editor.putString("bankProvince", province);
+									editor.putString("bankCity", city);
+									editor.putString("bankName", bank);
+									editor.putString("bankCardId", account1);
+									editor.putBoolean("uploadStatus", true);
+									editor.commit();
 									openActivity(UploadPicsActivity.class);
 									CertificationActivity.this.finish();
 								}
@@ -249,13 +291,6 @@ public class CertificationActivity extends BaseActivity implements
 			Utity.showToast(getApplicationContext(), "请选择开户银行");
 			return false;
 		}
-		openbank = editText_openaccountbank.getText().toString().trim();
-		if (TextUtils.isEmpty(openbank)) {
-			editText_openaccountbank.setFocusable(true);
-			editText_openaccountbank.requestFocus();
-			Utity.showToast(getApplicationContext(), "请输入开户银行");
-			return false;
-		}
 		account1 = editText_accountnum.getText().toString().trim();
 		if (TextUtils.isEmpty(account1)) {
 			editText_accountnum.setFocusable(true);
@@ -270,7 +305,7 @@ public class CertificationActivity extends BaseActivity implements
 			Utity.showToast(getApplicationContext(), "请确定银行账号");
 			return false;
 		}
-		if (account1.equals(account2)) {
+		if (!account1.equals(account2)) {
 			Utity.showToast(getApplicationContext(), "两次输入的账号不一样");
 			return false;
 		}
@@ -368,6 +403,7 @@ public class CertificationActivity extends BaseActivity implements
 					long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).getCity_name());// 设置所选的item作为下拉框的标题
+				city_id = list.get(arg2).getCity_id();
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;

@@ -132,6 +132,15 @@ public class ReturnNavigation extends Fragment {
 		case "CertificationActivity":
 			textView_title.setText("实名认证");
 			break;
+		case "UploadPicsActivity":
+			textView_title.setText("上传照片");
+			break;
+		case "GetIdentityCodeActivity":
+			textView_title.setText("获取验证码");
+			break;
+		case "ResetPasswrodActivity":
+			textView_title.setText("重置密码");
+			break;
 
 		}
 

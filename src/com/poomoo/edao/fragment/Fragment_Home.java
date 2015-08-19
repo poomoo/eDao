@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.LinearGradient;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.CertificationActivity;
 import com.poomoo.edao.activity.CooperationActivity;
 import com.poomoo.edao.activity.CreditManageActivity;
 import com.poomoo.edao.activity.GetDetailActivity;
@@ -142,7 +144,14 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
-		if (arg2 != 8)
+		if (arg2 == 6 || arg2 == 2) {
+			SharedPreferences sp = getActivity().getSharedPreferences(
+					"userInfo", Context.MODE_PRIVATE);
+			if (!sp.getString("type", "1").equals("2")) {
+				startActivity(new Intent(getActivity(),
+						CertificationActivity.class));
+			}
+		} else if (arg2 != 8)
 			startActivity(new Intent(getActivity(), outIntent[arg2]));
 		else {
 			FragmentManager fragmentManager = getFragmentManager();

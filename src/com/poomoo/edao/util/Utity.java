@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.Selection;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -258,6 +259,7 @@ public class Utity {
 	 * @date 2015年8月18日下午10:45:00
 	 */
 	public static Bitmap revitionImageSize(String path) {
+		System.out.println("revitionImageSize:" + path);
 		BufferedInputStream in;
 		Bitmap bitmap = null;
 		try {
@@ -275,6 +277,8 @@ public class Utity {
 					in = new BufferedInputStream(new FileInputStream(new File(
 							path)));
 					options.inSampleSize = (int) Math.pow(2.0D, i);
+					// options.inSampleSize = calculateInSampleSize(options,
+					// 480, 800);
 					options.inJustDecodeBounds = false;
 					bitmap = BitmapFactory.decodeStream(in, null, options);
 					break;
@@ -285,8 +289,56 @@ public class Utity {
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			System.out.println("revitionImageSize Exception：" + e.getMessage());
 		} finally {
+			System.out.println("revitionImageSize结束 bitmap:" + bitmap);
 			return bitmap;
 		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: getBitMap
+	 * @Description: TODO 获取Bitmap
+	 * @author 李苜菲
+	 * @return
+	 * @return Bitmap
+	 * @throws
+	 * @date 2015-8-19下午3:28:53
+	 */
+	public static Bitmap getBitMap(String path) {
+		System.out.println("getBitMap path:" + path);
+		Bitmap bitmap = null;
+		BufferedInputStream in;
+
+		try {
+			in = new BufferedInputStream(new FileInputStream(new File(path)));
+
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			bitmap = BitmapFactory.decodeStream(in, null, options);
+			in.close();
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: trimAll
+	 * @Description: TODO 去掉所有空格
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws
+	 * @date 2015-8-19下午3:01:50
+	 */
+	public static String trimAll(String string) {
+		return string.replaceAll(" ", "");
+
 	}
 }

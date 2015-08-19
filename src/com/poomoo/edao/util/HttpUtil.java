@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.google.gson.Gson;
+import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 
 public class HttpUtil {
@@ -33,8 +34,8 @@ public class HttpUtil {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestMethod("POST");
-					connection.setReadTimeout(1 * 30 * 1000);
-					connection.setConnectTimeout(1 * 30 * 1000);
+					connection.setReadTimeout(eDaoClientConfig.timeout);
+					connection.setConnectTimeout(eDaoClientConfig.timeout);
 					connection.setDoOutput(true);
 					connection.setDoInput(true);
 					// Post 请求不能使用缓存

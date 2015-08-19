@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -23,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,6 +31,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,12 +41,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
@@ -77,6 +71,13 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private ProgressDialog progressDialog;
 	private File file1 = null, file2 = null, file3 = null, file4 = null;
 	private Bitmap bitmap = null;
+	private int uploadCount = 0;
+	private List<File> filelist = null;
+	private SharedPreferences sharedPreferences_userInfo = null,
+			sharedPreferences_certificaitonInfo = null;
+	private Editor editor = null;
+	private final static String image_capture_path = Environment
+			.getExternalStorageDirectory() + "/" + "edao.temp";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,9 +114,40 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		frameLayout_business_license.setOnClickListener(this);
 		button_upload.setOnClickListener(this);
 
-		SharedPreferences sp = getSharedPreferences("userInfo",
+		sharedPreferences_userInfo = getSharedPreferences("userInfo",
 				Context.MODE_PRIVATE);
-		userId = sp.getString("userId", "");
+		userId = sharedPreferences_userInfo.getString("userId", "");
+
+		sharedPreferences_certificaitonInfo = getSharedPreferences(
+				"certificaitonInfo", Context.MODE_PRIVATE);
+		path1 = sharedPreferences_certificaitonInfo.getString("imagepath1", "");
+		path2 = sharedPreferences_certificaitonInfo.getString("imagepath2", "");
+		path3 = sharedPreferences_certificaitonInfo.getString("imagepath3", "");
+		path4 = sharedPreferences_certificaitonInfo.getString("imagepath4", "");
+
+		if (!TextUtils.isEmpty(path1)) {
+			imageView_identitycard_front.setImageBitmap(Utity
+					.revitionImageSize(path1));
+			textView_identitycard_front.setText("");
+		}
+
+		if (!TextUtils.isEmpty(path2)) {
+			imageView_identitycard_back.setImageBitmap(Utity
+					.revitionImageSize(path2));
+			textView_identitycard_back.setText("");
+		}
+
+		if (!TextUtils.isEmpty(path3)) {
+			imageView_identitycard_inhand.setImageBitmap(Utity
+					.revitionImageSize(path3));
+			textView_identitycard_inhand.setText("");
+		}
+
+		if (!TextUtils.isEmpty(path4)) {
+			imageView_business_license.setImageBitmap(Utity
+					.revitionImageSize(path4));
+			textView_business_license.setText("");
+		}
 
 	}
 
@@ -140,17 +172,49 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			select_pics();
 			break;
 		case R.id.uploadpics_btn_upload:
-			showProgressDialog();
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// TODO 自动生成的方法存根
-					upload();
-				}
-			}).start();
+
+			if (checkInput()) {
+				showProgressDialog();
+				// test();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						uploadCount = 0;
+						upload(filelist.get(uploadCount));
+					}
+				}).start();
+			}
 			break;
 		}
 
+	}
+
+	private boolean checkInput() {
+		// TODO 自动生成的方法存根
+		if (file1 == null) {
+			Utity.showToast(getApplicationContext(), "请选择身份证正面照");
+			return false;
+		}
+		if (file2 == null) {
+			Utity.showToast(getApplicationContext(), "请选择身份证背面照");
+			return false;
+		}
+		if (file3 == null) {
+			Utity.showToast(getApplicationContext(), "请选择手持证件照");
+			return false;
+		}
+		filelist = new ArrayList<File>();
+		filelist.add(file1);
+		filelist.add(file2);
+		filelist.add(file3);
+		if (file4 != null) {
+			// Utity.showToast(getApplicationContext(), "请选择营业执照");
+			// return false;
+			filelist.add(file4);
+		}
+
+		return true;
 	}
 
 	private void select_pics() {
@@ -171,10 +235,10 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			upload_Pics_PopupWindow.dismiss();
 			switch (view.getId()) {
 			case R.id.popup_select_pic_res_camera:
-				Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-						.fromFile(new File(Environment
-								.getExternalStorageDirectory(), flag + ".jpg")));
+				Intent intent1 = new Intent(
+						"android.media.action.IMAGE_CAPTURE");
+				intent1.putExtra(MediaStore.EXTRA_OUTPUT,
+						Uri.fromFile(new File(image_capture_path)));
 				startActivityForResult(intent1, PHOTOHRAPH);
 				break;
 
@@ -184,23 +248,22 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
 						IMAGE_UNSPECIFIED);
 				intent.putExtra("return-data", true);
-				// startActivityForResult(intent, PHOTOZOOM);
 				startActivityForResult(intent, PHOTORESOULT);
 				break;
 			}
 		}
 	};
 
-	private File saveBitmap(Bitmap bitmap, String imageName) {
+	private File saveBitmap(Bitmap bitmap, String path) {
 
-		File f = new File(Environment.getExternalStorageDirectory(), imageName);
+		File f = new File(path);
 		if (f.exists()) {
 			f.delete();
 		}
 
 		try {
 			FileOutputStream out = new FileOutputStream(f);
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 40, out);
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -217,15 +280,13 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			return;
 		// 拍照
 		if (requestCode == PHOTOHRAPH) {
-			// 设置文件保存路径这里放在跟目录下
-			String imagePath = Environment.getExternalStorageDirectory() + "/"
-					+ flag + ".jpg";
-			setImage(imagePath);
+			System.out.println("拍照返回");
+			setImage(image_capture_path);
 		}
-
-		if (data == null)
+		if (data == null) {
+			System.out.println("返回为空");
 			return;
-
+		}
 		// 处理结果
 		if (requestCode == PHOTORESOULT) {
 			// 取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
@@ -234,9 +295,6 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			// 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
 			if (mImageCaptureUri != null) {
 				try {
-					// 这个方法是根据Uri获取Bitmap图片的静态方法
-					photo = MediaStore.Images.Media.getBitmap(
-							this.getContentResolver(), mImageCaptureUri);
 					String imagePath;
 					Cursor cursor = getContentResolver().query(
 							mImageCaptureUri, new String[] { Media.DATA },
@@ -245,10 +303,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 					int columnIndex = cursor.getColumnIndex(Media.DATA);
 					imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
 					cursor.close();
-					if (photo != null) {
-						System.out.println("进入setImage:" + imagePath);
-						setImage(imagePath);
-					}
+					setImage(imagePath);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -259,64 +315,87 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	}
 
 	private void setImage(String path) {
+		photo = null;
 		switch (flag) {
 		case 1:
 			textView_identitycard_front.setText("");
+			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_identitycard_front.setImageBitmap(bitmap);
-			file1 = saveBitmap(bitmap, "1.jpg");
+			path1 = Environment.getExternalStorageDirectory() + "/"
+					+ "edao1.jpg";
+			file1 = saveBitmap(bitmap, path1);
 			break;
 		case 2:
 			textView_identitycard_back.setText("");
+			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_identitycard_back.setImageBitmap(bitmap);
-			file2 = saveBitmap(bitmap, "2.jpg");
+			path2 = Environment.getExternalStorageDirectory() + "/"
+					+ "edao2.jpg";
+			file2 = saveBitmap(bitmap, path2);
 			break;
 		case 3:
 			textView_identitycard_inhand.setText("");
+			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
+			System.out.println("bitmap:" + bitmap);
 			imageView_identitycard_inhand.setImageBitmap(bitmap);
-			file3 = saveBitmap(bitmap, "3.jpg");
+			path3 = Environment.getExternalStorageDirectory() + "/"
+					+ "edao3.jpg";
+			file3 = saveBitmap(bitmap, path3);
 			break;
 		case 4:
 			textView_business_license.setText("");
+			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_business_license.setImageBitmap(bitmap);
-			file4 = saveBitmap(bitmap, "4.jpg");
+			path4 = Environment.getExternalStorageDirectory() + "/"
+					+ "edao4.jpg";
+			file4 = saveBitmap(bitmap, path4);
 			break;
 		}
 	}
 
-	private void upload() {
-
+	private void upload(File file) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(eDaoClientConfig.imageurl); // 根据Post参数,实例化一个Post对象
 		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
-				1 * 10 * 1000);
+				eDaoClientConfig.timeout);
 		client.getParams().setParameter(
-				CoreConnectionPNames.CONNECTION_TIMEOUT, 1 * 10 * 1000);
+				CoreConnectionPNames.CONNECTION_TIMEOUT,
+				eDaoClientConfig.timeout);
 
 		MultipartEntity entity = new MultipartEntity(); // 实例化请求实体,请求正文
-		List<File> list = new ArrayList<File>();
-		// 创建File
-		list.add(file1);
-		list.add(file2);
-		for (int i = 0; i < list.size(); i++) {
-			ContentBody body = new FileBody(list.get(i));
-			entity.addPart("file", body); // 表单字段名
-		}
+		// List<File> list = new ArrayList<File>();
+		// // 创建File
+		// list.add(file1);
+		// list.add(file2);
+		// list.add(file3);
+		// list.add(file4);
+		// System.out.println("list.size():" + list.size());
+		// for (int i = 0; i < list.size(); i++) {
+		// ContentBody body = new FileBody(list.get(i));
+		// entity.addPart("file", body); // 表单字段名
+		// }
+		System.out.println("进入upload：" + "uploadCount" + ":" + uploadCount
+				+ "filelist.size" + ":" + filelist.size());
+		entity.addPart("file", new FileBody(file));
 
 		post.setEntity(entity); // 将请求实体保存到Post的实体参数中
 		Message message = new Message();
 		try {
+			entity.addPart("imageType", new StringBody(uploadCount + "1",
+					Charset.forName("utf-8")));
 			entity.addPart("userId",
 					new StringBody(userId, Charset.forName("utf-8")));
 			HttpResponse response;
 			response = client.execute(post);
 			// 执行Post方法
-			if (response.getStatusLine().getStatusCode() == 200)
+			if (response.getStatusLine().getStatusCode() == 200) {
+				uploadCount++;
 				message.what = 1;
-			else
+			} else
 				message.what = 2;
 			// return EntityUtils.toString(response.getEntity(), "UTF-8"); //
 			// 根据字符编码返回字符串
@@ -331,65 +410,33 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		}
 	}
 
-	private void test() {
-		RequestParams params = new RequestParams();
-		// params.addHeader("name", "value");
-		// params.addQueryStringParameter("userId", userId);
-
-		// 只包含字符串参数时默认使用BodyParamsEntity，
-		// 类似于UrlEncodedFormEntity（"application/x-www-form-urlencoded"）。
-		params.addBodyParameter("userId", userId);
-
-		// 加入文件参数后默认使用MultipartEntity（"multipart/form-data"），
-		// 如需"multipart/related"，xUtils中提供的MultipartEntity支持设置subType为"related"。
-		// 使用params.setBodyEntity(httpEntity)可设置更多类型的HttpEntity（如：
-		// MultipartEntity,BodyParamsEntity,FileUploadEntity,InputStreamUploadEntity,StringEntity）。
-		// 例如发送json参数：params.setBodyEntity(new StringEntity(jsonStr,charset));
-		params.addBodyParameter("file", file1);
-		params.addBodyParameter("file", file2);
-		final DecimalFormat df = new DecimalFormat("0.00");
-		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST, eDaoClientConfig.imageurl,
-				params, new RequestCallBack<String>() {
-
-					@Override
-					public void onStart() {
-					}
-
-					@Override
-					public void onLoading(long total, long current,
-							boolean isUploading) {
-						if (isUploading) {
-							System.out.println("上传进度:"
-									+ df.format(current / total) + "%");
-						} else {
-							System.out.println("上传结束");
-						}
-					}
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-						Toast.makeText(getApplicationContext(), "上传成功",
-								Toast.LENGTH_LONG).show();
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-						Toast.makeText(getApplicationContext(), "上传失败",
-								Toast.LENGTH_LONG).show();
-					}
-				});
-	}
-
 	Handler myHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			closeProgressDialog();
+
 			if (msg.what == 1) {
+				if (uploadCount < filelist.size())
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							upload(filelist.get(uploadCount));
+						}
+					}).start();
+				else {
+					closeProgressDialog();
+					editor = sharedPreferences_certificaitonInfo.edit();
+					editor.putString("imagepath1", path1);
+					editor.putString("imagepath2", path2);
+					editor.putString("imagepath3", path3);
+					editor.putString("imagepath4", path4);
+					editor.commit();
+					Toast.makeText(getApplicationContext(), "上传成功",
+							Toast.LENGTH_LONG).show();
+					finish();
+				}
 
-				Toast.makeText(getApplicationContext(), "上传成功",
-						Toast.LENGTH_LONG).show();
 			} else {
-
+				closeProgressDialog();
 				Toast.makeText(getApplicationContext(), "上传失败",
 						Toast.LENGTH_LONG).show();
 			}
