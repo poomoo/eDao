@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.LoginResData;
 import com.poomoo.edao.model.ResponseData;
@@ -49,6 +50,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private SharedPreferences loginsp;
 	private Editor editor = null;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		applicaiton=(eDaoClientApplicaiton)getApplication();
 		init();
 	}
 
@@ -77,14 +80,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		editor = loginsp.edit();
 		if (loginsp.getBoolean("isLogin", false)) {
+			applicaiton.setRealName(loginsp.getString("realName", ""));
+			applicaiton.setTel(loginsp.getString("tel", ""));
+			applicaiton.setUserId(loginsp.getString("userId", ""));
+			applicaiton.setType(loginsp.getString("type", ""));
 			startActivity(new Intent(LoginActivity.this,
 					NavigationActivity.class));
+			System.out.println("login:"+applicaiton.getRealName());
 			finish();
 		} else {
 			if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
 				editText_phone.setText(loginsp.getString("tel", ""));
-			if (!TextUtils.isEmpty(loginsp.getString("password", "")))
-				editText_password.setText(loginsp.getString("password", ""));
+			if (!TextUtils.isEmpty(loginsp.getString("passWord", "")))
+				editText_password.setText(loginsp.getString("passWord", ""));
 		}
 	}
 
@@ -99,7 +107,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(new Intent(this, RegistrationActivity.class));
 			break;
 		case R.id.login_textView_forget_password:
-			startActivity(new Intent(this, PassWordManageActivity.class));
+			startActivity(new Intent(this, GetIdentityCodeActivity.class));
 			break;
 
 		}
@@ -141,10 +149,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												loginResData.getRealName());
 										editor.putString("tel",
 												loginResData.getTel());
-										editor.putString("type", loginResData.getType());
+										editor.putString("type",
+												loginResData.getType());
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();
+										applicaiton.setRealName(loginResData
+												.getRealName());
+										applicaiton.setTel(loginResData
+												.getTel());
+										applicaiton.setUserId(loginResData
+												.getUserId());
+										applicaiton.setType(loginResData
+												.getType());
 										LoginActivity.this
 												.startActivity(new Intent(
 														LoginActivity.this,

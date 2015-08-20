@@ -22,15 +22,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.LocationClientOption.LocationMode;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.PayInfo;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -64,6 +61,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 			referrerUserId = "", referrerName = "", curProvince = "",
 			curCity = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +70,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_alliance_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		isPartener();
+		applicaiton=(eDaoClientApplicaiton)getApplication();
 		init();
-	}
-
-	private void isPartener() {
-		// TODO 自动生成的方法存根
-		SharedPreferences sp = getSharedPreferences("userInfo",
-				Context.MODE_PRIVATE);
-		if (!sp.getString("type", "1").equals("2")) {
-			openActivity(CertificationActivity.class);
-		}
-
 	}
 
 	private void init() {
@@ -104,11 +92,12 @@ public class AllianceApplyActivity extends BaseActivity implements
 		button_confirm.setOnClickListener(this);
 		textView_merchant_name.setOnClickListener(this);
 
+		textView_username.setText(applicaiton.getRealName());
+		textView_phonenum.setText(applicaiton.getTel());
+
 		// 取当前定位
-		SharedPreferences sp = getSharedPreferences("location",
-				Context.MODE_PRIVATE);
-		curProvince = sp.getString("province", "");
-		curCity = sp.getString("city", "");
+		curProvince = applicaiton.getCurProvince();
+		curCity = applicaiton.getCurCity();
 	}
 
 	@Override
@@ -151,7 +140,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 			if (view.getId() == R.id.popup_select_city_btn_confirm) {
 				select_City_PopupWindow.dismiss();
 				textView_zone.setText(CityPicker.getZone_string());
-				// getMoney();
+				getMoney();
 			}
 		}
 	};
@@ -263,8 +252,21 @@ public class AllianceApplyActivity extends BaseActivity implements
 								// TODO 自动生成的方法存根
 								closeProgressDialog();
 								if (responseData.getRsCode() == 1) {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+									PayInfo payInfo = gson.fromJson(
+											responseData.getJsonData(),
+											PayInfo.class);
+									Bundle pBundle = new Bundle();
+									pBundle.putString("userId",
+											payInfo.getUserId());
+									pBundle.putString("realName",
+											payInfo.getRealName());
+									pBundle.putString("tel", payInfo.getTel());
+									pBundle.putString("money", textView_money
+											.getText().toString());
+									openActivity(
+											TransferOfPaymentActivity2.class,
+											pBundle);
+									finish();
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());

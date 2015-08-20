@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.fragment.Fragment_Home;
 import com.poomoo.edao.fragment.Fragment_Personal_Center;
@@ -37,13 +38,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 
 	// 侧边栏
 	private TextView textView_userName, textView_userTel;
-	private SharedPreferences usersp;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
+		applicaiton=(eDaoClientApplicaiton)getApplication();
 		init();
 	}
 
@@ -65,15 +67,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		textView_userName = (TextView) findViewById(R.id.sidebar_textView_userName);
 		textView_userTel = (TextView) findViewById(R.id.sidebar_textView_userTel);
 
-		usersp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		// 是否实名认证
-		if (TextUtils.isEmpty(usersp.getString("realName", ""))) {
+		if (TextUtils.isEmpty(applicaiton.getRealName())) {
 			System.out.println("进行实名认证");
 			textView_userName.setText(eDaoClientConfig.certificate);
 			spark();
 		} else
-			textView_userName.setText(usersp.getString("realName", "用户名"));
-		textView_userTel.setText(usersp.getString("tel", ""));
+			textView_userName.setText(applicaiton.getRealName());
+		textView_userTel.setText(applicaiton.getTel());
 		textView_userName.setOnClickListener(this);
 
 	}

@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -36,14 +37,16 @@ public class ResetPasswrodActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String passWord1 = "", passWord2 = "";
 	private ProgressDialog progressDialog = null;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration);
+		setContentView(R.layout.activity_reset_password);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		applicaiton=(eDaoClientApplicaiton)getApplication();
 		init();
 	}
 
@@ -84,10 +87,8 @@ public class ResetPasswrodActivity extends BaseActivity implements
 		if (checkInput()) {
 			Map<String, String> data = new HashMap<String, String>();
 			data.put("bizName", "10000");
-			data.put("method", "10007");
-			SharedPreferences sp = getSharedPreferences("userInfo",
-					Context.MODE_PRIVATE);
-			data.put("userId", sp.getString("userId", ""));
+			data.put("method", "10006");
+			data.put("userId", applicaiton.getUserId());
 			data.put("password", passWord1);
 			showProgressDialog();
 			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,

@@ -3,6 +3,8 @@ package com.poomoo.edao.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +37,8 @@ public class Fragment_Personal_Center extends Fragment implements
 	private Button button_logout;
 
 	private MessageBox_YESNO box_YESNO;
+	private SharedPreferences sharedPreferencesUserInfo = null;
+	private Editor editor = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -78,6 +82,8 @@ public class Fragment_Personal_Center extends Fragment implements
 				R.id.personalcenter_layout_twodimencode);
 		button_logout = (Button) getView().findViewById(
 				R.id.personalcenter_btn_logout);
+
+		button_logout.setOnClickListener(this);
 	}
 
 	@Override
@@ -97,11 +103,16 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_btn_logout:
 			box_YESNO = new MessageBox_YESNO(getActivity());
 			box_YESNO.showDialog("确定退出？", new DialogResultListener() {
-
 				@Override
 				public void onFinishDialogResult(int result) {
 					// TODO 自动生成的方法存根
 					if (result == 1) {
+						sharedPreferencesUserInfo = getActivity()
+								.getSharedPreferences("userInfo",
+										Context.MODE_PRIVATE);
+						editor = sharedPreferencesUserInfo.edit();
+						editor.putBoolean("isLogin", false);
+						editor.commit();
 						startActivity(new Intent(getActivity(),
 								LoginActivity.class));
 						getActivity().finish();

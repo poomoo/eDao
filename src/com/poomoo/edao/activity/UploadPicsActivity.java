@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
 import com.poomoo.edao.util.Utity;
@@ -73,8 +74,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private Bitmap bitmap = null;
 	private int uploadCount = 0;
 	private List<File> filelist = null;
-	private SharedPreferences sharedPreferences_userInfo = null,
-			sharedPreferences_certificaitonInfo = null;
+	private eDaoClientApplicaiton applicaiton = null;
+	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
 	private final static String image_capture_path = Environment
 			.getExternalStorageDirectory() + "/" + "edao.temp";
@@ -86,6 +87,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		setContentView(R.layout.activity_uploadpics);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
 
@@ -114,9 +116,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		frameLayout_business_license.setOnClickListener(this);
 		button_upload.setOnClickListener(this);
 
-		sharedPreferences_userInfo = getSharedPreferences("userInfo",
-				Context.MODE_PRIVATE);
-		userId = sharedPreferences_userInfo.getString("userId", "");
+		userId = applicaiton.getUserId();
 
 		sharedPreferences_certificaitonInfo = getSharedPreferences(
 				"certificaitonInfo", Context.MODE_PRIVATE);

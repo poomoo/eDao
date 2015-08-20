@@ -3,8 +3,6 @@ package com.poomoo.edao.util;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.Selection;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -59,8 +56,9 @@ public class Utity {
 	 * @date 2015-8-17上午10:38:47
 	 */
 	public static ArrayList<ProvinceInfo> getProvinceList() {
-		ProvinceInfo provinceInfo = DataSupport.findFirst(ProvinceInfo.class);
-		System.out.println(provinceInfo.getProvince_name());
+		// ProvinceInfo provinceInfo =
+		// DataSupport.findFirst(ProvinceInfo.class);
+		// System.out.println(provinceInfo.getProvince_name());
 		List<ProvinceInfo> provinceList = DataSupport
 				.findAll(ProvinceInfo.class);
 		return (ArrayList<ProvinceInfo>) provinceList;

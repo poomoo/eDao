@@ -16,5 +16,6 @@
 
     <!-- DP -->
     <dimen name="margin5">5dp</dimen>
+    <dimen name="margin10">10dp</dimen>
 
 </resources>

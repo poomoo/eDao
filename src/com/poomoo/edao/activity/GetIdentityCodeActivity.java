@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.R.color;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -56,7 +58,7 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration);
+		setContentView(R.layout.activity_get_identity_code);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
@@ -69,6 +71,7 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 		editText_identity_code = (EditText) findViewById(R.id.get_identity_code_editText_identitynum);
 
 		button_identity_code = (Button) findViewById(R.id.get_identity_code_btn_identitynum);
+		button_next = (Button) findViewById(R.id.get_identity_code_btn_next);
 
 		button_identity_code.setOnClickListener(this);
 		button_next.setOnClickListener(this);
@@ -94,10 +97,20 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO 自动生成的方法存根
-				if (temp.toString().length() == 11)
+				if (temp.toString().trim().length() == 11) {
 					button_identity_code.setClickable(true);
-				else
+					button_identity_code
+							.setBackgroundResource(R.drawable.style_identy_button_yes_frame);
+					button_identity_code.setTextColor(Color
+							.parseColor("#0079ff"));
+					editText_identity_code.setFocusable(true);
+					editText_identity_code.requestFocus();
+				} else {
 					button_identity_code.setClickable(false);
+					button_identity_code
+							.setBackgroundResource(R.drawable.style_identy_button_no_frame);
+					button_identity_code.setTextColor(color.gray);
+				}
 			}
 		});
 	}
@@ -136,6 +149,7 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "10000");
 		data.put("method", "10003");
+		tel = editText_phone.getText().toString();
 		data.put("tel", tel);
 
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
@@ -258,6 +272,7 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 										startActivity(new Intent(
 												GetIdentityCodeActivity.this,
 												ResetPasswrodActivity.class));
+										finish();
 									}
 								}
 							});

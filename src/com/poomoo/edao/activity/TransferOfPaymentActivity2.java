@@ -1,8 +1,11 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,8 +23,16 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
  * 
@@ -34,10 +45,11 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		OnClickListener {
 
 	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel;
+			textView_balance, textView_channel, textView_control,
+			textView_money;
 	private EditText editText_pay_money, editText_pay_password,
 			editText_remark;
-	private LinearLayout layout_channel;
+	private LinearLayout layout_channel, layout_password, layout_control;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -45,6 +57,16 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 	private ChannelSpinnerAdapter adapter;
 	private List<HashMap<String, String>> list;
 	private ListView listView;
+
+	private eDaoClientApplicaiton applicaiton = null;
+	private String userId = "", realName = "", tel = "", money = "",
+			payType = "";
+	private static final String[] channel = new String[] { "意币支付", "现金支付",
+			"微信支付" };
+	private boolean isSelectedChannle = false, needPassword = false;
+	private ProgressDialog progressDialog;
+	private Gson gson = new Gson();
+	private MessageBox_YES box_YES;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +77,17 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		setContentView(R.layout.activity_transfer_of_payment2);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		getIntentData();
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
+	}
+
+	private void getIntentData() {
+		// TODO 自动生成的方法存根
+		userId = getIntent().getExtras().getString("userId");
+		realName = getIntent().getExtras().getString("realName");
+		tel = getIntent().getExtras().getString("tel");
+		money = getIntent().getExtras().getString("money");
 	}
 
 	private void init() {
@@ -64,13 +96,31 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		textView_payee_phonenum = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_phonenum);
 		textView_balance = (TextView) findViewById(R.id.transfer_of_payment2_textView_balance);
 		textView_channel = (TextView) findViewById(R.id.transfer_of_payment2_textView_channel);
+		textView_money = (TextView) findViewById(R.id.transfer_of_payment2_textView_pay_money);
+
+		textView_control = (TextView) findViewById(R.id.transfer_of_payment2_textView_control);
 
 		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_channel);
+		layout_password = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_password);
+		layout_control = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_control);
 
 		button_pay = (Button) findViewById(R.id.transfer_of_payment2_btn_pay);
 
 		layout_channel.setOnClickListener(this);
 		button_pay.setOnClickListener(this);
+
+		list = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> data = null;
+		for (int i = 0; i < 3; i++) {
+			data = new HashMap<String, String>();
+			data.put("name", channel[i]);
+			data.put("id", i + 1 + "");
+			list.add(data);
+		}
+
+		textView_payee_name.setText(realName);
+		textView_payee_phonenum.setText(tel);
+		textView_money.setText(money);
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}
@@ -84,9 +134,79 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 					adapter);
 			break;
 		case R.id.transfer_of_payment2_btn_pay:
+			if (checkInput()) {
+				confirm();
+			}
 			break;
 		}
 
+	}
+
+	private boolean checkInput() {
+		// TODO 自动生成的方法存根
+		if (!isSelectedChannle) {
+			Utity.showToast(getApplicationContext(), "请选择支付方式");
+			return false;
+		}
+		if (needPassword
+				&& editText_pay_password.getText().toString().trim().length() == 0) {
+			Utity.showToast(getApplicationContext(), "请输入支付密码");
+			return false;
+		}
+		return true;
+	}
+
+	private void confirm() {
+		// TODO 自动生成的方法存根
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "50000");
+		data.put("method", "50001");
+		data.put("fromUserId", applicaiton.getUserId());
+		data.put("toUserId", userId);
+		data.put("payFee", money);
+		data.put("ordersType", "4");
+		data.put("payType", payType);
+		showProgressDialog("提交中...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() != 1) {
+									box_YES = new MessageBox_YES(
+											TransferOfPaymentActivity2.this);
+									box_YES.showDialog(responseData.getMsg());
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+									finish();
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+
+							}
+						});
+					}
+				});
 	}
 
 	public void showWindow(View spinnerlayout, ListView listView,
@@ -129,6 +249,19 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 					long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
+				payType = list.get(arg2).get("id");
+				if (payType.equals("1")) {
+					needPassword = true;
+					textView_control.setVisibility(View.VISIBLE);
+					layout_password.setVisibility(View.VISIBLE);
+					layout_control.setVisibility(View.GONE);
+				} else {
+					needPassword = false;
+					textView_control.setVisibility(View.GONE);
+					layout_password.setVisibility(View.GONE);
+					layout_control.setVisibility(View.VISIBLE);
+				}
+				isSelectedChannle = true;
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;
@@ -137,4 +270,39 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 
 	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: showProgressDialog
+	 * @Description: TODO 显示进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:23:53
+	 */
+	private void showProgressDialog(String msg) {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage(msg);
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: closeProgressDialog
+	 * @Description: TODO 关闭进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:24:43
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
+	}
 }

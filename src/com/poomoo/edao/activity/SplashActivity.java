@@ -20,13 +20,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;
 
 	private ImageView imageView;
 
-	private SharedPreferences sp = null;
 	private Editor editor = null;
 	private String guide = "", index = "";
 
@@ -36,12 +36,15 @@ public class SplashActivity extends BaseActivity {
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
 
+	private eDaoClientApplicaiton applicaiton = null;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		setImmerseLayout();
 		init();
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		// sp = getSharedPreferences("index", Context.MODE_PRIVATE);
 		// editor = sp.edit();
 		// guide = sp.getString("guide", "");
@@ -148,11 +151,8 @@ public class SplashActivity extends BaseActivity {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			sp = getSharedPreferences("location", Context.MODE_PRIVATE);
-			editor = sp.edit();
-			editor.putString("province", location.getProvince());
-			editor.putString("city", location.getCity());
-			editor.commit();
+			applicaiton.setCurProvince(location.getProvince());
+			applicaiton.setCurCity(location.getCity());
 			mLocationClient.unRegisterLocationListener(myListener);
 		}
 	}

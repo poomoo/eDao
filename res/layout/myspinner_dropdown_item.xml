@@ -26,7 +26,7 @@
             android:gravity="left|center"
             android:text="TextView"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
     </LinearLayout>
 
     <View

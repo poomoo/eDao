@@ -1,13 +1,11 @@
 package com.poomoo.edao.fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.LinearGradient;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -37,6 +34,7 @@ import com.poomoo.edao.activity.PurchaseHistoryActivity;
 import com.poomoo.edao.activity.RebateActivity;
 import com.poomoo.edao.activity.TransferOfPaymentActivity1;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 import com.poomoo.edao.widget.SideBar;
 
 /**
@@ -70,6 +68,8 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			PurchaseHistoryActivity.class, CreditManageActivity.class,
 			TransferOfPaymentActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
+
+	private eDaoClientApplicaiton applicaiton;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -145,12 +145,12 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
 		if (arg2 == 6 || arg2 == 2) {
-			SharedPreferences sp = getActivity().getSharedPreferences(
-					"userInfo", Context.MODE_PRIVATE);
-			if (!sp.getString("type", "1").equals("2")) {
-				startActivity(new Intent(getActivity(),
-						CertificationActivity.class));
-			}
+			applicaiton = new eDaoClientApplicaiton();
+			// if (!applicaiton.getType().equals("2")) {
+			// startActivity(new Intent(getActivity(),
+			// CertificationActivity.class));
+			// } else
+				startActivity(new Intent(getActivity(), outIntent[arg2]));
 		} else if (arg2 != 8)
 			startActivity(new Intent(getActivity(), outIntent[arg2]));
 		else {

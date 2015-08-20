@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplicaiton;
 
 /**
  * 
@@ -20,6 +21,7 @@ public class CooperationActivity extends BaseActivity implements
 	private TextView textView_username, textView_tel;
 	private Button button_alliance_apply, button_dealer_apply,
 			button_partner_apply;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class CooperationActivity extends BaseActivity implements
 		setContentView(R.layout.activity_cooperation);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
 
@@ -43,6 +46,9 @@ public class CooperationActivity extends BaseActivity implements
 		button_alliance_apply.setOnClickListener(this);
 		button_dealer_apply.setOnClickListener(this);
 		button_partner_apply.setOnClickListener(this);
+
+		textView_username.setText(applicaiton.getRealName());
+		textView_tel.setText(applicaiton.getRealName());
 	}
 
 	@Override
