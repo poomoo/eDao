@@ -42,125 +42,39 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:paddingRight="2dp"
-                    android:text="区域:"
-                    android:textSize="@dimen/textsize16" />
-
-                <LinearLayout
-                    android:id="@+id/dealer_layout_zone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@drawable/style_background"
-                    android:gravity="center"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" >
-
-                    <TextView
-                        android:id="@+id/dealer_textView_zone"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:gravity="left|center"
-                        android:hint=""
-                        android:textSize="@dimen/textsize14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_xiala" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                    android:layout_weight="0.2" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="商户类型:"
-                    android:textSize="@dimen/textsize16" />
-
-                <LinearLayout
-                    android:id="@+id/dealer_layout_merchant_type"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@drawable/style_background"
-                    android:gravity="center"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" >
-
-                    <TextView
-                        android:id="@+id/dealer_textView_merchant_type"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:gravity="left|center"
-                        android:hint=""
-                        android:textSize="@dimen/textsize14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_xiala" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                    android:text="费　　　用 :"
+                    android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:paddingRight="2dp"
-                    android:text="费用:"
-                    android:textSize="@dimen/textsize16" />
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
-                <EditText
-                    android:id="@+id/dealer_editText_money"
+                <Textview
+                    android:id="@+id/dealer_textView_money"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
-                    android:hint=""
-                    android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
-                    android:textSize="@dimen/textsize14" >
+                    android:textSize="@dimen/textsize14" />
 
-                    <requestFocus />
-                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,28 +86,41 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="秘钥:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="服 务 商 号  :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <EditText
-                    android:id="@+id/dealer_editText_secret_key"
+                    android:id="@+id/dealer_editText_merchant_phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
                     android:hint="请输入服务商手机号:"
                     android:inputType="phone"
                     android:paddingLeft="8dp"
                     android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,35 +132,46 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="服务商户名:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="服务商户名 :"
+                    android:textSize="@dimen/textsize14" />
 
-                <EditText
-                    android:id="@+id/dealer_editText_merchant_name"
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/dealer_textView_merchant_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
-                    android:hint="跑马科技"
-                    android:inputType="text"
                     android:paddingLeft="8dp"
                     android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="2" >
     </LinearLayout>
 
     <LinearLayout
@@ -246,9 +184,10 @@
             android:id="@+id/dealer_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/gray"
+            android:background="@drawable/style_btn_background"
             android:gravity="center"
-            android:text="确    定" />
+            android:text="确    定"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

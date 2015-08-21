@@ -6,26 +6,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp" >
+        android:layout_height="@dimen/margin70"
+        android:paddingBottom="@dimen/margin5"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:paddingTop="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/margin50"
             android:background="#1995EB"
             android:gravity="center_vertical"
-            android:padding="5dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_include_logo" />
 
-            <View
-                android:layout_width="5dp"
+            <TextView
+                android:layout_width="@dimen/margin5"
                 android:layout_height="match_parent" />
 
             <LinearLayout

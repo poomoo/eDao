@@ -50,11 +50,6 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private LinearLayout layout_zone;
 	private Button button_confirm;
 
-	private PopupWindow popupWindow;
-	private View layout;
-	private ChannelSpinnerAdapter adapter_zone, adapter_merchant_type;
-	private List<HashMap<String, String>> list_zone, list_merchant_type;
-	private ListView listView;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "",
@@ -70,8 +65,9 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_alliance_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton=(eDaoClientApplicaiton)getApplication();
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
+
 	}
 
 	private void init() {

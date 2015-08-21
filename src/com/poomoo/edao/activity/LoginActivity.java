@@ -1,13 +1,17 @@
 package com.poomoo.edao.activity;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.litepal.LitePalApplication;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;

@@ -42,19 +42,22 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="区            域:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="区　　　域 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
                     android:id="@+id/alliance_layout_zone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.8"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="center"
                     android:paddingLeft="8dp"
@@ -66,7 +69,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="left|center"
-                        android:hint=""
                         android:textSize="@dimen/textsize14" />
 
                     <ImageView
@@ -79,11 +81,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,19 +91,22 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="费            用:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="费　　　用 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/alliance_textView_money"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.8"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
@@ -114,7 +115,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,19 +125,22 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="服 务  商 号:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="服 务 商 号  :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <EditText
                     android:id="@+id/alliance_editText_merchant_num"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.8"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
                     android:hint="请输入服务商手机号"
@@ -147,7 +151,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -157,19 +161,22 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingRight="2dp"
-                    android:text="服务商户名:"
-                    android:textSize="@dimen/textsize16" />
+                    android:text="服务商户名 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/alliance_textView_merchant_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.8"
+                    android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
@@ -178,7 +185,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
         </LinearLayout>
     </LinearLayout>
 

@@ -48,7 +48,7 @@ public class CooperationActivity extends BaseActivity implements
 		button_partner_apply.setOnClickListener(this);
 
 		textView_username.setText(applicaiton.getRealName());
-		textView_tel.setText(applicaiton.getRealName());
+		textView_tel.setText(applicaiton.getTel());
 	}
 
 	@Override
@@ -57,12 +57,15 @@ public class CooperationActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.cooperation_btn_alliance_apply:
 			openActivity(AllianceApplyActivity.class);
+			finish();
 			break;
 		case R.id.cooperation_btn_dealer_apply:
 			openActivity(DealerApplyActivity.class);
+			finish();
 			break;
 		case R.id.cooperation_btn_partner_apply:
 			openActivity(PartnerApplyActivity.class);
+			finish();
 			break;
 		}
 	}

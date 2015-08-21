@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -69,7 +68,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			TransferOfPaymentActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
-	private eDaoClientApplicaiton applicaiton;
+	private eDaoClientApplicaiton applicaiton=null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -145,7 +144,8 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
 		if (arg2 == 6 || arg2 == 2) {
-			applicaiton = new eDaoClientApplicaiton();
+			applicaiton = (eDaoClientApplicaiton) getActivity()
+					.getApplication();
 			// if (!applicaiton.getType().equals("2")) {
 			// startActivity(new Intent(getActivity(),
 			// CertificationActivity.class));

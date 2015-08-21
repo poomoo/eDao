@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.widget.CityPicker;
 
 public class Select_City_PopupWindow extends PopupWindow {
 

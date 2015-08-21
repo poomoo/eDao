@@ -2,11 +2,13 @@ package com.poomoo.edao.activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import org.litepal.LitePalApplication;
+
 import android.content.SharedPreferences.Editor;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -63,7 +65,6 @@ public class SplashActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		// 导入数据库文件
 		importDB();
-
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		mLocationClient.registerLocationListener(myListener);
 		initLocation();
