@@ -15,6 +15,7 @@ public class eDaoClientApplicaiton extends LitePalApplication {
 	private String type = "";
 	private String curProvince = "";
 	private String curCity = "";
+	private String realNameAuth="";
 
 	public String getRealName() {
 		return this.realName;
@@ -62,6 +63,14 @@ public class eDaoClientApplicaiton extends LitePalApplication {
 
 	public void setCurCity(String curCity) {
 		this.curCity = curCity;
+	}
+
+	public String getRealNameAuth() {
+		return this.realNameAuth;
+	}
+
+	public void setRealNameAuth(String realNameAuth) {
+		this.realNameAuth = realNameAuth;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class LoginResData {
 	private String realName = "";
 	private String tel = "";
 	private String type = "";
+	private String realNameAuth = "";
 
 	public String getUserId() {
 		return this.userId;
@@ -28,6 +29,14 @@ public class LoginResData {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	public String getRealNameAuth() {
+		return this.realNameAuth;
+	}
+
+	public void setRealNameAuth(String realNameAuth) {
+		this.realNameAuth = realNameAuth;
 	}
 
 	public String getTel() {

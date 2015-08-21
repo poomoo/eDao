@@ -339,4 +339,40 @@ public class Utity {
 		return string.replaceAll(" ", "");
 
 	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: bankAccount
+	 * @Description: TODO 数字加*
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws
+	 * @date 2015-8-21下午3:31:32
+	 */
+	public static String addStarByNum(int begin, int end, String str) {
+		String temp = "";
+		temp = str.substring(0, begin)
+				+ str.substring(begin, end).replaceAll("[0123456789]", "*")
+				+ str.substring(end, str.length());
+		return temp;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: addStarByName
+	 * @Description: TODO 名字加*号
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws
+	 * @date 2015-8-21下午3:41:44
+	 */
+	public static String addStarByName(String str) {
+		String temp = "";
+		temp = "*" + str.substring(1, str.length());
+		return temp;
+	}
 }

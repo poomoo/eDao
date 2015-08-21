@@ -20,17 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="10dp"
+            android:paddingBottom="@dimen/margin10"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="5dp" >
+            android:paddingTop="@dimen/margin5" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_width="@dimen/margin5"
                     android:layout_height="match_parent" />
 
-                <Textview
+                <TextView
                     android:id="@+id/dealer_textView_money"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -107,7 +107,7 @@
                     android:layout_weight="4"
                     android:background="@drawable/style_background"
                     android:gravity="left|center"
-                    android:hint="请输入服务商手机号:"
+                    android:hint="请输入服务商手机号"
                     android:inputType="phone"
                     android:paddingLeft="8dp"
                     android:textSize="@dimen/textsize14" />
@@ -171,7 +171,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2" >
+        android:layout_weight="3" >
     </LinearLayout>
 
     <LinearLayout

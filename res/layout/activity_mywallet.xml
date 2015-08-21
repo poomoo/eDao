@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="4"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
@@ -33,52 +33,9 @@
             android:paddingRight="15dp"
             android:paddingTop="5dp" >
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="通道名称:"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:id="@+id/mywallet_layout_channel"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@drawable/style_background"
-                    android:gravity="center"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" >
-
-                    <TextView
-                        android:id="@+id/mywallet_textView_channel"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:gravity="left|center"
-                        android:text="通道名称"
-                        android:textSize="13sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_xiala" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,13 +45,16 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="2dp"
-                    android:text="通道余额:"
-                    android:textSize="16sp" />
+                    android:text="钱包余额:"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/mywallet_textView_balance"
@@ -104,12 +64,12 @@
                     android:gravity="left|center"
                     android:text="￥8000.00"
                     android:textColor="@color/orange"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,24 +86,35 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/margin10"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:paddingRight="2dp"
                         android:text="提现手续:"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:id="@+id/mywallet_textView_handing_charge"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
                         android:gravity="left|center"
                         android:text="20.00元/次"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -154,30 +125,41 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/margin10"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:paddingRight="2dp"
                         android:text="提现上限:"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:id="@+id/mywallet_textView_handing_toplimit"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
                         android:gravity="left|center"
                         android:text="5000元/次"
                         android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
                 </LinearLayout>
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,13 +169,16 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="2dp"
                     android:text="收款银行:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/mywallet_textView_bankname"
@@ -203,12 +188,12 @@
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
                     android:text="招商银行"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -218,28 +203,31 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="2dp"
-                    android:text="支行名称:"
-                    android:textSize="16sp" />
+                    android:text="开户名称:"
+                    android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    android:id="@+id/mywallet_textView_branchbankname"
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/mywallet_textView_account_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
-                    android:text="金阳招商银行支行"
-                    android:textSize="13sp" />
+                    android:text="张三"
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -249,13 +237,16 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="2dp"
                     android:text="银行账号:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/mywallet_textView_bankaccount"
@@ -265,12 +256,12 @@
                     android:gravity="left|center"
                     android:paddingLeft="8dp"
                     android:text="978479359069059069"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,13 +271,16 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="2dp"
                     android:text="提现金额:"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
 
                 <EditText
                     android:id="@+id/mywallet_editText_handing_money"
@@ -298,10 +292,15 @@
                     android:hint="提现金额"
                     android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -313,21 +312,23 @@
             android:id="@+id/mywallet_btn_recharge"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/gray"
+            android:background="@drawable/style_btn_background"
             android:gravity="center"
-            android:text="充    值" />
+            android:text="充    值"
+            android:textColor="@color/white" />
 
-        <View
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="@dimen/margin10" />
 
         <Button
             android:id="@+id/mywallet_btn_handing"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/gray"
+            android:background="@drawable/style_btn_background"
             android:gravity="center"
-            android:text="提    现" />
+            android:text="提    现"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

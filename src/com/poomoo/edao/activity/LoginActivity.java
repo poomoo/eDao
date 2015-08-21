@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton=(eDaoClientApplicaiton)getApplication();
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
 
@@ -88,9 +88,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			applicaiton.setTel(loginsp.getString("tel", ""));
 			applicaiton.setUserId(loginsp.getString("userId", ""));
 			applicaiton.setType(loginsp.getString("type", ""));
+			applicaiton.setRealNameAuth(loginsp.getString("realNameAuth", ""));
 			startActivity(new Intent(LoginActivity.this,
 					NavigationActivity.class));
-			System.out.println("login:"+applicaiton.getRealName());
+			System.out.println("login:" + applicaiton.getRealName());
 			finish();
 		} else {
 			if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
@@ -155,6 +156,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												loginResData.getTel());
 										editor.putString("type",
 												loginResData.getType());
+										editor.putString("realNameAuth",
+												loginResData.getRealNameAuth());
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();
@@ -166,6 +169,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												.getUserId());
 										applicaiton.setType(loginResData
 												.getType());
+										applicaiton
+												.setRealNameAuth(loginResData
+														.getRealNameAuth());
 										LoginActivity.this
 												.startActivity(new Intent(
 														LoginActivity.this,

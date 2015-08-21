@@ -45,11 +45,11 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		OnClickListener {
 
 	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel, textView_control,
-			textView_money;
+			textView_balance, textView_channel, textView_money;
 	private EditText editText_pay_money, editText_pay_password,
 			editText_remark;
-	private LinearLayout layout_channel, layout_password, layout_control;
+	private LinearLayout layout_channel, layout_password, layout_ecoin,
+			layout_control;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -77,7 +77,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		setContentView(R.layout.activity_transfer_of_payment2);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		getIntentData();
+		// getIntentData();
 		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
@@ -98,10 +98,8 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		textView_channel = (TextView) findViewById(R.id.transfer_of_payment2_textView_channel);
 		textView_money = (TextView) findViewById(R.id.transfer_of_payment2_textView_pay_money);
 
-		textView_control = (TextView) findViewById(R.id.transfer_of_payment2_textView_control);
-
 		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_channel);
-		layout_password = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_password);
+		layout_ecoin = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_by_ecoin);
 		layout_control = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_control);
 
 		button_pay = (Button) findViewById(R.id.transfer_of_payment2_btn_pay);
@@ -121,6 +119,8 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		textView_payee_name.setText(realName);
 		textView_payee_phonenum.setText(tel);
 		textView_money.setText(money);
+		textView_channel.setText(channel[0]);
+		payType = "1";
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}
@@ -252,13 +252,11 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 				payType = list.get(arg2).get("id");
 				if (payType.equals("1")) {
 					needPassword = true;
-					textView_control.setVisibility(View.VISIBLE);
-					layout_password.setVisibility(View.VISIBLE);
+					layout_ecoin.setVisibility(View.VISIBLE);
 					layout_control.setVisibility(View.GONE);
 				} else {
 					needPassword = false;
-					textView_control.setVisibility(View.GONE);
-					layout_password.setVisibility(View.GONE);
+					layout_ecoin.setVisibility(View.GONE);
 					layout_control.setVisibility(View.VISIBLE);
 				}
 				isSelectedChannle = true;

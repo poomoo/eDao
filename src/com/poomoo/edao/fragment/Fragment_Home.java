@@ -68,7 +68,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			TransferOfPaymentActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
-	private eDaoClientApplicaiton applicaiton=null;
+	private eDaoClientApplicaiton applicaiton = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -143,13 +143,13 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
-		if (arg2 == 6 || arg2 == 2) {
+		if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
 			applicaiton = (eDaoClientApplicaiton) getActivity()
 					.getApplication();
-			// if (!applicaiton.getType().equals("2")) {
-			// startActivity(new Intent(getActivity(),
-			// CertificationActivity.class));
-			// } else
+			if (!applicaiton.getRealNameAuth().equals("1")) {
+				startActivity(new Intent(getActivity(),
+						CertificationActivity.class));
+			} else
 				startActivity(new Intent(getActivity(), outIntent[arg2]));
 		} else if (arg2 != 8)
 			startActivity(new Intent(getActivity(), outIntent[arg2]));

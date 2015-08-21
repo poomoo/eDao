@@ -88,8 +88,10 @@ public class AllianceApplyActivity extends BaseActivity implements
 		button_confirm.setOnClickListener(this);
 		textView_merchant_name.setOnClickListener(this);
 
-		textView_username.setText(applicaiton.getRealName());
-		textView_phonenum.setText(applicaiton.getTel());
+		textView_username
+				.setText(Utity.addStarByName(applicaiton.getRealName()));
+		textView_phonenum
+				.setText(Utity.addStarByNum(3, 7, applicaiton.getTel()));
 
 		// 取当前定位
 		curProvince = applicaiton.getCurProvince();
