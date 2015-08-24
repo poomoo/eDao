@@ -5,17 +5,12 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#F2F2F2" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,8 +31,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:paddingLeft="@dimen/margin5"
+        android:paddingRight="@dimen/margin5" >
 
         <View
             android:layout_width="match_parent"
@@ -51,17 +46,18 @@
         android:layout_height="120dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <ImageView
             android:id="@+id/order_list_item_imageView_pic"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_love_fund" />
+            android:src="@drawable/ic_love_fund"
+            android:visibility="gone" />
 
-        <View
-            android:layout_width="5dp"
+        <TextView
+            android:layout_width="@dimen/margin5"
             android:layout_height="match_parent" />
 
         <LinearLayout
@@ -78,25 +74,23 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="总金额:"
+                    android:text="总金额:　　　"
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:id="@+id/order_list_item_textView_money"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="￥378.00"
                     android:textColor="@color/orangered"
                     android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,25 +99,23 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="订单状态:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单状态:　　"
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:id="@+id/order_list_item_textView_state"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="已完成"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -132,17 +124,15 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="下单时间:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下单时间:　　"
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
                     android:id="@+id/order_list_item_textView_date"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="2015-06-06"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/textsize16" />
@@ -151,8 +141,13 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_arrow" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sidebar_arrow" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin10"
+        android:background="#F2F2F2" />
 
 </LinearLayout>

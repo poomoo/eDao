@@ -12,7 +12,7 @@ import com.poomoo.edao.adapter.Rebate_ListViewAdapter;
 /**
  * 
  * @ClassName RebateActivity
- * @Description TODO 全国返利
+ * @Description TODO 普惠全民
  * @author 李苜菲
  * @date 2015-7-29 下午2:14:43
  */

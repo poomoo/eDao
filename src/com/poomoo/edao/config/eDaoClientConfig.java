@@ -14,4 +14,6 @@ public class eDaoClientConfig {
 	// "";//远程
 	public static final String checkNet = "请检查网络后重试";
 	public static final String certificate = "请进行实名认证";
+
+	public static String tel = "", web = "", weibo = "", weixin = "";
 }

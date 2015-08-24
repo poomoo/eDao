@@ -18,14 +18,14 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:id="@+id/navigation_imageView_return"
+                android:id="@+id/share_imageView_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_return" />
 
             <TextView
-                android:id="@+id/navigation_textView_title"
+                android:id="@+id/share_textView_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -59,7 +59,8 @@ public class Fragment_Personal_Center extends Fragment implements
 		// TODO 自动生成的方法存根
 		super.onStart();
 		// 实现沉浸式状态栏效果
-		setImmerseLayout(getView().findViewById(R.id.personalcenter_layout));
+		setImmerseLayout(getView().findViewById(
+				R.id.fragment_personal_center_layout));
 
 		init();
 	}

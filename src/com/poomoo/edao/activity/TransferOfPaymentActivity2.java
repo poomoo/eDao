@@ -8,6 +8,7 @@ import java.util.Map;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +46,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		OnClickListener {
 
 	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel, textView_money;
+			textView_balance, textView_channel;
 	private EditText editText_pay_money, editText_pay_password,
 			editText_remark;
 	private LinearLayout layout_channel, layout_password, layout_ecoin,
@@ -77,7 +78,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		setContentView(R.layout.activity_transfer_of_payment2);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		// getIntentData();
+		getIntentData();
 		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
@@ -88,6 +89,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		realName = getIntent().getExtras().getString("realName");
 		tel = getIntent().getExtras().getString("tel");
 		money = getIntent().getExtras().getString("money");
+		payType = getIntent().getExtras().getString("payType");
 	}
 
 	private void init() {
@@ -96,7 +98,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		textView_payee_phonenum = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_phonenum);
 		textView_balance = (TextView) findViewById(R.id.transfer_of_payment2_textView_balance);
 		textView_channel = (TextView) findViewById(R.id.transfer_of_payment2_textView_channel);
-		textView_money = (TextView) findViewById(R.id.transfer_of_payment2_textView_pay_money);
+		editText_pay_money = (EditText) findViewById(R.id.transfer_of_payment2_editText_pay_money);
 
 		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_channel);
 		layout_ecoin = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_by_ecoin);
@@ -104,7 +106,6 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 
 		button_pay = (Button) findViewById(R.id.transfer_of_payment2_btn_pay);
 
-		layout_channel.setOnClickListener(this);
 		button_pay.setOnClickListener(this);
 
 		list = new ArrayList<HashMap<String, String>>();
@@ -118,9 +119,20 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 
 		textView_payee_name.setText(realName);
 		textView_payee_phonenum.setText(tel);
-		textView_money.setText(money);
+
 		textView_channel.setText(channel[0]);
-		payType = "1";
+		// 指定意币转账后不能选择支付类型
+		if (TextUtils.isEmpty(payType)) {
+			payType = "1";
+			layout_channel.setOnClickListener(this);
+		} else {
+			isSelectedChannle = true;
+		}
+		// 指定了金额时不能手动修改
+		if (!TextUtils.isEmpty(money)) {
+			editText_pay_money.setText(money);
+			editText_pay_money.setEnabled(false);
+		}
 
 		adapter = new ChannelSpinnerAdapter(this, list);
 	}

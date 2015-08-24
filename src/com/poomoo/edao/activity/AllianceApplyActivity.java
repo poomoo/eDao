@@ -261,6 +261,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 									pBundle.putString("tel", payInfo.getTel());
 									pBundle.putString("money", textView_money
 											.getText().toString());
+									pBundle.putString("payType", "");
 									openActivity(
 											TransferOfPaymentActivity2.class,
 											pBundle);
@@ -319,7 +320,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 			return false;
 		}
 		merchant_name = textView_merchant_name.getText().toString().trim();
-		if (TextUtils.isEmpty(zone)) {
+		if (TextUtils.isEmpty(merchant_name)) {
 			Utity.showToast(getApplicationContext(), "请查询服务商户名");
 			return false;
 		}

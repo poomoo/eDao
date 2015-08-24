@@ -5,77 +5,11 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <include
+        android:id="@+id/fragment_store_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1995EB"
-        android:padding="10dp" >
-
-        <LinearLayout
-            android:id="@+id/fragment_store_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="贵阳"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize14" />
-
-                <ImageView
-                    android:id="@+id/fragment_store_imageView_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_xiala" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                android:background="@drawable/style_background"
-                android:gravity="center_vertical"
-                android:padding="5dp" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_reserch" />
-
-                <EditText
-                    android:id="@+id/fragment_store_editText_keywords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:hint="请输入商品关键词"
-                    android:singleLine="true"
-                    android:textSize="@dimen/textsize14" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/fragment_store_imageView_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_position" />
-        </LinearLayout>
-    </FrameLayout>
+        layout="@layout/pub_layout_fragment_store" />
 
     <LinearLayout
         android:layout_width="match_parent"

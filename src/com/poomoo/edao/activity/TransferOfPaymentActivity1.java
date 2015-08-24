@@ -1,12 +1,20 @@
 package com.poomoo.edao.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,8 +23,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
 /**
@@ -30,14 +43,16 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 		OnClickListener {
 
 	private TextView textView_username, textView_phonenum, textView_balance;
-	private ImageView imageView_payby_addressbook;
 	private EditText editText_payee_phonenum;
 	private LinearLayout layout_payby_phone, layout_payby_2dimencode;
 	private Button button_confirm;
 	private eDaoClientApplicaiton application = null;
 	private static final int READCONTRACT = 1;
 
-	private String name = "", phoneNum = "";
+	private String name = "", phoneNum = "", referrerUserId = "",
+			referrerName = "";
+	private ProgressDialog progressDialog;
+	private Gson gson = new Gson();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,17 +92,95 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.transfer_of_payment1_layout_payby_phone:
-			System.out.println("点击图片");
-
 			startActivityForResult(new Intent(Intent.ACTION_PICK,
 					ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
 			break;
 		case R.id.transfer_of_payment1_layout_payby_2dimencode:
 			break;
 		case R.id.transfer_of_payment1_btn_confirm:
+			if (checkInput())
+				getMerchantName();
 			break;
 		}
 
+	}
+
+	private boolean checkInput() {
+		// TODO 自动生成的方法存根
+		phoneNum = editText_payee_phonenum.getText().toString().trim();
+		if (TextUtils.isEmpty(phoneNum)) {
+			Utity.showToast(getApplication(), "请填写收款人信息");
+			return false;
+		}
+		return true;
+	}
+
+	private void getMerchantName() {
+		progressDialog = null;
+		showProgressDialog("请稍后...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20002");
+		data.put("referrerTel", phoneNum);
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() == 1) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+										referrerUserId = result
+												.getString("referrerUserId");
+										referrerName = result
+												.getString("referrerName");
+										Bundle pBundle = new Bundle();
+										pBundle.putString("realName",
+												referrerName);
+										pBundle.putString("tel", phoneNum);
+										pBundle.putString("money", "");
+										pBundle.putString("userId",
+												referrerUserId);
+										pBundle.putString("payType", "1");
+										openActivity(
+												TransferOfPaymentActivity2.class,
+												pBundle);
+									} catch (JSONException e) {
+									}
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
 	}
 
 	@Override
@@ -118,7 +211,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 			}
 
-			editText_payee_phonenum.setText(name + "\t" + phoneNum);
+			editText_payee_phonenum.setText(phoneNum);
 			editText_payee_phonenum.setSelection(editText_payee_phonenum
 					.getText().toString().length());
 			return;
@@ -126,4 +219,39 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 
 	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: showProgressDialog
+	 * @Description: TODO 显示进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:23:53
+	 */
+	private void showProgressDialog(String msg) {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage(msg);
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: closeProgressDialog
+	 * @Description: TODO 关闭进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:24:43
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
+	}
 }

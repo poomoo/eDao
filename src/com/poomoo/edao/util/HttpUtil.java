@@ -93,7 +93,7 @@ public class HttpUtil {
 	 * @throws
 	 * @date 2015-7-24下午3:07:47
 	 */
-	public static void SendGetRequest(final String address,
+	public static void SendGetRequest(final String json, final String address,
 			final HttpCallbackListener listener) {
 		new Thread(new Runnable() {
 			@Override
@@ -103,8 +103,21 @@ public class HttpUtil {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestMethod("GET");
-					connection.setConnectTimeout(8000);
-					connection.setReadTimeout(8000);
+					connection.setConnectTimeout(eDaoClientConfig.timeout);
+					connection.setReadTimeout(eDaoClientConfig.timeout);
+					connection.setRequestProperty("Content-Type",
+							"application/json");
+					connection.connect();
+					System.out.println("json:" + json);
+					if (json != null && json.trim().length() > 0) {
+						DataOutputStream out = new DataOutputStream(
+								connection.getOutputStream());
+						byte[] content = json.toString().getBytes("utf-8");
+						out.write(content, 0, content.length);
+						out.flush();
+						out.close();
+					}
+
 					InputStream in = connection.getInputStream();
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(in));

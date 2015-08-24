@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1995EB"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/margin5" >
+
+        <LinearLayout
+            android:id="@+id/map_layout_curcity"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/map_layout_name"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="贵阳"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/map_layout_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="地图"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize20" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/map_layout_store"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/map_layout_name"
+            android:layout_alignParentRight="true"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="店铺"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize16" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

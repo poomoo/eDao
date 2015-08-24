@@ -9,64 +9,12 @@
         android:layout_height="fill_parent"
         android:clickable="true" />
 
-    <FrameLayout
+    <include
+        android:id="@+id/map_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#1995EB" >
-
-        <LinearLayout
-            android:id="@+id/personalcenter_layout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical" >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" >
-
-                <TextView
-                    android:id="@+id/map_textView_curcity"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="贵阳"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize16" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="地图"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize20" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
-
-                <TextView
-                    android:id="@+id/map_textView_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="店铺"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize16" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        layout="@layout/pub_layout_activity_map" />
 
     <ImageView
         android:id="@+id/map_imageView_center_dot"

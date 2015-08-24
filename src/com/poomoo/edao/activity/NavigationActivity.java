@@ -7,11 +7,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Helpers;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -33,6 +35,8 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private Fragment_Personal_Center fragment_Personal_Center;
 	public static SideBar sideBar;
 	private int clo = 0;
+	private LinearLayout layout_myOrder, layout_shared, layout_check_update,
+			layout_feed_back, layout_help_center, layout_about_us;
 
 	// 侧边栏
 	private TextView textView_userName, textView_userTel;
@@ -43,7 +47,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
-		applicaiton=(eDaoClientApplicaiton)getApplication();
+		applicaiton = (eDaoClientApplicaiton) getApplication();
 		init();
 	}
 
@@ -54,11 +58,23 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		radioButton_shop = (RadioButton) findViewById(R.id.navigation_radioButton_shop);
 		radioButton_myown = (RadioButton) findViewById(R.id.navigation_radioButton_myown);
 		sideBar = (SideBar) findViewById(R.id.navigation_sidebar);
+		layout_shared = (LinearLayout) findViewById(R.id.sidebar_layout_shared);
+		layout_check_update = (LinearLayout) findViewById(R.id.sidebar_layout_check_update);
+		layout_feed_back = (LinearLayout) findViewById(R.id.sidebar_layout_feed_back);
+		layout_help_center = (LinearLayout) findViewById(R.id.sidebar_layout_help_center);
+		layout_about_us = (LinearLayout) findViewById(R.id.sidebar_layout_about_us);
+		layout_myOrder = (LinearLayout) findViewById(R.id.sidebar_layout_myorder);
 
 		frameLayout.setOnClickListener(this);
 		radioButton_home.setOnClickListener(this);
 		radioButton_shop.setOnClickListener(this);
 		radioButton_myown.setOnClickListener(this);
+		layout_shared.setOnClickListener(this);
+		layout_check_update.setOnClickListener(this);
+		layout_feed_back.setOnClickListener(this);
+		layout_help_center.setOnClickListener(this);
+		layout_about_us.setOnClickListener(this);
+		layout_myOrder.setOnClickListener(this);
 
 		setDefaultFragment();
 
@@ -94,22 +110,24 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
 		System.out.println("onClick");
-		sideBar.closeMenu();
+
 		switch (v.getId()) {
 		case R.id.navigation_radioButton_home:
-			System.out.println("onClick home");
+			sideBar.closeMenu();
 			if (fragment_Home == null)
 				fragment_Home = new Fragment_Home();
 			fragmentTransaction.replace(R.id.navigation_frameLayout,
 					fragment_Home);
 			break;
 		case R.id.navigation_radioButton_shop:
+			sideBar.closeMenu();
 			if (fragment_Store == null)
 				fragment_Store = new Fragment_Store();
 			fragmentTransaction.replace(R.id.navigation_frameLayout,
 					fragment_Store);
 			break;
 		case R.id.navigation_radioButton_myown:
+			sideBar.closeMenu();
 			if (fragment_Personal_Center == null)
 				fragment_Personal_Center = new Fragment_Personal_Center();
 			fragmentTransaction.replace(R.id.navigation_frameLayout,
@@ -118,6 +136,24 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		case R.id.sidebar_textView_userName:
 			System.out.println("点击userName");
 			openActivity(CertificationActivity.class);
+			break;
+		case R.id.sidebar_layout_shared:
+			openActivity(ShareActivity.class);
+			break;
+		case R.id.sidebar_layout_check_update:
+			// openActivity(OrderListActivity.class);
+			break;
+		case R.id.sidebar_layout_feed_back:
+			// openActivity(OrderListActivity.class);
+			break;
+		case R.id.sidebar_layout_help_center:
+			// openActivity(Helpers.class);
+			break;
+		case R.id.sidebar_layout_about_us:
+			openActivity(AboutUsActivity.class);
+			break;
+		case R.id.sidebar_layout_myorder:
+			openActivity(OrderListActivity.class);
 			break;
 		}
 

@@ -45,7 +45,8 @@
                         android:layout_height="wrap_content"
                         android:text="账户名:"
                         android:textColor="#ffffff"
-                        android:textSize="@dimen/textsize12" />
+                        android:textSize="@dimen/textsize12"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/layout_userinfo_textView_username"

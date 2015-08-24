@@ -11,10 +11,126 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <RadioGroup
+        android:id="@+id/navigation_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_all"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin40"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="全部"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_status"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="状态"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_classify"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="分类"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_date"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="时间"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10" >
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_nopay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin40"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="未支付"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize14" />
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_payed"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="已支付"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize14" />
+
+        <RadioButton
+            android:id="@+id/order_list_radioButton_delete"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="已删除"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize14" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gainsboro" />
+
     <ListView
         android:id="@+id/order_list_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none" >
     </ListView>
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 
-	private TextView textView_curcity, textView_store;
+	private LinearLayout layout_curCity, layout_store;
 
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	private BitmapDescriptor bdA;
@@ -73,10 +74,12 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 
+		setImmerseLayout(findViewById(R.id.map_layout));
+
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		initLocation();
 		mLocationClient.start();
-		
+
 		init();
 
 		bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
@@ -96,10 +99,10 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_curcity = (TextView) findViewById(R.id.map_textView_curcity);
-		textView_store = (TextView) findViewById(R.id.map_textView_store);
+		layout_curCity = (LinearLayout) findViewById(R.id.map_layout_curcity);
+		layout_store = (LinearLayout) findViewById(R.id.map_layout_store);
 
-		textView_store.setOnClickListener(this);
+		layout_store.setOnClickListener(this);
 	}
 
 	/**
@@ -369,7 +372,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
 			break;
-		case R.id.map_textView_store:
+		case R.id.map_layout_store:
 			openActivity(ShopListActivity.class, null);
 			break;
 		}
@@ -415,4 +418,5 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		super.onDestroy(); // 回收 bitmap 资源 bdA.recycle();
 		bdA.recycle();
 	}
+
 }

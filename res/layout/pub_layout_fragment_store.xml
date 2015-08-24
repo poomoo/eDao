@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1995EB"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin5"
+        android:paddingTop="@dimen/margin5" >
+
+        <LinearLayout
+            android:id="@+id/fragment_store_layout_position"
+            android:layout_width="68dp"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="贵阳"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize14" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_xiala" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/style_background"
+            android:gravity="center"
+            android:padding="@dimen/margin5" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_reserch" />
+
+            <EditText
+                android:id="@+id/fragment_store_editText_keywords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入商品关键词"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_store_layout_map"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_position" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

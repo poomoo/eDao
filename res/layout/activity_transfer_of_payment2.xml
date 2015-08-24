@@ -256,15 +256,15 @@
                             android:layout_width="@dimen/margin5"
                             android:layout_height="match_parent" />
 
-                        <TextView
-                            android:id="@+id/transfer_of_payment2_textView_pay_money"
+                        <EditText
+                            android:id="@+id/transfer_of_payment2_editText_pay_money"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
                             android:background="@drawable/style_background"
                             android:gravity="left|center"
+                            android:hint="支付金额"
                             android:paddingLeft="@dimen/margin10"
-                            android:text="100"
                             android:textSize="@dimen/textsize14" />
 
                         <TextView

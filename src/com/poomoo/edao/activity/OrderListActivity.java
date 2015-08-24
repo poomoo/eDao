@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Order_List_ListViewAdapter;
@@ -18,6 +19,8 @@ import com.poomoo.edao.adapter.Order_List_ListViewAdapter;
  * @date 2015-8-3 上午10:35:50
  */
 public class OrderListActivity extends BaseActivity {
+	private RadioButton button_all, button_status, button_classify,
+			button_date, button_unpay, button_payed, button_delete;
 	private ListView listView;
 	private Order_List_ListViewAdapter adapter;
 	private List<HashMap<String, String>> list;

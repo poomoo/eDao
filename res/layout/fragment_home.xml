@@ -5,61 +5,11 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <include
+        android:id="@+id/fragment_home_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1995EB"
-        android:padding="10dp" >
-
-        <LinearLayout
-            android:id="@+id/fragment_home_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:id="@+id/main_layout_user"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_user" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="乐意道"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/textsize20" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/main_layout_map"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_position" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        layout="@layout/pub_layout_fragment_home" />
 
     <LinearLayout
         android:layout_width="match_parent"

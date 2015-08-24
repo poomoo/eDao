@@ -12,13 +12,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
 
 public class Fragment_Store extends Fragment {
 	private EditText editText_keywords;
-	private ImageView imageView_user, imageView_position;
+	private LinearLayout layout_position, layout_map;
 	private GridView gridView;
 	private Fragment_Store_GridViewAdapter gridViewAdapter;
 	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
@@ -55,17 +56,17 @@ public class Fragment_Store extends Fragment {
 		super.onStart();
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
-		
+
 		init();
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
 
-		imageView_user = (ImageView) getView().findViewById(
-				R.id.fragment_store_imageView_user);
-		imageView_position = (ImageView) getView().findViewById(
-				R.id.fragment_store_imageView_position);
+		layout_position = (LinearLayout) getView().findViewById(
+				R.id.fragment_store_layout_position);
+		layout_map = (LinearLayout) getView().findViewById(
+				R.id.fragment_store_layout_map);
 		editText_keywords = (EditText) getView().findViewById(
 				R.id.fragment_store_editText_keywords);
 		gridView = (GridView) getView().findViewById(
