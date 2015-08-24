@@ -66,6 +66,22 @@ public class BaseActivity extends Activity {
 	/**
 	 * 
 	 * 
+	 * @Title: openActivityForResult
+	 * @Description: TODO
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015年8月24日下午11:28:46
+	 */
+	protected void openActivityForResult(Class<?> pClass, int requestCode) {
+		Intent intent = new Intent(this, pClass);
+		startActivityForResult(intent, requestCode);
+	}
+
+	/**
+	 * 
+	 * 
 	 * @Title: setImmerseLayout
 	 * @Description: TODO 实现沉浸式状态栏效果
 	 * @author 李苜菲

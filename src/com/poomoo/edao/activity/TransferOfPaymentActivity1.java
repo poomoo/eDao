@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +30,7 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.zbar.lib.CaptureActivity;
 
 /**
  * 
@@ -48,6 +48,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 	private Button button_confirm;
 	private eDaoClientApplicaiton application = null;
 	private static final int READCONTRACT = 1;
+	private final static int TWODIMENCODE = 2;
 
 	private String name = "", phoneNum = "", referrerUserId = "",
 			referrerName = "";
@@ -79,12 +80,13 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 		button_confirm = (Button) findViewById(R.id.transfer_of_payment1_btn_confirm);
 
 		layout_payby_phone.setOnClickListener(this);
+		layout_payby_2dimencode.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
-		textView_username
-				.setText(Utity.addStarByName(application.getRealName()));
-		textView_phonenum
-				.setText(Utity.addStarByNum(3, 7, application.getTel()));
+		// textView_username
+		// .setText(Utity.addStarByName(application.getRealName()));
+		// textView_phonenum
+		// .setText(Utity.addStarByNum(3, 7, application.getTel()));
 	}
 
 	@Override
@@ -96,6 +98,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 					ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
 			break;
 		case R.id.transfer_of_payment1_layout_payby_2dimencode:
+			openActivityForResult(CaptureActivity.class, TWODIMENCODE);
 			break;
 		case R.id.transfer_of_payment1_btn_confirm:
 			if (checkInput())
@@ -215,6 +218,31 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 			editText_payee_phonenum.setSelection(editText_payee_phonenum
 					.getText().toString().length());
 			return;
+		}
+
+		if (requestCode == TWODIMENCODE && resultCode == Activity.RESULT_OK) {
+			System.out.println("data:" + data.getStringExtra("result"));
+			String result = data.getStringExtra("result");
+			String[] temp = result.split("\\n");
+			for (String str : temp) {
+				if (str.startsWith("N:")) {
+					String[] temp1 = str.split(":");
+					System.out.println("temp1:" + temp1[1]);
+				}
+				if (str.startsWith("TEL:")) {
+					String[] temp1 = str.split(":");
+					editText_payee_phonenum.setText(temp1[1]);
+					editText_payee_phonenum
+							.setSelection(editText_payee_phonenum.getText()
+									.toString().length());
+				}
+				if (str.startsWith("NOTE:")) {
+					String[] temp1 = str.split(":");
+					System.out.println("temp1:" + temp1[1]);
+				}
+
+			}
+
 		}
 
 	}

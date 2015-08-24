@@ -2,13 +2,9 @@ package com.poomoo.edao.activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
-import org.litepal.LitePalApplication;
-
 import android.content.SharedPreferences.Editor;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;

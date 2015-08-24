@@ -7,7 +7,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Helpers;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -147,7 +146,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			// openActivity(OrderListActivity.class);
 			break;
 		case R.id.sidebar_layout_help_center:
-			// openActivity(Helpers.class);
+			openActivity(WebViewActivity.class);
 			break;
 		case R.id.sidebar_layout_about_us:
 			openActivity(AboutUsActivity.class);
