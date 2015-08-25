@@ -3,6 +3,7 @@ package com.poomoo.edao.application;
 import org.litepal.LitePalApplication;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -15,7 +16,7 @@ public class eDaoClientApplicaiton extends LitePalApplication {
 	private String type = "";
 	private String curProvince = "";
 	private String curCity = "";
-	private String realNameAuth="";
+	private String realNameAuth = "";
 
 	public String getRealName() {
 		return this.realName;
@@ -88,6 +89,7 @@ public class eDaoClientApplicaiton extends LitePalApplication {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				getApplicationContext())
 				.defaultDisplayImageOptions(defaultOptions)
+				.memoryCache(new WeakMemoryCache())
 				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100)// 缓存一百张图片
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);

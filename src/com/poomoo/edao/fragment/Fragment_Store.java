@@ -2,6 +2,7 @@ package com.poomoo.edao.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.ShopListActivity;
 import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
 
-public class Fragment_Store extends Fragment {
+public class Fragment_Store extends Fragment implements OnItemClickListener {
 	private EditText editText_keywords;
 	private LinearLayout layout_position, layout_map;
 	private GridView gridView;
@@ -25,6 +28,9 @@ public class Fragment_Store extends Fragment {
 	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
 			"生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
 			"汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
+	// 1金银首饰 2 酒店娱乐 3 餐饮美食 4 服装鞋类 5 生活超市 6 旅游度假 7 美容保健 8 宣传广告 9 数码电器
+	// 10 皮具箱包 11 酒店服务 12 户外休闲 13 汽车服务 14 教育培训 15 农副产品 16 医药服务 17 交通运输 18 办公家具
+	// 19 建房建材 20 机械设备
 	private final int[] list_image = { R.drawable.ic_store_jewelry,
 			R.drawable.ic_store_hotel, R.drawable.ic_store_food,
 			R.drawable.ic_store_clothing, R.drawable.ic_store_super_market,
@@ -75,6 +81,7 @@ public class Fragment_Store extends Fragment {
 		gridViewAdapter = new Fragment_Store_GridViewAdapter(getActivity(),
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
+		gridView.setOnItemClickListener(this);
 	}
 
 	protected void setImmerseLayout(View view) {
@@ -97,5 +104,13 @@ public class Fragment_Store extends Fragment {
 			result = context.getResources().getDimensionPixelSize(resourceId);
 		}
 		return result;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO 自动生成的方法存根
+		Intent intent = new Intent(getActivity(), ShopListActivity.class);
+		intent.putExtra("categoryId", Integer.toString(arg2 + 1));
+		startActivity(intent);
 	}
 }

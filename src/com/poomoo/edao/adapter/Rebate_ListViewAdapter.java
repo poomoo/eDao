@@ -11,14 +11,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.UserRebateData;
+import com.poomoo.edao.util.Utity;
 
 public class Rebate_ListViewAdapter extends BaseAdapter {
 
-	private List<HashMap<String, String>> list;
+	private List<UserRebateData> list;
 	private LayoutInflater inflater;
 
-	public Rebate_ListViewAdapter(Context context,
-			List<HashMap<String, String>> list) {
+	public Rebate_ListViewAdapter(Context context, List<UserRebateData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -62,6 +63,12 @@ public class Rebate_ListViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		holder.textView_name.setText(Utity.addStarByName(list.get(position)
+				.getRealName()));
+		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position)
+				.getTel()));
+		holder.textView_money.setText("￥" + list.get(position).getRebateGold());
+		holder.textView_date.setText(list.get(position).getPayDt());
 		return convertView;
 	}
 

@@ -1,25 +1,30 @@
 package com.poomoo.edao.adapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.ShopList;
 
 public class Shop_List_ListViewAdapter extends BaseAdapter {
 
-	private List<HashMap<String, String>> list;
+	private List<ShopList> list;
 	private LayoutInflater inflater;
 
-	public Shop_List_ListViewAdapter(Context context,
-			List<HashMap<String, String>> list) {
+	public Shop_List_ListViewAdapter(Context context, List<ShopList> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -48,24 +53,48 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(
-					R.layout.item_listview_shop_list, parent, false);
+			convertView = inflater.inflate(R.layout.item_listview_shop_list,
+					parent, false);
 			holder = new ViewHolder();
 			holder.imageView = (ImageView) convertView
-					.findViewById(R.id.fragment_shop_listview_item_imageView);
-			holder.textView_name = (TextView) convertView
-					.findViewById(R.id.fragment_shop_listview_item_textView_name);
+					.findViewById(R.id.shop_list_item_imageView);
+			holder.textView_shopname = (TextView) convertView
+					.findViewById(R.id.shop_list_item_textView_name);
+			holder.textView_position = (TextView) convertView
+					.findViewById(R.id.shop_list_item_textView_position);
+			holder.textView_distance = (TextView) convertView
+					.findViewById(R.id.shop_list_item_textView_distance);
+			holder.bar = (RatingBar) convertView
+					.findViewById(R.id.shop_list_item_ratingBar);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		// 使用ImageLoader加载网络图片
+		DisplayImageOptions options = new DisplayImageOptions.Builder()//
+				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
+				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
+				.cacheInMemory(true) // 内存缓存
+				.cacheOnDisk(true) // sdcard缓存
+				.bitmapConfig(Config.RGB_565)// 设置最低配置
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
+				.build();
+		System.out.println("getview:" + list.get(position).getPictures());
+		ImageLoader.getInstance().displayImage(
+				list.get(position).getPictures(), holder.imageView, options);
+
+		holder.textView_shopname.setText(list.get(position).getShopName());
+		holder.textView_position.setText(list.get(position).getAddress());
+		holder.textView_distance.setText(list.get(position).getDistance());
+		holder.bar.setRating(list.get(position).getAvgScore());
 		return convertView;
 	}
 
 	private class ViewHolder {
 		private ImageView imageView;
-		private TextView textView_name;
-
+		private TextView textView_shopname, textView_position,
+				textView_distance;
+		private RatingBar bar;
 	}
 
 }

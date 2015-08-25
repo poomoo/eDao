@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.Selection;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -352,6 +353,8 @@ public class Utity {
 	 * @date 2015-8-21下午3:31:32
 	 */
 	public static String addStarByNum(int begin, int end, String str) {
+		if (TextUtils.isEmpty(str))
+			return "";
 		String temp = "";
 		temp = str.substring(0, begin)
 				+ str.substring(begin, end).replaceAll("[0123456789]", "*")
@@ -371,6 +374,8 @@ public class Utity {
 	 * @date 2015-8-21下午3:41:44
 	 */
 	public static String addStarByName(String str) {
+		if (TextUtils.isEmpty(str))
+			return "";
 		String temp = "";
 		temp = "*" + str.substring(1, str.length());
 		return temp;

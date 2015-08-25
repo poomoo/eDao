@@ -25,34 +25,34 @@
             android:gravity="center"
             android:text="姓名"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize16" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:text="手机号码"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:text="金额"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize16" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="金额"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize16" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
             android:text="时间"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
     <View
@@ -60,10 +60,9 @@
         android:layout_height="2dp"
         android:background="@color/gainsboro" />
 
-    <ListView
+    <com.poomoo.edao.widget.MyListView
         android:id="@+id/rebate_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

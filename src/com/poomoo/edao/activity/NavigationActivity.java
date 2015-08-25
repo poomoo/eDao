@@ -146,7 +146,9 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			// openActivity(OrderListActivity.class);
 			break;
 		case R.id.sidebar_layout_help_center:
-			openActivity(WebViewActivity.class);
+			Bundle pBundle = new Bundle();
+			pBundle.putString("from", "help");
+			openActivity(WebViewActivity.class, pBundle);
 			break;
 		case R.id.sidebar_layout_about_us:
 			openActivity(AboutUsActivity.class);

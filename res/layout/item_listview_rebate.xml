@@ -10,7 +10,7 @@
         android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <TextView
             android:id="@+id/rebate_item_textView_name"
@@ -20,37 +20,37 @@
             android:gravity="center"
             android:text="张*玲"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:id="@+id/rebate_item_textView_tel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.3"
             android:gravity="center"
             android:text="181****9910"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:id="@+id/rebate_item_textView_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="￥129.59"
             android:textColor="@color/green"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:id="@+id/rebate_item_textView_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
-            android:text="今天"
+            android:text="2015-08-13 17:23:58"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize14" />
     </LinearLayout>
 
 </LinearLayout>

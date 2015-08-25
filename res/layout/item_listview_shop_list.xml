@@ -1,56 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:padding="5dp" >
+    android:padding="@dimen/margin5" >
 
     <ImageView
-        android:id="@+id/fragment_shop_listview_item_imageView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:scaleType="fitXY"
+        android:id="@+id/shop_list_item_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <TextView
-            android:id="@+id/fragment_shop_listview_item_textView_name"
-            android:layout_width="match_parent"
+            android:id="@+id/shop_list_item_textView_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="贵阳世纪城店铺"
             android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <RatingBar
+            android:id="@+id/shop_list_item_ratingBar"
+            style="@style/myRatingBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="评价五角星"
-            android:textSize="10sp" />
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="5"
+            android:stepSize="0.1" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="店铺负责人:"
-                android:textColor="@color/gray"
-                android:textSize="10sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_arrow" />
+
+            <TextView
+                android:id="@+id/shop_list_item_textView_position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="贵阳 世纪城"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/shop_list_item_textView_distance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="100m"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 
