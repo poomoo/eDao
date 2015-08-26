@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="全国返利"
             android:textColor="@color/gray"
-            android:textSize="@dimen/textsize12" />
+            android:textSize="@dimen/textsize10" />
     </LinearLayout>
 
     <View
@@ -35,8 +35,8 @@
         android:layout_height="1dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/item_home_layout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="@dimen/margin5"
+        android:layout_marginRight="@dimen/margin5"
         android:background="#E6E6E6"
         android:contentDescription="@null" />
 
@@ -47,8 +47,8 @@
         android:layout_alignBottom="@+id/item_home_bottomline"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="@dimen/margin5"
+        android:layout_marginTop="@dimen/margin5"
         android:background="#E6E6E6"
         android:contentDescription="@null" />
 

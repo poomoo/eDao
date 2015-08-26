@@ -1,25 +1,46 @@
 package com.poomoo.edao.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap.Config;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.CertificationActivity;
 import com.poomoo.edao.activity.CooperationActivity;
@@ -32,9 +53,17 @@ import com.poomoo.edao.activity.NavigationActivity;
 import com.poomoo.edao.activity.PurchaseHistoryActivity;
 import com.poomoo.edao.activity.RebateActivity;
 import com.poomoo.edao.activity.TransferOfPaymentActivity1;
+import com.poomoo.edao.activity.WebViewActivity;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.SideBar;
+import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
+import com.poomoo.edao.widget.PhotoView.MyGestureListener;
 
 /**
  * 
@@ -46,12 +75,14 @@ import com.poomoo.edao.widget.SideBar;
 public class Fragment_Home extends Fragment implements OnClickListener,
 		OnItemClickListener {
 	private TextView textView_inform, textView_ecoin, textView_goldcoin,
-			textView_point;
+			textView_point, textView_indicator;
 	private LinearLayout layout_user, layout_map;
 	private RadioButton radioButton_shop;
 	private GridView gridView;
 	private SideBar sidebar;
 	private Fragment_Store fragment_Store;
+	private ViewFlipper flipper;
+	private GestureDetector mGestureDetector;
 
 	private Fragment_Home_GridViewAdapter gridViewAdapter;
 	private static final String[] list_name = { "普惠全民", "消费领取", "我的钱包", "交易明细",
@@ -69,6 +100,11 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			LoveFundActivity.class, Fragment_Store.class };
 
 	private eDaoClientApplicaiton applicaiton = null;
+	private Gson gson = new Gson();
+	private ArrayList<String> imageUrlsList = null;
+	private static final int[] pics = { R.drawable.a01, R.drawable.a02,
+			R.drawable.a03, R.drawable.a04 };
+	private int advCount = 0;// 广告数量
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -91,10 +127,27 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		setImmerseLayout(getView().findViewById(R.id.fragment_home_layout));
 
 		init();
+		// 查询通知
+		getInformData();
+		// 查询广告
+		getAdvData();
+		// int length = pics.length;
+		// for (int i = 0; i < length; i++) {
+		// final ImageView iv = new ImageView(getActivity());
+		// iv.setImageResource(pics[i]);
+		// iv.setScaleType(ScaleType.FIT_XY);
+		// flipper.addView(iv);
+		// }
+		// CharSequence text = getString(R.string.viewpager_indicator, 1,
+		// length);
+		// textView_indicator.setText(text);
+		// textView_indicator.setVisibility(View.VISIBLE);
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
+		flipper = (ViewFlipper) getView().findViewById(
+				R.id.fragment_home_viewFlipper);
 		textView_inform = (TextView) getView().findViewById(
 				R.id.main_textView_inform);
 		textView_ecoin = (TextView) getView().findViewById(
@@ -107,6 +160,8 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 				R.id.main_layout_user);
 		layout_map = (LinearLayout) getView()
 				.findViewById(R.id.main_layout_map);
+		textView_indicator = (TextView) getView().findViewById(
+				R.id.fragment_home_indicator);
 		gridView = (GridView) getView().findViewById(R.id.main_gridView);
 
 		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
@@ -120,12 +175,77 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 		layout_user.setOnClickListener(this);
 		layout_map.setOnClickListener(this);
+		textView_inform.setOnClickListener(this);
+	}
+
+	private void setFlipper() {
+		// TODO 自动生成的方法存根
+
+		mGestureDetector = new GestureDetector(getActivity(),
+				new MyGestureListener(getActivity(), flipper,
+						textView_indicator, pics.length));
+
+		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(),
+				android.R.anim.fade_in));
+		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(),
+				android.R.anim.fade_out));
+		flipper.setAutoStart(true); // 设置自动播放功能（点击事件，前自动播放）
+		flipper.setFlipInterval(eDaoClientConfig.advTime);
+		if (flipper.isAutoStart() && !flipper.isFlipping()) {
+			flipper.startFlipping();
+		}
+
+		flipper.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				System.out.println("flipper onTouch");
+				v.getParent().requestDisallowInterceptTouchEvent(true);// 防止与父类的onTouch冲突
+				return mGestureDetector.onTouchEvent(event);
+			}
+		});
+
+		flipper.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				int position = flipper.getDisplayedChild();
+				imageBrower(position, imageUrlsList);
+			}
+		});
+		flipper.getInAnimation().setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO 自动生成的方法存根
+				CharSequence text = getString(R.string.viewpager_indicator,
+						flipper.getDisplayedChild() + 1, advCount);
+				textView_indicator.setText(text);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO 自动生成的方法存根
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				// TODO 自动生成的方法存根
+
+			}
+		});
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
+		case R.id.main_textView_inform:
+			Intent intent = new Intent(getActivity(), WebViewActivity.class);
+			intent.putExtra("from", "inform");
+			startActivity(intent);
+			break;
 		case R.id.main_layout_user:
 			sidebar.toggle();
 			break;
@@ -164,6 +284,153 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			fragmentTransaction.commit();
 			radioButton_shop.setChecked(true);
 		}
+	}
+
+	private void getInformData() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "70000");
+		data.put("method", "70003");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								if (responseData.getRsCode() == 1) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+										textView_inform.setText(result
+												.getString("title"));
+									} catch (JSONException e) {
+										// TODO 自动生成的 catch 块
+										e.printStackTrace();
+									}
+								} else {
+									Utity.showToast(getActivity()
+											.getApplicationContext(), "查询通知失败"
+											+ responseData.getMsg());
+								}
+							}
+
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								Utity.showToast(getActivity()
+										.getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+
+						});
+					}
+				});
+	}
+
+	private void getAdvData() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "70000");
+		data.put("method", "70002");
+		data.put("type", "1");
+		data.put("position", "1");// 1-首页 2-商铺
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								if (responseData.getRsCode() == 1) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+										JSONArray array = result
+												.getJSONArray("records");
+										advCount = array.length();
+										imageUrlsList = new ArrayList<String>();
+										for (int i = 0; i < advCount; i++) {
+											imageUrlsList.add(array
+													.getJSONObject(i)
+													.getString("picture"));
+											flipper.addView(addImageById(imageUrlsList
+													.get(i)));
+										}
+										CharSequence text = getString(
+												R.string.viewpager_indicator,
+												1, advCount);
+										textView_indicator.setText(text);
+										textView_indicator
+												.setVisibility(View.VISIBLE);
+										setFlipper();
+									} catch (JSONException e) {
+										// TODO 自动生成的 catch 块
+										e.printStackTrace();
+									}
+								} else {
+									Utity.showToast(getActivity()
+											.getApplicationContext(), "查询广告失败"
+											+ responseData.getMsg());
+								}
+							}
+
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								Utity.showToast(getActivity()
+										.getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+
+						});
+					}
+				});
+	}
+
+	protected void imageBrower(int position, ArrayList<String> urls2) {
+		Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+		// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+		startActivity(intent);
+	}
+
+	public View addImageById(String url) {
+		final ImageView iv = new ImageView(getActivity());
+		// 使用ImageLoader加载网络图片
+		DisplayImageOptions options = new DisplayImageOptions.Builder()//
+				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
+				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
+				.cacheInMemory(true) // 内存缓存
+				.cacheOnDisk(true) // sdcard缓存
+				.bitmapConfig(Config.RGB_565)// 设置最低配置
+				.build();//
+		ImageLoader.getInstance().displayImage(url, iv, options);
+		iv.setScaleType(ScaleType.FIT_XY);
+		return iv;
 	}
 
 	protected void setImmerseLayout(View view) {

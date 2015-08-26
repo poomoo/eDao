@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 
 import com.nineoldandroids.view.ViewHelper;
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.NavigationActivity;
+import com.poomoo.edao.config.eDaoClientConfig;
 
 /**
  * 
@@ -127,7 +129,9 @@ public class SideBar extends HorizontalScrollView {
 				this.smoothScrollTo(0, 0);
 				isOpen = true;
 			}
+			System.out.println("ACTION_UP");
 			return true;
+
 		}
 		return super.onTouchEvent(ev);
 	}

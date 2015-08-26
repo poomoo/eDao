@@ -29,7 +29,7 @@ public class WebViewActivity extends BaseActivity {
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 	private static String content = "";
-	private String from = "";
+	private String from = "", method = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +51,21 @@ public class WebViewActivity extends BaseActivity {
 		// }
 		from = getIntent().getStringExtra("from");
 		textView_title = (TextView) findViewById(R.id.navigation_textView_title);
-		if (from.equals("help"))
+		if (from.equals("help")) {
+			method = "70005";
 			textView_title.setText("帮助中心");
-		else
+		} else {
+			method = "70004";
 			textView_title.setText("通知");
+		}
+
 		getData();
 	}
 
 	private void getData() {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "70000");
-		data.put("method", "70005");
+		data.put("method", method);
 		showProgressDialog();
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {

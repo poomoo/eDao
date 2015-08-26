@@ -84,6 +84,7 @@
         <activity android:name=".activity.LoveFundActivity" />
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name="com.zbar.lib.CaptureActivity" />
+        <activity android:name=".widget.PhotoView.ImagePagerActivity" />
 
         <service
             android:name="com.baidu.location.f"

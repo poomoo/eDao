@@ -5,61 +5,11 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <include
         android:id="@+id/shop_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1995EB"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp" >
-
-        <ImageView
-            android:id="@+id/shop_list_imageView_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_return" />
-
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="3.5"
-            android:background="@drawable/style_background"
-            android:gravity="center_vertical"
-            android:padding="5dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_reserch" />
-
-            <EditText
-                android:id="@+id/shop_list_editText_keywords"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:background="@null"
-                android:hint="请输入商品关键词"
-                android:textSize="@dimen/textsize14" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/shop_list_textView_classify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="分类"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/textsize14" />
-    </LinearLayout>
+        layout="@layout/pub_layout_shop_list" />
 
     <com.poomoo.edao.widget.MyListView
         android:id="@+id/shop_list_listView"

@@ -1,6 +1,5 @@
 package com.poomoo.edao.adapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
