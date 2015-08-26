@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				openActivity(LoginActivity.class);
+				openActivity(NavigationActivity.class);
 				overridePendingTransition(R.anim.push_left_in,
 						R.anim.push_left_out);
 				SplashActivity.this.finish();
