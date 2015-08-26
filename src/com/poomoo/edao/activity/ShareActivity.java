@@ -47,7 +47,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_share);
 		// 实现沉浸式状态栏效果
-		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		setImmerseLayout(findViewById(R.id.share_layout));
 		init();
 		// 配置需要分享的相关平台
 		configPlatforms();
