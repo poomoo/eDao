@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -59,7 +59,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 	private List<HashMap<String, String>> list;
 	private ListView listView;
 
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 	private String userId = "", realName = "", tel = "", money = "",
 			payType = "";
 	private static final String[] channel = new String[] { "意币支付", "现金支付",
@@ -79,7 +79,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		getIntentData();
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 

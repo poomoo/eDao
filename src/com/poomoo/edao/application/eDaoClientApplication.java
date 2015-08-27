@@ -9,7 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.poomoo.edao.R;
 
-public class eDaoClientApplicaiton extends LitePalApplication {
+public class eDaoClientApplication extends LitePalApplication {
 	private String realName = "";
 	private String tel = "";
 	private String userId = "";

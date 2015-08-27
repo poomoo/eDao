@@ -35,7 +35,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.CitySpinnerAdapter;
 import com.poomoo.edao.adapter.ProvinceSpinnerAdapter;
 import com.poomoo.edao.adapter.RegistrationSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.database.CityInfo;
@@ -70,7 +70,7 @@ public class CertificationActivity extends BaseActivity implements
 	private List<HashMap<String, String>> list_bank;
 	private ListView listView;
 
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
 	private final String[] strbank = new String[] { "中国建设银行", "中国工商银行",
@@ -91,7 +91,7 @@ public class CertificationActivity extends BaseActivity implements
 		setContentView(R.layout.activity_certification);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton=(eDaoClientApplicaiton)getApplication();
+		applicaiton=(eDaoClientApplication)getApplication();
 		init();
 	}
 

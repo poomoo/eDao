@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.PayInfo;
 import com.poomoo.edao.model.ResponseData;
@@ -56,7 +56,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 			referrerUserId = "", referrerName = "", curProvince = "",
 			curCity = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_alliance_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 
 	}

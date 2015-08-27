@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/navigation_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/purchase_and_get_detail_radiobutton_history"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin40"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="消费记录"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+
+        <RadioButton
+            android:id="@+id/purchase_and_get_detail_radiobutton_detail"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="领取明细"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize16" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gainsboro" />
+
+    <FrameLayout
+        android:id="@+id/purchase_and_get_detail_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
+</LinearLayout>

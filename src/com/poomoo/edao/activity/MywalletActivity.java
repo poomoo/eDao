@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.util.Utity;
 
 /**
@@ -28,7 +28,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private EditText editText_handing_money;
 	private Button button_recharge, button_handing;
 
-	private eDaoClientApplicaiton application = null;
+	private eDaoClientApplication application = null;
 	private SharedPreferences sharedPreferences_certification = null;
 	private static final String bankaccount = "6226622662266226123";
 
@@ -41,7 +41,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_mywallet);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		application = (eDaoClientApplicaiton) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 

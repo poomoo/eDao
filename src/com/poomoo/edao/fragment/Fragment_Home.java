@@ -45,17 +45,17 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.activity.CertificationActivity;
 import com.poomoo.edao.activity.CooperationActivity;
 import com.poomoo.edao.activity.CreditManageActivity;
-import com.poomoo.edao.activity.GetDetailActivity;
 import com.poomoo.edao.activity.LoveFundActivity;
 import com.poomoo.edao.activity.MapActivity;
 import com.poomoo.edao.activity.MywalletActivity;
 import com.poomoo.edao.activity.NavigationActivity;
-import com.poomoo.edao.activity.PurchaseHistoryActivity;
+import com.poomoo.edao.activity.OrderListActivity;
+import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
 import com.poomoo.edao.activity.RebateActivity;
 import com.poomoo.edao.activity.TransferOfPaymentActivity1;
 import com.poomoo.edao.activity.WebViewActivity;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -94,12 +94,12 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			R.drawable.ic_love_fund, R.drawable.ic_shop };
 
 	private static final Class[] outIntent = { RebateActivity.class,
-			GetDetailActivity.class, MywalletActivity.class,
-			PurchaseHistoryActivity.class, CreditManageActivity.class,
+			PurchaseAndGetDetailActivity.class, MywalletActivity.class,
+			OrderListActivity.class, CreditManageActivity.class,
 			TransferOfPaymentActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 	private Gson gson = new Gson();
 	private ArrayList<String> imageUrlsList = null;
 	private static final int[] pics = { R.drawable.a01, R.drawable.a02,
@@ -264,7 +264,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
 		if (arg2 == 2 || arg2 == 50 || arg2 == 6) {
-			applicaiton = (eDaoClientApplicaiton) getActivity()
+			applicaiton = (eDaoClientApplication) getActivity()
 					.getApplication();
 			if (!applicaiton.getRealNameAuth().equals("1")) {
 				startActivity(new Intent(getActivity(),

@@ -1,6 +1,5 @@
 package com.poomoo.edao.adapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -11,14 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.Detail;
 
 public class Get_DetailAdapter extends BaseAdapter {
 
-	private List<HashMap<String, String>> list;
+	private List<Detail> list;
 	private LayoutInflater inflater;
 
-	public Get_DetailAdapter(Context context,
-			List<HashMap<String, String>> list) {
+	public Get_DetailAdapter(Context context, List<Detail> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -47,8 +46,8 @@ public class Get_DetailAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(
-					R.layout.item_listview_get_detail, parent, false);
+			convertView = inflater.inflate(R.layout.item_listview_get_detail,
+					parent, false);
 			holder = new ViewHolder();
 			holder.textView_expense_time = (TextView) convertView
 					.findViewById(R.id.get_detail_item_textView_expense_time);
@@ -62,12 +61,16 @@ public class Get_DetailAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		holder.textView_expense_time.setText(list.get(position).getPayDt());
+		holder.textView_get_money.setText("￥"+list.get(position).getGotNum());
+		holder.textView_balance.setText("￥"+list.get(position).getTotalNum());
+		holder.textView_get_time.setText(list.get(position).getGotTime());
 		return convertView;
 	}
 
 	private class ViewHolder {
-		private TextView textView_expense_time, textView_get_money, textView_balance,
-				textView_get_time;
+		private TextView textView_expense_time, textView_get_money,
+				textView_balance, textView_get_time;
 
 	}
 

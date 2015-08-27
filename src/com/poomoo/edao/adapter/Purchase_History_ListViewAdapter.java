@@ -1,6 +1,5 @@
 package com.poomoo.edao.adapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -11,14 +10,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.Purchase_History;
 
 public class Purchase_History_ListViewAdapter extends BaseAdapter {
 
-	private List<HashMap<String, String>> list;
+	private List<Purchase_History> list;
 	private LayoutInflater inflater;
 
 	public Purchase_History_ListViewAdapter(Context context,
-			List<HashMap<String, String>> list) {
+			List<Purchase_History> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -62,6 +62,10 @@ public class Purchase_History_ListViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		holder.textView_shop.setText(list.get(position).getShopName());
+		holder.textView_money.setText("￥"+list.get(position).getPayFee());
+		holder.textView_date.setText(list.get(position).getPayDt());
+		holder.textView_state.setText(list.get(position).getRank());
 		return convertView;
 	}
 

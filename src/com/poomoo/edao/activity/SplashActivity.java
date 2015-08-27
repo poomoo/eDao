@@ -18,7 +18,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;
@@ -34,7 +34,7 @@ public class SplashActivity extends BaseActivity {
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
 
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class SplashActivity extends BaseActivity {
 		setContentView(R.layout.activity_splash);
 		setImmerseLayout();
 		init();
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		// sp = getSharedPreferences("index", Context.MODE_PRIVATE);
 		// editor = sp.edit();
 		// guide = sp.getString("guide", "");
@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				openActivity(NavigationActivity.class);
+				openActivity(LoginActivity.class);
 				overridePendingTransition(R.anim.push_left_in,
 						R.anim.push_left_out);
 				SplashActivity.this.finish();

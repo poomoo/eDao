@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.PayInfo;
 import com.poomoo.edao.model.ResponseData;
@@ -42,7 +42,7 @@ public class DealerApplyActivity extends BaseActivity implements
 	private EditText editText_merchant_phone;
 	private Button button_confirm;
 
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String merchant_phone = "", referrerUserId = "", referrerName = "",
@@ -57,7 +57,7 @@ public class DealerApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_dealer_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 

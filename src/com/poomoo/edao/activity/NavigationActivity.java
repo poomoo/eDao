@@ -17,7 +17,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.fragment.Fragment_Home;
 import com.poomoo.edao.fragment.Fragment_Personal_Center;
@@ -39,14 +39,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 
 	// 侧边栏
 	private TextView textView_userName, textView_userTel;
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 

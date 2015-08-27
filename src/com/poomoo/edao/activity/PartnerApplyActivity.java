@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.PayInfo;
 import com.poomoo.edao.model.ResponseData;
@@ -48,7 +48,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private Button button_confirm;
 
 	private Select_City_PopupWindow select_City_PopupWindow;
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String zone = "", merchant_phone = "", merchant_name = "",
@@ -64,7 +64,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_partner_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 

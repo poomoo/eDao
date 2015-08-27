@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.LoginResData;
 import com.poomoo.edao.model.ResponseData;
@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private SharedPreferences loginsp;
 	private Editor editor = null;
-	private eDaoClientApplicaiton applicaiton = null;
+	private eDaoClientApplication applicaiton = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplicaiton) getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 

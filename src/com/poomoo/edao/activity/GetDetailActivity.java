@@ -25,7 +25,7 @@ public class GetDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_get_detail);
+		setContentView(R.layout.fragment_get_detail);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
@@ -34,7 +34,7 @@ public class GetDetailActivity extends BaseActivity {
 	private void init() {
 		// TODO 自动生成的方法存根
 		listView = (ListView) findViewById(R.id.get_detail_listView);
-		adapter = new Get_DetailAdapter(this, list);
+//		adapter = new Get_DetailAdapter(this, list);
 		listView.setAdapter(adapter);
 	}
 

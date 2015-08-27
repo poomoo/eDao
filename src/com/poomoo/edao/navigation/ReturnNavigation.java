@@ -60,11 +60,8 @@ public class ReturnNavigation extends Fragment {
 		case "RebateActivity":
 			textView_title.setText("全国返利");
 			break;
-		case "PurchaseHistoryActivity":
-			textView_title.setText("消费记录");
-			break;
-		case "GetDetailActivity":
-			textView_title.setText("领取明细");
+		case "PurchaseAndGetDetailActivity":
+			textView_title.setText("消费领取");
 			break;
 		case "MywalletActivity":
 			textView_title.setText("我的钱包");

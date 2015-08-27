@@ -25,7 +25,7 @@ public class PurchaseHistoryActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_purchase_history);
+		setContentView(R.layout.fragment_purchase_history);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		init();
@@ -34,7 +34,7 @@ public class PurchaseHistoryActivity extends BaseActivity {
 	private void init() {
 		// TODO 自动生成的方法存根
 		listView = (ListView) findViewById(R.id.purchase_history_listView);
-		adapter = new Purchase_History_ListViewAdapter(this, list);
+		// adapter = new Purchase_History_ListViewAdapter(this, list);
 		listView.setAdapter(adapter);
 	}
 

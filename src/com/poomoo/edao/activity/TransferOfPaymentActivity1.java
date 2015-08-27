@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplicaiton;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -46,7 +46,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 	private EditText editText_payee_phonenum;
 	private LinearLayout layout_payby_phone, layout_payby_2dimencode;
 	private Button button_confirm;
-	private eDaoClientApplicaiton application = null;
+	private eDaoClientApplication application = null;
 	private static final int READCONTRACT = 1;
 	private final static int TWODIMENCODE = 2;
 
@@ -62,7 +62,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 		setContentView(R.layout.activity_transfer_of_payment1);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		application = (eDaoClientApplicaiton) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
