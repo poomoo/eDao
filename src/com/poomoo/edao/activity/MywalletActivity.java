@@ -219,7 +219,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 									application.setCovertMinFee(data
 											.getCovertMinFee());
 									application.setCorvertMaxFee(data
-											.getCorvertMaxFee());
+											.getCovertMaxFee());
 									application.setTotalEb(data.getTotalEb());
 									application.setBankName(data.getBankName());
 									application.setBankCardId(data

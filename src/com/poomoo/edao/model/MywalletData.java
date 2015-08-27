@@ -10,7 +10,7 @@ package com.poomoo.edao.model;
 public class MywalletData {
 	private String handlingFee = "";
 	private String covertMinFee = "";
-	private String corvertMaxFee = "";
+	private String covertMaxFee = "";
 	private String totalEb = "";
 	private String bankName = "";
 	private String bankCardId = "";
@@ -31,12 +31,12 @@ public class MywalletData {
 		this.covertMinFee = covertMinFee;
 	}
 
-	public String getCorvertMaxFee() {
-		return this.corvertMaxFee;
+	public String getCovertMaxFee() {
+		return this.covertMaxFee;
 	}
 
-	public void setCorvertMaxFee(String corvertMaxFee) {
-		this.corvertMaxFee = corvertMaxFee;
+	public void setCovertMaxFee(String corvertMaxFee) {
+		this.covertMaxFee = corvertMaxFee;
 	}
 
 	public String getTotalEb() {
