@@ -3,6 +3,7 @@ package com.poomoo.edao.activity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	private Fragment_Home fragment_Home;
 	public static Fragment_Store fragment_Store;
 	private Fragment_Personal_Center fragment_Personal_Center;
+	private Fragment curFragment;
 	public static SideBar sideBar;
 	private int clo = 0;
 	private LinearLayout layout_myOrder, layout_shared, layout_check_update,
@@ -98,39 +100,35 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
 		fragment_Home = new Fragment_Home();
-		fragmentTransaction.replace(R.id.navigation_frameLayout, fragment_Home);
+		curFragment = fragment_Home;
+		fragmentTransaction.add(R.id.navigation_frameLayout, fragment_Home);
 		fragmentTransaction.commit();
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
-		System.out.println("onClick");
-
 		switch (v.getId()) {
 		case R.id.navigation_radioButton_home:
 			sideBar.closeMenu();
 			if (fragment_Home == null)
 				fragment_Home = new Fragment_Home();
-			fragmentTransaction.replace(R.id.navigation_frameLayout,
-					fragment_Home);
+			switchFragment(fragment_Home);
+			curFragment = fragment_Home;
 			break;
 		case R.id.navigation_radioButton_shop:
 			sideBar.closeMenu();
 			if (fragment_Store == null)
 				fragment_Store = new Fragment_Store();
-			fragmentTransaction.replace(R.id.navigation_frameLayout,
-					fragment_Store);
+			switchFragment(fragment_Store);
+			curFragment = fragment_Store;
 			break;
 		case R.id.navigation_radioButton_myown:
 			sideBar.closeMenu();
 			if (fragment_Personal_Center == null)
 				fragment_Personal_Center = new Fragment_Personal_Center();
-			fragmentTransaction.replace(R.id.navigation_frameLayout,
-					fragment_Personal_Center);
+			switchFragment(fragment_Personal_Center);
+			curFragment = fragment_Personal_Center;
 			break;
 		case R.id.sidebar_textView_userName:
 			System.out.println("点击userName");
@@ -157,9 +155,19 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			openActivity(OrderListActivity.class);
 			break;
 		}
+	}
 
+	private void switchFragment(Fragment to) {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+		if (!to.isAdded()) { // 先判断是否被add过
+			fragmentTransaction.hide(curFragment).add(
+					R.id.navigation_frameLayout, to); // 隐藏当前的fragment，add下一个到Activity中
+		} else {
+			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
+		}
 		fragmentTransaction.commit();
-
 	}
 
 	public void spark() {

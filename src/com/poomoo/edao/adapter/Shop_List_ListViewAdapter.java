@@ -17,14 +17,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.ShopList;
+import com.poomoo.edao.model.ShopListData;
 
 public class Shop_List_ListViewAdapter extends BaseAdapter {
 
-	private List<ShopList> list;
+	private List<ShopListData> list;
 	private LayoutInflater inflater;
 
-	public Shop_List_ListViewAdapter(Context context, List<ShopList> list) {
+	public Shop_List_ListViewAdapter(Context context, List<ShopListData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);

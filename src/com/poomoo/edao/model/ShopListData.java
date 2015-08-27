@@ -7,7 +7,7 @@ package com.poomoo.edao.model;
  * @author 李苜菲
  * @date 2015-8-25 上午10:43:51
  */
-public class ShopList {
+public class ShopListData {
 	private String distance = "";// 店铺与当前位置的距离
 	private String shopId = "";
 	private String shopName = "";

@@ -10,14 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.Detail;
+import com.poomoo.edao.model.DetailData;
 
 public class Get_DetailAdapter extends BaseAdapter {
 
-	private List<Detail> list;
+	private List<DetailData> list;
 	private LayoutInflater inflater;
 
-	public Get_DetailAdapter(Context context, List<Detail> list) {
+	public Get_DetailAdapter(Context context, List<DetailData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);

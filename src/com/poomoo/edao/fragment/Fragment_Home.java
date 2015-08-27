@@ -263,7 +263,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
-		if (arg2 == 2 || arg2 == 50 || arg2 == 6) {
+		if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
 			applicaiton = (eDaoClientApplication) getActivity()
 					.getApplication();
 			if (!applicaiton.getRealNameAuth().equals("1")) {

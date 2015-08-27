@@ -7,7 +7,7 @@ package com.poomoo.edao.model;
  * @author 李苜菲
  * @date 2015-8-27 上午10:15:31
  */
-public class Detail {
+public class DetailData {
 	private String payDt = "";
 	private String gotNum = "";
 	private String totalNum = "";

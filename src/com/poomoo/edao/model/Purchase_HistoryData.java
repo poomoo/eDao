@@ -7,7 +7,7 @@ package com.poomoo.edao.model;
  * @author 李苜菲
  * @date 2015-8-27 上午10:10:44
  */
-public class Purchase_History {
+public class Purchase_HistoryData {
 	private String shopName = "";
 	private String payFee = "";
 	private String payDt = "";

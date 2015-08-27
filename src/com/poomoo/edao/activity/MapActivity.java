@@ -36,7 +36,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.Store;
+import com.poomoo.edao.model.StoreData;
 
 public class MapActivity extends BaseActivity implements OnMapClickListener,
 		OnMapStatusChangeListener, OnClickListener {
@@ -93,7 +93,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
-		addInfosOverlay(Store.infos);
+		addInfosOverlay(StoreData.infos);
 		initMarkerClickEvent();
 	}
 
@@ -108,12 +108,12 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	/**
 	 * 初始化图层
 	 */
-	public void addInfosOverlay(List<Store> infos) {
+	public void addInfosOverlay(List<StoreData> infos) {
 		mBaiduMap.clear();
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
-		for (Store info : infos) {
+		for (StoreData info : infos) {
 			// 位置
 			latLng = new LatLng(info.getLatitude(), info.getLongitude());
 			// 图标
@@ -141,7 +141,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				} else {
 					showCurrtenStroeOnMap(ll);
 					// 获得marker中的数据
-					Store info = (Store) marker.getExtraInfo().get("info");
+					StoreData info = (StoreData) marker.getExtraInfo().get("info");
 					View linlayout = MapActivity.this.getLayoutInflater()
 							.inflate(R.layout.popup_map_inform, null);
 					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
@@ -161,7 +161,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		});
 	}
 
-	private View getInfoWindowView(View mMarkerLy, final Store store) {
+	private View getInfoWindowView(View mMarkerLy, final StoreData store) {
 		ViewHolder viewHolder = null;
 		if (mMarkerLy.getTag() == null) {
 			viewHolder = new ViewHolder();

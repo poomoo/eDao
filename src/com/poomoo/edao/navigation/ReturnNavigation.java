@@ -138,6 +138,9 @@ public class ReturnNavigation extends Fragment {
 		case "ResetPasswrodActivity":
 			textView_title.setText("重置密码");
 			break;
+		case "RechargeActivity":
+			textView_title.setText("充值");
+			break;
 
 		}
 

@@ -66,38 +66,33 @@ public class PurchaseAndGetDetailActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+
 		switch (v.getId()) {
 		case R.id.purchase_and_get_detail_radiobutton_history:
 			if (fragment_History == null)
 				fragment_History = new Fragment_History();
-			if (!fragment_History.isAdded()) { // 先判断是否被add过
-				fragmentTransaction.hide(curFragment).add(
-						R.id.purchase_and_get_detail_frameLayout,
-						fragment_History); // 隐藏当前的fragment，add下一个到Activity中
-			} else {
-				fragmentTransaction.hide(curFragment).show(fragment_History); // 隐藏当前的fragment，显示下一个
-			}
+			switchFragment(fragment_History);
 			curFragment = fragment_History;
-			// fragmentTransaction.replace(
-			// R.id.purchase_and_get_detail_frameLayout, fragment_History);
 			break;
 		case R.id.purchase_and_get_detail_radiobutton_detail:
 			if (fragment_Detail == null)
 				fragment_Detail = new Fragment_Detail();
-			if (!fragment_Detail.isAdded()) { // 先判断是否被add过
-				fragmentTransaction.hide(curFragment).add(
-						R.id.purchase_and_get_detail_frameLayout,
-						fragment_Detail); // 隐藏当前的fragment，add下一个到Activity中
-			} else {
-				fragmentTransaction.hide(curFragment).show(fragment_Detail); // 隐藏当前的fragment，显示下一个
-			}
+			switchFragment(fragment_Detail);
 			curFragment = fragment_Detail;
-			// fragmentTransaction.replace(
-			// R.id.purchase_and_get_detail_frameLayout, fragment_Detail);
 			break;
+		}
+
+	}
+
+	private void switchFragment(Fragment to) {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+		if (!to.isAdded()) { // 先判断是否被add过
+			fragmentTransaction.hide(curFragment).add(
+					R.id.purchase_and_get_detail_frameLayout, to); // 隐藏当前的fragment，add下一个到Activity中
+		} else {
+			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}
 		fragmentTransaction.commit();
 	}

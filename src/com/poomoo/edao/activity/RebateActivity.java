@@ -19,7 +19,7 @@ import com.poomoo.edao.adapter.Rebate_ListViewAdapter;
 import com.poomoo.edao.adapter.Shop_List_ListViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.ShopList;
+import com.poomoo.edao.model.ShopListData;
 import com.poomoo.edao.model.UserRebateData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;

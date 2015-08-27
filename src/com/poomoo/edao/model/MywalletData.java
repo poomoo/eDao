@@ -1,0 +1,66 @@
+package com.poomoo.edao.model;
+
+/**
+ * 
+ * @ClassName MywalletData
+ * @Description TODO 我的钱包数据
+ * @author 李苜菲
+ * @date 2015-8-27 下午2:52:45
+ */
+public class MywalletData {
+	private String handlingFee = "";
+	private String covertMinFee = "";
+	private String corvertMaxFee = "";
+	private String totalEb = "";
+	private String bankName = "";
+	private String bankCardId = "";
+
+	public String getHandlingFee() {
+		return this.handlingFee;
+	}
+
+	public void setHandlingFee(String handlingFee) {
+		this.handlingFee = handlingFee;
+	}
+
+	public String getCovertMinFee() {
+		return this.covertMinFee;
+	}
+
+	public void setCovertMinFee(String covertMinFee) {
+		this.covertMinFee = covertMinFee;
+	}
+
+	public String getCorvertMaxFee() {
+		return this.corvertMaxFee;
+	}
+
+	public void setCorvertMaxFee(String corvertMaxFee) {
+		this.corvertMaxFee = corvertMaxFee;
+	}
+
+	public String getTotalEb() {
+		return this.totalEb;
+	}
+
+	public void setTotalEb(String totalEb) {
+		this.totalEb = totalEb;
+	}
+
+	public String getBankName() {
+		return this.bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public String getBankCardId() {
+		return this.bankCardId;
+	}
+
+	public void setBankCardId(String bankCardId) {
+		this.bankCardId = bankCardId;
+	}
+
+}

@@ -72,6 +72,7 @@
         <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.PurchaseAndGetDetailActivity" />
         <activity android:name=".activity.RebateActivity" />
+        <activity android:name=".activity.RechargeActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ResetPasswrodActivity" />
         <activity android:name=".activity.ShareActivity" />

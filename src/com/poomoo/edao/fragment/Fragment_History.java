@@ -21,7 +21,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Purchase_History_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.Purchase_History;
+import com.poomoo.edao.model.Purchase_HistoryData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
@@ -31,7 +31,7 @@ import com.poomoo.edao.widget.MyListView;
 public class Fragment_History extends Fragment {
 	private MyListView listView;
 	private Purchase_History_ListViewAdapter adapter;
-	private List<Purchase_History> list;
+	private List<Purchase_HistoryData> list;
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
@@ -98,13 +98,13 @@ public class Fragment_History extends Fragment {
 										JSONArray pager = result
 												.getJSONArray("records");
 										int length = pager.length();
-										list=new ArrayList<Purchase_History>();
+										list=new ArrayList<Purchase_HistoryData>();
 										for (int i = 0; i < length; i++) {
-											Purchase_History purchase_History = new Purchase_History();
+											Purchase_HistoryData purchase_History = new Purchase_HistoryData();
 											purchase_History = gson.fromJson(
 													pager.getJSONObject(i)
 															.toString(),
-													Purchase_History.class);
+													Purchase_HistoryData.class);
 											list.add(purchase_History);
 										}
 										if (isFirst) {

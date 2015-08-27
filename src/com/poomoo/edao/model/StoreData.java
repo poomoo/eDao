@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.poomoo.edao.R;
 
-public class Store implements Serializable {
+public class StoreData implements Serializable {
 	private static final long serialVersionUID = -758459502806858414L;
 	/**
 	 * 精度
@@ -37,19 +37,19 @@ public class Store implements Serializable {
 	 */
 	private String info;
 
-	public static List<Store> infos = new ArrayList<Store>();
+	public static List<StoreData> infos = new ArrayList<StoreData>();
 
 	static {
-		infos.add(new Store(26.612562, 106.636244, R.drawable.ic_store_pic,
+		infos.add(new StoreData(26.612562, 106.636244, R.drawable.ic_store_pic,
 				"乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商", "209米", 4.7f, "90起送"));
-		infos.add(new Store(26.612433, 106.635911, R.drawable.ic_store_pic,
+		infos.add(new StoreData(26.612433, 106.635911, R.drawable.ic_store_pic,
 				"乐意道合作商", "897米", 4.8f, "100起送"));
-		infos.add(new Store(26.612264, 106.637236, R.drawable.ic_store_pic,
+		infos.add(new StoreData(26.612264, 106.637236, R.drawable.ic_store_pic,
 				"乐意道经销商", "249米", 4.9f, "110起送"));
 
 	}
 
-	public Store(double latitude, double longitude, int imgId, String name,
+	public StoreData(double latitude, double longitude, int imgId, String name,
 			String distance, float score, String info) {
 		super();
 		this.latitude = latitude;

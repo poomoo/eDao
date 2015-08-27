@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.LoginActivity;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YESNO;
 
@@ -39,6 +41,7 @@ public class Fragment_Personal_Center extends Fragment implements
 	private MessageBox_YESNO box_YESNO;
 	private SharedPreferences sharedPreferencesUserInfo = null;
 	private Editor editor = null;
+	private eDaoClientApplication application = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class Fragment_Personal_Center extends Fragment implements
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(
 				R.id.fragment_personal_center_layout));
-
+		application = (eDaoClientApplication) getActivity().getApplication();
 		init();
 	}
 
@@ -85,6 +88,9 @@ public class Fragment_Personal_Center extends Fragment implements
 				R.id.personalcenter_btn_logout);
 
 		button_logout.setOnClickListener(this);
+
+		textView_name.setText(Utity.addStarByName(application.getRealName()));
+		textView_tel.setText(Utity.addStarByNum(3, 7, application.getTel()));
 	}
 
 	@Override

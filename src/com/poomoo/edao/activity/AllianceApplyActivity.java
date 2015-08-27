@@ -27,7 +27,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.PayInfo;
+import com.poomoo.edao.model.PayInfoData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -250,9 +250,9 @@ public class AllianceApplyActivity extends BaseActivity implements
 								// TODO 自动生成的方法存根
 								closeProgressDialog();
 								if (responseData.getRsCode() == 1) {
-									PayInfo payInfo = gson.fromJson(
+									PayInfoData payInfo = gson.fromJson(
 											responseData.getJsonData(),
-											PayInfo.class);
+											PayInfoData.class);
 									Bundle pBundle = new Bundle();
 									pBundle.putString("userId",
 											payInfo.getUserId());

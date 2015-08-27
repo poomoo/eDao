@@ -7,7 +7,7 @@ package com.poomoo.edao.model;
  * @author 李苜菲
  * @date 2015-8-20 上午11:13:26
  */
-public class PayInfo {
+public class PayInfoData {
 	private String userId = "";
 	private String realName = "";
 	private String tel = "";

@@ -10,15 +10,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.Purchase_History;
+import com.poomoo.edao.model.Purchase_HistoryData;
 
 public class Purchase_History_ListViewAdapter extends BaseAdapter {
 
-	private List<Purchase_History> list;
+	private List<Purchase_HistoryData> list;
 	private LayoutInflater inflater;
 
 	public Purchase_History_ListViewAdapter(Context context,
-			List<Purchase_History> list) {
+			List<Purchase_HistoryData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);

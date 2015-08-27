@@ -21,7 +21,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Get_DetailAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.Detail;
+import com.poomoo.edao.model.DetailData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
@@ -31,7 +31,7 @@ import com.poomoo.edao.widget.MyListView;
 public class Fragment_Detail extends Fragment {
 	private MyListView listView;
 	private Get_DetailAdapter adapter;
-	private List<Detail> list;
+	private List<DetailData> list;
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
@@ -97,13 +97,13 @@ public class Fragment_Detail extends Fragment {
 
 										JSONArray pager = result
 												.getJSONArray("records");
-										list = new ArrayList<Detail>();
+										list = new ArrayList<DetailData>();
 										int length = pager.length();
 										for (int i = 0; i < length; i++) {
-											Detail Detail = new Detail();
+											DetailData Detail = new DetailData();
 											Detail = gson.fromJson(pager
 													.getJSONObject(i)
-													.toString(), Detail.class);
+													.toString(), DetailData.class);
 											list.add(Detail);
 										}
 										if (isFirst) {

@@ -26,7 +26,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Shop_List_ListViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.ShopList;
+import com.poomoo.edao.model.ShopListData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -47,7 +47,7 @@ public class ShopListActivity extends BaseActivity {
 	private MyListView listView;
 
 	private Shop_List_ListViewAdapter adapter;
-	private List<ShopList> list;
+	private List<ShopListData> list;
 
 	private LocationClient mLocationClient = null;
 	private BDLocationListener myListener = new MyLocationListener();
@@ -90,7 +90,7 @@ public class ShopListActivity extends BaseActivity {
 		initLocation();
 		mLocationClient.start();
 
-		list = new ArrayList<ShopList>();
+		list = new ArrayList<ShopListData>();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 				getData();
@@ -162,12 +162,12 @@ public class ShopListActivity extends BaseActivity {
 												.getJSONArray("records");
 										int length = pager.length();
 										for (int i = 0; i < length; i++) {
-											ShopList shopList = new ShopList();
+											ShopListData shopList = new ShopListData();
 											shopList = gson
 													.fromJson(pager
 															.getJSONObject(i)
 															.toString(),
-															ShopList.class);
+															ShopListData.class);
 											list.add(shopList);
 										}
 										if (isFirst) {
