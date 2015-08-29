@@ -59,11 +59,12 @@ public class MessageBox_YES extends Dialog {
 		this.dialogResult = dialogResult;
 	}
 
-	public void endDialog() {
+	public void endDialog(int result) {
 		dismiss();
+		setDialogResult(result);
 	}
 
-	public int showDialog(String Msg) {
+	public int showDialog(String Msg,final DialogResultListener dialogResultListener) {
 		TextView Info = (TextView) findViewById(R.id.messagebox_yes_textView_content);
 		Info.setText(Msg);
 		// 获取焦点
@@ -78,7 +79,9 @@ public class MessageBox_YES extends Dialog {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View paramView) {
-						endDialog();
+						endDialog(1);
+						if (dialogResultListener != null)
+							dialogResultListener.onFinishDialogResult(1);
 					}
 				});
 

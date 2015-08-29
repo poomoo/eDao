@@ -3,9 +3,14 @@ package com.poomoo.edao.util;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
+import org.apache.http.conn.util.InetAddressUtils;
 import org.litepal.crud.DataSupport;
 
 import android.content.Context;
@@ -379,5 +384,62 @@ public class Utity {
 		String temp = "";
 		temp = "*" + str.substring(1, str.length());
 		return temp;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: getLocalHostIp
+	 * @Description: TODO 获取设备IP地址
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws
+	 * @date 2015-8-29下午4:56:18
+	 */
+	public static String getLocalHostIp() {
+		String ipaddress = "";
+		try {
+			Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces();
+			// 遍历所用的网络接口
+			while (en.hasMoreElements()) {
+				NetworkInterface nif = en.nextElement();// 得到每一个网络接口绑定的所有ip
+				Enumeration<InetAddress> inet = nif.getInetAddresses();
+				// 遍历每一个接口绑定的所有ip
+				while (inet.hasMoreElements()) {
+					InetAddress ip = inet.nextElement();
+					if (!ip.isLoopbackAddress()
+							&& InetAddressUtils.isIPv4Address(ip
+									.getHostAddress())) {
+						return ipaddress = ip.getHostAddress();
+					}
+				}
+
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return ipaddress;
+
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: subZeroAndDot
+	 * @Description: TODO 去掉多余的.和0
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws
+	 * @date 2015-8-29下午6:06:02
+	 */
+	public static String subZeroAndDot(String s) {
+		if (s.indexOf(".") > 0) {
+			s = s.replaceAll("0+?$", "");// 去掉多余的0
+			s = s.replaceAll("[.]$", "");// 如最后一位是.则去掉
+		}
+		return s;
 	}
 }

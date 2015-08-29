@@ -24,6 +24,7 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
@@ -84,8 +85,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 				.setText(Utity.addStarByName(application.getRealName()));
 		textView_phonenum
 				.setText(Utity.addStarByNum(3, 7, application.getTel()));
-		// textView_account_name.setText(Utity.addStarByName(application
-		// .getRealName()));
+		textView_account_name.setText(Utity.addStarByName(application
+				.getRealName()));
 		// sharedPreferences_certification = getSharedPreferences(
 		// "certificaitonInfo", Context.MODE_PRIVATE);
 		// textView_bankname.setText(sharedPreferences_certification.getString(
@@ -160,7 +161,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 								if (responseData.getRsCode() != 1) {
 									box_YES = new MessageBox_YES(
 											MywalletActivity.this);
-									box_YES.showDialog(responseData.getMsg());
+									box_YES.showDialog(responseData.getMsg(),null);
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());

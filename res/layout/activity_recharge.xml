@@ -124,6 +124,7 @@
                             android:background="@drawable/style_background"
                             android:gravity="left|center"
                             android:hint="支付金额"
+                            android:inputType="numberDecimal"
                             android:paddingLeft="@dimen/margin10"
                             android:textSize="@dimen/textsize14" />
 

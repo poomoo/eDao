@@ -6,8 +6,10 @@ public class eDaoClientConfig {
 	 */
 
 	// IP
-	public static final String url = "http://192.168.0.112:8080/yidao/app/call.htm";// 本地
-	public static final String imageurl = "http://192.168.0.112:8080/yidao/app/user/uploadUserImage.json";
+	public static final String BaseUrl = "http://192.168.0.112:8080/yidao/app/";
+	public static final String url = BaseUrl + "call.htm";// 本地
+	public static final String wxReUrl = BaseUrl + "orders/wxPayCallBack.json";
+	public static final String imageurl = BaseUrl + "user/uploadUserImage.json";
 
 	public static final int timeout = 1 * 30 * 1000;// 网络通讯超时
 	public static final int advTime = 1 * 5 * 1000;// 广告轮播时间

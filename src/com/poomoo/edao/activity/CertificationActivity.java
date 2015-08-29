@@ -43,6 +43,7 @@ import com.poomoo.edao.model.database.ProvinceInfo;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
@@ -223,7 +224,7 @@ public class CertificationActivity extends BaseActivity implements
 								if (responseData.getRsCode() != 1) {
 									box_YES = new MessageBox_YES(
 											CertificationActivity.this);
-									box_YES.showDialog(responseData.getMsg());
+									box_YES.showDialog(responseData.getMsg(),null);
 								} else {
 									sharedPreferences_certificaitonInfo = getSharedPreferences(
 											"certificaitonInfo",
