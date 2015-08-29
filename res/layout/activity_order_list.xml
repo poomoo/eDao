@@ -19,26 +19,13 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_all"
+            android:id="@+id/order_list_radioButton_status"
+            style="@null"
             android:layout_width="0dp"
             android:layout_height="@dimen/margin40"
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="全部"
-            android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
-
-        <RadioButton
-            android:id="@+id/order_list_radioButton_status"
-            style="@null"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
             android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
@@ -76,6 +63,7 @@
     </RadioGroup>
 
     <RadioGroup
+        android:id="@+id/order_list_radioGroup_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -102,6 +90,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
+            android:checked="true"
             android:gravity="center"
             android:singleLine="true"
             android:text="已支付"
@@ -121,6 +110,117 @@
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize14" />
     </RadioGroup>
+
+    <GridView
+        android:id="@+id/order_list_gridView_classify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:visibility="gone" >
+    </GridView>
+
+    <LinearLayout
+        android:id="@+id/order_list_layout_classify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:visibility="gone" >
+
+        <RadioGroup
+            android:id="@+id/order_list_radioGroup_classify_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_ecoin_transfer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin40"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="意币转账"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_recharge"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="充值"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_buy_key"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="购买秘钥"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/order_list_radioGroup_classify_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_apply"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin40"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="申请加盟"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_buy_commodity"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="购买商品"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+
+            <RadioButton
+                android:id="@+id/order_list_radioButton_handing"
+                style="@null"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="提现申请"
+                android:textColor="@drawable/style_navigation_text_background"
+                android:textSize="@dimen/textsize14" />
+        </RadioGroup>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

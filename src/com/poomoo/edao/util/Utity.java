@@ -442,4 +442,23 @@ public class Utity {
 		}
 		return s;
 	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: getLastNum
+	 * @Description: TODO 获取一个整数的个位数
+	 * @author 李苜菲
+	 * @return
+	 * @return int
+	 * @throws
+	 * @date 2015年8月30日上午12:51:58
+	 */
+	public static int getLastNum(int num) {
+		String temp=String.valueOf(num);
+		char ch=temp.charAt(temp.length()-1);
+		int re=Integer.parseInt(ch+"");
+		System.out.println("getLastNum"+num+":"+re);
+		return re;
+	}
 }

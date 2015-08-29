@@ -38,97 +38,6 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="收款人姓名:"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="@dimen/margin5"
-                        android:layout_height="match_parent" />
-
-                    <TextView
-                        android:id="@+id/transfer_of_payment2_textView_payee_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="left|center"
-                        android:paddingLeft="@dimen/margin10"
-                        android:text="张小呆"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin5" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="收款人手机号:"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="@dimen/margin5"
-                        android:layout_height="match_parent" />
-
-                    <TextView
-                        android:id="@+id/transfer_of_payment2_textView_payee_phonenum"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="left|center"
-                        android:paddingLeft="@dimen/margin10"
-                        android:text="18198889908"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin5" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/style_dashed_line"
-                    android:layerType="software" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -151,7 +60,7 @@
                         android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:id="@+id/transfer_of_payment2_layout_channel"
+                        android:id="@+id/payment_layout_channel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -159,7 +68,7 @@
                         android:gravity="center" >
 
                         <TextView
-                            android:id="@+id/transfer_of_payment2_textView_channel"
+                            android:id="@+id/payment_textView_channel"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="3"
@@ -183,7 +92,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/transfer_of_payment2_layout_by_ecoin"
+                    android:id="@+id/payment_layout_by_ecoin"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3.3"
@@ -217,7 +126,7 @@
                             android:layout_height="match_parent" />
 
                         <TextView
-                            android:id="@+id/transfer_of_payment2_textView_balance"
+                            android:id="@+id/payment_textView_balance"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
@@ -257,7 +166,7 @@
                             android:layout_height="match_parent" />
 
                         <EditText
-                            android:id="@+id/transfer_of_payment2_editText_pay_money"
+                            android:id="@+id/payment_editText_pay_money"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
@@ -301,7 +210,7 @@
                             android:layout_height="match_parent" />
 
                         <EditText
-                            android:id="@+id/transfer_of_payment2_editText_pay_password"
+                            android:id="@+id/payment_editText_pay_password"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
@@ -346,7 +255,7 @@
                         android:layout_height="match_parent" />
 
                     <EditText
-                        android:id="@+id/transfer_of_payment2_editText_remark"
+                        android:id="@+id/payment_editText_remark"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -367,7 +276,7 @@
                     android:layout_height="@dimen/margin10" />
 
                 <LinearLayout
-                    android:id="@+id/transfer_of_payment2_layout_control"
+                    android:id="@+id/payment_layout_control"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3.3"
@@ -391,7 +300,7 @@
         android:padding="15dp" >
 
         <Button
-            android:id="@+id/transfer_of_payment2_btn_pay"
+            android:id="@+id/payment_btn_pay"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/style_btn_background"

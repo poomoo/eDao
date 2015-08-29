@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -33,21 +32,18 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
  * 
- * @ClassName TransferOfPaymentActivity2
- * @Description TODO 转账支付2
+ * @ClassName PaymentActivity
+ * @Description TODO 支付
  * @author 李苜菲
- * @date 2015-7-30 上午11:02:41
+ * @date 2015年8月29日 下午9:02:54
  */
-public class TransferOfPaymentActivity2 extends BaseActivity implements
-		OnClickListener {
+public class PaymentActivity extends BaseActivity implements OnClickListener {
 
-	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel;
+	private TextView textView_balance, textView_channel;
 	private EditText editText_pay_money, editText_pay_password,
 			editText_remark;
 	private LinearLayout layout_channel, layout_password, layout_ecoin,
@@ -74,9 +70,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		setContentView(R.layout.activity_transfer_of_payment2);
+		setContentView(R.layout.activity_payment);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		getIntentData();
@@ -95,17 +89,15 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_payee_name = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_name);
-		textView_payee_phonenum = (TextView) findViewById(R.id.transfer_of_payment2_textView_payee_phonenum);
-		textView_balance = (TextView) findViewById(R.id.transfer_of_payment2_textView_balance);
-		textView_channel = (TextView) findViewById(R.id.transfer_of_payment2_textView_channel);
-		editText_pay_money = (EditText) findViewById(R.id.transfer_of_payment2_editText_pay_money);
+		textView_balance = (TextView) findViewById(R.id.payment_textView_balance);
+		textView_channel = (TextView) findViewById(R.id.payment_textView_channel);
+		editText_pay_money = (EditText) findViewById(R.id.payment_editText_pay_money);
 
-		layout_channel = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_channel);
-		layout_ecoin = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_by_ecoin);
-		layout_control = (LinearLayout) findViewById(R.id.transfer_of_payment2_layout_control);
+		layout_channel = (LinearLayout) findViewById(R.id.payment_layout_channel);
+		layout_ecoin = (LinearLayout) findViewById(R.id.payment_layout_by_ecoin);
+		layout_control = (LinearLayout) findViewById(R.id.payment_layout_control);
 
-		button_pay = (Button) findViewById(R.id.transfer_of_payment2_btn_pay);
+		button_pay = (Button) findViewById(R.id.payment_btn_pay);
 
 		button_pay.setOnClickListener(this);
 
@@ -117,9 +109,6 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 			data.put("id", i + 1 + "");
 			list.add(data);
 		}
-
-		textView_payee_name.setText(realName);
-		textView_payee_phonenum.setText(tel);
 
 		textView_channel.setText(channel[0]);
 		// 指定意币转账后不能选择支付类型
@@ -142,11 +131,11 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.transfer_of_payment2_layout_channel:
+		case R.id.payment_layout_channel:
 			showWindow(layout_channel, listView, list, textView_channel,
 					adapter);
 			break;
-		case R.id.transfer_of_payment2_btn_pay:
+		case R.id.payment_btn_pay:
 			if (checkInput()) {
 				confirm();
 			}
@@ -194,7 +183,7 @@ public class TransferOfPaymentActivity2 extends BaseActivity implements
 								closeProgressDialog();
 								if (responseData.getRsCode() != 1) {
 									box_YES = new MessageBox_YES(
-											TransferOfPaymentActivity2.this);
+											PaymentActivity.this);
 									box_YES.showDialog(responseData.getMsg(),
 											null);
 								} else {

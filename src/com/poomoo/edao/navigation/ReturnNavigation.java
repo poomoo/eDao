@@ -66,10 +66,10 @@ public class ReturnNavigation extends Fragment {
 		case "MywalletActivity":
 			textView_title.setText("我的钱包");
 			break;
-		case "TransferOfPaymentActivity1":
+		case "TransferActivity1":
 			textView_title.setText("转账支付");
 			break;
-		case "TransferOfPaymentActivity2":
+		case "TransferActivity2":
 			textView_title.setText("转账支付");
 			break;
 		case "CommodityListActivity":
@@ -140,6 +140,9 @@ public class ReturnNavigation extends Fragment {
 			break;
 		case "RechargeActivity":
 			textView_title.setText("充值");
+			break;
+		case "PaymentActivity":
+			textView_title.setText("支付");
 			break;
 
 		}

@@ -39,8 +39,7 @@ import com.zbar.lib.CaptureActivity;
  * @author 李苜菲
  * @date 2015-7-30 上午11:02:41
  */
-public class TransferOfPaymentActivity1 extends BaseActivity implements
-		OnClickListener {
+public class TransferActivity1 extends BaseActivity implements OnClickListener {
 
 	private TextView textView_username, textView_phonenum, textView_balance;
 	private EditText editText_payee_phonenum;
@@ -59,7 +58,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_transfer_of_payment1);
+		setContentView(R.layout.activity_transfer1);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
@@ -70,37 +69,38 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
 		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
-		textView_balance = (TextView) findViewById(R.id.transfer_of_payment1_textView_balance);
+		textView_balance = (TextView) findViewById(R.id.transfer1_textView_balance);
 
-		editText_payee_phonenum = (EditText) findViewById(R.id.transfer_of_payment1_editText_phonenum);
+		editText_payee_phonenum = (EditText) findViewById(R.id.transfer1_editText_phonenum);
 
-		layout_payby_phone = (LinearLayout) findViewById(R.id.transfer_of_payment1_layout_payby_phone);
-		layout_payby_2dimencode = (LinearLayout) findViewById(R.id.transfer_of_payment1_layout_payby_2dimencode);
+		layout_payby_phone = (LinearLayout) findViewById(R.id.transfer1_layout_payby_phone);
+		layout_payby_2dimencode = (LinearLayout) findViewById(R.id.transfer1_layout_payby_2dimencode);
 
-		button_confirm = (Button) findViewById(R.id.transfer_of_payment1_btn_confirm);
+		button_confirm = (Button) findViewById(R.id.transfer1_btn_confirm);
 
 		layout_payby_phone.setOnClickListener(this);
 		layout_payby_2dimencode.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
-		// textView_username
-		// .setText(Utity.addStarByName(application.getRealName()));
-		// textView_phonenum
-		// .setText(Utity.addStarByNum(3, 7, application.getTel()));
+		textView_username
+				.setText(Utity.addStarByName(application.getRealName()));
+		textView_phonenum
+				.setText(Utity.addStarByNum(3, 7, application.getTel()));
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.transfer_of_payment1_layout_payby_phone:
+		case R.id.transfer1_layout_payby_phone:
 			startActivityForResult(new Intent(Intent.ACTION_PICK,
 					ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
 			break;
-		case R.id.transfer_of_payment1_layout_payby_2dimencode:
+		case R.id.transfer1_layout_payby_2dimencode:
 			openActivityForResult(CaptureActivity.class, TWODIMENCODE);
 			break;
-		case R.id.transfer_of_payment1_btn_confirm:
+		case R.id.transfer1_btn_confirm:
+			// openActivity(TransferActivity2.class);
 			if (checkInput())
 				getMerchantName();
 			break;
@@ -155,8 +155,7 @@ public class TransferOfPaymentActivity1 extends BaseActivity implements
 										pBundle.putString("userId",
 												referrerUserId);
 										pBundle.putString("payType", "1");
-										openActivity(
-												TransferOfPaymentActivity2.class,
+										openActivity(TransferActivity2.class,
 												pBundle);
 									} catch (JSONException e) {
 									}

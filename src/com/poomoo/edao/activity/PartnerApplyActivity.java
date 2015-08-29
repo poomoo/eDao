@@ -260,7 +260,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 											.getText().toString());
 									pBundle.putString("payType", "");
 									openActivity(
-											TransferOfPaymentActivity2.class,
+											TransferActivity2.class,
 											pBundle);
 									finish();
 								} else {

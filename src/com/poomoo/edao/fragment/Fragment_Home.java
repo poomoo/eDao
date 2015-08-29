@@ -52,7 +52,7 @@ import com.poomoo.edao.activity.NavigationActivity;
 import com.poomoo.edao.activity.OrderListActivity;
 import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
 import com.poomoo.edao.activity.RebateActivity;
-import com.poomoo.edao.activity.TransferOfPaymentActivity1;
+import com.poomoo.edao.activity.TransferActivity1;
 import com.poomoo.edao.activity.WebViewActivity;
 import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
@@ -96,7 +96,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private static final Class[] outIntent = { RebateActivity.class,
 			PurchaseAndGetDetailActivity.class, MywalletActivity.class,
 			OrderListActivity.class, CreditManageActivity.class,
-			TransferOfPaymentActivity1.class, CooperationActivity.class,
+			TransferActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
 	private eDaoClientApplication applicaiton = null;
@@ -258,6 +258,11 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO 自动生成的方法存根
+		// gridViewAdapter.setTextColor();
+		// System.out.println("arg2:" + arg2 + ":"
+		// + Fragment_Home_GridViewAdapter.textViews.get(arg2));
+		// Fragment_Home_GridViewAdapter.textViews.get(arg2).setTextColor(
+		// Color.parseColor("#1995EB"));
 		showActivity(arg2);
 	}
 

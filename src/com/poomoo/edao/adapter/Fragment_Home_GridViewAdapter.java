@@ -29,6 +29,14 @@ public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 		this.list_image = list_image;
 		this.gridView = gridView;
 		inflater = LayoutInflater.from(context);
+		init();
+	}
+
+	private void init() {
+		// TODO 自动生成的方法存根
+		for (int i = 0; i < list_name.length; i++) {
+
+		}
 	}
 
 	@Override
@@ -73,7 +81,6 @@ public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 		}
 		viewHolder.textView.setText(list_name[position]);
 		viewHolder.imageView.setImageResource(list_image[position]);
-
 		// 设置layout大小，以免出现下边框不显示的情况
 		viewHolder.linearLayout
 				.setLayoutParams(new RelativeLayout.LayoutParams(

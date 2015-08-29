@@ -69,6 +69,7 @@
         <activity android:name=".activity.OrderListActivity" />
         <activity android:name=".activity.PassWordManageActivity" />
         <activity android:name=".activity.PartnerApplyActivity" />
+        <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.PurchaseAndGetDetailActivity" />
         <activity android:name=".activity.RebateActivity" />
@@ -80,8 +81,8 @@
         <activity android:name=".activity.StoreInformationActivity" />
         <activity android:name=".activity.SideBarActivity" />
         <activity android:name=".activity.ShopListActivity" />
-        <activity android:name=".activity.TransferOfPaymentActivity1" />
-        <activity android:name=".activity.TransferOfPaymentActivity2" />
+        <activity android:name=".activity.TransferActivity1" />
+        <activity android:name=".activity.TransferActivity2" />
         <activity android:name=".activity.UploadPicsActivity" />
         <activity android:name=".activity.LoveFundActivity" />
         <activity android:name=".activity.WebViewActivity" />
