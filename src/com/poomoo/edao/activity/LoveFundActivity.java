@@ -11,11 +11,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.MywalletData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
@@ -56,6 +54,7 @@ public class LoveFundActivity extends BaseActivity {
 		textView_myown = (TextView) findViewById(R.id.love_fund_textView_myown);
 		textView_total = (TextView) findViewById(R.id.love_fund_textView_total);
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
+		getData();
 	}
 
 	private void getData() {

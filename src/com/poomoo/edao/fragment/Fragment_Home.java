@@ -42,14 +42,13 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.CertificationActivity;
 import com.poomoo.edao.activity.CooperationActivity;
 import com.poomoo.edao.activity.CreditManageActivity;
+import com.poomoo.edao.activity.DealDetailActivity;
 import com.poomoo.edao.activity.LoveFundActivity;
 import com.poomoo.edao.activity.MapActivity;
 import com.poomoo.edao.activity.MywalletActivity;
 import com.poomoo.edao.activity.NavigationActivity;
-import com.poomoo.edao.activity.DealDetailActivity;
 import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
 import com.poomoo.edao.activity.RebateActivity;
 import com.poomoo.edao.activity.TransferActivity1;
@@ -80,7 +79,6 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private RadioButton radioButton_shop;
 	private GridView gridView;
 	private SideBar sidebar;
-	private Fragment_Store fragment_Store;
 	private ViewFlipper flipper;
 	private GestureDetector mGestureDetector;
 
@@ -170,7 +168,6 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		gridView.setOnItemClickListener(this);
 
 		sidebar = NavigationActivity.sideBar;
-		fragment_Store = NavigationActivity.fragment_Store;
 		radioButton_shop = (RadioButton) NavigationActivity.radioButton_shop;
 
 		layout_user.setOnClickListener(this);
@@ -281,19 +278,15 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			// CertificationActivity.class));
 			// } else
 			// startActivity(new Intent(getActivity(), outIntent[arg2]));
-		} else if (arg2 != 8)
-			startActivity(new Intent(getActivity(), outIntent[arg2]));
-		else {
-			FragmentManager fragmentManager = getFragmentManager();
-			FragmentTransaction fragmentTransaction = fragmentManager
-					.beginTransaction();
-			if (fragment_Store == null)
-				fragment_Store = new Fragment_Store();
-			fragmentTransaction.replace(R.id.navigation_frameLayout,
-					fragment_Store);
-			fragmentTransaction.commit();
+		} else if (arg2 == 8) {
+			if (NavigationActivity.fragment_Store == null)
+				NavigationActivity.fragment_Store = new Fragment_Store();
+			NavigationActivity.instance
+					.switchFragment(NavigationActivity.fragment_Store);
+			NavigationActivity.curFragment = NavigationActivity.fragment_Store;
 			radioButton_shop.setChecked(true);
-		}
+		} else
+			startActivity(new Intent(getActivity(), outIntent[arg2]));
 	}
 
 	private void getInformData() {
@@ -464,4 +457,5 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		}
 		return result;
 	}
+
 }

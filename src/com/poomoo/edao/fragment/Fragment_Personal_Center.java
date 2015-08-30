@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.LoginActivity;
+import com.poomoo.edao.activity.PassWordManageActivity;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.DialogResultListener;
@@ -87,6 +88,7 @@ public class Fragment_Personal_Center extends Fragment implements
 		button_logout = (Button) getView().findViewById(
 				R.id.personalcenter_btn_logout);
 
+		layout_accountpassword.setOnClickListener(this);
 		button_logout.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
@@ -101,6 +103,8 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_layout_bankaccount_manage:
 			break;
 		case R.id.personalcenter_layout_accountpassword_manage:
+			startActivity(new Intent(getActivity(),
+					PassWordManageActivity.class));
 			break;
 		case R.id.personalcenter_layout_paypassword_manage:
 			break;

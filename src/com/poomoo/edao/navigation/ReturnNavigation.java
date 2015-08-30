@@ -144,7 +144,15 @@ public class ReturnNavigation extends Fragment {
 		case "PaymentActivity":
 			textView_title.setText("支付");
 			break;
-
+		case "LoveFundActivity":
+			textView_title.setText("爱心基金");
+			break;
+		case "MyOrderActivity":
+			textView_title.setText("我的订单");
+			break;
+		case "PassWordManageActivity":
+			textView_title.setText("密码管理");
+			break;
 		}
 
 	}

@@ -2,15 +2,19 @@ package com.poomoo.edao.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.model.OrderListData;
 
 /**
@@ -24,11 +28,14 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 
 	private List<OrderListData> list;
 	private LayoutInflater inflater;
+	private Activity activity;
 
-	public Deal_Detail_ListViewAdapter(Context context, List<OrderListData> list) {
+	public Deal_Detail_ListViewAdapter(Activity activity,
+			List<OrderListData> list) {
 		super();
+		this.activity = activity;
 		this.list = list;
-		this.inflater = LayoutInflater.from(context);
+		this.inflater = LayoutInflater.from(activity);
 	}
 
 	@Override
@@ -65,8 +72,8 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 					.findViewById(R.id.order_list_item_textView_state);
 			holder.textView_order_date = (TextView) convertView
 					.findViewById(R.id.order_list_item_textView_date);
-			// holder.imageView = (ImageView) convertView
-			// .findViewById(R.id.order_list_item_imageView_pic);
+			holder.button_pay = (Button) convertView
+					.findViewById(R.id.order_list_item_button_pay);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -75,6 +82,19 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_money.setText(list.get(position).getMoney());
 		holder.textView_order_state.setText(list.get(position).getState());
 		holder.textView_order_date.setText(list.get(position).getDate());
+		if (list.get(position).getState().equals("未支付")) {
+			holder.button_pay.setVisibility(View.VISIBLE);
+			holder.button_pay.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO 自动生成的方法存根
+					activity.startActivity(new Intent(activity,
+							PaymentActivity.class));
+					activity.finish();
+				}
+			});
+		}
 
 		return convertView;
 	}
@@ -82,6 +102,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 	private class ViewHolder {
 		private TextView textView_order_id, textView_order_money,
 				textView_order_state, textView_order_date;
+		private Button button_pay;
 	}
 
 }

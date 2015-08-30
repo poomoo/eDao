@@ -108,7 +108,7 @@
                     android:id="@+id/order_list_item_textView_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已完成"
+                    android:text="已支付"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/textsize16" />
             </LinearLayout>
@@ -139,10 +139,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
+        <Button
+            android:id="@+id/order_list_item_button_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_sidebar_arrow"
+            android:background="@drawable/style_btn_background"
+            android:text="去支付"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize14"
             android:visibility="gone" />
     </LinearLayout>
 

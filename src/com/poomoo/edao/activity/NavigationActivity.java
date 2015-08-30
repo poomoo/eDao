@@ -27,22 +27,22 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.SideBar;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
-
+	private LinearLayout layout_myOrder, layout_shared, layout_check_update,
+			layout_feed_back, layout_help_center, layout_about_us;
 	private FrameLayout frameLayout;
 	private RadioButton radioButton_home, radioButton_myown;
 	public static RadioButton radioButton_shop;
 	private Fragment_Home fragment_Home;
 	public static Fragment_Store fragment_Store;
 	private Fragment_Personal_Center fragment_Personal_Center;
-	private Fragment curFragment;
-	public static SideBar sideBar;
-	private int clo = 0;
-	private LinearLayout layout_myOrder, layout_shared, layout_check_update,
-			layout_feed_back, layout_help_center, layout_about_us;
+	public static Fragment curFragment;
 
 	// 侧边栏
+	public static SideBar sideBar;
+	private int clo = 0;
 	private TextView textView_username, textView_phonenum;
 	private eDaoClientApplication application = null;
+	public static NavigationActivity instance = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
 		application = (eDaoClientApplication) getApplication();
+		instance = this;
 		init();
 	}
 
@@ -131,8 +132,16 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			curFragment = fragment_Personal_Center;
 			break;
 		case R.id.sidebar_textView_userName:
-			System.out.println("点击userName");
-			openActivity(CertificationActivity.class);
+			sideBar.closeMenu();
+			if (!application.getRealNameAuth().equals("1")) {
+				openActivity(CertificationActivity.class);
+			} else {
+				if (fragment_Personal_Center == null)
+					fragment_Personal_Center = new Fragment_Personal_Center();
+				switchFragment(fragment_Personal_Center);
+				curFragment = fragment_Personal_Center;
+				radioButton_myown.setChecked(true);
+			}
 			break;
 		case R.id.sidebar_layout_shared:
 			openActivity(ShareActivity.class);
@@ -152,12 +161,12 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			openActivity(AboutUsActivity.class);
 			break;
 		case R.id.sidebar_layout_myorder:
-			openActivity(DealDetailActivity.class);
+			openActivity(MyOrderActivity.class);
 			break;
 		}
 	}
 
-	private void switchFragment(Fragment to) {
+	public void switchFragment(Fragment to) {
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
