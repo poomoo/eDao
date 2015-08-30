@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.util.Utity;
 
 /**
  * 
@@ -18,10 +19,10 @@ import com.poomoo.edao.application.eDaoClientApplication;
  */
 public class CooperationActivity extends BaseActivity implements
 		OnClickListener {
-	private TextView textView_username, textView_tel;
+	private TextView textView_username, textView_phonenum;
 	private Button button_alliance_apply, button_dealer_apply,
 			button_partner_apply;
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +31,14 @@ public class CooperationActivity extends BaseActivity implements
 		setContentView(R.layout.activity_cooperation);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
-		textView_tel = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
+		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
 
 		button_alliance_apply = (Button) findViewById(R.id.cooperation_btn_alliance_apply);
 		button_dealer_apply = (Button) findViewById(R.id.cooperation_btn_dealer_apply);
@@ -47,8 +48,7 @@ public class CooperationActivity extends BaseActivity implements
 		button_dealer_apply.setOnClickListener(this);
 		button_partner_apply.setOnClickListener(this);
 
-		textView_username.setText(applicaiton.getRealName());
-		textView_tel.setText(applicaiton.getTel());
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 	}
 
 	@Override

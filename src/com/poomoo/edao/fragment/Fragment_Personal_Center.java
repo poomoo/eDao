@@ -33,7 +33,7 @@ import com.poomoo.edao.widget.MessageBox_YESNO;
  */
 public class Fragment_Personal_Center extends Fragment implements
 		OnClickListener {
-	private TextView textView_name, textView_tel;
+	private TextView textView_username, textView_phonenum;
 	private LinearLayout layout_credit, layout_bankaccount,
 			layout_accountpassword, layout_paypassword, layout_twodimencode;
 	private Button button_logout;
@@ -70,9 +70,9 @@ public class Fragment_Personal_Center extends Fragment implements
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_name = (TextView) getView().findViewById(
+		textView_username = (TextView) getView().findViewById(
 				R.id.layout_userinfo_textView_username);
-		textView_tel = (TextView) getView().findViewById(
+		textView_phonenum = (TextView) getView().findViewById(
 				R.id.layout_userinfo_textView_tel);
 		layout_credit = (LinearLayout) getView().findViewById(
 				R.id.personalcenter_layout_credit_manage);
@@ -89,8 +89,7 @@ public class Fragment_Personal_Center extends Fragment implements
 
 		button_logout.setOnClickListener(this);
 
-		textView_name.setText(Utity.addStarByName(application.getRealName()));
-		textView_tel.setText(Utity.addStarByNum(3, 7, application.getTel()));
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 	}
 
 	@Override

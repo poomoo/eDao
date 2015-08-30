@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,8 +24,9 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 
@@ -48,6 +49,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
+	private final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +83,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		button_recharge.setOnClickListener(this);
 		button_handing.setOnClickListener(this);
 
-		textView_username
-				.setText(Utity.addStarByName(application.getRealName()));
-		textView_phonenum
-				.setText(Utity.addStarByNum(3, 7, application.getTel()));
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_account_name.setText(Utity.addStarByName(application
 				.getRealName()));
 		// sharedPreferences_certification = getSharedPreferences(
@@ -103,9 +102,9 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 
 	private void initData() {
 		textView_balance.setText(application.getTotalEb());
-		textView_handing_charge.setText(application.getHandlingFee()+"元/次");
+		textView_handing_charge.setText(application.getHandlingFee() + "元/次");
 		textView_handing_toplimit.setText(application.getCovertMinFee() + "-"
-				+ application.getCorvertMaxFee()+"元/次");
+				+ application.getCorvertMaxFee() + "元/次");
 		textView_bankname.setText(application.getBankName());
 		textView_bankaccount.setText(Utity.addStarByNum(3, 16,
 				application.getBankCardId()));
@@ -114,8 +113,18 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
+		if (!application.getRealNameAuth().equals("1")) {
+			openActivity(CertificationActivity.class);
+			startActivity(new Intent(this, CertificationActivity.class));
+			finish();
+		}
 		switch (v.getId()) {
 		case R.id.mywallet_btn_recharge:
+			if (!Utity.isWXAppInstalledAndSupported(this, msgApi)) {
+				Utity.showToast(getApplicationContext(),
+						eDaoClientConfig.notInstallWX);
+				return;
+			}
 			openActivity(RechargeActivity.class);
 			finish();
 			break;
@@ -161,7 +170,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 								if (responseData.getRsCode() != 1) {
 									box_YES = new MessageBox_YES(
 											MywalletActivity.this);
-									box_YES.showDialog(responseData.getMsg(),null);
+									box_YES.showDialog(responseData.getMsg(),
+											null);
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());

@@ -23,6 +23,7 @@ import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.fragment.Fragment_Home;
 import com.poomoo.edao.fragment.Fragment_Personal_Center;
 import com.poomoo.edao.fragment.Fragment_Store;
+import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.SideBar;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
@@ -40,15 +41,15 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			layout_feed_back, layout_help_center, layout_about_us;
 
 	// 侧边栏
-	private TextView textView_userName, textView_userTel;
-	private eDaoClientApplication applicaiton = null;
+	private TextView textView_username, textView_phonenum;
+	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_navigation);
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -79,19 +80,18 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 
 		setDefaultFragment();
 
-		textView_userName = (TextView) findViewById(R.id.sidebar_textView_userName);
-		textView_userTel = (TextView) findViewById(R.id.sidebar_textView_userTel);
+		textView_username = (TextView) findViewById(R.id.sidebar_textView_userName);
+		textView_phonenum = (TextView) findViewById(R.id.sidebar_textView_userTel);
 
 		// 是否实名认证
-		if (TextUtils.isEmpty(applicaiton.getRealName())) {
+		if (TextUtils.isEmpty(application.getRealName())) {
 			System.out.println("进行实名认证");
-			textView_userName.setText(eDaoClientConfig.certificate);
+			textView_username.setText(eDaoClientConfig.certificate);
 			spark();
 		} else
-			textView_userName.setText(applicaiton.getRealName());
-		textView_userTel.setText(applicaiton.getTel());
-		textView_userName.setOnClickListener(this);
-
+			Utity.setUserAndTel(textView_username, textView_phonenum,
+					application);
+		textView_username.setOnClickListener(this);
 	}
 
 	private void setDefaultFragment() {
@@ -179,10 +179,10 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 					public void run() {
 						if (clo == 0) {
 							clo = 1;
-							textView_userName.setTextColor(Color.WHITE);
+							textView_username.setTextColor(Color.WHITE);
 						} else {
 							clo = 0;
-							textView_userName.setTextColor(Color.RED);
+							textView_username.setTextColor(Color.RED);
 						}
 					}
 				});

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,7 +49,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private Button button_confirm;
 
 	private Select_City_PopupWindow select_City_PopupWindow;
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String zone = "", merchant_phone = "", merchant_name = "",
@@ -64,7 +65,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_partner_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -86,18 +87,22 @@ public class PartnerApplyActivity extends BaseActivity implements
 		layout_zone.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
-		textView_username.setText(applicaiton.getRealName());
-		textView_phonenum.setText(applicaiton.getTel());
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 
 		// 取当前定位
-		curProvince = applicaiton.getCurProvince();
-		curCity = applicaiton.getCurCity();
+		curProvince = application.getCurProvince();
+		curCity = application.getCurCity();
 
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
+		if (!application.getRealNameAuth().equals("1")) {
+			openActivity(CertificationActivity.class);
+			startActivity(new Intent(this, CertificationActivity.class));
+			finish();
+		}
 		switch (v.getId()) {
 		case R.id.partner_layout_zone:
 			select_city();
@@ -259,8 +264,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(
-											TransferActivity2.class,
+									openActivity(TransferActivity2.class,
 											pBundle);
 									finish();
 								} else {

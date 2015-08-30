@@ -15,8 +15,11 @@ public class eDaoClientConfig {
 	public static final int advTime = 1 * 5 * 1000;// 广告轮播时间
 	// public static final String url =
 	// "";//远程
+	/* 提示信息 */
 	public static final String checkNet = "请检查网络后重试";
 	public static final String certificate = "请进行实名认证";
+	public static final String notInstallWX = "请先安装微信,目前只支持微信支付";
+	public static final String notDevelop = "开发中,敬请期待...";
 
 	public static String tel = "", web = "", weibo = "", weixin = "";
 }

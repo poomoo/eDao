@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,13 +54,14 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/love_fund_textView_myown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="@dimen/margin30"
+                        android:layout_marginRight="@dimen/margin30"
                         android:background="@drawable/style_love_fund_background"
                         android:gravity="center"
-                        android:padding="2dp"
+                        android:padding="@dimen/margin2"
                         android:text="￥200.00"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />
@@ -72,8 +73,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="@dimen/margin5"
+                        android:layout_marginRight="@dimen/margin5"
                         android:text="我的爱心池"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />
@@ -94,13 +95,14 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/love_fund_textView_total"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="@dimen/margin30"
+                        android:layout_marginRight="@dimen/margin30"
                         android:background="@drawable/style_love_fund_background"
                         android:gravity="center"
-                        android:padding="2dp"
+                        android:padding="@dimen/margin2"
                         android:text="￥23300.00"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />
@@ -110,10 +112,10 @@
                         android:layout_height="@dimen/margin5" />
 
                     <TextView
-                          android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin5"
+                        android:layout_marginRight="@dimen/margin5"
                         android:text="乐意道爱心池"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />

@@ -1,7 +1,6 @@
 package com.poomoo.edao.activity;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -9,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,13 +18,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.PayInfoData;
@@ -56,7 +53,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 			referrerUserId = "", referrerName = "", curProvince = "",
 			curCity = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +62,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_alliance_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 
 	}
@@ -88,19 +85,21 @@ public class AllianceApplyActivity extends BaseActivity implements
 		button_confirm.setOnClickListener(this);
 		textView_merchant_name.setOnClickListener(this);
 
-		textView_username
-				.setText(Utity.addStarByName(applicaiton.getRealName()));
-		textView_phonenum
-				.setText(Utity.addStarByNum(3, 7, applicaiton.getTel()));
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 
 		// 取当前定位
-		curProvince = applicaiton.getCurProvince();
-		curCity = applicaiton.getCurCity();
+		curProvince = application.getCurProvince();
+		curCity = application.getCurCity();
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
+		if (!application.getRealNameAuth().equals("1")) {
+			openActivity(CertificationActivity.class);
+			startActivity(new Intent(this, CertificationActivity.class));
+			finish();
+		}
 		switch (v.getId()) {
 		case R.id.alliance_layout_zone:
 			select_city();
@@ -262,8 +261,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(
-											TransferActivity2.class,
+									openActivity(TransferActivity2.class,
 											pBundle);
 									finish();
 								} else {

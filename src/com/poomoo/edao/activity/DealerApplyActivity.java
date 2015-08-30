@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -42,7 +43,7 @@ public class DealerApplyActivity extends BaseActivity implements
 	private EditText editText_merchant_phone;
 	private Button button_confirm;
 
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String merchant_phone = "", referrerUserId = "", referrerName = "",
@@ -57,7 +58,7 @@ public class DealerApplyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_dealer_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -74,13 +75,17 @@ public class DealerApplyActivity extends BaseActivity implements
 
 		button_confirm.setOnClickListener(this);
 
-		textView_username.setText(applicaiton.getRealName());
-		textView_phonenum.setText(applicaiton.getTel());
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
+		if (!application.getRealNameAuth().equals("1")) {
+			openActivity(CertificationActivity.class);
+			startActivity(new Intent(this, CertificationActivity.class));
+			finish();
+		}
 		switch (v.getId()) {
 		case R.id.dealer_textView_merchant_name:
 			getMerchantName();

@@ -99,7 +99,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			TransferActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 	private Gson gson = new Gson();
 	private ArrayList<String> imageUrlsList = null;
 	private static final int[] pics = { R.drawable.a01, R.drawable.a02,
@@ -268,10 +268,15 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
+		if (arg2 == 4) {
+			Utity.showToast(getActivity().getApplicationContext(),
+					eDaoClientConfig.notDevelop);
+			return;
+		}
 		if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
-			applicaiton = (eDaoClientApplication) getActivity()
+			application = (eDaoClientApplication) getActivity()
 					.getApplication();
-			if (!applicaiton.getRealNameAuth().equals("1")) {
+			if (!application.getRealNameAuth().equals("1")) {
 				startActivity(new Intent(getActivity(),
 						CertificationActivity.class));
 			} else

@@ -21,11 +21,14 @@ import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
+import com.tencent.mm.sdk.openapi.IWXAPI;
 
 /**
  * 
@@ -455,10 +458,48 @@ public class Utity {
 	 * @date 2015年8月30日上午12:51:58
 	 */
 	public static int getLastNum(int num) {
-		String temp=String.valueOf(num);
-		char ch=temp.charAt(temp.length()-1);
-		int re=Integer.parseInt(ch+"");
-		System.out.println("getLastNum"+num+":"+re);
+		String temp = String.valueOf(num);
+		char ch = temp.charAt(temp.length() - 1);
+		int re = Integer.parseInt(ch + "");
+		System.out.println("getLastNum" + num + ":" + re);
 		return re;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: isWXAppInstalledAndSupported
+	 * @Description: TODO 判断微信是否安装
+	 * @author 李苜菲
+	 * @return
+	 * @return boolean
+	 * @throws
+	 * @date 2015年8月30日下午2:38:31
+	 */
+	public static boolean isWXAppInstalledAndSupported(Context context,
+			IWXAPI api) {
+		System.out.println("检查微信是否安装 api:" + api + "isWXAppInstalled："
+				+ api.isWXAppInstalled() + "isWXAppSupportAPI:"
+				+ api.isWXAppSupportAPI());
+		boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled()
+				&& api.isWXAppSupportAPI();
+		return sIsWXAppInstalledAndSupported;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: setUserAndTel
+	 * @Description: TODO 设置用户名字和手机号
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015年8月30日下午3:17:16
+	 */
+	public static void setUserAndTel(TextView textView_user,
+			TextView textView_tel, eDaoClientApplication application) {
+		textView_user.setText(Utity.addStarByName(application.getRealName()));
+		textView_tel.setText(Utity.addStarByNum(3, 7, application.getTel()));
 	}
 }

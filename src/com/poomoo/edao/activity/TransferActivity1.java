@@ -82,15 +82,17 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		layout_payby_2dimencode.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
-		textView_username
-				.setText(Utity.addStarByName(application.getRealName()));
-		textView_phonenum
-				.setText(Utity.addStarByNum(3, 7, application.getTel()));
+		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
+		if (!application.getRealNameAuth().equals("1")) {
+			openActivity(CertificationActivity.class);
+			startActivity(new Intent(this, CertificationActivity.class));
+			finish();
+		}
 		switch (v.getId()) {
 		case R.id.transfer1_layout_payby_phone:
 			startActivityForResult(new Intent(Intent.ACTION_PICK,

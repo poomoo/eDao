@@ -296,6 +296,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 			packageParams.add(new BasicNameValuePair("sign", sign));
 
 			String xmlstring = toXml(packageParams);
+			xmlstring = new String(xmlstring.getBytes("UTF-8"), "ISO-8859-1");
 
 			return xmlstring;
 

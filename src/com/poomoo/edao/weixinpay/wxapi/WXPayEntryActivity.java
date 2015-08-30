@@ -1,14 +1,13 @@
 package com.poomoo.edao.weixinpay.wxapi;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.weixinpay.Constants;
-import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -23,12 +22,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
 	private IWXAPI api;
 	private MessageBox_YES box_YES;
+	private TextView textView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.pay_result);
-
+		setContentView(R.layout.activity_pay_result);
+		textView = (TextView) findViewById(R.id.pay_result_textView);
 		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
 
 		api.handleIntent(getIntent(), this);
@@ -58,15 +58,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 				msg = "支付失败！";
 			else
 				msg = "取消支付！";
-			box_YES = new MessageBox_YES(this);
-			box_YES.showDialog(msg, new DialogResultListener() {
-
-				@Override
-				public void onFinishDialogResult(int result) {
-					// TODO 自动生成的方法存根
-					finish();
-				}
-			});
+			textView.setText(msg);
+			// box_YES = new MessageBox_YES(this);
+			// box_YES.showDialog(msg, new DialogResultListener() {
+			//
+			// @Override
+			// public void onFinishDialogResult(int result) {
+			// // TODO 自动生成的方法存根
+			// finish();
+			// }
+			// });
 		}
 
 	}
