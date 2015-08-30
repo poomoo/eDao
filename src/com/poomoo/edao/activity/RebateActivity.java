@@ -11,15 +11,12 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Rebate_ListViewAdapter;
-import com.poomoo.edao.adapter.Shop_List_ListViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.ShopListData;
 import com.poomoo.edao.model.UserRebateData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;

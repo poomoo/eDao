@@ -19,7 +19,7 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_status"
+            android:id="@+id/deal_detail_radioButton_status"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="@dimen/margin40"
@@ -34,7 +34,7 @@
             android:textSize="@dimen/textsize16" />
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_classify"
+            android:id="@+id/deal_detail_radioButton_classify"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -48,7 +48,7 @@
             android:textSize="@dimen/textsize16" />
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_date"
+            android:id="@+id/deal_detail_radioButton_date"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -63,7 +63,7 @@
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/order_list_radioGroup_status"
+        android:id="@+id/deal_detail_radioGroup_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -72,19 +72,7 @@
         android:paddingRight="@dimen/margin10" >
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_nopay"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/margin40"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="未支付"
-            android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize14" />
-
-        <RadioButton
-            android:id="@+id/order_list_radioButton_payed"
+            android:id="@+id/deal_detail_radioButton_payed"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -98,7 +86,19 @@
             android:textSize="@dimen/textsize14" />
 
         <RadioButton
-            android:id="@+id/order_list_radioButton_delete"
+            android:id="@+id/deal_detail_radioButton_nopay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin40"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="未支付"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize14" />
+
+        <RadioButton
+            android:id="@+id/deal_detail_radioButton_delete"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -112,7 +112,7 @@
     </RadioGroup>
 
     <GridView
-        android:id="@+id/order_list_gridView_classify"
+        android:id="@+id/deal_detail_gridView_classify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"
@@ -122,7 +122,7 @@
     </GridView>
 
     <LinearLayout
-        android:id="@+id/order_list_layout_classify"
+        android:id="@+id/deal_detail_layout_classify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -132,13 +132,13 @@
         android:visibility="gone" >
 
         <RadioGroup
-            android:id="@+id/order_list_radioGroup_classify_1"
+            android:id="@+id/deal_detail_radioGroup_classify_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_ecoin_transfer"
+                android:id="@+id/deal_detail_radioButton_ecoin_transfer"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin40"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_recharge"
+                android:id="@+id/deal_detail_radioButton_recharge"
                 style="@null"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -163,7 +163,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_buy_key"
+                android:id="@+id/deal_detail_radioButton_buy_key"
                 style="@null"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -177,13 +177,13 @@
         </RadioGroup>
 
         <RadioGroup
-            android:id="@+id/order_list_radioGroup_classify_2"
+            android:id="@+id/deal_detail_radioGroup_classify_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_apply"
+                android:id="@+id/deal_detail_radioButton_apply"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin40"
                 android:layout_weight="1"
@@ -195,7 +195,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_buy_commodity"
+                android:id="@+id/deal_detail_radioButton_buy_commodity"
                 style="@null"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -208,7 +208,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <RadioButton
-                android:id="@+id/order_list_radioButton_handing"
+                android:id="@+id/deal_detail_radioButton_handing"
                 style="@null"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -227,11 +227,10 @@
         android:layout_height="1dp"
         android:background="@color/gainsboro" />
 
-    <ListView
-        android:id="@+id/order_list_listView"
+    <com.poomoo.edao.widget.MyListView
+        android:id="@+id/deal_detail_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none" >
-    </ListView>
+        android:scrollbars="none" />
 
 </LinearLayout>

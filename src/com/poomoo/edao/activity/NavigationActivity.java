@@ -152,7 +152,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			openActivity(AboutUsActivity.class);
 			break;
 		case R.id.sidebar_layout_myorder:
-			openActivity(OrderListActivity.class);
+			openActivity(DealDetailActivity.class);
 			break;
 		}
 	}

@@ -114,8 +114,8 @@ public class ReturnNavigation extends Fragment {
 		case "OrderInformationActivity":
 			textView_title.setText("订单详情");
 			break;
-		case "OrderListActivity":
-			textView_title.setText("全部订单");
+		case "DealDetailActivity":
+			textView_title.setText("交易明细");
 			break;
 		case "StoreInformationActivity":
 			textView_title.setText("店铺详情");

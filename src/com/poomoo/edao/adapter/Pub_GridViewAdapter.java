@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
@@ -51,21 +50,20 @@ public class Pub_GridViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_gridview_order_list, parent,
+			convertView = inflater.inflate(R.layout.item_gridview_pub, parent,
 					false);
 			viewHolder = new ViewHolder();
 			viewHolder.textView = (TextView) convertView
-					.findViewById(R.id.item_order_list_textView);
+					.findViewById(R.id.item_pub_textView);
 
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		viewHolder.textView.setText(list.get(position).get("name"));
-
 		textViews.put(position, viewHolder.textView);
-		System.out.println("position:" + position);
-
+		if (position == 0)
+			viewHolder.textView.setTextColor(Color.parseColor("#1995EB"));
 		return convertView;
 	}
 

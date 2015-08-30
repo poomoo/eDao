@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/item_order_list_textView"
+        android:id="@+id/item_pub_textView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin40"
         android:gravity="center"

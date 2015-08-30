@@ -57,6 +57,7 @@
         <activity android:name=".activity.ConfirmOrderActivity" />
         <activity android:name=".activity.CommodityEvaluateActivity" />
         <activity android:name=".activity.DealerApplyActivity" />
+        <activity android:name=".activity.DealDetailActivity" />
         <activity android:name=".activity.EvaluationListActivity" />
         <!-- <activity android:name=".activity.GetDetailActivity" /> -->
 
@@ -66,7 +67,6 @@
         <activity android:name=".activity.MywalletActivity" />
         <activity android:name=".activity.NavigationActivity" />
         <activity android:name=".activity.OrderInformationActivity" />
-        <activity android:name=".activity.OrderListActivity" />
         <activity android:name=".activity.PassWordManageActivity" />
         <activity android:name=".activity.PartnerApplyActivity" />
         <activity android:name=".activity.PaymentActivity" />

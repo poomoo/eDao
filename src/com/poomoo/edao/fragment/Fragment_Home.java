@@ -49,7 +49,7 @@ import com.poomoo.edao.activity.LoveFundActivity;
 import com.poomoo.edao.activity.MapActivity;
 import com.poomoo.edao.activity.MywalletActivity;
 import com.poomoo.edao.activity.NavigationActivity;
-import com.poomoo.edao.activity.OrderListActivity;
+import com.poomoo.edao.activity.DealDetailActivity;
 import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
 import com.poomoo.edao.activity.RebateActivity;
 import com.poomoo.edao.activity.TransferActivity1;
@@ -95,7 +95,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private static final Class[] outIntent = { RebateActivity.class,
 			PurchaseAndGetDetailActivity.class, MywalletActivity.class,
-			OrderListActivity.class, CreditManageActivity.class,
+			DealDetailActivity.class, CreditManageActivity.class,
 			TransferActivity1.class, CooperationActivity.class,
 			LoveFundActivity.class, Fragment_Store.class };
 
@@ -272,15 +272,15 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			Utity.showToast(getActivity().getApplicationContext(),
 					eDaoClientConfig.notDevelop);
 			return;
-		}
-		if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
-			application = (eDaoClientApplication) getActivity()
-					.getApplication();
-			if (!application.getRealNameAuth().equals("1")) {
-				startActivity(new Intent(getActivity(),
-						CertificationActivity.class));
-			} else
-				startActivity(new Intent(getActivity(), outIntent[arg2]));
+			// }
+			// if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
+			// application = (eDaoClientApplication) getActivity()
+			// .getApplication();
+			// if (!application.getRealNameAuth().equals("1")) {
+			// startActivity(new Intent(getActivity(),
+			// CertificationActivity.class));
+			// } else
+			// startActivity(new Intent(getActivity(), outIntent[arg2]));
 		} else if (arg2 != 8)
 			startActivity(new Intent(getActivity(), outIntent[arg2]));
 		else {

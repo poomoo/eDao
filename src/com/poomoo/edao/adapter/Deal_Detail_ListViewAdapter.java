@@ -1,6 +1,5 @@
 package com.poomoo.edao.adapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.model.OrderListData;
 
 /**
  * 
@@ -20,13 +20,12 @@ import com.poomoo.edao.R;
  * @author 李苜菲
  * @date 2015-8-3 上午10:37:42
  */
-public class Order_List_ListViewAdapter extends BaseAdapter {
+public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 
-	private List<HashMap<String, String>> list;
+	private List<OrderListData> list;
 	private LayoutInflater inflater;
 
-	public Order_List_ListViewAdapter(Context context,
-			List<HashMap<String, String>> list) {
+	public Deal_Detail_ListViewAdapter(Context context, List<OrderListData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -56,7 +55,7 @@ public class Order_List_ListViewAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_listview_order_list,
-					parent,false);
+					parent, false);
 			holder = new ViewHolder();
 			holder.textView_order_id = (TextView) convertView
 					.findViewById(R.id.order_list_item_textView_orderid);
@@ -66,16 +65,16 @@ public class Order_List_ListViewAdapter extends BaseAdapter {
 					.findViewById(R.id.order_list_item_textView_state);
 			holder.textView_order_date = (TextView) convertView
 					.findViewById(R.id.order_list_item_textView_date);
-			holder.imageView = (ImageView) convertView
-					.findViewById(R.id.order_list_item_imageView_pic);
+			// holder.imageView = (ImageView) convertView
+			// .findViewById(R.id.order_list_item_imageView_pic);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.textView_order_id.setText(list.get(position).get("id"));
-		holder.textView_order_money.setText(list.get(position).get("money"));
-		holder.textView_order_state.setText(list.get(position).get("state"));
-		holder.textView_order_date.setText(list.get(position).get("date"));
+		holder.textView_order_id.setText(list.get(position).getId());
+		holder.textView_order_money.setText(list.get(position).getMoney());
+		holder.textView_order_state.setText(list.get(position).getState());
+		holder.textView_order_date.setText(list.get(position).getDate());
 
 		return convertView;
 	}
@@ -83,8 +82,6 @@ public class Order_List_ListViewAdapter extends BaseAdapter {
 	private class ViewHolder {
 		private TextView textView_order_id, textView_order_money,
 				textView_order_state, textView_order_date;
-		private ImageView imageView;
-
 	}
 
 }
