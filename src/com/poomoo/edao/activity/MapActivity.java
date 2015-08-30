@@ -1,7 +1,14 @@
 package com.poomoo.edao.activity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -35,8 +42,16 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.OrderListData;
+import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
 
 public class MapActivity extends BaseActivity implements OnMapClickListener,
 		OnMapStatusChangeListener, OnClickListener {
@@ -47,7 +62,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private BaiduMap mBaiduMap;
 	private InfoWindow mInfoWindow;
 
-	private LinearLayout layout_curCity, layout_store;
+	private LinearLayout layout_store;
+	private TextView textView_curCity;
 
 	// 初始化全局 bitmap 信息，不用时及时 recycle
 	private BitmapDescriptor bdA;
@@ -68,6 +84,9 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	 */
 	private double mCurrentLantitude;
 	private double mCurrentLongitude;
+	private String curCity = "定位中...";
+	private Gson gson = new Gson();
+	private ProgressDialog progressDialog = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,9 +118,10 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		layout_curCity = (LinearLayout) findViewById(R.id.map_layout_curcity);
+		textView_curCity = (TextView) findViewById(R.id.map_textView_curcity);
 		layout_store = (LinearLayout) findViewById(R.id.map_layout_store);
 
+		textView_curCity.setText(curCity);
 		layout_store.setOnClickListener(this);
 	}
 
@@ -141,7 +161,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				} else {
 					showCurrtenStroeOnMap(ll);
 					// 获得marker中的数据
-					StoreData info = (StoreData) marker.getExtraInfo().get("info");
+					StoreData info = (StoreData) marker.getExtraInfo().get(
+							"info");
 					View linlayout = MapActivity.this.getLayoutInflater()
 							.inflate(R.layout.popup_map_inform, null);
 					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
@@ -291,6 +312,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				return;
 			mCurrentLantitude = location.getLatitude();
 			mCurrentLongitude = location.getLongitude();
+			curCity = location.getCity();
+			textView_curCity.setText(curCity);
 
 			MyLocationData locData = new MyLocationData.Builder()
 					.accuracy(location.getRadius())
@@ -419,4 +442,102 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		bdA.recycle();
 	}
 
+	private void getData(String status) {
+		// TODO 自动生成的方法存根
+		System.out.println("调用getData");
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("bizName", "50000");
+		data.put("method", "50005");
+
+		data.put("status", status);
+		data.put("ordersType", "");
+		data.put("startDt", "");
+		data.put("endDt", "");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								if (responseData.getRsCode() == 1
+										&& responseData.getJsonData().length() > 0) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+
+										JSONArray pager = result
+												.getJSONArray("records");
+										int length = pager.length();
+
+									} catch (JSONException e) {
+										// TODO 自动生成的 catch 块
+										e.printStackTrace();
+									}
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+							}
+
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+
+						});
+					}
+				});
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: showProgressDialog
+	 * @Description: TODO 显示进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:23:53
+	 */
+	private void showProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("请稍后...");
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: closeProgressDialog
+	 * @Description: TODO 关闭进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-12下午1:24:43
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
+	}
 }

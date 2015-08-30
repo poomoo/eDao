@@ -12,13 +12,13 @@
         android:paddingBottom="@dimen/margin5" >
 
         <LinearLayout
-            android:id="@+id/map_layout_curcity"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/map_layout_name"
             android:gravity="center" >
 
             <TextView
+                android:id="@+id/map_textView_curcity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

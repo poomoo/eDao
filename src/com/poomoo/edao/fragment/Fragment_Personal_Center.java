@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.KeyManageActivity;
 import com.poomoo.edao.activity.LoginActivity;
 import com.poomoo.edao.activity.PassWordManageActivity;
 import com.poomoo.edao.application.eDaoClientApplication;
@@ -36,7 +37,8 @@ public class Fragment_Personal_Center extends Fragment implements
 		OnClickListener {
 	private TextView textView_username, textView_phonenum;
 	private LinearLayout layout_credit, layout_bankaccount,
-			layout_accountpassword, layout_paypassword, layout_twodimencode;
+			layout_accountpassword, layout_paypassword, layout_twodimencode,
+			layout_key_manage, layout_operate_manage;
 	private Button button_logout;
 
 	private MessageBox_YESNO box_YESNO;
@@ -85,10 +87,20 @@ public class Fragment_Personal_Center extends Fragment implements
 				R.id.personalcenter_layout_paypassword_manage);
 		layout_twodimencode = (LinearLayout) getView().findViewById(
 				R.id.personalcenter_layout_twodimencode);
+		layout_key_manage = (LinearLayout) getView().findViewById(
+				R.id.personalcenter_layout_key_manage);
+		layout_operate_manage = (LinearLayout) getView().findViewById(
+				R.id.personalcenter_layout_operate_manage);
 		button_logout = (Button) getView().findViewById(
 				R.id.personalcenter_btn_logout);
 
+		layout_credit.setOnClickListener(this);
+		layout_bankaccount.setOnClickListener(this);
 		layout_accountpassword.setOnClickListener(this);
+		layout_paypassword.setOnClickListener(this);
+		layout_twodimencode.setOnClickListener(this);
+		layout_key_manage.setOnClickListener(this);
+		layout_operate_manage.setOnClickListener(this);
 		button_logout.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
@@ -109,6 +121,11 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_layout_paypassword_manage:
 			break;
 		case R.id.personalcenter_layout_twodimencode:
+			break;
+		case R.id.personalcenter_layout_key_manage:
+			startActivity(new Intent(getActivity(), KeyManageActivity.class));
+			break;
+		case R.id.personalcenter_layout_operate_manage:
 			break;
 		case R.id.personalcenter_btn_logout:
 			box_YESNO = new MessageBox_YESNO(getActivity());
