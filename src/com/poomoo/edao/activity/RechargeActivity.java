@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -36,14 +35,9 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.weixinpay.MD5;
 import com.poomoo.edao.weixinpay.Util;
-import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
-import com.tencent.mm.sdk.constants.ConstantsAPI;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
@@ -53,8 +47,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  * @author 李苜菲
  * @date 2015-8-27 下午2:20:26
  */
-public class RechargeActivity extends BaseActivity implements OnClickListener,
-		IWXAPIEventHandler {
+public class RechargeActivity extends BaseActivity implements OnClickListener {
 
 	private EditText editText_pay_money;
 	private Button button_pay;
@@ -64,7 +57,6 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
-	private IWXAPI api;
 	private String orderId = "";
 	private PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
@@ -93,8 +85,6 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 
 	private void weixin() {
 		// TODO 自动生成的方法存根
-		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
-		api.handleIntent(getIntent(), this);
 		req = new PayReq();
 		msgApi.registerApp(Constants.APP_ID);
 	}
@@ -181,9 +171,9 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 	}
 
 	private void sendPayReq() {
-		System.out.println("resultunifiedorder");
 		msgApi.registerApp(Constants.APP_ID);
 		msgApi.sendReq(req);
+		finish();
 	}
 
 	/**
@@ -220,13 +210,6 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 	private void closeProgressDialog() {
 		if (progressDialog != null)
 			progressDialog.dismiss();
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		setIntent(intent);
-		api.handleIntent(intent, this);
 	}
 
 	private class GetPrepayIdTask extends
@@ -278,7 +261,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 			List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams
 					.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body", "leyidao"));
+			packageParams.add(new BasicNameValuePair("body", "充值"));
 			packageParams
 					.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
@@ -424,36 +407,5 @@ public class RechargeActivity extends BaseActivity implements OnClickListener,
 
 		Log.e("orion", signParams.toString());
 
-	}
-
-	@Override
-	public void onReq(BaseReq arg0) {
-		// TODO 自动生成的方法存根
-
-	}
-
-	@Override
-	public void onResp(BaseResp resp) {
-		// TODO 自动生成的方法存根
-		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-			System.out.println("onResp:" + resp.errCode + ":" + resp.errStr);
-			closeProgressDialog();
-			String msg = "";
-			if (resp.errCode == 0)
-				msg = "支付成功！";
-			else if (resp.errCode == -1)
-				msg = "支付失败！";
-			else
-				msg = "取消支付！";
-			box_YES = new MessageBox_YES(this);
-			box_YES.showDialog(msg, new DialogResultListener() {
-
-				@Override
-				public void onFinishDialogResult(int result) {
-					// TODO 自动生成的方法存根
-					finish();
-				}
-			});
-		}
 	}
 }

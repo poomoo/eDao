@@ -212,4 +212,34 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		return true;
 	}
 
+	@Override
+	protected void onStart() {
+		// TODO 自动生成的方法存根
+		super.onStart();
+		System.out.println("onStart");
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO 自动生成的方法存根
+		super.onRestart();
+		System.out.println("onRestart");
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO 自动生成的方法存根
+		super.onResume();
+		System.out.println("onResume");
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO 自动生成的方法存根
+		super.onPause();
+		System.out.println("onPause");
+	}
+	
+	
+
 }

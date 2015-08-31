@@ -1,14 +1,12 @@
-package com.poomoo.edao.weixinpay.wxapi;
+package com.poomoo.edao.wxapi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.BaseActivity;
 import com.poomoo.edao.weixinpay.Constants;
-import com.poomoo.edao.widget.MessageBox_YES;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -16,18 +14,16 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
-
-	private static final String TAG = "WXPayEntryActivity";
-
+public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 	private IWXAPI api;
-	private MessageBox_YES box_YES;
 	private TextView textView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pay_result);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		textView = (TextView) findViewById(R.id.pay_result_textView);
 		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
 
@@ -47,7 +43,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
 	@Override
 	public void onResp(BaseResp resp) {
-		Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+		System.out.println("onPayFinish, errCode = " + resp.errCode);
 
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			System.out.println("onResp:" + resp.errCode + ":" + resp.errStr);

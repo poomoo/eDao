@@ -59,19 +59,7 @@
                 android:id="@+id/item_store_evaluate_textView_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2015-05-21"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textsize14" />
-
-            <TextView
-                android:layout_width="@dimen/margin5"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/item_store_evaluate_textView_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="16:41"
+                android:text="2015-05-21 16:41"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>

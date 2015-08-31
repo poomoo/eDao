@@ -88,8 +88,9 @@ public class LoveFundActivity extends BaseActivity {
 												.getString("myLoveFund");
 										total_fund = result
 												.getString("totalLoveFund");
-										textView_myown.setText(my_fund);
-										textView_total.setText(total_fund);
+										textView_myown.setText("￥" + my_fund);
+										textView_total
+												.setText("￥" + total_fund);
 									} catch (JSONException e) {
 										// TODO 自动生成的 catch 块
 										e.printStackTrace();

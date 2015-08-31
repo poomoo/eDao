@@ -85,6 +85,12 @@ public class Fragment_Store extends Fragment implements OnItemClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
+
+		init();
+		// 查询广告
+		getAdvData();
 	}
 
 	@Override
@@ -92,18 +98,6 @@ public class Fragment_Store extends Fragment implements OnItemClickListener {
 			Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_store, container, false);
-	}
-
-	@Override
-	public void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-		// 实现沉浸式状态栏效果
-		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
-
-		init();
-		// 查询广告
-		getAdvData();
 	}
 
 	private void init() {

@@ -108,19 +108,6 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
-		return inflater.inflate(R.layout.fragment_home, container, false);
-	}
-
-	@Override
-	public void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_home_layout));
 
@@ -129,17 +116,13 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		getInformData();
 		// 查询广告
 		getAdvData();
-		// int length = pics.length;
-		// for (int i = 0; i < length; i++) {
-		// final ImageView iv = new ImageView(getActivity());
-		// iv.setImageResource(pics[i]);
-		// iv.setScaleType(ScaleType.FIT_XY);
-		// flipper.addView(iv);
-		// }
-		// CharSequence text = getString(R.string.viewpager_indicator, 1,
-		// length);
-		// textView_indicator.setText(text);
-		// textView_indicator.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO 自动生成的方法存根
+		return inflater.inflate(R.layout.fragment_home, container, false);
 	}
 
 	private void init() {

@@ -42,6 +42,7 @@ public class Fragment_History extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
+		init();
 	}
 
 	@Override
@@ -50,13 +51,6 @@ public class Fragment_History extends Fragment {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_purchase_history, container,
 				false);
-	}
-
-	@Override
-	public void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-		init();
 	}
 
 	private void init() {
@@ -98,7 +92,7 @@ public class Fragment_History extends Fragment {
 										JSONArray pager = result
 												.getJSONArray("records");
 										int length = pager.length();
-										list=new ArrayList<Purchase_HistoryData>();
+										list = new ArrayList<Purchase_HistoryData>();
 										for (int i = 0; i < length; i++) {
 											Purchase_HistoryData purchase_History = new Purchase_HistoryData();
 											purchase_History = gson.fromJson(
@@ -142,7 +136,8 @@ public class Fragment_History extends Fragment {
 							public void run() {
 								// TODO 自动生成的方法存根
 								listView.onRefreshComplete();
-								Utity.showToast(getActivity().getApplicationContext(),
+								Utity.showToast(getActivity()
+										.getApplicationContext(),
 										eDaoClientConfig.checkNet);
 							}
 

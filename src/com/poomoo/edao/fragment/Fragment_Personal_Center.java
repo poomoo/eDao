@@ -50,6 +50,11 @@ public class Fragment_Personal_Center extends Fragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
+		// 实现沉浸式状态栏效果
+		setImmerseLayout(getView().findViewById(
+				R.id.fragment_personal_center_layout));
+		application = (eDaoClientApplication) getActivity().getApplication();
+		init();
 	}
 
 	@Override
@@ -58,17 +63,6 @@ public class Fragment_Personal_Center extends Fragment implements
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_personal_center, container,
 				false);
-	}
-
-	@Override
-	public void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-		// 实现沉浸式状态栏效果
-		setImmerseLayout(getView().findViewById(
-				R.id.fragment_personal_center_layout));
-		application = (eDaoClientApplication) getActivity().getApplication();
-		init();
 	}
 
 	private void init() {

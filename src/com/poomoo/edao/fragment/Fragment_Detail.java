@@ -42,6 +42,7 @@ public class Fragment_Detail extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
+		init();
 	}
 
 	@Override
@@ -49,14 +50,6 @@ public class Fragment_Detail extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_get_detail, container, false);
-	}
-
-	@Override
-	public void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-
-		init();
 	}
 
 	private void init() {
@@ -103,7 +96,8 @@ public class Fragment_Detail extends Fragment {
 											DetailData Detail = new DetailData();
 											Detail = gson.fromJson(pager
 													.getJSONObject(i)
-													.toString(), DetailData.class);
+													.toString(),
+													DetailData.class);
 											list.add(Detail);
 										}
 										if (isFirst) {

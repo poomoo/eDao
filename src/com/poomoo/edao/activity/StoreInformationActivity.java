@@ -1,6 +1,9 @@
 package com.poomoo.edao.activity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -17,10 +20,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.Shop_List_ListViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.ShopListData;
+import com.poomoo.edao.model.StoreEvaluationData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -35,11 +38,14 @@ import com.poomoo.edao.util.Utity;
 public class StoreInformationActivity extends BaseActivity implements
 		OnClickListener {
 	private TextView textView_name, textView_score, textView_distance,
-			textView_info, textView_address, textView_tel, textView_more;
-	private RatingBar ratingBar;
-	private LinearLayout layout;
+			textView_info, textView_address, textView_tel,textView_more,
+			textView_evaluate_name, textView_evaluate_date,
+			textView_evaluate_info;
+	private RatingBar ratingBar_all, ratingBar_evaluate;
+	private LinearLayout layout_evaluate;
 
 	private ShopListData listData;
+	private List<StoreEvaluationData> list;
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 
@@ -63,17 +69,25 @@ public class StoreInformationActivity extends BaseActivity implements
 		textView_address = (TextView) findViewById(R.id.store_information_textView_address);
 		textView_tel = (TextView) findViewById(R.id.store_information_textView_tel);
 		textView_more = (TextView) findViewById(R.id.store_information_textView_more);
+		textView_evaluate_name = (TextView) findViewById(R.id.item_store_evaluate_textView_name);
+		textView_evaluate_date = (TextView) findViewById(R.id.item_store_evaluate_textView_date);
+		textView_evaluate_info = (TextView) findViewById(R.id.item_store_evaluate_textView_info);
 
-		ratingBar = (RatingBar) findViewById(R.id.store_information_ratingBar);
-		layout = (LinearLayout) findViewById(R.id.store_information_layout_evaluation);
+		ratingBar_all = (RatingBar) findViewById(R.id.store_information_ratingBar);
+		ratingBar_evaluate = (RatingBar) findViewById(R.id.item_store_evaluate_ratingBar);
+		layout_evaluate = (LinearLayout) findViewById(R.id.store_information_layout_evaluation);
 
 		textView_name.setText(listData.getShopName());
 		textView_score.setText(String.valueOf(listData.getAvgScore()));
 		textView_distance.setText(listData.getDistance());
 		textView_address.setText(listData.getAddress());
 		textView_tel.setText(listData.getTel());
-		ratingBar.setRating(listData.getAvgScore());
+		ratingBar_all.setRating(listData.getAvgScore());
+
+		textView_more.setOnClickListener(this);
 		// textView_info.setText(data.getShopName());
+		list = new ArrayList<StoreEvaluationData>();
+		getData();
 	}
 
 	@Override
@@ -81,7 +95,10 @@ public class StoreInformationActivity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.store_information_textView_more:
-			openActivity(EvaluationListActivity.class);
+			Bundle pBundle = new Bundle();
+			pBundle.putSerializable("list", (Serializable) list);
+			pBundle.putFloat("score", listData.getAvgScore());
+			openActivity(EvaluationListActivity.class, pBundle);
 			break;
 		}
 	}
@@ -92,8 +109,8 @@ public class StoreInformationActivity extends BaseActivity implements
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
 		data.put("method", "30006");
-		data.put("currPage", 0);
-		data.put("pageSize", 1);
+		data.put("currPage", 1);
+		data.put("pageSize", 10);
 		data.put("shopId", listData.getShopId());
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
@@ -114,12 +131,25 @@ public class StoreInformationActivity extends BaseActivity implements
 
 										JSONArray pager = result
 												.getJSONArray("records");
+										int length = pager.length();
+										for (int i = 0; i < length; i++) {
+											StoreEvaluationData data = new StoreEvaluationData();
+											data = gson.fromJson(pager
+													.getJSONObject(i)
+													.toString(),
+													StoreEvaluationData.class);
+											list.add(data);
+										}
 
-										ShopListData shopList = new ShopListData();
-										shopList = gson.fromJson(pager
-												.getJSONObject(0).toString(),
-												ShopListData.class);
-										layout.setVisibility(View.VISIBLE);
+										layout_evaluate.setVisibility(View.VISIBLE);
+										textView_evaluate_name.setText(list
+												.get(0).getRealName());
+										textView_evaluate_date.setText(list
+												.get(0).getAppraiseDt());
+										textView_evaluate_info.setText(list
+												.get(0).getContent());
+										ratingBar_evaluate.setRating(list
+												.get(0).getScore());
 									} catch (JSONException e) {
 										// TODO 自动生成的 catch 块
 										e.printStackTrace();
