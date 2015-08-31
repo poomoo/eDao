@@ -17,6 +17,7 @@
     <!-- DP -->
     <dimen name="margin2">2dp</dimen>
     <dimen name="margin5">5dp</dimen>
+    <dimen name="margin7">7dp</dimen>
     <dimen name="margin10">10dp</dimen>
     <dimen name="margin20">20dp</dimen>
     <dimen name="margin30">30dp</dimen>

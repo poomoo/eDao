@@ -18,9 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.KeyAndOperateActivity;
 import com.poomoo.edao.activity.KeyManageActivity;
 import com.poomoo.edao.activity.LoginActivity;
 import com.poomoo.edao.activity.PassWordManageActivity;
+import com.poomoo.edao.activity.StoreManageActivity;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.DialogResultListener;
@@ -38,7 +40,7 @@ public class Fragment_Personal_Center extends Fragment implements
 	private TextView textView_username, textView_phonenum;
 	private LinearLayout layout_credit, layout_bankaccount,
 			layout_accountpassword, layout_paypassword, layout_twodimencode,
-			layout_key_manage, layout_operate_manage;
+			layout_operate_manage, layout_store_manage;
 	private Button button_logout;
 
 	private MessageBox_YESNO box_YESNO;
@@ -81,10 +83,10 @@ public class Fragment_Personal_Center extends Fragment implements
 				R.id.personalcenter_layout_paypassword_manage);
 		layout_twodimencode = (LinearLayout) getView().findViewById(
 				R.id.personalcenter_layout_twodimencode);
-		layout_key_manage = (LinearLayout) getView().findViewById(
-				R.id.personalcenter_layout_key_manage);
 		layout_operate_manage = (LinearLayout) getView().findViewById(
 				R.id.personalcenter_layout_operate_manage);
+		layout_store_manage = (LinearLayout) getView().findViewById(
+				R.id.personalcenter_layout_store_manage);
 		button_logout = (Button) getView().findViewById(
 				R.id.personalcenter_btn_logout);
 
@@ -93,8 +95,8 @@ public class Fragment_Personal_Center extends Fragment implements
 		layout_accountpassword.setOnClickListener(this);
 		layout_paypassword.setOnClickListener(this);
 		layout_twodimencode.setOnClickListener(this);
-		layout_key_manage.setOnClickListener(this);
 		layout_operate_manage.setOnClickListener(this);
+		layout_store_manage.setOnClickListener(this);
 		button_logout.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
@@ -116,10 +118,11 @@ public class Fragment_Personal_Center extends Fragment implements
 			break;
 		case R.id.personalcenter_layout_twodimencode:
 			break;
-		case R.id.personalcenter_layout_key_manage:
-			startActivity(new Intent(getActivity(), KeyManageActivity.class));
-			break;
 		case R.id.personalcenter_layout_operate_manage:
+			startActivity(new Intent(getActivity(), KeyAndOperateActivity.class));
+			break;
+		case R.id.personalcenter_layout_store_manage:
+			startActivity(new Intent(getActivity(), StoreManageActivity.class));
 			break;
 		case R.id.personalcenter_btn_logout:
 			box_YESNO = new MessageBox_YESNO(getActivity());

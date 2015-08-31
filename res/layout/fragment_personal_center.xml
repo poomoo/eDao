@@ -19,18 +19,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/personalcenter_layout_credit_manage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -41,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="信用通道管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
@@ -61,11 +59,10 @@
         <LinearLayout
             android:id="@+id/personalcenter_layout_bankaccount_manage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -76,7 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="银行账户管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
@@ -96,11 +93,10 @@
         <LinearLayout
             android:id="@+id/personalcenter_layout_accountpassword_manage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -111,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="账户密码管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
@@ -131,11 +127,10 @@
         <LinearLayout
             android:id="@+id/personalcenter_layout_paypassword_manage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -146,7 +141,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="支付密码管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
@@ -166,11 +161,10 @@
         <LinearLayout
             android:id="@+id/personalcenter_layout_twodimencode"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -181,43 +175,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="我的二维码"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textsize16" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sidebar_arrow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gainsboro" >
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/personalcenter_layout_key_manage"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:padding="10dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_personal_center_pay_password" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:text="秘钥管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
 
@@ -236,11 +195,10 @@
         <LinearLayout
             android:id="@+id/personalcenter_layout_operate_manage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:gravity="center"
-            android:padding="10dp" >
+            android:padding="@dimen/margin5" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -251,8 +209,42 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="@dimen/margin5"
                 android:text="经营管理"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sidebar_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gainsboro" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/personalcenter_layout_store_manage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:padding="@dimen/margin5" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_center_pay_password" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/margin5"
+                android:text="店铺管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
 
@@ -271,22 +263,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gainsboro" >
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center|bottom"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <Button
             android:id="@+id/personalcenter_btn_logout"

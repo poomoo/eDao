@@ -11,13 +11,19 @@
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/margin5" >
 
-        <ImageView
-            android:id="@+id/navigation_imageView_return"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/navigation_layout_return"
+            android:layout_width="@dimen/margin50"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin10"
-            android:src="@drawable/ic_return" />
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin10"
+                android:src="@drawable/ic_return" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/navigation_textView_title"

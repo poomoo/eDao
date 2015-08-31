@@ -159,6 +159,27 @@ public class Utity {
 	/**
 	 * 
 	 * 
+	 * @Title: getAreaPosition
+	 * @Description: TODO 查找某区域所在表中位置
+	 * @author 李苜菲
+	 * @return
+	 * @return int
+	 * @throws
+	 * @date 2015年8月31日下午11:41:41
+	 */
+	public static int getAreaPosition(ArrayList<AreaInfo> areaList, String area) {
+		int i = 0;
+		for (AreaInfo areaInfo : areaList) {
+			i++;
+			if (areaInfo.getArea_name().equals(area))
+				return i - 1;
+		}
+		return 0;
+	}
+
+	/**
+	 * 
+	 * 
 	 * @Title: setOnTextChanged
 	 * @Description: TODO 输入的数字每隔4位加一个空格
 	 * @author 李苜菲

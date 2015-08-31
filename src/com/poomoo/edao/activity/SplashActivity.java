@@ -150,6 +150,7 @@ public class SplashActivity extends BaseActivity {
 		public void onReceiveLocation(BDLocation location) {
 			applicaiton.setCurProvince(location.getProvince());
 			applicaiton.setCurCity(location.getCity());
+			applicaiton.setCurArea(location.getDistrict());
 			mLocationClient.unRegisterLocationListener(myListener);
 		}
 	}

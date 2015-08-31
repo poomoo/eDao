@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:gravity="center"
-            android:text="手机号码"
+            android:text="电话"
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize16" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="金额"
+            android:text="级别"
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize16" />
 
@@ -61,7 +61,7 @@
         android:background="@color/gainsboro" />
 
     <com.poomoo.edao.widget.MyListView
-        android:id="@+id/rebate_listView"
+        android:id="@+id/operate_manage_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

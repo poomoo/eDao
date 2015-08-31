@@ -54,7 +54,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String zone = "", merchant_phone = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "", address = "";
+			curCity = "", curArea = "", address = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		// 取当前定位
 		curProvince = application.getCurProvince();
 		curCity = application.getCurCity();
+		curArea = application.getCurArea();
 
 	}
 
@@ -122,6 +123,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private void select_city() {
 		CityPicker.province_name = curProvince;
 		CityPicker.city_name = curCity;
+		CityPicker.area_name = curArea;
 		// 实例化SelectPicPopupWindow
 		select_City_PopupWindow = new Select_City_PopupWindow(
 				PartnerApplyActivity.this, itemsOnClick);

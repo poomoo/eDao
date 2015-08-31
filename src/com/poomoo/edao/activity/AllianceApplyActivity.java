@@ -51,7 +51,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "";
+			curCity = "",curArea = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
 	private eDaoClientApplication application = null;
 
@@ -90,6 +90,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 		// 取当前定位
 		curProvince = application.getCurProvince();
 		curCity = application.getCurCity();
+		curArea = application.getCurArea();
 	}
 
 	@Override
@@ -119,6 +120,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private void select_city() {
 		CityPicker.province_name = curProvince;
 		CityPicker.city_name = curCity;
+		CityPicker.area_name = curArea;
 		// 实例化SelectPicPopupWindow
 		select_City_PopupWindow = new Select_City_PopupWindow(
 				AllianceApplyActivity.this, itemsOnClick);

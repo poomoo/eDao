@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
@@ -15,7 +15,7 @@ import com.poomoo.edao.R;
 @SuppressLint("NewApi")
 public class ReturnNavigation extends Fragment {
 
-	ImageView imageView_return;
+	LinearLayout layout_return;
 	TextView textView_title;
 
 	@Override
@@ -40,9 +40,9 @@ public class ReturnNavigation extends Fragment {
 	}
 
 	public void init() {
-		imageView_return = (ImageView) getView().findViewById(
-				R.id.navigation_imageView_return);
-		imageView_return.setOnClickListener(new OnClickListener() {
+		layout_return = (LinearLayout) getView().findViewById(
+				R.id.navigation_layout_return);
+		layout_return.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				getActivity().finish();
@@ -155,6 +155,18 @@ public class ReturnNavigation extends Fragment {
 			break;
 		case "WXPayEntryActivity":
 			textView_title.setText("支付结果");
+			break;
+		case "KeyAndOperateActivity":
+			textView_title.setText("经营管理");
+			break;
+		case "KeyManageActivity":
+			textView_title.setText("秘钥管理");
+			break;
+		case "OperateManageActivity":
+			textView_title.setText("经营管理");
+			break;
+		case "StoreManageActivity":
+			textView_title.setText("店铺管理");
 			break;
 		}
 
