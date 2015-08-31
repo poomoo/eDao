@@ -110,8 +110,8 @@
                     <TextView
                         android:id="@+id/main_textView_ecoin"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="867"
+                        android:layout_height="match_parent"
+                        android:text="0"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/textsize10" >
                     </TextView>
@@ -157,8 +157,8 @@
                     <TextView
                         android:id="@+id/main_textView_goldcoin"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="86556"
+                        android:layout_height="match_parent"
+                        android:text="0"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/textsize10" >
                     </TextView>
@@ -204,8 +204,8 @@
                     <TextView
                         android:id="@+id/main_textView_point"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="86556656"
+                        android:layout_height="match_parent"
+                        android:text="0"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/textsize10" >
                     </TextView>

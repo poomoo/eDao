@@ -114,6 +114,8 @@ public class DealDetailActivity extends BaseActivity implements
 		// }
 		// adapter = new Deal_Detail_ListViewAdapter(this, list);
 		// listView.setAdapter(adapter);
+		
+		list=new ArrayList<OrderListData>();
 
 		menu_list = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> hashMap;

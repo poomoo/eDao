@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:padding="@dimen/margin10" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,22 +29,24 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/item_store_evaluate_textView_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="张三三"
                 android:textColor="#5477A7"
-                android:textSize="@dimen/textsize18"
+                android:textSize="@dimen/textsize16"
                 android:textStyle="bold" />
 
             <RatingBar
+                android:id="@+id/item_store_evaluate_ratingBar"
                 style="@style/myRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
                 android:numStars="5"
                 android:rating="5"
-                android:stepSize="1" />
+                android:stepSize="0.1" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,6 +56,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/item_store_evaluate_textView_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015-05-21"
@@ -61,10 +64,11 @@
                 android:textSize="@dimen/textsize14" />
 
             <TextView
-                android:layout_width="5dp"
+                android:layout_width="@dimen/margin5"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/item_store_evaluate_textView_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="16:41"
@@ -72,19 +76,20 @@
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
 
-        <View
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="@dimen/margin10" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <TextView
+                android:id="@+id/item_store_evaluate_textView_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="卖家服务很好，东西很好，物有所值，好评，下次还来哦~"
-                android:textSize="@dimen/textsize16" />
+                android:textSize="@dimen/textsize14" />
         </LinearLayout>
     </LinearLayout>
 

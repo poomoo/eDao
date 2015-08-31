@@ -1,5 +1,6 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +82,8 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		button_payed.setOnClickListener(this);
 		button_delete.setOnClickListener(this);
 
+		list=new ArrayList<OrderListData>();
+		
 		showProgressDialog();
 		getData(status);
 		listView.setonRefreshListener(new OnRefreshListener() {

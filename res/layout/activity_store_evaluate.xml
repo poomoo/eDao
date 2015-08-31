@@ -16,9 +16,9 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:paddingTop="@dimen/margin10"
         android:text="贵阳特产水果"
         android:textSize="@dimen/textsize20" />
 
@@ -28,7 +28,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <ImageView
             android:id="@+id/order_list_item_imageView_pic"
@@ -67,7 +67,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="@dimen/margin10" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                         android:textSize="@dimen/textsize16" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -95,7 +95,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="@dimen/margin10" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                         android:textSize="@dimen/textsize12" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -121,7 +121,7 @@
                         android:textSize="@dimen/textsize12" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:background="#F2F2F2"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <EditText
             android:layout_width="match_parent"
@@ -167,7 +167,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -259,7 +259,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="bottom"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <Button
             android:layout_width="match_parent"

@@ -1,120 +1,116 @@
 package com.poomoo.edao.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.poomoo.edao.R;
-
+/**
+ * 
+ * @ClassName StoreData
+ * @Description TODO 店铺数据
+ * @author 李苜菲
+ * @date 2015-8-31 上午9:27:23
+ */
 public class StoreData implements Serializable {
-	private static final long serialVersionUID = -758459502806858414L;
-	/**
-	 * 精度
-	 */
-	private double latitude;
-	/**
-	 * 纬度
-	 */
-	private double longitude;
-	/**
-	 * 图片ID，真实项目中可能是图片路径
-	 */
-	private int imgId;
-	/**
-	 * 商家名称
-	 */
-	private String name;
-	/**
-	 * 距离
-	 */
-	private String distance;
-	/**
-	 * 评分
-	 */
-	private float score;
-	/**
-	 * 信息
-	 */
-	private String info;
+	// serialVersionUID
 
-	public static List<StoreData> infos = new ArrayList<StoreData>();
+	private static final long serialVersionUID = -4761715977345558686L;
+	private String shopId = "";
+	private String shopName = "";
+	private String realName = "";
+	private double longitude = 0;
+	private double latitude = 0;
+	private String address = "";
+	private String pictures = "";
+	private String typeId = "";
+	private float avgSore = 0;
+	private String tel = "";
+	private String distance = "";
 
-	static {
-		infos.add(new StoreData(26.612562, 106.636244, R.drawable.ic_store_pic,
-				"乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商乐意道加盟商", "209米", 4.7f, "90起送"));
-		infos.add(new StoreData(26.612433, 106.635911, R.drawable.ic_store_pic,
-				"乐意道合作商", "897米", 4.8f, "100起送"));
-		infos.add(new StoreData(26.612264, 106.637236, R.drawable.ic_store_pic,
-				"乐意道经销商", "249米", 4.9f, "110起送"));
-
+	public String getShopId() {
+		return this.shopId;
 	}
 
-	public StoreData(double latitude, double longitude, int imgId, String name,
-			String distance, float score, String info) {
-		super();
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.imgId = imgId;
-		this.name = name;
-		this.distance = distance;
-		this.score = score;
-		this.info = info;
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public String getShopName() {
+		return this.shopName;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getRealName() {
+		return this.realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public double getLongitude() {
-		return longitude;
+		return this.longitude;
 	}
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public String getName() {
-		return name;
+	public double getLatitude() {
+		return this.latitude;
 	}
 
-	public int getImgId() {
-		return imgId;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
-	public void setImgId(int imgId) {
-		this.imgId = imgId;
+	public String getAddress() {
+		return this.address;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPictures() {
+		return this.pictures;
+	}
+
+	public void setPictures(String pictures) {
+		this.pictures = pictures;
+	}
+
+	public String getTypeId() {
+		return this.typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public float getAvgSore() {
+		return this.avgSore;
+	}
+
+	public void setAvgSore(float avgSore) {
+		this.avgSore = avgSore;
+	}
+
+	public String getTel() {
+		return this.tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 	public String getDistance() {
-		return distance;
+		return this.distance;
 	}
 
 	public void setDistance(String distance) {
 		this.distance = distance;
-	}
-
-	public float getScore() {
-		return this.score;
-	}
-
-	public void setScore(float score) {
-		this.score = score;
-	}
-
-	public String getInfo() {
-		return this.info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
 	}
 
 }

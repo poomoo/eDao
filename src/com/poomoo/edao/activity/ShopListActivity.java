@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +43,8 @@ import com.poomoo.edao.widget.MyListView.OnRefreshListener;
  * @author 李苜菲
  * @date 2015-8-4 下午3:43:49
  */
-public class ShopListActivity extends BaseActivity {
+public class ShopListActivity extends BaseActivity implements
+		OnItemClickListener {
 	private EditText editText_keywords;
 	private ImageView imageView_back;
 	private TextView textView_classify;
@@ -96,6 +100,7 @@ public class ShopListActivity extends BaseActivity {
 				getData();
 			}
 		});
+		listView.setOnItemClickListener(this);
 
 	}
 
@@ -163,11 +168,10 @@ public class ShopListActivity extends BaseActivity {
 										int length = pager.length();
 										for (int i = 0; i < length; i++) {
 											ShopListData shopList = new ShopListData();
-											shopList = gson
-													.fromJson(pager
-															.getJSONObject(i)
-															.toString(),
-															ShopListData.class);
+											shopList = gson.fromJson(pager
+													.getJSONObject(i)
+													.toString(),
+													ShopListData.class);
 											list.add(shopList);
 										}
 										if (isFirst) {
@@ -213,6 +217,13 @@ public class ShopListActivity extends BaseActivity {
 				});
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Bundle pBundle = new Bundle();
+		pBundle.putSerializable("data", list.get(arg2));
+		openActivity(StoreInformationActivity.class, pBundle);
+	}
+
 	/**
 	 * 
 	 * 
@@ -255,4 +266,5 @@ public class ShopListActivity extends BaseActivity {
 		ImageLoader.getInstance().clearMemoryCache();
 		ImageLoader.getInstance().clearDiskCache();
 	}
+
 }

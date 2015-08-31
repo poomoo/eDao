@@ -1,5 +1,6 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,10 +45,11 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.OrderListData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -87,6 +90,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private String curCity = "定位中...";
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
+	private List<StoreData> list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,8 +116,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
-		addInfosOverlay(StoreData.infos);
-		initMarkerClickEvent();
+		// showProgressDialog();
 	}
 
 	private void init() {
@@ -123,6 +126,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 
 		textView_curCity.setText(curCity);
 		layout_store.setOnClickListener(this);
+
+		list = new ArrayList<StoreData>();
 	}
 
 	/**
@@ -202,12 +207,23 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			mMarkerLy.setTag(viewHolder);
 		}
 		viewHolder = (ViewHolder) mMarkerLy.getTag();
-		viewHolder.storeImg.setImageResource(store.getImgId());
-		viewHolder.storeRatingBar.setRating(store.getScore());
-		viewHolder.storeName.setText(store.getName());
-		viewHolder.storeScore.setText(store.getScore() + "");
+		// 使用ImageLoader加载网络图片
+		DisplayImageOptions options = new DisplayImageOptions.Builder()//
+				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
+				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
+				.cacheInMemory(true) // 内存缓存
+				.cacheOnDisk(true) // sdcard缓存
+				.bitmapConfig(Config.RGB_565)// 设置最低配置
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
+				.build();
+		ImageLoader.getInstance().displayImage(store.getPictures(),
+				viewHolder.storeImg, options);
+
+		viewHolder.storeRatingBar.setRating(store.getAvgSore());
+		viewHolder.storeName.setText(store.getShopName());
+		viewHolder.storeScore.setText(store.getAvgSore() + "");
 		viewHolder.storeDistance.setText(store.getDistance());
-		viewHolder.storeInfo.setText(store.getInfo());
+		viewHolder.storeInfo.setText(store.getAddress());
 		mMarkerLy.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -230,61 +246,6 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		TextView storeName, storeScore, storeDistance, storeInfo;
 		RatingBar storeRatingBar;
 	}
-
-	// public void initOverlay() {
-	// // add marker overlay
-	// LatLng llA = new LatLng(39.963175, 116.400244);
-	// LatLng llB = new LatLng(39.942821, 116.369199);
-	// LatLng llC = new LatLng(39.939723, 116.425541);
-	// LatLng llD = new LatLng(39.906965, 116.401394);
-	//
-	// OverlayOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-	// .zIndex(9).draggable(true);
-	// mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-	// OverlayOptions ooB = new MarkerOptions().position(llB).icon(bdB)
-	// .zIndex(5);
-	// mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
-	// OverlayOptions ooC = new MarkerOptions().position(llC).icon(bdC)
-	// .perspective(false).anchor(0.5f, 0.5f).rotate(30).zIndex(7);
-	// mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
-	// ArrayList<BitmapDescriptor> giflist = new ArrayList<BitmapDescriptor>();
-	// giflist.add(bdA);
-	// giflist.add(bdB);
-	// giflist.add(bdC);
-	// OverlayOptions ooD = new MarkerOptions().position(llD).icons(giflist)
-	// .zIndex(0).period(10);
-	// mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
-	//
-	// // add ground overlay
-	// LatLng southwest = new LatLng(39.92235, 116.380338);
-	// LatLng northeast = new LatLng(39.947246, 116.414977);
-	// LatLngBounds bounds = new LatLngBounds.Builder().include(northeast)
-	// .include(southwest).build();
-	//
-	// OverlayOptions ooGround = new GroundOverlayOptions()
-	// .positionFromBounds(bounds).image(bdGround).transparency(0.8f);
-	// mBaiduMap.addOverlay(ooGround);
-	//
-	// MapStatusUpdate u = MapStatusUpdateFactory
-	// .newLatLng(bounds.getCenter());
-	// mBaiduMap.setMapStatus(u);
-	//
-	// mBaiduMap.setOnMarkerDragListener(new OnMarkerDragListener() {
-	// public void onMarkerDrag(Marker marker) {
-	// }
-	//
-	// public void onMarkerDragEnd(Marker marker) {
-	// Toast.makeText(
-	// getApplicationContext(),
-	// "拖拽结束，新位置：" + marker.getPosition().latitude + ", "
-	// + marker.getPosition().longitude,
-	// Toast.LENGTH_LONG).show();
-	// }
-	//
-	// public void onMarkerDragStart(Marker marker) {
-	// }
-	// });
-	// }
 
 	private void initLocation() {
 		LocationClientOption option = new LocationClientOption();
@@ -335,6 +296,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
 				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 				mBaiduMap.animateMapStatus(u);
+				getData();
 			}
 
 		}
@@ -442,17 +404,15 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		bdA.recycle();
 	}
 
-	private void getData(String status) {
+	private void getData() {
 		// TODO 自动生成的方法存根
 		System.out.println("调用getData");
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("bizName", "50000");
-		data.put("method", "50005");
+		data.put("bizName", "30000");
+		data.put("method", "30007");
 
-		data.put("status", status);
-		data.put("ordersType", "");
-		data.put("startDt", "");
-		data.put("endDt", "");
+		data.put("longitude", mCurrentLongitude);
+		data.put("latitude", mCurrentLantitude);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
 
@@ -471,10 +431,19 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 												responseData.getJsonData()
 														.toString());
 
-										JSONArray pager = result
+										JSONArray data = result
 												.getJSONArray("records");
-										int length = pager.length();
-
+										int length = data.length();
+										for (int i = 0; i < length; i++) {
+											StoreData storeData = new StoreData();
+											storeData = gson.fromJson(data
+													.getJSONObject(i)
+													.toString(),
+													StoreData.class);
+											list.add(storeData);
+										}
+										addInfosOverlay(list);
+										initMarkerClickEvent();
 									} catch (JSONException e) {
 										// TODO 自动生成的 catch 块
 										e.printStackTrace();

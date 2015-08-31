@@ -61,8 +61,8 @@ public class LoveFundActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "10000");
-		data.put("method", "10014");
-
+		data.put("method", "10016");
+		data.put("userId", application.getUserId());
 		showProgressDialog("查询中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {

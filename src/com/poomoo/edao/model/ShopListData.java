@@ -1,5 +1,7 @@
 package com.poomoo.edao.model;
 
+import java.io.Serializable;
+
 /**
  * 
  * @ClassName ShopList
@@ -7,13 +9,17 @@ package com.poomoo.edao.model;
  * @author 李苜菲
  * @date 2015-8-25 上午10:43:51
  */
-public class ShopListData {
+public class ShopListData implements Serializable{
+	//serialVersionUID
+	 
+	private static final long serialVersionUID = 3684264842536982626L;
 	private String distance = "";// 店铺与当前位置的距离
 	private String shopId = "";
 	private String shopName = "";
 	private float avgScore = 0;
 	private String pictures = "";
 	private String address = "";
+	private String tel="";
 
 	public String getDistance() {
 		return this.distance;
@@ -61,6 +67,14 @@ public class ShopListData {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getTel() {
+		return this.tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 }

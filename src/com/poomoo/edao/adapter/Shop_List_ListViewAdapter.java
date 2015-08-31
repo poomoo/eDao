@@ -79,7 +79,6 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
 				.build();
-		System.out.println("getview:" + list.get(position).getPictures());
 		ImageLoader.getInstance().displayImage(
 				list.get(position).getPictures(), holder.imageView, options);
 
