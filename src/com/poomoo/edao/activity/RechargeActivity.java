@@ -61,6 +61,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 	private PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	private Map<String, String> resultunifiedorder;
+	public static RechargeActivity instance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
+		instance=this;
 		init();
 		weixin();
 	}
@@ -173,7 +175,6 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 	private void sendPayReq() {
 		msgApi.registerApp(Constants.APP_ID);
 		msgApi.sendReq(req);
-		finish();
 	}
 
 	/**
