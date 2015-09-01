@@ -8,41 +8,41 @@ package com.poomoo.edao.model;
  * @date 2015年8月30日 下午4:02:56
  */
 public class OrderListData {
-	private String id = "";
-	private String money = "";
-	private String state = "";
-	private String date = "";
+	private String ordersId = "";
+	private String payFee = "";
+	private String status = "";
+	private String ordersDt = "";
 
-	public String getId() {
-		return this.id;
+	public String getOrdersId() {
+		return this.ordersId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setOrdersId(String ordersId) {
+		this.ordersId = ordersId;
 	}
 
-	public String getMoney() {
-		return this.money;
+	public String getPayFee() {
+		return this.payFee;
 	}
 
-	public void setMoney(String money) {
-		this.money = money;
+	public void setPayFee(String payFee) {
+		this.payFee = payFee;
 	}
 
-	public String getState() {
-		return this.state;
+	public String getStatus() {
+		return this.status;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public String getDate() {
-		return this.date;
+	public String getOrdersDt() {
+		return this.ordersDt;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setOrdersDt(String ordersDt) {
+		this.ordersDt = ordersDt;
 	}
 
 }

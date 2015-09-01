@@ -78,11 +78,11 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.textView_order_id.setText(list.get(position).getId());
-		holder.textView_order_money.setText(list.get(position).getMoney());
-		holder.textView_order_state.setText(list.get(position).getState());
-		holder.textView_order_date.setText(list.get(position).getDate());
-		if (list.get(position).getState().equals("未支付")) {
+		holder.textView_order_id.setText(list.get(position).getOrdersId());
+		holder.textView_order_money.setText(list.get(position).getPayFee());
+		holder.textView_order_state.setText(list.get(position).getStatus());
+		holder.textView_order_date.setText(list.get(position).getOrdersDt());
+		if (list.get(position).getStatus().equals("未支付")) {
 			holder.button_pay.setVisibility(View.VISIBLE);
 			holder.button_pay.setOnClickListener(new OnClickListener() {
 
