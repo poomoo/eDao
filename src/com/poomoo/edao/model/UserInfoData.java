@@ -1,26 +1,14 @@
-package com.poomoo.edao.application;
+package com.poomoo.edao.model;
 
-import org.litepal.LitePalApplication;
+/**
+ * 
+ * @ClassName UserInfoData
+ * @Description TODO 用户信息
+ * @author 李苜菲
+ * @date 2015-9-1 上午10:42:20
+ */
+public class UserInfoData {
 
-import com.baidu.mapapi.SDKInitializer;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.poomoo.edao.R;
-
-public class eDaoClientApplication extends LitePalApplication {
-	// 定位
-	private String curProvince = "";
-	private String curCity = "";
-	private String curArea = "";
-
-	// 提现
-	private String handlingFee = "";// 提现手续费
-	private String covertMinFee = "";// 提现下限
-	private String corvertMaxFee = "";// 提现上限
-
-	// 用户信息
 	private String userId = "";
 	private String realName = "";
 	private String tel = "";
@@ -33,57 +21,10 @@ public class eDaoClientApplication extends LitePalApplication {
 	private String bankName = "";// 开户行名称
 	private String bankCardId = "";// 银行卡号
 	private String payPwdValue = "";// 是否设置过支付密码
+
 	private int totalEb = 0;// 总的意币
 	private int totalGold = 0;// 总金币
 	private int totalIntegral = 0;// 总的积分
-
-	public String getCurProvince() {
-		return this.curProvince;
-	}
-
-	public void setCurProvince(String curProvince) {
-		this.curProvince = curProvince;
-	}
-
-	public String getCurCity() {
-		return this.curCity;
-	}
-
-	public void setCurCity(String curCity) {
-		this.curCity = curCity;
-	}
-
-	public String getCurArea() {
-		return this.curArea;
-	}
-
-	public void setCurArea(String curArea) {
-		this.curArea = curArea;
-	}
-
-	public String getHandlingFee() {
-		return this.handlingFee;
-	}
-
-	public void setHandlingFee(String handlingFee) {
-		this.handlingFee = handlingFee;
-	}
-
-	public String getCovertMinFee() {
-		return this.covertMinFee;
-	}
-
-	public void setCovertMinFee(String covertMinFee) {
-		this.covertMinFee = covertMinFee;
-	}
-
-	public String getCorvertMaxFee() {
-		return this.corvertMaxFee;
-	}
-
-	public void setCorvertMaxFee(String corvertMaxFee) {
-		this.corvertMaxFee = corvertMaxFee;
-	}
 
 	public String getUserId() {
 		return this.userId;
@@ -101,6 +42,14 @@ public class eDaoClientApplication extends LitePalApplication {
 		this.realName = realName;
 	}
 
+	public String getRealNameAuth() {
+		return this.realNameAuth;
+	}
+
+	public void setRealNameAuth(String realNameAuth) {
+		this.realNameAuth = realNameAuth;
+	}
+
 	public String getTel() {
 		return this.tel;
 	}
@@ -115,14 +64,6 @@ public class eDaoClientApplication extends LitePalApplication {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getRealNameAuth() {
-		return this.realNameAuth;
-	}
-
-	public void setRealNameAuth(String realNameAuth) {
-		this.realNameAuth = realNameAuth;
 	}
 
 	public String getIdCardNum() {
@@ -203,27 +144,6 @@ public class eDaoClientApplication extends LitePalApplication {
 
 	public void setTotalIntegral(int totalIntegral) {
 		this.totalIntegral = totalIntegral;
-	}
-
-	@Override
-	public void onCreate() {
-		// TODO 自动生成的方法存根
-		super.onCreate();
-
-		// 百度地图初始化
-		SDKInitializer.initialize(getApplicationContext());
-
-		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisk(true).build();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				getApplicationContext())
-				.defaultDisplayImageOptions(defaultOptions)
-				.memoryCache(new WeakMemoryCache())
-				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100)// 缓存一百张图片
-				.writeDebugLogs().build();
-		ImageLoader.getInstance().init(config);
 	}
 
 }

@@ -21,18 +21,18 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
             android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp" >
+            android:paddingBottom="@dimen/margin10"
+            android:paddingLeft="@dimen/margin15"
+            android:paddingRight="@dimen/margin15"
+            android:paddingTop="@dimen/margin5" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,8 +46,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="意币余额:"
+                    android:paddingRight="@dimen/margin2"
+                    android:text="钱包余额:"
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
@@ -63,7 +63,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="5dp" />
+                    android:layout_height="@dimen/margin5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:background="@drawable/style_background"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="5dp" >
+                    android:padding="@dimen/margin5" >
 
                     <EditText
                         android:id="@+id/transfer1_editText_phonenum"
@@ -120,10 +120,10 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <TextView
-            android:layout_width="5dp"
+            android:layout_width="@dimen/margin5"
             android:layout_height="match_parent" />
 
         <LinearLayout
@@ -133,10 +133,10 @@
             android:background="#ffffff"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp" >
+            android:paddingBottom="@dimen/margin10"
+            android:paddingLeft="@dimen/margin5"
+            android:paddingRight="@dimen/margin5"
+            android:paddingTop="@dimen/margin10" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -158,13 +158,13 @@
         android:layout_weight="2"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:padding="15dp" >
+        android:padding="@dimen/margin15" >
 
         <Button
             android:id="@+id/transfer1_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:gravity="center"
             android:text="确    定"
             android:textColor="@color/white" />

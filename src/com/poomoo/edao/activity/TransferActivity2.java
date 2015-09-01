@@ -8,12 +8,13 @@ import java.util.Map;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 
 /**
  * 
@@ -46,7 +48,7 @@ import com.poomoo.edao.widget.MessageBox_YES;
 public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel;
+			textView_balance, textView_channel, textView_isEnough;
 	private EditText editText_pay_money, editText_pay_password,
 			editText_remark;
 	private LinearLayout layout_channel, layout_password, layout_ecoin,
@@ -59,14 +61,15 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	private List<HashMap<String, String>> list;
 	private ListView listView;
 
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 	private String userId = "", realName = "", tel = "", money = "",
-			payType = "";
-	private static final String[] channel = new String[] { "意币支付", "现金支付",
-			"微信支付" };
-	private boolean isSelectedChannle = false, needPassword = false;
+			payType = "1", payPwd = "", remark = "";
+	private static final String[] channel = new String[] { "意币支付", "现金支付" };
+	private boolean isSelectedChannle = false, needPassword = true,
+			isBalanceEnough = true;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
+	private MessageBox_YESNO box_YESNO;
 	private MessageBox_YES box_YES;
 
 	@Override
@@ -77,7 +80,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		getIntentData();
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -87,7 +90,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		realName = getIntent().getExtras().getString("realName");
 		tel = getIntent().getExtras().getString("tel");
 		money = getIntent().getExtras().getString("money");
-		payType = getIntent().getExtras().getString("payType");
+		// payType = getIntent().getExtras().getString("payType");
 	}
 
 	private void init() {
@@ -96,7 +99,11 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		textView_payee_phonenum = (TextView) findViewById(R.id.transfer2_textView_payee_phonenum);
 		textView_balance = (TextView) findViewById(R.id.transfer2_textView_balance);
 		textView_channel = (TextView) findViewById(R.id.transfer2_textView_channel);
+		textView_isEnough = (TextView) findViewById(R.id.transfer2_textView_isEnough);
+
 		editText_pay_money = (EditText) findViewById(R.id.transfer2_editText_pay_money);
+		editText_pay_password = (EditText) findViewById(R.id.transfer2_editText_pay_password);
+		editText_remark = (EditText) findViewById(R.id.transfer2_editText_remark);
 
 		layout_channel = (LinearLayout) findViewById(R.id.transfer2_layout_channel);
 		layout_ecoin = (LinearLayout) findViewById(R.id.transfer2_layout_by_ecoin);
@@ -108,7 +115,8 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 		list = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> data = null;
-		for (int i = 0; i < 3; i++) {
+		int length = channel.length;
+		for (int i = 0; i < length; i++) {
 			data = new HashMap<String, String>();
 			data.put("name", channel[i]);
 			data.put("id", i + 1 + "");
@@ -117,15 +125,15 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 		textView_payee_name.setText(realName);
 		textView_payee_phonenum.setText(tel);
-
 		textView_channel.setText(channel[0]);
+		layout_channel.setOnClickListener(this);
 		// 指定意币转账后不能选择支付类型
-		if (TextUtils.isEmpty(payType)) {
-			payType = "1";
-			layout_channel.setOnClickListener(this);
-		} else {
-			isSelectedChannle = true;
-		}
+		// if (TextUtils.isEmpty(payType)) {
+		// payType = "1";
+		// layout_channel.setOnClickListener(this);
+		// } else {
+		// isSelectedChannle = true;
+		// }
 		// 指定了金额时不能手动修改
 		if (!TextUtils.isEmpty(money)) {
 			editText_pay_money.setText(money);
@@ -133,6 +141,52 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		}
 
 		adapter = new ChannelSpinnerAdapter(this, list);
+		textView_balance.setText("￥" + application.getTotalEb());
+		editText_pay_money.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO 自动生成的方法存根
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO 自动生成的方法存根
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO 自动生成的方法存根
+				System.out.println("afterTextChanged");
+				String temp = s.toString();
+				int posDot = temp.indexOf(".");
+				if (posDot > 0)
+					if (temp.length() - posDot - 1 > 2)
+						s.delete(posDot + 3, posDot + 4);
+
+				System.out.println("s:" + s.toString());
+				if (s.length() == 0) {
+					textView_isEnough.setVisibility(View.GONE);
+					return;
+				}
+				if (payType.equals("1")) {// 意币支付时不能超过上限
+					double money = Double.parseDouble(s.toString().trim());
+					if (money > (double) application.getTotalEb()) {
+						textView_isEnough.setVisibility(View.VISIBLE);
+						textView_isEnough
+								.setText(eDaoClientConfig.balanceIsNotEnough);
+						isBalanceEnough = false;
+					} else {
+						isBalanceEnough = true;
+						textView_isEnough.setVisibility(View.GONE);
+					}
+				} else
+					isBalanceEnough = true;
+			}
+		});
 	}
 
 	@Override
@@ -154,15 +208,42 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
-		if (!isSelectedChannle) {
-			Utity.showToast(getApplicationContext(), "请选择支付方式");
+		// if (!isSelectedChannle) {
+		// Utity.showToast(getApplicationContext(), "请选择支付方式");
+		// return false;
+		// }
+		if (TextUtils.isEmpty(application.getPayPwdValue())) {
+			box_YESNO = new MessageBox_YESNO(this);
+			box_YESNO.showDialog("请设置支付密码", new DialogResultListener() {
+
+				@Override
+				public void onFinishDialogResult(int result) {
+					// TODO 自动生成的方法存根
+					if (result == 1) {
+						Bundle pBundle = new Bundle();
+						pBundle.putString("type", "2");
+						openActivity(PassWordManageActivity.class, pBundle);
+					}
+				}
+			});
 			return false;
 		}
-		if (needPassword
-				&& editText_pay_password.getText().toString().trim().length() == 0) {
+		if (!isBalanceEnough) {
+			Utity.showToast(getApplicationContext(),
+					eDaoClientConfig.balanceIsNotEnough);
+			return false;
+		}
+		money = editText_pay_money.getText().toString().trim();
+		if (TextUtils.isEmpty(money)) {
+			Utity.showToast(getApplicationContext(), "请输入转账金额");
+			return false;
+		}
+		payPwd = editText_pay_password.getText().toString().trim();
+		if (needPassword && TextUtils.isEmpty(payPwd)) {
 			Utity.showToast(getApplicationContext(), "请输入支付密码");
 			return false;
 		}
+		remark = editText_remark.getText().toString().trim();
 		return true;
 	}
 
@@ -170,12 +251,14 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "50000");
-		data.put("method", "50001");
-		data.put("fromUserId", applicaiton.getUserId());
+		data.put("method", "50002");
+		data.put("fromUserId", application.getUserId());
 		data.put("toUserId", userId);
 		data.put("payFee", money);
 		data.put("ordersType", "4");
 		data.put("payType", payType);
+		data.put("payPwd", payPwd);
+		data.put("remark", remark);
 		showProgressDialog("提交中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
@@ -213,7 +296,8 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 							public void run() {
 								// TODO 自动生成的方法存根
 								closeProgressDialog();
-
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
 							}
 						});
 					}

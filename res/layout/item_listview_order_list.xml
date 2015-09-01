@@ -143,7 +143,7 @@
             android:id="@+id/order_list_item_button_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:text="去支付"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize14"

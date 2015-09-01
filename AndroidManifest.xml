@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
+
     <!-- 百度地图所需权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -83,7 +84,7 @@
         <activity android:name=".activity.ShareActivity" />
         <activity android:name=".activity.StoreEvaluateActivity" />
         <activity android:name=".activity.StoreInformationActivity" />
-          <activity android:name=".activity.StoreManageActivity" />
+        <activity android:name=".activity.StoreManageActivity" />
         <activity android:name=".activity.SideBarActivity" />
         <activity android:name=".activity.ShopListActivity" />
         <activity android:name=".activity.TransferActivity1" />
@@ -162,9 +163,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-    </application>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <service android:name=".service.Get_UserInfo_Service" />
+    </application>
 
 </manifest>

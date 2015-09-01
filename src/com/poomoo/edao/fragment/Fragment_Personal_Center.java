@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.KeyAndOperateActivity;
-import com.poomoo.edao.activity.KeyManageActivity;
 import com.poomoo.edao.activity.LoginActivity;
 import com.poomoo.edao.activity.PassWordManageActivity;
 import com.poomoo.edao.activity.StoreManageActivity;
@@ -111,10 +110,16 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_layout_bankaccount_manage:
 			break;
 		case R.id.personalcenter_layout_accountpassword_manage:
-			startActivity(new Intent(getActivity(),
-					PassWordManageActivity.class));
+			Intent intent1 = new Intent(getActivity(),
+					PassWordManageActivity.class);
+			intent1.putExtra("type", "1");
+			startActivity(intent1);
 			break;
 		case R.id.personalcenter_layout_paypassword_manage:
+			Intent intent2= new Intent(getActivity(),
+					PassWordManageActivity.class);
+			intent2.putExtra("type", "2");
+			startActivity(intent2);
 			break;
 		case R.id.personalcenter_layout_twodimencode:
 			break;

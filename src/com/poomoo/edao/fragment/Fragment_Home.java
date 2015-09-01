@@ -9,13 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap.Config;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -103,6 +103,8 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private static final int[] pics = { R.drawable.a01, R.drawable.a02,
 			R.drawable.a03, R.drawable.a04 };
 	private int advCount = 0;// 广告数量
+	public static Handler handler = null;
+	private NavigationActivity mActivity = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -110,12 +112,24 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		super.onActivityCreated(savedInstanceState);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_home_layout));
-
+		application = (eDaoClientApplication) getActivity().getApplication();
 		init();
 		// 查询通知
-		getInformData();
+		// getInformData();
 		// 查询广告
-		getAdvData();
+		// getAdvData();
+		handler = new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO 自动生成的方法存根
+				super.handleMessage(msg);
+				if (msg.what == eDaoClientConfig.freshFlag) {
+					setUserInfo();
+				}
+			}
+
+		};
 	}
 
 	@Override
@@ -123,6 +137,13 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_home, container, false);
+	}
+
+	@Override
+	public void onStart() {
+		// TODO 自动生成的方法存根
+		super.onStart();
+		setUserInfo();
 	}
 
 	private void init() {
@@ -441,4 +462,22 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		return result;
 	}
 
+	private void setUserInfo() {
+		textView_ecoin.setText("" + application.getTotalEb());
+		textView_goldcoin.setText("" + application.getTotalGold());
+		textView_point.setText("" + application.getTotalIntegral());
+	}
+
+	// public Handler handler = new Handler() {
+	//
+	// @Override
+	// public void handleMessage(Message msg) {
+	// // TODO 自动生成的方法存根
+	// super.handleMessage(msg);
+	// if (msg.what == eDaoClientConfig.freshFlag) {
+	// setUserInfo();
+	// }
+	// }
+	//
+	// };
 }

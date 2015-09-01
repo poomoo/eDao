@@ -481,7 +481,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:gravity="center"
             android:text="提交订单"
             android:textColor="@color/white" />

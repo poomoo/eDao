@@ -83,6 +83,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		button_confirm.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
+		textView_balance.setText("￥" + application.getTotalEb());
 	}
 
 	@Override
@@ -156,7 +157,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 										pBundle.putString("money", "");
 										pBundle.putString("userId",
 												referrerUserId);
-										pBundle.putString("payType", "1");
+										// pBundle.putString("payType", "1");
 										openActivity(TransferActivity2.class,
 												pBundle);
 									} catch (JSONException e) {
@@ -224,24 +225,15 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		if (requestCode == TWODIMENCODE && resultCode == Activity.RESULT_OK) {
 			System.out.println("data:" + data.getStringExtra("result"));
 			String result = data.getStringExtra("result");
-			String[] temp = result.split("\\n");
-			for (String str : temp) {
-				if (str.startsWith("N:")) {
-					String[] temp1 = str.split(":");
-					System.out.println("temp1:" + temp1[1]);
-				}
-				if (str.startsWith("TEL:")) {
-					String[] temp1 = str.split(":");
-					editText_payee_phonenum.setText(temp1[1]);
-					editText_payee_phonenum
-							.setSelection(editText_payee_phonenum.getText()
-									.toString().length());
-				}
-				if (str.startsWith("NOTE:")) {
-					String[] temp1 = str.split(":");
-					System.out.println("temp1:" + temp1[1]);
-				}
-
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String tel;
+				tel = jsonObject.getString("tel");
+				editText_payee_phonenum.setText(tel);
+				editText_payee_phonenum.setSelection(tel.length());
+			} catch (JSONException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
 			}
 
 		}

@@ -7,7 +7,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -21,6 +23,7 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.MywalletData;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -38,7 +41,8 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_balance,
 			textView_handing_charge, textView_handing_toplimit,
-			textView_bankname, textView_account_name, textView_bankaccount;
+			textView_bankname, textView_account_name, textView_bankaccount,
+			textView_isEnough;
 	private EditText editText_handing_money;
 	private Button button_recharge, button_handing;
 
@@ -74,6 +78,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		textView_bankname = (TextView) findViewById(R.id.mywallet_textView_bankname);
 		textView_account_name = (TextView) findViewById(R.id.mywallet_textView_account_name);
 		textView_bankaccount = (TextView) findViewById(R.id.mywallet_textView_bankaccount);
+		textView_isEnough = (TextView) findViewById(R.id.mywallet_textView_isEnough);
 
 		editText_handing_money = (EditText) findViewById(R.id.mywallet_editText_handing_money);
 
@@ -86,11 +91,68 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_account_name.setText(Utity.addStarByName(application
 				.getRealName()));
-		// sharedPreferences_certification = getSharedPreferences(
-		// "certificaitonInfo", Context.MODE_PRIVATE);
-		// textView_bankname.setText(sharedPreferences_certification.getString(
-		// "bankName", "建设银行"));
-		// textView_bankaccount.setText(Utity.addStarByNum(3, 16, bankaccount));
+		editText_handing_money.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO 自动生成的方法存根
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO 自动生成的方法存根
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO 自动生成的方法存根
+				System.out.println("afterTextChanged");
+				String temp = s.toString();
+				int posDot = temp.indexOf(".");
+				if (posDot > 0)
+					if (temp.length() - posDot - 1 > 2)
+						s.delete(posDot + 3, posDot + 4);
+
+				System.out.println("s:" + s.toString());
+				if (s.length() == 0) {
+					textView_isEnough.setVisibility(View.GONE);
+					return;
+				}
+
+				double money = Double.parseDouble(s.toString().trim());
+				System.out.println("money:" + money + " "
+						+ (double) application.getTotalEb());
+
+				if (money > (double) application.getTotalEb()) {
+					textView_isEnough.setVisibility(View.VISIBLE);
+					textView_isEnough
+							.setText(eDaoClientConfig.balanceIsNotEnough);
+					button_handing.setClickable(false);
+					button_handing
+							.setBackgroundResource(R.drawable.style_btn_no_background);
+				} else if (money < 500) {
+					textView_isEnough.setVisibility(View.VISIBLE);
+					textView_isEnough.setText(eDaoClientConfig.less500);
+					button_handing.setClickable(false);
+					button_handing
+							.setBackgroundResource(R.drawable.style_btn_no_background);
+				} else if (money > 5000) {
+					textView_isEnough.setVisibility(View.VISIBLE);
+					textView_isEnough.setText(eDaoClientConfig.more5000);
+					button_handing.setClickable(false);
+					button_handing
+							.setBackgroundResource(R.drawable.style_btn_no_background);
+				} else {
+					textView_isEnough.setVisibility(View.GONE);
+					button_handing.setClickable(true);
+					button_handing
+							.setBackgroundResource(R.drawable.style_btn_yes_background);
+				}
+			}
+		});
 		System.out.println("进入钱包" + application.getCorvertMaxFee());
 		if (TextUtils.isEmpty(application.getHandlingFee())) {
 			showProgressDialog("请稍后");
@@ -101,7 +163,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initData() {
-		textView_balance.setText(application.getTotalEb());
+		textView_balance.setText("￥" + application.getTotalEb());
 		textView_handing_charge.setText(application.getHandlingFee() + "元/次");
 		textView_handing_toplimit.setText(application.getCovertMinFee() + "-"
 				+ application.getCorvertMaxFee() + "元/次");
@@ -175,6 +237,9 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());
+									startService(new Intent(
+											MywalletActivity.this,
+											Get_UserInfo_Service.class));
 									finish();
 								}
 
@@ -190,6 +255,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 							public void run() {
 								// TODO 自动生成的方法存根
 								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
 							}
 						});
 					}

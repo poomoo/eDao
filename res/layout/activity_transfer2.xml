@@ -186,92 +186,8 @@
                     android:id="@+id/transfer2_layout_by_ecoin"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3.3"
+                    android:layout_weight="2.5"
                     android:orientation="vertical" >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="意币余额 :"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="@dimen/margin5"
-                            android:layout_height="match_parent" />
-
-                        <TextView
-                            android:id="@+id/transfer2_textView_balance"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:gravity="left|center"
-                            android:paddingLeft="@dimen/margin10"
-                            android:text="￥8000.00"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="支付金额 :"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="@dimen/margin5"
-                            android:layout_height="match_parent" />
-
-                        <EditText
-                            android:id="@+id/transfer2_editText_pay_money"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:background="@drawable/style_background"
-                            android:gravity="left|center"
-                            android:hint="支付金额"
-                            android:paddingLeft="@dimen/margin10"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -316,6 +232,113 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.2" />
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin5" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="钱包余额 :"
+                            android:textSize="@dimen/textsize14" />
+
+                        <TextView
+                            android:layout_width="@dimen/margin5"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/transfer2_textView_balance"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:gravity="left|center"
+                            android:paddingLeft="@dimen/margin10"
+                            android:text="￥8000.00"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/textsize14" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="支付金额 :"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@drawable/style_background" >
+
+                        <EditText
+                            android:id="@+id/transfer2_editText_pay_money"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.5"
+                            android:background="@null"
+                            android:gravity="left|center"
+                            android:hint="支付金额"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="@dimen/margin10"
+                            android:textSize="@dimen/textsize14" />
+
+                        <TextView
+                            android:id="@+id/transfer2_textView_isEnough"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:text="余额不足"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/textsize10"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
                 <TextView
@@ -394,7 +417,7 @@
             android:id="@+id/transfer2_btn_pay"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:gravity="center"
             android:text="确认支付"
             android:textColor="@color/white"

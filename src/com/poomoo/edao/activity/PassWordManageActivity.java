@@ -4,15 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,6 +19,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.TimeCountUtil;
@@ -31,12 +31,14 @@ public class PassWordManageActivity extends BaseActivity implements
 			editText_newpasswordagain, editText_identifycode;
 	private Button button_send, button_confirm, button_cancle;
 	private TextView textView_phone;
+	private LinearLayout layout_oldpw, layout_control;
 
 	private eDaoClientApplication application;
 	private Gson gson = new Gson();
-	private String tel = "", identyNum = "", oldPassWord = "", passWord1 = "",
-			passWord2 = "";
+	private String type = "", tel = "", identyNum = "", oldPassWord = "",
+			passWord1 = "", passWord2 = "";
 	private ProgressDialog progressDialog = null;
+	private boolean isNeedOldPW = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class PassWordManageActivity extends BaseActivity implements
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
+		type = getIntent().getStringExtra("type");// 1-账户密码 2-支付密码
 		init();
 	}
 
@@ -60,6 +63,16 @@ public class PassWordManageActivity extends BaseActivity implements
 		button_send = (Button) findViewById(R.id.passwordmanage_btn_sendIdentifyCode);
 		button_confirm = (Button) findViewById(R.id.passwordmanage_btn_confirm);
 		button_cancle = (Button) findViewById(R.id.passwordmanage_btn_cancle);
+
+		layout_oldpw = (LinearLayout) findViewById(R.id.passwordmanage_layout_oldpassword);
+		layout_control = (LinearLayout) findViewById(R.id.passwordmanage_layout_control);
+
+		if (type.equals("2")
+				&& !TextUtils.isEmpty(application.getPayPwdValue())) {
+			isNeedOldPW = false;
+			layout_oldpw.setVisibility(View.GONE);
+			layout_control.setVisibility(View.VISIBLE);
+		}
 
 		button_send.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
@@ -156,65 +169,127 @@ public class PassWordManageActivity extends BaseActivity implements
 	private void confirm() {
 		// TODO 自动生成的方法存根
 		if (checkInput()) {
-			Map<String, String> data = new HashMap<String, String>();
-			data.put("bizName", "10000");
-			data.put("method", "10007");
-			data.put("tel", tel);
-			data.put("password", passWord1);
-			data.put("oldPassword", oldPassWord);
-			data.put("code", identyNum);
-
-			showProgressDialog();
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
-
-						@Override
-						public void onFinish(final ResponseData responseData) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									if (responseData.getRsCode() != 1) {
-										Utity.showToast(
-												getApplicationContext(),
-												responseData.getMsg());
-									} else {
-										finish();
-									}
-								}
-							});
-						}
-
-						@Override
-						public void onError(Exception e) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									Utity.showToast(getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
-							});
-						}
-					});
+			if (type.equals("1"))
+				account();
+			else
+				pay();
 		}
 	}
 
+	private void account() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10007");
+		data.put("tel", tel);
+		data.put("password", passWord1);
+		data.put("oldPassword", oldPassWord);
+		data.put("code", identyNum);
+
+		showProgressDialog();
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() != 1) {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								} else {
+									finish();
+								}
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
+	}
+
+	private void pay() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10009");
+		data.put("tel", tel);
+		data.put("password", passWord1);
+		data.put("oldPassword", oldPassWord);
+		data.put("code", identyNum);
+
+		showProgressDialog();
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() != 1) {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								} else {
+									Intent intent = new Intent(
+											PassWordManageActivity.this,
+											Get_UserInfo_Service.class);
+									startService(intent);
+									finish();
+								}
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
+	}
+
 	private boolean checkInput() {
-		oldPassWord = editText_oldpassword.getText().toString().trim();
-		if (TextUtils.isEmpty(oldPassWord)) {
-			editText_oldpassword.setFocusable(true);
-			editText_oldpassword.setFocusableInTouchMode(true);
-			editText_oldpassword.requestFocus();
-			Utity.showToast(getApplicationContext(), "请输入旧密码");
-			return false;
+		if (isNeedOldPW) {
+			oldPassWord = editText_oldpassword.getText().toString().trim();
+			if (TextUtils.isEmpty(oldPassWord)) {
+				editText_oldpassword.setFocusable(true);
+				editText_oldpassword.setFocusableInTouchMode(true);
+				editText_oldpassword.requestFocus();
+				Utity.showToast(getApplicationContext(), "请输入旧密码");
+				return false;
+			}
 		}
+
 		passWord1 = editText_newpassword.getText().toString().trim();
 		if (TextUtils.isEmpty(passWord1)) {
 			editText_newpassword.setFocusable(true);

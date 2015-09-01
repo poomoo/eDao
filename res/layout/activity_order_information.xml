@@ -140,7 +140,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:background="@drawable/style_btn_background"
+                        android:background="@drawable/style_btn_yes_background"
                         android:gravity="center"
                         android:text="查物流"
                         android:textColor="@color/white"

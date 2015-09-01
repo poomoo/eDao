@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -40,7 +40,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.NavigationActivity;
+import com.poomoo.edao.activity.MapActivity;
 import com.poomoo.edao.activity.ShopListActivity;
 import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -51,7 +51,8 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
 import com.poomoo.edao.widget.PhotoView.MyGestureListener;
 
-public class Fragment_Store extends Fragment implements OnItemClickListener {
+public class Fragment_Store extends Fragment implements OnItemClickListener,
+		OnClickListener {
 	private TextView textView_indicator;
 	private EditText editText_keywords;
 	private LinearLayout layout_position, layout_map;
@@ -119,6 +120,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener {
 				list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
 		gridView.setOnItemClickListener(this);
+		layout_map.setOnClickListener(this);
 	}
 
 	private void getAdvData() {
@@ -301,5 +303,15 @@ public class Fragment_Store extends Fragment implements OnItemClickListener {
 		Intent intent = new Intent(getActivity(), ShopListActivity.class);
 		intent.putExtra("categoryId", Integer.toString(arg2 + 1));
 		startActivity(intent);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.fragment_store_layout_map:
+			startActivity(new Intent(getActivity(), MapActivity.class));
+			break;
+		}
 	}
 }

@@ -8,7 +8,9 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.conn.util.InetAddressUtils;
 import org.litepal.crud.DataSupport;
@@ -24,7 +26,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;

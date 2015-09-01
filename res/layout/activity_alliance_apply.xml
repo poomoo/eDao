@@ -205,7 +205,7 @@
             android:id="@+id/alliance_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:gravity="center"
             android:text="确    定"
             android:textColor="@color/white" />

@@ -8,6 +8,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,8 +29,9 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.SideBar;
 
 public class NavigationActivity extends BaseActivity implements OnClickListener {
-	private LinearLayout layout_myOrder, layout_shared, layout_check_update,
-			layout_feed_back, layout_help_center, layout_about_us;
+	private LinearLayout layout_myOrder, layout_shopping_cart, layout_messages,
+			layout_shared, layout_check_update, layout_feed_back,
+			layout_help_center, layout_about_us;
 	private FrameLayout frameLayout;
 	private RadioButton radioButton_home, radioButton_myown;
 	public static RadioButton radioButton_shop;
@@ -40,9 +43,11 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	// 侧边栏
 	public static SideBar sideBar;
 	private int clo = 0;
-	private TextView textView_username, textView_phonenum;
+	private TextView textView_username, textView_phonenum, textView_ecoin,
+			textView_gold_coin, textView_point;
 	private eDaoClientApplication application = null;
 	public static NavigationActivity instance = null;
+	public static Handler handler = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,22 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		application = (eDaoClientApplication) getApplication();
 		instance = this;
 		init();
+		handler = new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO 自动生成的方法存根
+				super.handleMessage(msg);
+				if (msg.what == eDaoClientConfig.freshFlag) {
+					System.out.println("收到返回");
+					setUserInfo();
+					Message message = new Message();
+					message.what=eDaoClientConfig.freshFlag;
+					Fragment_Home.handler.sendMessage(message);
+				}
+			}
+
+		};
 	}
 
 	private void init() {
@@ -67,6 +88,8 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		layout_help_center = (LinearLayout) findViewById(R.id.sidebar_layout_help_center);
 		layout_about_us = (LinearLayout) findViewById(R.id.sidebar_layout_about_us);
 		layout_myOrder = (LinearLayout) findViewById(R.id.sidebar_layout_myorder);
+		layout_shopping_cart = (LinearLayout) findViewById(R.id.sidebar_layout_shopping_cart);
+		layout_messages = (LinearLayout) findViewById(R.id.sidebar_layout_messges);
 
 		frameLayout.setOnClickListener(this);
 		radioButton_home.setOnClickListener(this);
@@ -78,11 +101,16 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		layout_help_center.setOnClickListener(this);
 		layout_about_us.setOnClickListener(this);
 		layout_myOrder.setOnClickListener(this);
+		layout_shopping_cart.setOnClickListener(this);
+		layout_messages.setOnClickListener(this);
 
 		setDefaultFragment();
 
 		textView_username = (TextView) findViewById(R.id.sidebar_textView_userName);
 		textView_phonenum = (TextView) findViewById(R.id.sidebar_textView_userTel);
+		textView_ecoin = (TextView) findViewById(R.id.sidebar_textView_ecoin);
+		textView_gold_coin = (TextView) findViewById(R.id.sidebar_textView_gold_coin);
+		textView_point = (TextView) findViewById(R.id.sidebar_textView_point);
 
 		// 是否实名认证
 		if (TextUtils.isEmpty(application.getRealName())) {
@@ -163,6 +191,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		case R.id.sidebar_layout_myorder:
 			openActivity(MyOrderActivity.class);
 			break;
+		case R.id.sidebar_layout_shopping_cart:
+			Utity.showToast(getApplicationContext(),
+					eDaoClientConfig.notDevelop);
+			break;
+		case R.id.sidebar_layout_messges:
+			Utity.showToast(getApplicationContext(),
+					eDaoClientConfig.notDevelop);
+			break;
 		}
 	}
 
@@ -213,33 +249,20 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	}
 
 	@Override
-	protected void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-		System.out.println("onStart");
-	}
-
-	@Override
 	protected void onRestart() {
 		// TODO 自动生成的方法存根
 		super.onRestart();
-		System.out.println("onRestart");
+		setUserInfo();
 	}
 
-	@Override
-	protected void onResume() {
+	private void setUserInfo() {
 		// TODO 自动生成的方法存根
-		super.onResume();
-		System.out.println("onResume");
+		textView_ecoin.setText("" + application.getTotalEb());
+		textView_gold_coin.setText("" + application.getTotalGold());
+		textView_point.setText("" + application.getTotalIntegral());
 	}
 
-	@Override
-	protected void onPause() {
-		// TODO 自动生成的方法存根
-		super.onPause();
-		System.out.println("onPause");
-	}
-	
-	
-
+//	public void setHandler(Handler handler) {
+//		NavigationActivity.handler = handler;
+//	}
 }

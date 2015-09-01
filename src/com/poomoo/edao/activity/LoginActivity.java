@@ -20,8 +20,9 @@ import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.LoginResData;
+import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -46,11 +47,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private MessageBox_YES box_YES;
 	private MessageBox_YESNO box_YESNO;
 	private ProgressDialog progressDialog = null;
-	private LoginResData loginResData = null;
+	private UserInfoData loginResData = null;
 
 	private SharedPreferences loginsp;
 	private Editor editor = null;
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -79,22 +80,23 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		editor = loginsp.edit();
-		if (loginsp.getBoolean("isLogin", false)) {
-			applicaiton.setRealName(loginsp.getString("realName", ""));
-			applicaiton.setTel(loginsp.getString("tel", ""));
-			applicaiton.setUserId(loginsp.getString("userId", ""));
-			applicaiton.setType(loginsp.getString("type", ""));
-			applicaiton.setRealNameAuth(loginsp.getString("realNameAuth", ""));
-			startActivity(new Intent(LoginActivity.this,
-					NavigationActivity.class));
-			System.out.println("login:" + applicaiton.getRealName());
-			finish();
-		} else {
-			if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
-				editText_phone.setText(loginsp.getString("tel", ""));
-			if (!TextUtils.isEmpty(loginsp.getString("passWord", "")))
-				editText_password.setText(loginsp.getString("passWord", ""));
-		}
+		// if (loginsp.getBoolean("isLogin", false)) {
+		// applicaiton.setRealName(loginsp.getString("realName", ""));
+		// applicaiton.setTel(loginsp.getString("tel", ""));
+		// applicaiton.setUserId(loginsp.getString("userId", ""));
+		// applicaiton.setType(loginsp.getString("type", ""));
+		// applicaiton.setRealNameAuth(loginsp.getString("realNameAuth", ""));
+		// startActivity(new Intent(LoginActivity.this,
+		// NavigationActivity.class));
+		// System.out.println("login:" + applicaiton.getRealName());
+		// startService(new Intent(this, Get_UserInfo_Service.class));
+		// finish();
+		// } else {
+		if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
+			editText_phone.setText(loginsp.getString("tel", ""));
+		if (!TextUtils.isEmpty(loginsp.getString("passWord", "")))
+			editText_password.setText(loginsp.getString("passWord", ""));
+		// }
 	}
 
 	@Override
@@ -140,10 +142,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 										box_YESNO.showDialog(
 												responseData.getMsg(), null);
 									} else {
-										loginResData = new LoginResData();
+										loginResData = new UserInfoData();
 										loginResData = gson.fromJson(
 												responseData.getJsonData(),
-												LoginResData.class);
+												UserInfoData.class);
 										editor.putString("userId",
 												loginResData.getUserId());
 										editor.putString("realName",
@@ -154,20 +156,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 												loginResData.getType());
 										editor.putString("realNameAuth",
 												loginResData.getRealNameAuth());
+										editor.putString("payPwdValue",
+												loginResData.getPayPwdValue());
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();
-										applicaiton.setRealName(loginResData
+										application.setRealName(loginResData
 												.getRealName());
-										applicaiton.setTel(loginResData
+										application.setTel(loginResData
 												.getTel());
-										applicaiton.setUserId(loginResData
+										application.setUserId(loginResData
 												.getUserId());
-										applicaiton.setType(loginResData
+										application.setType(loginResData
 												.getType());
-										applicaiton
+										application
 												.setRealNameAuth(loginResData
 														.getRealNameAuth());
+										application.setPayPwdValue(loginResData
+												.getPayPwdValue());
+
 										LoginActivity.this
 												.startActivity(new Intent(
 														LoginActivity.this,

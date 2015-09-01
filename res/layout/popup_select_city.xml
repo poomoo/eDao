@@ -29,7 +29,7 @@
             android:layout_gravity="right"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/style_btn_background"
+            android:background="@drawable/style_btn_yes_background"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white"

@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import android.content.SharedPreferences.Editor;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -19,14 +21,12 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;
 
 	private ImageView imageView;
-
-	private Editor editor = null;
-	private String guide = "", index = "";
 
 	private static String DB_PATH = "/data/data/com.poomoo.edao/databases/";
 	private static String DB_NAME = "eDao.db";
@@ -34,20 +34,16 @@ public class SplashActivity extends BaseActivity {
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
 
-	private eDaoClientApplication applicaiton = null;
+	private SharedPreferences loginsp;
+	private eDaoClientApplication application = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		setImmerseLayout();
+		application = (eDaoClientApplication) getApplication();
 		init();
-		applicaiton = (eDaoClientApplication) getApplication();
-		// sp = getSharedPreferences("index", Context.MODE_PRIVATE);
-		// editor = sp.edit();
-		// guide = sp.getString("guide", "");
-		// index = sp.getString("index", "");
-
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
@@ -65,7 +61,6 @@ public class SplashActivity extends BaseActivity {
 		mLocationClient.registerLocationListener(myListener);
 		initLocation();
 		mLocationClient.start();
-
 		imageView = (ImageView) findViewById(R.id.splash_loading_item);
 		Animation translate = AnimationUtils.loadAnimation(this,
 				R.anim.splash_loading);
@@ -93,6 +88,20 @@ public class SplashActivity extends BaseActivity {
 			}
 		});
 		imageView.setAnimation(translate);
+		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		if (loginsp.getBoolean("isLogin", false)) {
+			application.setRealName(loginsp.getString("realName", ""));
+			application.setTel(loginsp.getString("tel", ""));
+			application.setUserId(loginsp.getString("userId", ""));
+			application.setType(loginsp.getString("type", ""));
+			application.setRealNameAuth(loginsp.getString("realNameAuth", ""));
+			application.setPayPwdValue(loginsp.getString("payPwdValue", ""));
+			openActivity(NavigationActivity.class);
+			startService(new Intent(this, Get_UserInfo_Service.class));
+			finish();
+		} else
+			openActivity(LoginActivity.class);
+
 	}
 
 	private void importDB() {
@@ -148,9 +157,9 @@ public class SplashActivity extends BaseActivity {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			applicaiton.setCurProvince(location.getProvince());
-			applicaiton.setCurCity(location.getCity());
-			applicaiton.setCurArea(location.getDistrict());
+			application.setCurProvince(location.getProvince());
+			application.setCurCity(location.getCity());
+			application.setCurArea(location.getDistrict());
 			mLocationClient.unRegisterLocationListener(myListener);
 		}
 	}

@@ -33,7 +33,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <TextView
                 android:id="@+id/sidebar_textView_userName"
@@ -46,7 +46,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
 
             <TextView
                 android:id="@+id/sidebar_textView_userTel"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/margin5" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +83,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="5dp" >
+                    android:padding="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                         android:src="@drawable/ic_sidebar_ecoin" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="match_parent" />
 
                     <LinearLayout
@@ -110,11 +110,11 @@
                         </TextView>
 
                         <TextView
-                            android:id="@+id/main_textView_ecoin"
+                            android:id="@+id/sidebar_textView_ecoin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:text="38"
+                            android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/textsize10" >
                         </TextView>
@@ -132,7 +132,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="5dp" >
+                    android:padding="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                         android:src="@drawable/ic_sidebar_gold_coin" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="match_parent" />
 
                     <LinearLayout
@@ -163,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:text="3888"
+                            android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/textsize10" >
                         </TextView>
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="5dp" >
+                    android:padding="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -193,7 +193,7 @@
                         android:src="@drawable/ic_sidebar_point" />
 
                     <TextView
-                        android:layout_width="5dp"
+                        android:layout_width="@dimen/margin5"
                         android:layout_height="match_parent" />
 
                     <LinearLayout
@@ -216,7 +216,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:text="888"
+                            android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/textsize10" >
                         </TextView>
@@ -423,7 +423,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp" >
+        android:padding="@dimen/margin5" >
 
         <LinearLayout
             android:id="@+id/sidebar_layout_myorder"
@@ -447,6 +447,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/sidebar_layout_shopping_cart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -467,6 +468,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/sidebar_layout_messges"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
