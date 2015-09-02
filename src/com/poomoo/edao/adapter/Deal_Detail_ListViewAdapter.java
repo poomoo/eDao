@@ -3,8 +3,6 @@ package com.poomoo.edao.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.model.OrderListData;
 
 /**
@@ -81,6 +78,8 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
+		System.out.println("list.get(position).getOrdersDt():"
+				+ list.get(position).getOrdersDt());
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
 		if (list.get(position).getStatus().equals("未支付")) {
 			holder.button_pay.setVisibility(View.VISIBLE);
@@ -89,9 +88,9 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO 自动生成的方法存根
-					activity.startActivity(new Intent(activity,
-							PaymentActivity.class));
-					activity.finish();
+					// activity.startActivity(new Intent(activity,
+					// PaymentActivity.class));
+					// activity.finish();
 				}
 			});
 		}

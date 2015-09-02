@@ -36,6 +36,8 @@ public class eDaoClientApplication extends LitePalApplication {
 	private int totalEb = 0;// 总的意币
 	private int totalGold = 0;// 总金币
 	private int totalIntegral = 0;// 总的积分
+	private double curlongitude = 0;
+	private double curlatitude = 0;
 
 	public String getCurProvince() {
 		return this.curProvince;
@@ -203,6 +205,22 @@ public class eDaoClientApplication extends LitePalApplication {
 
 	public void setTotalIntegral(int totalIntegral) {
 		this.totalIntegral = totalIntegral;
+	}
+
+	public double getCurlongitude() {
+		return this.curlongitude;
+	}
+
+	public void setCurlongitude(double curlongitude) {
+		this.curlongitude = curlongitude;
+	}
+
+	public double getCurlatitude() {
+		return this.curlatitude;
+	}
+
+	public void setCurlatitude(double curlatitude) {
+		this.curlatitude = curlatitude;
 	}
 
 	@Override

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/store_manage_layout_logo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -20,6 +21,7 @@
         android:gravity="center" >
 
         <LinearLayout
+            android:id="@+id/store_manage_layout_logo_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_add_store"
@@ -74,11 +76,13 @@
                     android:layout_height="match_parent" />
 
                 <EditText
+                    android:id="@+id/store_manage_editText_store_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/style_background"
-                    android:paddingLeft="@dimen/margin10" />
+                    android:paddingLeft="@dimen/margin10"
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <TextView
@@ -105,7 +109,7 @@
                     android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:id="@+id/store_manage_layout_class"
+                    android:id="@+id/store_manage_layout_store_class"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -115,7 +119,7 @@
                     android:paddingRight="8dp" >
 
                     <TextView
-                        android:id="@+id/store_manage_textView_class"
+                        android:id="@+id/store_manage_textView_store_class"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
@@ -209,11 +213,13 @@
                     android:layout_height="match_parent" />
 
                 <EditText
+                    android:id="@+id/store_manage_editText_address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/style_background"
-                    android:paddingLeft="@dimen/margin10" />
+                    android:paddingLeft="@dimen/margin10"
+                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
         </LinearLayout>
 
@@ -229,6 +235,7 @@
         android:padding="@dimen/margin10" >
 
         <Button
+            android:id="@+id/store_manage_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin40"
             android:background="@drawable/style_btn_yes_background"

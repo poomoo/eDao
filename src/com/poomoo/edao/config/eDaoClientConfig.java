@@ -12,6 +12,7 @@ public class eDaoClientConfig {
 	// "orders/wxPayCallBack.json";
 	public static final String wxReUrl = "http://www.yidao7.com/app/orders/wxPayCallBack.json";
 	public static final String imageurl = BaseUrl + "user/uploadUserImage.json";
+	public static final String uploadStoreurl = BaseUrl + "shop/add.json";
 
 	public static final int timeout = 1 * 30 * 1000;// 网络通讯超时
 	public static final int advTime = 1 * 5 * 1000;// 广告轮播时间

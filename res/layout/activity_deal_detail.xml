@@ -69,7 +69,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin10"
-        android:paddingRight="@dimen/margin10" >
+        android:paddingRight="@dimen/margin10"
+        android:visibility="gone" >
 
         <RadioButton
             android:id="@+id/deal_detail_radioButton_payed"
@@ -231,6 +232,12 @@
         android:id="@+id/deal_detail_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/deal_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

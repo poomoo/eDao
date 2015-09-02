@@ -5,60 +5,53 @@
     android:background="#ECECEC"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/navigation_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/pub_layout_key_manage" />
-
     <RadioGroup
+        android:id="@+id/fragment_status_radioGroup_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10" >
 
         <RadioButton
-            android:id="@+id/key_manage_radioButton_apply"
+            android:id="@+id/fragment_status_radioButton_payed"
             style="@null"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="已支付"
+            android:textColor="@drawable/style_navigation_text_background"
+            android:textSize="@dimen/textsize14" />
+
+        <RadioButton
+            android:id="@+id/fragment_status_radioButton_nopay"
             android:layout_width="0dp"
             android:layout_height="@dimen/margin40"
             android:layout_weight="1"
             android:button="@null"
-            android:checked="true"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
-            android:text="申请中"
+            android:text="未支付"
             android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
+            android:textSize="@dimen/textsize14" />
 
         <RadioButton
-            android:id="@+id/key_manage_radioButton_used"
+            android:id="@+id/fragment_status_radioButton_delete"
             style="@null"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
-            android:text="已使用"
+            android:text="已删除"
             android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
-
-        <RadioButton
-            android:id="@+id/key_manage_radioButton_notUsed"
-            style="@null"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="未使用"
-            android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
+            android:textSize="@dimen/textsize14" />
     </RadioGroup>
 
     <TextView
@@ -66,19 +59,10 @@
         android:layout_height="1dp"
         android:background="@color/gainsboro" />
 
-    <com.poomoo.edao.widget.MyListView
-        android:id="@+id/key_manage_listView"
+    <FrameLayout
+        android:id="@+id/fragment_status_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
-
-    <TextView
-        android:id="@+id/key_manage_textView_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/textsize18"
-        android:visibility="gone" />
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </LinearLayout>

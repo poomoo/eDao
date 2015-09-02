@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -19,9 +20,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -82,9 +81,9 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
 	private eDaoClientApplication application = null;
 	private String userId = "", realName = "", tel = "", money = "",
-			payType = "1", payPwd = "", remark = "", orderId = "";
+			payType = "1", payPwd = "", remark = "", orderId = "", buyNum = "";
 	private static final String[] channel = new String[] { "意币支付", "微信支付" };
-	private boolean needPassword = true, isBalanceEnough = true;
+	private boolean needPassword = true;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
@@ -101,20 +100,11 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_buy_key);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-//		getIntentData();
 		application = (eDaoClientApplication) getApplication();
 		instance = this;
+		getData();
 		init();
 		weixin();
-	}
-
-	private void getIntentData() {
-		// TODO 自动生成的方法存根
-		userId = getIntent().getExtras().getString("userId");
-		realName = getIntent().getExtras().getString("realName");
-		tel = getIntent().getExtras().getString("tel");
-		money = getIntent().getExtras().getString("money");
-		payType = getIntent().getExtras().getString("payType");
 	}
 
 	private void weixin() {
@@ -198,11 +188,17 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 			});
 			return false;
 		}
-		if (!isBalanceEnough) {
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.balanceIsNotEnough);
+		if (TextUtils.isEmpty(buyNum)) {
+			Utity.showToast(getApplicationContext(), "请选择数量");
 			return false;
 		}
+		if (Double.parseDouble(money) > (double) application.getTotalEb()) {
+			Utity.showToast(getApplicationContext(),
+					eDaoClientConfig.balanceIsNotEnough);
+			textView_isEnough.setVisibility(View.VISIBLE);
+			return false;
+		}
+
 		payPwd = editText_pay_password.getText().toString().trim();
 		if (needPassword && TextUtils.isEmpty(payPwd)) {
 			Utity.showToast(getApplicationContext(), "请输入支付密码");
@@ -212,13 +208,98 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		return true;
 	}
 
+	private void getData() {
+		// TODO 自动生成的方法存根
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20009");
+		showProgressDialog("请稍后...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() != 1) {
+									box_YES = new MessageBox_YES(
+											BuyKeyActivity.this);
+									box_YES.showDialog(responseData.getMsg(),
+											null);
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+
+									try {
+										System.out.println("jsonData:"
+												+ responseData.getJsonData());
+										String jsonData = "{\"records\":"
+												+ responseData.getJsonData()
+												+ "}";
+										System.out.println("jsonData:"
+												+ responseData.getJsonData());
+										JSONObject result = new JSONObject(
+												jsonData);
+
+										JSONArray array = result
+												.getJSONArray("records");
+										int length = array.length();
+										System.out.println("length:" + length);
+										HashMap<String, String> item;
+										list_count = new ArrayList<HashMap<String, String>>();
+										for (int i = 0; i < length; i++) {
+											item = new HashMap<String, String>();
+											item.put("name", array
+													.getJSONObject(i)
+													.getString("keysNum"));
+											item.put("payFee", array
+													.getJSONObject(i)
+													.getString("payFee"));
+											list_count.add(item);
+										}
+										adapter_count = new ChannelSpinnerAdapter(
+												BuyKeyActivity.this, list_count);
+									} catch (JSONException e) {
+										// TODO 自动生成的 catch 块
+										e.printStackTrace();
+									}
+
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
+	}
+
 	private void confirm() {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "50000");
-		data.put("method", "50010");
+		data.put("method", "50003");
 		data.put("fromUserId", application.getUserId());
 		data.put("payFee", money);
+		data.put("buyNum", buyNum);
 		data.put("payType", payType);
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
@@ -326,7 +407,13 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
+				buyNum = list.get(arg2).get("name");
+				money = list.get(arg2).get("payFee");
+				text.setText(money);// 设置所选的item作为下拉框的标题
+				textView_count.setText(buyNum);
+				textView_pay_money.setText(money);
+				textView_isEnough.setVisibility(View.GONE);
+
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;

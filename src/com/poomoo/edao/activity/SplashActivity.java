@@ -160,6 +160,8 @@ public class SplashActivity extends BaseActivity {
 			application.setCurProvince(location.getProvince());
 			application.setCurCity(location.getCity());
 			application.setCurArea(location.getDistrict());
+			application.setCurlongitude(location.getLongitude());
+			application.setCurlatitude(location.getLatitude());
 			mLocationClient.unRegisterLocationListener(myListener);
 		}
 	}

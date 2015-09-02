@@ -78,10 +78,13 @@ public class CityPicker extends LinearLayout {
 		// 判断当前省份是否存在 是-显示当前省份
 		if (TextUtils.isEmpty(province_name)) {
 			province_name = provinceList.get(0).getProvince_name();
+			province_id = provinceList.get(0).getProvince_id();
 			provincePicker.setDefault(0);
 		} else {
-			provincePicker.setDefault(Utity.getProvincePosition(provinceList,
-					province_name));
+			int position = Utity.getProvincePosition(provinceList,
+					province_name);
+			province_id = provinceList.get(position).getProvince_id();
+			provincePicker.setDefault(position);
 		}
 
 		cityList = Utity.getCityList(provincePicker.getItemId(Utity
@@ -89,9 +92,12 @@ public class CityPicker extends LinearLayout {
 		cityPicker.setCityData(cityList);
 		if (TextUtils.isEmpty(city_name)) {
 			city_name = cityList.get(0).getCity_name();
+			city_id = cityList.get(0).getCity_id();
 			cityPicker.setDefault(0);
 		} else {
-			cityPicker.setDefault(Utity.getCityPosition(cityList, city_name));
+			int position = Utity.getCityPosition(cityList, city_name);
+			city_id = cityList.get(position).getCity_id();
+			cityPicker.setDefault(position);
 		}
 
 		areaList = Utity.getAreaList(cityPicker.getItemId(0));
@@ -264,6 +270,14 @@ public class CityPicker extends LinearLayout {
 
 	public void setOnSelectingListener(OnSelectingListener onSelectingListener) {
 		this.onSelectingListener = onSelectingListener;
+	}
+
+	public static String getProvince_id() {
+		return province_id;
+	}
+
+	public static String getCity_id() {
+		return city_id;
 	}
 
 	public static String getArea_id() {
