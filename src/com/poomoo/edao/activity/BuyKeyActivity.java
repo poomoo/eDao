@@ -1,6 +1,7 @@
 package com.poomoo.edao.activity;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,75 +15,106 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.weixinpay.MD5;
 import com.poomoo.edao.weixinpay.Util;
+import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 
- * @ClassName RechargeActivity
- * @Description TODO 充值
+ * @ClassName BuyKeyActivity
+ * @Description TODO 购买秘钥
  * @author 李苜菲
- * @date 2015-8-27 下午2:20:26
+ * @date 2015-9-2 上午10:45:35
  */
-public class RechargeActivity extends BaseActivity implements OnClickListener {
+public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
-	private EditText editText_pay_money;
+	private TextView textView_balance, textView_channel, textView_isEnough,
+			textView_pay_money, textView_count;
+	private EditText editText_pay_password, editText_remark;
+	private LinearLayout layout_count, layout_channel, layout_ecoin,
+			layout_control;
 	private Button button_pay;
 
-	private String money = "";
+	private PopupWindow popupWindow;
+	private View layout;
+	private ChannelSpinnerAdapter adapter_count, adapter_channel;
+	private List<HashMap<String, String>> list_count, list_payWay;
+	private ListView listView;
+
 	private eDaoClientApplication application = null;
+	private String userId = "", realName = "", tel = "", money = "",
+			payType = "1", payPwd = "", remark = "", orderId = "";
+	private static final String[] channel = new String[] { "意币支付", "微信支付" };
+	private boolean needPassword = true, isBalanceEnough = true;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
-	private String orderId = "";
+	private MessageBox_YESNO box_YESNO;
 	private PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	private Map<String, String> resultunifiedorder;
-	public static RechargeActivity instance;
+	public static BuyKeyActivity instance = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_recharge);
+		setContentView(R.layout.activity_buy_key);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+//		getIntentData();
 		application = (eDaoClientApplication) getApplication();
 		instance = this;
 		init();
 		weixin();
 	}
 
-	private void init() {
+	private void getIntentData() {
 		// TODO 自动生成的方法存根
-		editText_pay_money = (EditText) findViewById(R.id.recharge_editText_pay_money);
-
-		button_pay = (Button) findViewById(R.id.recharge_btn_pay);
-
-		button_pay.setOnClickListener(this);
+		userId = getIntent().getExtras().getString("userId");
+		realName = getIntent().getExtras().getString("realName");
+		tel = getIntent().getExtras().getString("tel");
+		money = getIntent().getExtras().getString("money");
+		payType = getIntent().getExtras().getString("payType");
 	}
 
 	private void weixin() {
@@ -91,11 +123,55 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		msgApi.registerApp(Constants.APP_ID);
 	}
 
+	private void init() {
+		// TODO 自动生成的方法存根
+		textView_balance = (TextView) findViewById(R.id.buy_key_textView_balance);
+		textView_channel = (TextView) findViewById(R.id.buy_key_textView_channel);
+		textView_isEnough = (TextView) findViewById(R.id.buy_key_textView_isEnough);
+		textView_pay_money = (TextView) findViewById(R.id.buy_key_textView_pay_money);
+		textView_count = (TextView) findViewById(R.id.buy_key_textView_count);
+		editText_pay_password = (EditText) findViewById(R.id.buy_key_editText_pay_password);
+		editText_remark = (EditText) findViewById(R.id.buy_key_editText_remark);
+
+		layout_count = (LinearLayout) findViewById(R.id.buy_key_layout_count);
+		layout_channel = (LinearLayout) findViewById(R.id.buy_key_layout_channel);
+		layout_ecoin = (LinearLayout) findViewById(R.id.buy_key_layout_by_ecoin);
+		layout_control = (LinearLayout) findViewById(R.id.buy_key_layout_control);
+
+		button_pay = (Button) findViewById(R.id.buy_key_btn_pay);
+
+		button_pay.setOnClickListener(this);
+
+		list_payWay = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> data = null;
+		int length = channel.length;
+		for (int i = 0; i < length; i++) {
+			data = new HashMap<String, String>();
+			data.put("name", channel[i]);
+			data.put("id", i + 1 + "");
+			list_payWay.add(data);
+		}
+
+		textView_channel.setText(channel[0]);
+		layout_count.setOnClickListener(this);
+		layout_channel.setOnClickListener(this);
+		adapter_channel = new ChannelSpinnerAdapter(this, list_payWay);
+		textView_balance.setText("￥" + application.getTotalEb());
+	}
+
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.recharge_btn_pay:
+		case R.id.buy_key_layout_count:
+			showWindow_count(layout_count, listView, list_count,
+					textView_count, adapter_count);
+			break;
+		case R.id.buy_key_layout_channel:
+			showWindow_payWay(layout_channel, listView, list_payWay,
+					textView_channel, adapter_channel);
+			break;
+		case R.id.buy_key_btn_pay:
 			if (checkInput()) {
 				confirm();
 			}
@@ -106,11 +182,33 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
-		money = editText_pay_money.getText().toString().trim();
-		if (TextUtils.isEmpty(money)) {
-			Utity.showToast(getApplicationContext(), "请输入金额");
+		if (TextUtils.isEmpty(application.getPayPwdValue())) {
+			box_YESNO = new MessageBox_YESNO(this);
+			box_YESNO.showDialog("请设置支付密码", new DialogResultListener() {
+
+				@Override
+				public void onFinishDialogResult(int result) {
+					// TODO 自动生成的方法存根
+					if (result == 1) {
+						Bundle pBundle = new Bundle();
+						pBundle.putString("type", "2");
+						openActivity(PassWordManageActivity.class, pBundle);
+					}
+				}
+			});
 			return false;
 		}
+		if (!isBalanceEnough) {
+			Utity.showToast(getApplicationContext(),
+					eDaoClientConfig.balanceIsNotEnough);
+			return false;
+		}
+		payPwd = editText_pay_password.getText().toString().trim();
+		if (needPassword && TextUtils.isEmpty(payPwd)) {
+			Utity.showToast(getApplicationContext(), "请输入支付密码");
+			return false;
+		}
+		remark = editText_remark.getText().toString().trim();
 		return true;
 	}
 
@@ -118,10 +216,12 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "50000");
-		data.put("method", "50009");
+		data.put("method", "50010");
 		data.put("fromUserId", application.getUserId());
 		data.put("payFee", money);
-
+		data.put("payType", payType);
+		data.put("payPwd", payPwd);
+		data.put("remark", remark);
 		showProgressDialog("提交中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
@@ -137,21 +237,33 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 								if (responseData.getRsCode() != 1) {
 									closeProgressDialog();
 									box_YES = new MessageBox_YES(
-											RechargeActivity.this);
+											BuyKeyActivity.this);
 									box_YES.showDialog(responseData.getMsg(),
 											null);
 								} else {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										orderId = result.getString("ordersId");
-										GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
-										getPrepayId.execute();
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+									if (payType.equals("1")) {
+										closeProgressDialog();
+										startService(new Intent(
+												BuyKeyActivity.this,
+												Get_UserInfo_Service.class));
+										finish();
+									} else {
+										try {
+											JSONObject result = new JSONObject(
+													responseData.getJsonData()
+															.toString());
+											orderId = result
+													.getString("ordersId");
+											GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
+											getPrepayId.execute();
+										} catch (JSONException e) {
+											// TODO 自动生成的 catch 块
+											e.printStackTrace();
+										}
 									}
+
 								}
 
 							}
@@ -162,14 +274,123 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 					public void onError(Exception e) {
 						// TODO 自动生成的方法存根
 						runOnUiThread(new Runnable() {
+
 							@Override
 							public void run() {
 								// TODO 自动生成的方法存根
 								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
 							}
 						});
 					}
 				});
+	}
+
+	public void showWindow_count(View spinnerlayout, ListView listView,
+			final List<HashMap<String, String>> list, final TextView text,
+			final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(
+				R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout
+				.findViewById(R.id.myspinner_dropdown_listView);
+		listView.setAdapter(adapter);
+		popupWindow = new PopupWindow(spinnerlayout);
+		// 设置弹框的宽度为布局文件的宽
+		popupWindow.setWidth(spinnerlayout.getWidth());
+		popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
+		// 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
+		ColorDrawable dw = new ColorDrawable(0xb0000000);
+		popupWindow.setBackgroundDrawable(dw);
+		// 设置点击弹框外部，弹框消失
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setFocusable(true);
+		popupWindow.setContentView(layout);
+		// 设置弹框出现的位置，在v的正下方横轴偏移textview的宽度，为了对齐~纵轴不偏移
+		popupWindow.showAsDropDown(spinnerlayout, 0, 0);
+		// 弹出动画
+		// popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+		popupWindow.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				// spinnerlayout
+				// .setBackgroundResource(R.drawable.preference_single_item);
+			}
+
+		});
+		// listView的item点击事件
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
+				// 弹框消失
+				popupWindow.dismiss();
+				popupWindow = null;
+			}
+		});
+
+	}
+
+	public void showWindow_payWay(View spinnerlayout, ListView listView,
+			final List<HashMap<String, String>> list, final TextView text,
+			final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(
+				R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout
+				.findViewById(R.id.myspinner_dropdown_listView);
+		listView.setAdapter(adapter);
+		popupWindow = new PopupWindow(spinnerlayout);
+		// 设置弹框的宽度为布局文件的宽
+		popupWindow.setWidth(spinnerlayout.getWidth());
+		popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
+		// 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
+		ColorDrawable dw = new ColorDrawable(0xb0000000);
+		popupWindow.setBackgroundDrawable(dw);
+		// 设置点击弹框外部，弹框消失
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setFocusable(true);
+		popupWindow.setContentView(layout);
+		// 设置弹框出现的位置，在v的正下方横轴偏移textview的宽度，为了对齐~纵轴不偏移
+		popupWindow.showAsDropDown(spinnerlayout, 0, 0);
+		// 弹出动画
+		// popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+		popupWindow.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				// spinnerlayout
+				// .setBackgroundResource(R.drawable.preference_single_item);
+			}
+
+		});
+		// listView的item点击事件
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
+				payType = list.get(arg2).get("id");
+				if (payType.equals("1")) {
+					needPassword = true;
+					layout_ecoin.setVisibility(View.VISIBLE);
+					layout_control.setVisibility(View.GONE);
+				} else {
+					needPassword = false;
+					layout_ecoin.setVisibility(View.GONE);
+					layout_control.setVisibility(View.VISIBLE);
+				}
+				// 弹框消失
+				popupWindow.dismiss();
+				popupWindow = null;
+			}
+		});
+
 	}
 
 	/**

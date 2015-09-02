@@ -177,6 +177,7 @@ public class Utity {
 		int i = 0;
 		for (AreaInfo areaInfo : areaList) {
 			i++;
+			System.out.println("areaInfo.getArea_name():"+areaInfo.getArea_name()+"  "+area);
 			if (areaInfo.getArea_name().equals(area))
 				return i - 1;
 		}

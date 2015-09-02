@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.BaseActivity;
+import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.activity.RechargeActivity;
 import com.poomoo.edao.weixinpay.Constants;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -28,7 +29,10 @@ public class WXPayEntryActivity extends BaseActivity implements
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		textView = (TextView) findViewById(R.id.pay_result_textView);
 		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
-		RechargeActivity.instance.finish();
+		if (RechargeActivity.instance != null)
+			RechargeActivity.instance.finish();
+		if (PaymentActivity.instance != null)
+			PaymentActivity.instance.finish();
 		api.handleIntent(getIntent(), this);
 	}
 

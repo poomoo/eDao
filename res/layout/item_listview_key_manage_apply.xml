@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin10" >
+
+        <TextView
+            android:layout_width="@dimen/margin5"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/item_key_manage_apply_textView_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textSize="@dimen/textsize16" />
+
+            <TextView
+                android:id="@+id/item_key_manage_apply_textView_tel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18198559920"
+                android:textSize="@dimen/textsize16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin10" />
+
+            <TextView
+                android:id="@+id/item_key_manage_apply_textView_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015-06-26 12:22:34"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin10" />
+
+            <Button
+                android:id="@+id/item_key_manage_apply_button_agree"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin30"
+                android:background="@drawable/style_btn_yes_background"
+                android:gravity="center"
+                android:text="同意并申请"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin10" />
+
+            <Button
+                android:id="@+id/item_key_manage_apply_button_refuse"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin30"
+                android:background="@drawable/style_btn_no_background"
+                android:gravity="center"
+                android:text="拒绝"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin10" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

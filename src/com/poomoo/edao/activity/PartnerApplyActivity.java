@@ -266,7 +266,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(TransferActivity2.class,
+									openActivity(PaymentActivity.class,
 											pBundle);
 									finish();
 								} else {

@@ -30,7 +30,11 @@ import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.widget.CityPicker;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 
@@ -51,7 +55,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "",curArea = "";
+			curCity = "", curArea = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
 	private eDaoClientApplication application = null;
 
@@ -64,7 +68,6 @@ public class AllianceApplyActivity extends BaseActivity implements
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
 		init();
-
 	}
 
 	private void init() {
@@ -263,8 +266,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(TransferActivity2.class,
-											pBundle);
+									openActivity(PaymentActivity.class, pBundle);
 									finish();
 								} else {
 									Utity.showToast(getApplicationContext(),

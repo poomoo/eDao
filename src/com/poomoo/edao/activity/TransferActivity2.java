@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +32,7 @@ import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -280,6 +282,10 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());
+									if (payType.equals("1"))
+										startService(new Intent(
+												TransferActivity2.this,
+												Get_UserInfo_Service.class));
 									finish();
 								}
 

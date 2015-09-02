@@ -149,9 +149,7 @@ public class DealerApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(
-											TransferActivity2.class,
-											pBundle);
+									openActivity(PaymentActivity.class, pBundle);
 									finish();
 								} else {
 									Utity.showToast(getApplicationContext(),

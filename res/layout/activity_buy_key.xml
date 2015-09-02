@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:paddingTop="@dimen/margin10" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin10"
+            android:paddingLeft="@dimen/margin15"
+            android:paddingRight="@dimen/margin15"
+            android:paddingTop="@dimen/margin10" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="数　　量 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/buy_key_layout_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/buy_key_textView_count"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/margin10"
+                        android:text="请选择数量"
+                        android:textSize="@dimen/textsize14" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/margin10"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_xiala" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="应付金额 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background" >
+
+                    <TextView
+                        android:id="@+id/buy_key_textView_pay_money"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.5"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/margin10"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:id="@+id/buy_key_textView_isEnough"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:text="余额不足"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/textsize10"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="支付方式 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/buy_key_layout_channel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/buy_key_textView_channel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/margin10"
+                        android:text="请选择支付方式"
+                        android:textSize="@dimen/textsize14" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/margin10"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_xiala" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/buy_key_layout_by_ecoin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="支付密码 :"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:id="@+id/buy_key_editText_pay_password"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@drawable/style_background"
+                        android:gravity="left|center"
+                        android:inputType="textPassword"
+                        android:paddingLeft="@dimen/margin10"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="钱包余额 :"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/buy_key_textView_balance"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/margin10"
+                        android:text="￥8000.00"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="备　　注 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/margin5"
+                    android:layout_height="match_parent" />
+
+                <EditText
+                    android:id="@+id/buy_key_editText_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/margin10"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin10" />
+
+            <LinearLayout
+                android:id="@+id/buy_key_layout_control"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.3"
+                android:orientation="vertical"
+                android:visibility="gone" >
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="@dimen/margin15" >
+
+        <Button
+            android:id="@+id/buy_key_btn_pay"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/style_btn_yes_background"
+            android:gravity="center"
+            android:text="购买"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -96,12 +96,15 @@ public class CityPicker extends LinearLayout {
 
 		areaList = Utity.getAreaList(cityPicker.getItemId(0));
 		areaPicker.setAreaData(areaList);
+		System.out.println("area_name:" + area_name);
 		if (TextUtils.isEmpty(area_name)) {
 			area_name = areaList.get(0).getArea_name();
 			area_id = areaList.get(0).getArea_id();
 			areaPicker.setDefault(0);
 		} else {
-			areaPicker.setDefault(Utity.getAreaPosition(areaList, area_name));
+			int position = Utity.getAreaPosition(areaList, area_name);
+			areaPicker.setDefault(position);
+			area_id = areaList.get(position).getArea_id();
 		}
 
 		provincePicker.setOnSelectListener(new OnSelectListener() {
