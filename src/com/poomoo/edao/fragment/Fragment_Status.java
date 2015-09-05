@@ -3,7 +3,6 @@ package com.poomoo.edao.fragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.RadioButton;
 import com.poomoo.edao.R;
 
 public class Fragment_Status extends Fragment implements OnClickListener {
-	private ProgressDialog progressDialog = null;
 	private RadioButton button_unpay, button_payed, button_delete;
 
 	private Fragment curFragment;

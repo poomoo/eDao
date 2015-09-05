@@ -1,30 +1,21 @@
 package com.poomoo.edao.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
+import android.widget.TextView;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.Pub_GridViewAdapter;
 
-public class Fragment_Classify extends Fragment implements OnItemClickListener {
-	private Pub_GridViewAdapter gridViewAdapter;
-	private GridView gridView;
-	private List<HashMap<String, String>> menu_list;
-	private final static String[] items = new String[] { "意币转账", "充值", "购买秘钥",
-			"申请加盟", "购买商品", "提现申请" };
+public class Fragment_Classify extends Fragment implements OnClickListener {
+	private TextView textView_transfer, textView_recharge, textView_buy_keys,
+			textView_apply, textView_buy_goods, textView_handing;
+
 	private Fragment curFragment;
 	private Fragment_Transfer fragment_Transfer;
 	private Fragment_Recharge fragment_Recharge;
@@ -48,22 +39,6 @@ public class Fragment_Classify extends Fragment implements OnItemClickListener {
 		return inflater.inflate(R.layout.fragment_classify, container, false);
 	}
 
-	private void init() {
-		// TODO 自动生成的方法存根
-		gridView = (GridView) getView().findViewById(
-				R.id.fragment_classify_gridView);
-		menu_list = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> hashMap;
-		for (String string : items) {
-			hashMap = new HashMap<String, String>();
-			hashMap.put("name", string);
-			menu_list.add(hashMap);
-		}
-		gridViewAdapter = new Pub_GridViewAdapter(getActivity(), menu_list);
-		gridView.setAdapter(gridViewAdapter);
-		gridView.setOnItemClickListener(this);
-	}
-
 	private void setDefaultFragment() {
 		// TODO 自动生成的方法存根
 		FragmentManager fragmentManager = getFragmentManager();
@@ -75,51 +50,29 @@ public class Fragment_Classify extends Fragment implements OnItemClickListener {
 		fragmentTransaction.commit();
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-			long arg3) {
+	private void init() {
 		// TODO 自动生成的方法存根
-		gridViewAdapter.setTextColor();
-		Pub_GridViewAdapter.textViews.get(position).setTextColor(
-				Color.parseColor("#1995EB"));
-		switch (position + 1) {
-		case 1:
-			if (fragment_Transfer == null)
-				fragment_Transfer = new Fragment_Transfer();
-			switchFragment(fragment_Transfer);
-			curFragment = fragment_Transfer;
-			break;
-		case 2:
-			if (fragment_Recharge == null)
-				fragment_Recharge = new Fragment_Recharge();
-			switchFragment(fragment_Recharge);
-			curFragment = fragment_Recharge;
-			break;
-		case 3:
-			if (fragment_Buy_Key == null)
-				fragment_Buy_Key = new Fragment_Buy_Key();
-			switchFragment(fragment_Buy_Key);
-			curFragment = fragment_Buy_Key;
-			break;
-		case 4:
-			if (fragment_Apply == null)
-				fragment_Apply = new Fragment_Apply();
-			switchFragment(fragment_Apply);
-			curFragment = fragment_Apply;
-			break;
-		case 5:
-			if (fragment_Buy_Goods == null)
-				fragment_Buy_Goods = new Fragment_Buy_Goods();
-			switchFragment(fragment_Buy_Goods);
-			curFragment = fragment_Buy_Goods;
-			break;
-		case 6:
-			if (fragment_Handing == null)
-				fragment_Handing = new Fragment_Handing();
-			switchFragment(fragment_Handing);
-			curFragment = fragment_Handing;
-			break;
-		}
+		textView_transfer = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_transfer);
+		textView_recharge = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_recharge);
+		textView_buy_keys = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_buy_keys);
+		textView_apply = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_apply);
+		textView_buy_goods = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_buy_goods);
+		textView_handing = (TextView) getView().findViewById(
+				R.id.fragment_classify_textView_handing);
+
+		textView_transfer.setOnClickListener(this);
+		textView_recharge.setOnClickListener(this);
+		textView_buy_keys.setOnClickListener(this);
+		textView_apply.setOnClickListener(this);
+		textView_buy_goods.setOnClickListener(this);
+		textView_handing.setOnClickListener(this);
+
+		textView_transfer.setSelected(true);
 	}
 
 	public void switchFragment(Fragment to) {
@@ -133,5 +86,59 @@ public class Fragment_Classify extends Fragment implements OnItemClickListener {
 			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}
 		fragmentTransaction.commit();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		clearSelected();
+		v.setSelected(true);
+		switch (v.getId()) {
+		case R.id.fragment_classify_textView_transfer:
+			if (fragment_Transfer == null)
+				fragment_Transfer = new Fragment_Transfer();
+			switchFragment(fragment_Transfer);
+			curFragment = fragment_Transfer;
+			break;
+		case R.id.fragment_classify_textView_recharge:
+			if (fragment_Recharge == null)
+				fragment_Recharge = new Fragment_Recharge();
+			switchFragment(fragment_Recharge);
+			curFragment = fragment_Recharge;
+			break;
+		case R.id.fragment_classify_textView_buy_keys:
+			if (fragment_Buy_Key == null)
+				fragment_Buy_Key = new Fragment_Buy_Key();
+			switchFragment(fragment_Buy_Key);
+			curFragment = fragment_Buy_Key;
+			break;
+		case R.id.fragment_classify_textView_apply:
+			if (fragment_Apply == null)
+				fragment_Apply = new Fragment_Apply();
+			switchFragment(fragment_Apply);
+			curFragment = fragment_Apply;
+			break;
+		case R.id.fragment_classify_textView_buy_goods:
+			if (fragment_Buy_Goods == null)
+				fragment_Buy_Goods = new Fragment_Buy_Goods();
+			switchFragment(fragment_Buy_Goods);
+			curFragment = fragment_Buy_Goods;
+			break;
+		case R.id.fragment_classify_textView_handing:
+			if (fragment_Handing == null)
+				fragment_Handing = new Fragment_Handing();
+			switchFragment(fragment_Handing);
+			curFragment = fragment_Handing;
+			break;
+		}
+	}
+
+	private void clearSelected() {
+		textView_transfer.setSelected(false);
+		textView_recharge.setSelected(false);
+		textView_buy_keys.setSelected(false);
+		textView_apply.setSelected(false);
+		textView_buy_goods.setSelected(false);
+		textView_handing.setSelected(false);
 	}
 }

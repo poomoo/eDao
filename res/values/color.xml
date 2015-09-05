@@ -299,6 +299,7 @@
 
     <color name="transparent">#00000000</color>
     <color name="refuse">#E6EAED</color>
+    <color name="pressed_color">#1995EB</color>
 
     <drawable name="pressed_color">#808080</drawable>
 

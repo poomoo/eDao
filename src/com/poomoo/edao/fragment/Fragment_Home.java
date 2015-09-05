@@ -115,9 +115,9 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		application = (eDaoClientApplication) getActivity().getApplication();
 		init();
 		// 查询通知
-		// getInformData();
+		getInformData();
 		// 查询广告
-		// getAdvData();
+		getAdvData();
 		handler = new Handler() {
 
 			@Override

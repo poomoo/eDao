@@ -48,6 +48,7 @@ public class Pub_GridViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
+		System.out.println("getview:" + position);
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_gridview_pub, parent,
@@ -67,13 +68,15 @@ public class Pub_GridViewAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	public static class ViewHolder {
+	private class ViewHolder {
 
 		public TextView textView;
 	}
 
 	public void setTextColor() {
-		for (int i = 0; i < textViews.size(); i++) {
+		int length = textViews.size();
+		System.out.println("setTextColor:" + length);
+		for (int i = 0; i < length; i++) {
 			textViews.get(i).setTextColor(Color.parseColor("#808080"));
 		}
 	}

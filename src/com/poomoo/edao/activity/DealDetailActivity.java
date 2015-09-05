@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.RadioButton;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.fragment.Fragment_Classify;
 import com.poomoo.edao.fragment.Fragment_Status;
 
