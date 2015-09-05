@@ -55,7 +55,7 @@ public class AllianceApplyActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "", curArea = "";
+			curCity = "", curArea = "", money = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
 	private eDaoClientApplication application = null;
 
@@ -113,7 +113,16 @@ public class AllianceApplyActivity extends BaseActivity implements
 			break;
 		case R.id.alliance_btn_confirm:
 			if (checkInput()) {
-				apply();
+				Bundle pBundle = new Bundle();
+				pBundle.putString("money", money);
+				pBundle.putString("areaId", CityPicker.getArea_id());
+				pBundle.putString("referrerTel", merchant_num);
+				pBundle.putString("referrerUserId", referrerUserId);
+				pBundle.putString("referrerName", referrerName);
+				pBundle.putString("address", "");
+				pBundle.putString("joinType", "1");
+				openActivity(PaymentActivity.class, pBundle);
+				finish();
 			}
 			break;
 		}
@@ -184,90 +193,10 @@ public class AllianceApplyActivity extends BaseActivity implements
 										JSONObject result = new JSONObject(
 												responseData.getJsonData()
 														.toString());
-										textView_money.setText(result
-												.getString("price"));
+										money = result.getString("price");
+										textView_money.setText(money);
 									} catch (JSONException e) {
 									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
-					}
-				});
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: apply
-	 * @Description: TODO 提交申请
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-17下午4:53:39
-	 */
-	private void apply() {
-		progressDialog = null;
-		showProgressDialog("提交申请中...");
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("bizName", "20000");
-		data.put("method", "20003");
-		SharedPreferences sp = getSharedPreferences("userInfo",
-				Context.MODE_PRIVATE);
-		data.put("userId", sp.getString("userId", ""));
-		data.put("areaId", CityPicker.getArea_id());
-		data.put("joinType", "1");
-		data.put("address", "");
-		data.put("referrerTel", merchant_num);
-		data.put("referrerUserId", referrerUserId);
-		data.put("referrerName", referrerName);
-
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
-
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									PayInfoData payInfo = gson.fromJson(
-											responseData.getJsonData(),
-											PayInfoData.class);
-									Bundle pBundle = new Bundle();
-									pBundle.putString("userId",
-											payInfo.getUserId());
-									pBundle.putString("realName",
-											payInfo.getRealName());
-									pBundle.putString("tel", payInfo.getTel());
-									pBundle.putString("money", textView_money
-											.getText().toString());
-									pBundle.putString("payType", "");
-									openActivity(PaymentActivity.class, pBundle);
-									finish();
 								} else {
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());
@@ -324,6 +253,11 @@ public class AllianceApplyActivity extends BaseActivity implements
 		merchant_name = textView_merchant_name.getText().toString().trim();
 		if (TextUtils.isEmpty(merchant_name)) {
 			Utity.showToast(getApplicationContext(), "请查询服务商户名");
+			return false;
+		}
+
+		if (TextUtils.isEmpty(money)) {
+			Utity.showToast(getApplicationContext(), "请查询费用");
 			return false;
 		}
 		return true;

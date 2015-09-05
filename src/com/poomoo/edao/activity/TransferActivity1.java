@@ -93,6 +93,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 			openActivity(CertificationActivity.class);
 			startActivity(new Intent(this, CertificationActivity.class));
 			finish();
+			return;
 		}
 		switch (v.getId()) {
 		case R.id.transfer1_layout_payby_phone:

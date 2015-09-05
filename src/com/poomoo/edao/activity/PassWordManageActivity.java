@@ -67,8 +67,7 @@ public class PassWordManageActivity extends BaseActivity implements
 		layout_oldpw = (LinearLayout) findViewById(R.id.passwordmanage_layout_oldpassword);
 		layout_control = (LinearLayout) findViewById(R.id.passwordmanage_layout_control);
 
-		if (type.equals("2")
-				&& !TextUtils.isEmpty(application.getPayPwdValue())) {
+		if (type.equals("2") && TextUtils.isEmpty(application.getPayPwdValue())) {
 			isNeedOldPW = false;
 			layout_oldpw.setVisibility(View.GONE);
 			layout_control.setVisibility(View.VISIBLE);
@@ -230,8 +229,8 @@ public class PassWordManageActivity extends BaseActivity implements
 		data.put("bizName", "10000");
 		data.put("method", "10009");
 		data.put("tel", tel);
-		data.put("password", passWord1);
-		data.put("oldPassword", oldPassWord);
+		data.put("payPwd", passWord1);
+		data.put("oldPayPwd", oldPassWord);
 		data.put("code", identyNum);
 
 		showProgressDialog();

@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
@@ -161,20 +161,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();
-										application.setRealName(loginResData
-												.getRealName());
-										application.setTel(loginResData
-												.getTel());
-										application.setUserId(loginResData
-												.getUserId());
-										application.setType(loginResData
-												.getType());
-										application
-												.setRealNameAuth(loginResData
-														.getRealNameAuth());
-										application.setPayPwdValue(loginResData
-												.getPayPwdValue());
-
+										// application.setRealName(loginResData
+										// .getRealName());
+										// application.setTel(loginResData
+										// .getTel());
+										// application.setUserId(loginResData
+										// .getUserId());
+										// application.setType(loginResData
+										// .getType());
+										// application
+										// .setRealNameAuth(loginResData
+										// .getRealNameAuth());
+										// application.setPayPwdValue(loginResData
+										// .getPayPwdValue());
+										startService(new Intent(
+												LoginActivity.this,
+												Get_UserInfo_Service.class));
 										LoginActivity.this
 												.startActivity(new Intent(
 														LoginActivity.this,

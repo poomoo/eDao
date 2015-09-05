@@ -67,7 +67,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 					System.out.println("收到返回");
 					setUserInfo();
 					Message message = new Message();
-					message.what=eDaoClientConfig.freshFlag;
+					message.what = eDaoClientConfig.freshFlag;
 					Fragment_Home.handler.sendMessage(message);
 				}
 			}
@@ -113,10 +113,10 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		textView_point = (TextView) findViewById(R.id.sidebar_textView_point);
 
 		// 是否实名认证
-		if (TextUtils.isEmpty(application.getRealName())) {
+		if (!application.getRealNameAuth().equals("1")) {
 			System.out.println("进行实名认证");
 			textView_username.setText(eDaoClientConfig.certificate);
-			spark();
+			// spark();
 		} else
 			Utity.setUserAndTel(textView_username, textView_phonenum,
 					application);
@@ -257,12 +257,20 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 
 	private void setUserInfo() {
 		// TODO 自动生成的方法存根
+		// 是否实名认证
+		if (!application.getRealNameAuth().equals("1")) {
+			System.out.println("进行实名认证");
+			textView_username.setText(eDaoClientConfig.certificate);
+			// spark();
+		} else
+			Utity.setUserAndTel(textView_username, textView_phonenum,
+					application);
 		textView_ecoin.setText("" + application.getTotalEb());
 		textView_gold_coin.setText("" + application.getTotalGold());
 		textView_point.setText("" + application.getTotalIntegral());
 	}
 
-//	public void setHandler(Handler handler) {
-//		NavigationActivity.handler = handler;
-//	}
+	// public void setHandler(Handler handler) {
+	// NavigationActivity.handler = handler;
+	// }
 }

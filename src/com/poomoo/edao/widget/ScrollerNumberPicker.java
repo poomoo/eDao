@@ -263,15 +263,24 @@ public class ScrollerNumberPicker extends View {
 	private void initCityData() {
 		isClearing = true;
 		itemList.clear();
-		for (int i = 0; i < cityList.size(); i++) {
+		if (cityList.size() == 0) {
 			ItemObject itmItemObject = new ItemObject();
-			itmItemObject.id = i;
-			itmItemObject.itemId = cityList.get(i).getCity_id();
-			itmItemObject.itemText = cityList.get(i).getCity_name();
+			itmItemObject.id = 0;
+			itmItemObject.itemId = -1 + "";
+			itmItemObject.itemText = "";
 			itmItemObject.x = 0;
-			itmItemObject.y = i * unitHeight;
+			itmItemObject.y = 0 * unitHeight;
 			itemList.add(itmItemObject);
-		}
+		} else
+			for (int i = 0; i < cityList.size(); i++) {
+				ItemObject itmItemObject = new ItemObject();
+				itmItemObject.id = i;
+				itmItemObject.itemId = cityList.get(i).getCity_id();
+				itmItemObject.itemText = cityList.get(i).getCity_name();
+				itmItemObject.x = 0;
+				itmItemObject.y = i * unitHeight;
+				itemList.add(itmItemObject);
+			}
 		isClearing = false;
 
 	}
@@ -282,15 +291,24 @@ public class ScrollerNumberPicker extends View {
 	private void initAreaData() {
 		isClearing = true;
 		itemList.clear();
-		for (int i = 0; i < areaList.size(); i++) {
+		if (areaList.size() == 0) {
 			ItemObject itmItemObject = new ItemObject();
-			itmItemObject.id = i;
-			itmItemObject.itemId = areaList.get(i).getArea_id();
-			itmItemObject.itemText = areaList.get(i).getArea_name();
+			itmItemObject.id = 0;
+			itmItemObject.itemId = -1 + "";
+			itmItemObject.itemText = "";
 			itmItemObject.x = 0;
-			itmItemObject.y = i * unitHeight;
+			itmItemObject.y = 0 * unitHeight;
 			itemList.add(itmItemObject);
-		}
+		} else
+			for (int i = 0; i < areaList.size(); i++) {
+				ItemObject itmItemObject = new ItemObject();
+				itmItemObject.id = i;
+				itmItemObject.itemId = areaList.get(i).getArea_id();
+				itmItemObject.itemText = areaList.get(i).getArea_name();
+				itmItemObject.x = 0;
+				itmItemObject.y = i * unitHeight;
+				itemList.add(itmItemObject);
+			}
 		isClearing = false;
 
 	}

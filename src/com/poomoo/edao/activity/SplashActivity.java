@@ -101,7 +101,6 @@ public class SplashActivity extends BaseActivity {
 			finish();
 		} else
 			openActivity(LoginActivity.class);
-
 	}
 
 	private void importDB() {

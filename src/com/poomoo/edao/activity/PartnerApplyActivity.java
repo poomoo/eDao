@@ -54,7 +54,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private Gson gson = new Gson();
 	private String zone = "", merchant_phone = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "", curArea = "", address = "";
+			curCity = "", curArea = "", address = "", money = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
+		getMoney();
 		init();
 	}
 
@@ -85,6 +86,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		button_confirm = (Button) findViewById(R.id.partner_btn_confirm);
 
 		layout_zone.setOnClickListener(this);
+		textView_merchant_name.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
@@ -113,7 +115,16 @@ public class PartnerApplyActivity extends BaseActivity implements
 			break;
 		case R.id.partner_btn_confirm:
 			if (checkInput()) {
-				apply();
+				Bundle pBundle = new Bundle();
+				pBundle.putString("money", money);
+				pBundle.putString("areaId", CityPicker.getArea_id());
+				pBundle.putString("referrerTel", merchant_phone);
+				pBundle.putString("referrerUserId", referrerUserId);
+				pBundle.putString("referrerName", referrerName);
+				pBundle.putString("address", address);
+				pBundle.putString("joinType", "3");
+				openActivity(PaymentActivity.class, pBundle);
+				finish();
 			}
 			break;
 		}
@@ -165,8 +176,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20001");
-		data.put("joinType", "1");
-		data.put("areaId", CityPicker.getArea_id());
+		data.put("joinType", "3");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
 
@@ -184,8 +194,8 @@ public class PartnerApplyActivity extends BaseActivity implements
 										JSONObject result = new JSONObject(
 												responseData.getJsonData()
 														.toString());
-										textView_money.setText(result
-												.getString("price"));
+										money = result.getString("price");
+										textView_money.setText(money);
 									} catch (JSONException e) {
 									}
 								} else {
@@ -266,8 +276,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 									pBundle.putString("money", textView_money
 											.getText().toString());
 									pBundle.putString("payType", "");
-									openActivity(PaymentActivity.class,
-											pBundle);
+									openActivity(PaymentActivity.class, pBundle);
 									finish();
 								} else {
 									Utity.showToast(getApplicationContext(),
@@ -308,12 +317,12 @@ public class PartnerApplyActivity extends BaseActivity implements
 	 */
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
-		zone = textView_zone.getText().toString().trim();
-		if (TextUtils.isEmpty(zone)) {
-			select_city();
-			Utity.showToast(getApplicationContext(), "请选择区域");
-			return false;
-		}
+		// zone = textView_zone.getText().toString().trim();
+		// if (TextUtils.isEmpty(zone)) {
+		// select_city();
+		// Utity.showToast(getApplicationContext(), "请选择区域");
+		// return false;
+		// }
 		merchant_phone = editText_merchant_phone.getText().toString().trim();
 		if (TextUtils.isEmpty(merchant_phone)) {
 			editText_merchant_phone.setFocusable(true);
@@ -328,7 +337,10 @@ public class PartnerApplyActivity extends BaseActivity implements
 			return false;
 		}
 		address = editText_address.getText().toString().trim();
-
+		if (TextUtils.isEmpty(money)) {
+			Utity.showToast(getApplicationContext(), "请查询费用");
+			return false;
+		}
 		return true;
 	}
 

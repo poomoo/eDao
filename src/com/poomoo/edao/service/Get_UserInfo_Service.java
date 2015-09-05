@@ -55,6 +55,12 @@ public class Get_UserInfo_Service extends Service {
 									.getTotalIntegral());
 							application.setPayPwdValue(infoData
 									.getPayPwdValue());
+							application.setRealNameAuth(infoData
+									.getRealNameAuth());
+							application.setRealName(infoData.getRealName());
+							application.setType(infoData.getType());
+							application.setJoinType(infoData.getJoinType());
+							application.setJoinStatus(infoData.getJoinStatus());
 							Message msg = new Message();
 							msg.what = eDaoClientConfig.freshFlag;
 							NavigationActivity.handler.sendMessage(msg);

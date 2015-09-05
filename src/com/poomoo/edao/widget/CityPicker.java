@@ -118,34 +118,39 @@ public class CityPicker extends LinearLayout {
 			@Override
 			public void endSelect(int id, String text) {
 				// TODO Auto-generated method stub
-				System.out.println("provinceid-->" + id + "text----->" + text);
-				if (text.equals("") || text == null)
+				if (TextUtils.isEmpty(text))
 					return;
 				province_name = text;
 				province_id = provinceList.get(id).getProvince_id();
-				// province_position = id;
 				if (tempProvinceIndex != id) {
 					System.out.println("endselect");
-					String city = cityPicker.getSelectedText();
-					if (TextUtils.isEmpty(city))
-						return;
-					String area = areaPicker.getSelectedText();
-					if (TextUtils.isEmpty(area))
-						return;
+					// String city = cityPicker.getSelectedText();
+					// if (TextUtils.isEmpty(city))
+					// return;
+					// String area = areaPicker.getSelectedText();
+					// if (TextUtils.isEmpty(area))
+					// return;
 					city_id = provincePicker.getItemId(id);
 					// 城市数组
 					cityList = Utity.getCityList(province_id);
 					cityPicker.setCityData(cityList);
 					cityPicker.setDefault(0);
-					city_name = cityList.get(0).getCity_name();
-					city_id = cityList.get(0).getCity_id();
 
 					areaList = Utity.getAreaList(cityPicker.getItemId(0));
 					areaPicker.setAreaData(areaList);
 					areaPicker.setDefault(0);
-					area_name = areaList.get(0).getArea_name();
-					area_id = areaList.get(0).getArea_id();
-
+					System.out.println("cityList大小:" + cityList.size());
+					if (cityList.size() > 0) {
+						city_name = cityList.get(0).getCity_name();
+						city_id = cityList.get(0).getCity_id();
+						area_name = areaList.get(0).getArea_name();
+						area_id = areaList.get(0).getArea_id();
+					} else {
+						city_name = "";
+						area_name = "";
+						city_id = province_id;
+						area_id = province_id;
+					}
 					int lastId = Integer.valueOf(provincePicker.getListSize());
 					if (id > lastId) {
 						provincePicker.setDefault(lastId - 1);
@@ -179,12 +184,13 @@ public class CityPicker extends LinearLayout {
 					String area = areaPicker.getSelectedText();
 					if (TextUtils.isEmpty(area))
 						return;
-
 					areaList = Utity.getAreaList(city_id);
 					areaPicker.setAreaData(areaList);
-					areaPicker.setDefault(0);
-					area_name = areaList.get(0).getArea_name();
-					area_id = areaList.get(0).getArea_id();
+					if (areaList.size() > 0) {
+						areaPicker.setDefault(0);
+						area_name = areaList.get(0).getArea_name();
+						area_id = areaList.get(0).getArea_id();
+					}
 
 					int lastId = Integer.valueOf(cityPicker.getListSize());
 					if (id > lastId) {
@@ -285,7 +291,10 @@ public class CityPicker extends LinearLayout {
 	}
 
 	public static String getZone_string() {
-		zone_string = province_name + "-" + city_name + "-" + area_name;
+		if (!TextUtils.isEmpty(city_name) && !TextUtils.isEmpty(area_name))
+			zone_string = province_name + "-" + city_name + "-" + area_name;
+		else
+			zone_string = province_name;
 		return zone_string;
 	}
 

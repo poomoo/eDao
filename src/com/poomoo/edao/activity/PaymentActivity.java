@@ -15,7 +15,9 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.PayInfoData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -51,6 +54,7 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.weixinpay.MD5;
 import com.poomoo.edao.weixinpay.Util;
+import com.poomoo.edao.widget.CityPicker;
 import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.poomoo.edao.widget.MessageBox_YESNO;
@@ -81,8 +85,9 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	private ListView listView;
 
 	private eDaoClientApplication application = null;
-	private String userId = "", realName = "", tel = "", money = "",
-			payType = "1", payPwd = "", remark = "", orderId = "";
+	private String money = "", payType = "1", payPwd = "", remark = "",
+			orderId = "", referrerTel = "", referrerUserId = "",
+			referrerName = "", address = "", joinType = "", areaId = "";
 	private static final String[] channel = new String[] { "意币支付", "微信支付" };
 	private boolean needPassword = true, isBalanceEnough = true;
 	private ProgressDialog progressDialog;
@@ -110,11 +115,13 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 
 	private void getIntentData() {
 		// TODO 自动生成的方法存根
-		userId = getIntent().getExtras().getString("userId");
-		realName = getIntent().getExtras().getString("realName");
-		tel = getIntent().getExtras().getString("tel");
+
 		money = getIntent().getExtras().getString("money");
-		payType = getIntent().getExtras().getString("payType");
+		areaId = getIntent().getExtras().getString("areaId");
+		referrerTel = getIntent().getExtras().getString("referrerTel");
+		referrerUserId = getIntent().getExtras().getString("referrerUserId");
+		referrerName = getIntent().getExtras().getString("referrerName");
+		joinType = getIntent().getExtras().getString("joinType");
 	}
 
 	private void weixin() {
@@ -223,7 +230,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.payment_btn_pay:
 			if (checkInput()) {
-				confirm();
+				apply();
 			}
 			break;
 		}
@@ -262,6 +269,71 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		return true;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @Title: apply
+	 * @Description: TODO 提交申请
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-17下午4:53:39
+	 */
+	private void apply() {
+		progressDialog = null;
+		showProgressDialog("提交申请中...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20003");
+		data.put("userId", application.getUserId());
+		data.put("areaId", areaId);
+		data.put("joinType", joinType);
+		data.put("address", address);
+		data.put("referrerTel", referrerTel);
+		data.put("referrerUserId", referrerUserId);
+		data.put("referrerName", referrerName);
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() == 1) {
+									confirm();
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
+	}
+
 	private void confirm() {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
@@ -272,7 +344,6 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		data.put("payType", payType);
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
-		showProgressDialog("提交中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
 

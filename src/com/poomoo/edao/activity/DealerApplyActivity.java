@@ -47,7 +47,7 @@ public class DealerApplyActivity extends BaseActivity implements
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String merchant_phone = "", referrerUserId = "", referrerName = "",
-			merchant_name = "";
+			merchant_name = "", money = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class DealerApplyActivity extends BaseActivity implements
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
+		getMoney();
 		init();
 	}
 
@@ -73,6 +74,7 @@ public class DealerApplyActivity extends BaseActivity implements
 
 		button_confirm = (Button) findViewById(R.id.dealer_btn_confirm);
 
+		textView_merchant_name.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
@@ -92,10 +94,85 @@ public class DealerApplyActivity extends BaseActivity implements
 			break;
 		case R.id.dealer_btn_confirm:
 			if (checkInput()) {
-				apply();
+				Bundle pBundle = new Bundle();
+				pBundle.putString("money", money);
+				pBundle.putString("areaId", "");
+				pBundle.putString("referrerTel", merchant_phone);
+				pBundle.putString("referrerUserId", referrerUserId);
+				pBundle.putString("referrerName", referrerName);
+				pBundle.putString("address", "");
+				pBundle.putString("joinType", "2");
+				openActivity(PaymentActivity.class, pBundle);
+				finish();
 			}
 			break;
 		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: getMoney
+	 * @Description: TODO 查询加盟费用
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws
+	 * @date 2015-8-17下午4:54:42
+	 */
+	private void getMoney() {
+		// TODO 自动生成的方法存根
+		progressDialog = null;
+		showProgressDialog("查询费用......");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "20000");
+		data.put("method", "20001");
+		data.put("joinType", "2");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								if (responseData.getRsCode() == 1) {
+									try {
+										JSONObject result = new JSONObject(
+												responseData.getJsonData()
+														.toString());
+										money = result.getString("price");
+										textView_money.setText(money);
+									} catch (JSONException e) {
+									}
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+
+							}
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								closeProgressDialog();
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+						});
+					}
+				});
 	}
 
 	/**
@@ -201,6 +278,10 @@ public class DealerApplyActivity extends BaseActivity implements
 		merchant_name = textView_merchant_name.getText().toString().trim();
 		if (TextUtils.isEmpty(merchant_name)) {
 			Utity.showToast(getApplicationContext(), "请查询服务商户名");
+			return false;
+		}
+		if (TextUtils.isEmpty(money)) {
+			Utity.showToast(getApplicationContext(), "请查询费用");
 			return false;
 		}
 		return true;

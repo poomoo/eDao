@@ -385,7 +385,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		post.setEntity(entity); // 将请求实体保存到Post的实体参数中
 		Message message = new Message();
 		try {
-			entity.addPart("imageType", new StringBody(uploadCount + "1",
+			entity.addPart("imageType", new StringBody(String.valueOf(uploadCount + 1),
 					Charset.forName("utf-8")));
 			entity.addPart("userId",
 					new StringBody(userId, Charset.forName("utf-8")));

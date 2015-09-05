@@ -21,6 +21,8 @@ public class UserInfoData {
 	private String bankName = "";// 开户行名称
 	private String bankCardId = "";// 银行卡号
 	private String payPwdValue = "";// 是否设置过支付密码
+	private String joinType = "";// 加盟类型 1-加盟商 2-经销商 3-合作商
+	private String joinStatus = "";// 加盟审核 0,"默认值，未审核" 1,"审核通过" 2,"审核未通过"
 
 	private int totalEb = 0;// 总的意币
 	private int totalGold = 0;// 总金币
@@ -120,6 +122,22 @@ public class UserInfoData {
 
 	public void setPayPwdValue(String payPwdValue) {
 		this.payPwdValue = payPwdValue;
+	}
+
+	public String getJoinType() {
+		return this.joinType;
+	}
+
+	public void setJoinType(String joinType) {
+		this.joinType = joinType;
+	}
+
+	public String getJoinStatus() {
+		return this.joinStatus;
+	}
+
+	public void setJoinStatus(String joinStatus) {
+		this.joinStatus = joinStatus;
 	}
 
 	public int getTotalEb() {

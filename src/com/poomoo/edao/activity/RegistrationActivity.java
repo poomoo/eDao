@@ -242,6 +242,9 @@ public class RegistrationActivity extends BaseActivity implements
 												getApplicationContext(),
 												responseData.getMsg());
 									} else {
+										Utity.showToast(
+												getApplicationContext(),
+												responseData.getMsg());
 										startActivity(new Intent(
 												RegistrationActivity.this,
 												LoginActivity.class));

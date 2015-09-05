@@ -116,7 +116,7 @@ public class Fragment_Personal_Center extends Fragment implements
 			startActivity(intent1);
 			break;
 		case R.id.personalcenter_layout_paypassword_manage:
-			Intent intent2= new Intent(getActivity(),
+			Intent intent2 = new Intent(getActivity(),
 					PassWordManageActivity.class);
 			intent2.putExtra("type", "2");
 			startActivity(intent2);
@@ -124,10 +124,41 @@ public class Fragment_Personal_Center extends Fragment implements
 		case R.id.personalcenter_layout_twodimencode:
 			break;
 		case R.id.personalcenter_layout_operate_manage:
-			startActivity(new Intent(getActivity(), KeyAndOperateActivity.class));
+			System.out
+					.println("application.getType():" + application.getType());
+			if (application.getType().equals("2")) {
+				if (!application.getJoinType().equals("3")) {
+					if (application.getJoinStatus().equals("1")) {
+						startActivity(new Intent(getActivity(),
+								KeyAndOperateActivity.class));
+					} else {
+						Utity.showToast(getActivity().getApplication(),
+								"审核未通过或未审核");
+					}
+				} else {
+					Utity.showToast(getActivity().getApplication(),
+							"合作商不能使用该功能");
+				}
+			} else
+				Utity.showToast(getActivity().getApplication(), "非加盟会员");
 			break;
 		case R.id.personalcenter_layout_store_manage:
-			startActivity(new Intent(getActivity(), StoreManageActivity.class));
+			System.out
+			.println("application.getJoinStatus():" + application.getJoinStatus());
+			if (application.getType().equals("2")) {
+				if (application.getJoinType().equals("3")) {
+					if (application.getJoinStatus().equals("1")) {
+						startActivity(new Intent(getActivity(),
+								StoreManageActivity.class));
+					} else {
+						Utity.showToast(getActivity().getApplication(),
+								"审核未通过或未审核");
+					}
+				} else {
+					Utity.showToast(getActivity().getApplication(), "非合作商");
+				}
+			} else
+				Utity.showToast(getActivity().getApplication(), "非加盟会员");
 			break;
 		case R.id.personalcenter_btn_logout:
 			box_YESNO = new MessageBox_YESNO(getActivity());
