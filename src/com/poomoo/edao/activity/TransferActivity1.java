@@ -11,10 +11,13 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.R.color;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
@@ -44,13 +48,13 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_balance;
 	private EditText editText_payee_phonenum;
 	private LinearLayout layout_payby_phone, layout_payby_2dimencode;
-	private Button button_confirm;
+	private Button button_transfer, button_buy;
 	private eDaoClientApplication application = null;
 	private static final int READCONTRACT = 1;
 	private final static int TWODIMENCODE = 2;
 
-	private String name = "", phoneNum = "", referrerUserId = "",
-			referrerName = "";
+	private String name = "", phoneNum = "", userId = "", userName = "",
+			joinType = "";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 
@@ -76,14 +80,43 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		layout_payby_phone = (LinearLayout) findViewById(R.id.transfer1_layout_payby_phone);
 		layout_payby_2dimencode = (LinearLayout) findViewById(R.id.transfer1_layout_payby_2dimencode);
 
-		button_confirm = (Button) findViewById(R.id.transfer1_btn_confirm);
+		button_transfer = (Button) findViewById(R.id.transfer1_btn_transfer);
+		button_buy = (Button) findViewById(R.id.transfer1_btn_buy);
 
 		layout_payby_phone.setOnClickListener(this);
 		layout_payby_2dimencode.setOnClickListener(this);
-		button_confirm.setOnClickListener(this);
+		button_transfer.setOnClickListener(this);
+		button_buy.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_balance.setText("￥" + application.getTotalEb());
+
+		editText_payee_phonenum.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO 自动生成的方法存根
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO 自动生成的方法存根
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO 自动生成的方法存根
+				if (s.length() == 11) {
+					phoneNum = editText_payee_phonenum.getText().toString()
+							.trim();
+					getMerchantName();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -103,10 +136,29 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		case R.id.transfer1_layout_payby_2dimencode:
 			openActivityForResult(CaptureActivity.class, TWODIMENCODE);
 			break;
-		case R.id.transfer1_btn_confirm:
-			// openActivity(TransferActivity2.class);
-			if (checkInput())
-				getMerchantName();
+		case R.id.transfer1_btn_transfer:
+			if (checkInput()) {
+				Bundle pBundle = new Bundle();
+				pBundle.putString("realName", userName);
+				pBundle.putString("tel", phoneNum);
+				pBundle.putString("money", "");
+				pBundle.putString("userId", userId);
+				pBundle.putString("transferType", "1");// transferType:转账类型，1：意币转账，2：购买支付
+				openActivity(TransferActivity2.class, pBundle);
+				finish();
+			}
+			break;
+		case R.id.transfer1_btn_buy:
+			if (checkInput()) {
+				Bundle pBundle = new Bundle();
+				pBundle.putString("realName", userName);
+				pBundle.putString("tel", phoneNum);
+				pBundle.putString("money", "");
+				pBundle.putString("userId", userId);
+				pBundle.putString("transferType", "2");// transferType:转账类型，1：意币转账，2：购买支付
+				openActivity(TransferActivity2.class, pBundle);
+				finish();
+			}
 			break;
 		}
 
@@ -114,7 +166,6 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
-		phoneNum = editText_payee_phonenum.getText().toString().trim();
 		if (TextUtils.isEmpty(phoneNum)) {
 			Utity.showToast(getApplication(), "请填写收款人信息");
 			return false;
@@ -127,8 +178,8 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		showProgressDialog("请稍后...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
-		data.put("method", "20002");
-		data.put("referrerTel", phoneNum);
+		data.put("method", "20011");
+		data.put("tel", phoneNum);
 
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
@@ -147,23 +198,26 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 										JSONObject result = new JSONObject(
 												responseData.getJsonData()
 														.toString());
-										referrerUserId = result
-												.getString("referrerUserId");
-										referrerName = result
-												.getString("referrerName");
-										Bundle pBundle = new Bundle();
-										pBundle.putString("realName",
-												referrerName);
-										pBundle.putString("tel", phoneNum);
-										pBundle.putString("money", "");
-										pBundle.putString("userId",
-												referrerUserId);
-										// pBundle.putString("payType", "1");
-										openActivity(TransferActivity2.class,
-												pBundle);
+										userId = result.getString("userId");
+										userName = result.getString("userName");
+										joinType = result.getString("joinType");
+										if (!joinType.equals("3")) {
+											button_buy.setClickable(false);
+											button_buy
+													.setBackgroundResource(R.drawable.style_btn_no_background);
+											button_buy.setTextColor(color.gray);
+										} else {
+											button_buy.setClickable(true);
+											button_buy
+													.setBackgroundResource(R.drawable.style_btn_yes_background);
+											button_buy
+													.setTextColor(color.white);
+										}
+
 									} catch (JSONException e) {
 									}
 								} else {
+									editText_payee_phonenum.setText("");
 									Utity.showToast(getApplicationContext(),
 											responseData.getMsg());
 								}
@@ -220,6 +274,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 			editText_payee_phonenum.setText(phoneNum);
 			editText_payee_phonenum.setSelection(editText_payee_phonenum
 					.getText().toString().length());
+			getMerchantName();
 			return;
 		}
 
@@ -228,10 +283,10 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 			String result = data.getStringExtra("result");
 			try {
 				JSONObject jsonObject = new JSONObject(result);
-				String tel;
-				tel = jsonObject.getString("tel");
-				editText_payee_phonenum.setText(tel);
-				editText_payee_phonenum.setSelection(tel.length());
+				phoneNum = jsonObject.getString("tel");
+				editText_payee_phonenum.setText(phoneNum);
+				editText_payee_phonenum.setSelection(phoneNum.length());
+				getMerchantName();
 			} catch (JSONException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();

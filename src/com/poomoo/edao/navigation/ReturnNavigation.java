@@ -171,6 +171,9 @@ public class ReturnNavigation extends Fragment {
 		case "BuyKeyActivity":
 			textView_title.setText("购买秘钥");
 			break;
+		case "BankCardManageActivity":
+			textView_title.setText("银行卡管理");
+			break;
 		}
 
 	}

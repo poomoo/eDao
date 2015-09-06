@@ -259,11 +259,6 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO 自动生成的方法存根
-		// gridViewAdapter.setTextColor();
-		// System.out.println("arg2:" + arg2 + ":"
-		// + Fragment_Home_GridViewAdapter.textViews.get(arg2));
-		// Fragment_Home_GridViewAdapter.textViews.get(arg2).setTextColor(
-		// Color.parseColor("#1995EB"));
 		showActivity(arg2);
 	}
 
@@ -273,15 +268,6 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			Utity.showToast(getActivity().getApplicationContext(),
 					eDaoClientConfig.notDevelop);
 			return;
-			// }
-			// if (arg2 == 2 || arg2 == 5 || arg2 == 6) {
-			// application = (eDaoClientApplication) getActivity()
-			// .getApplication();
-			// if (!application.getRealNameAuth().equals("1")) {
-			// startActivity(new Intent(getActivity(),
-			// CertificationActivity.class));
-			// } else
-			// startActivity(new Intent(getActivity(), outIntent[arg2]));
 		} else if (arg2 == 8) {
 			if (NavigationActivity.fragment_Store == null)
 				NavigationActivity.fragment_Store = new Fragment_Store();
@@ -474,16 +460,4 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		textView_point.setText("" + application.getTotalIntegral());
 	}
 
-	// public Handler handler = new Handler() {
-	//
-	// @Override
-	// public void handleMessage(Message msg) {
-	// // TODO 自动生成的方法存根
-	// super.handleMessage(msg);
-	// if (msg.what == eDaoClientConfig.freshFlag) {
-	// setUserInfo();
-	// }
-	// }
-	//
-	// };
 }

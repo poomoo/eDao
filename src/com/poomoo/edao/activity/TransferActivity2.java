@@ -73,6 +73,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	private Gson gson = new Gson();
 	private MessageBox_YESNO box_YESNO;
 	private MessageBox_YES box_YES;
+	private String transferType = "";// transferType:转账类型，1：意币转账，2：购买支付
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		realName = getIntent().getExtras().getString("realName");
 		tel = getIntent().getExtras().getString("tel");
 		money = getIntent().getExtras().getString("money");
+		transferType = getIntent().getExtras().getString("transferType");
 		// payType = getIntent().getExtras().getString("payType");
 	}
 
@@ -261,6 +263,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		data.put("payType", payType);
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
+		data.put("transferType", transferType);
 		showProgressDialog("提交中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 				new HttpCallbackListener() {
