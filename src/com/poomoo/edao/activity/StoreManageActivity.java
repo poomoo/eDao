@@ -51,6 +51,9 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.database.AreaInfo;
+import com.poomoo.edao.model.database.CityInfo;
+import com.poomoo.edao.model.database.ProvinceInfo;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.CityPicker;
@@ -90,6 +93,9 @@ public class StoreManageActivity extends BaseActivity implements
 			"生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
 			"汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
 	private ProgressDialog progressDialog = null;
+	private ArrayList<ProvinceInfo> provinceList = new ArrayList<ProvinceInfo>();
+	private ArrayList<CityInfo> cityList = new ArrayList<CityInfo>();
+	private ArrayList<AreaInfo> areaList = new ArrayList<AreaInfo>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +214,22 @@ public class StoreManageActivity extends BaseActivity implements
 		CityPicker.province_name = curProvince;
 		CityPicker.city_name = curCity;
 		CityPicker.area_name = curArea;
+		// 设置省份编码
+		provinceList = Utity.getProvinceList();
+		int position = 0;
+		position = Utity.getProvincePosition(provinceList, curProvince);
+		CityPicker.province_id = provinceList.get(position).getProvince_id();
+		// 设置城市编码
+		cityList = Utity.getCityList(CityPicker.province_id);
+		position = 0;
+		position = Utity.getCityPosition(cityList, curCity);
+		CityPicker.city_id = cityList.get(position).getCity_id();
+		// 设置区域编码
+		areaList = Utity.getAreaList(CityPicker.city_id);
+		position = 0;
+		position = Utity.getAreaPosition(areaList, curArea);
+		CityPicker.area_id = areaList.get(position).getArea_id();
+
 		// 实例化SelectPicPopupWindow
 		select_City_PopupWindow = new Select_City_PopupWindow(
 				StoreManageActivity.this, itemsOnClick);

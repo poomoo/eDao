@@ -303,45 +303,48 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 					@Override
 					public void onFinish(final ResponseData responseData) {
 						// TODO 自动生成的方法存根
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										textView_inform.setText(result
-												.getString("title"));
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									if (responseData.getRsCode() == 1) {
+										try {
+											JSONObject result = new JSONObject(
+													responseData.getJsonData()
+															.toString());
+											textView_inform.setText(result
+													.getString("title"));
+										} catch (JSONException e) {
+											// TODO 自动生成的 catch 块
+											e.printStackTrace();
+										}
+									} else {
+										Utity.showToast(
+												getActivity()
+														.getApplicationContext(),
+												"查询通知失败"
+														+ responseData.getMsg());
 									}
-								} else {
-									Utity.showToast(getActivity()
-											.getApplicationContext(), "查询通知失败"
-											+ responseData.getMsg());
 								}
-							}
 
-						});
+							});
 					}
 
 					@Override
 					public void onError(Exception e) {
 						// TODO 自动生成的方法存根
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									Utity.showToast(getActivity()
+											.getApplicationContext(),
+											eDaoClientConfig.checkNet);
+								}
 
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getActivity()
-										.getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
+							});
 					}
 				});
 	}
@@ -358,61 +361,64 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 					@Override
 					public void onFinish(final ResponseData responseData) {
 						// TODO 自动生成的方法存根
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										JSONArray array = result
-												.getJSONArray("records");
-										advCount = array.length();
-										imageUrlsList = new ArrayList<String>();
-										for (int i = 0; i < advCount; i++) {
-											imageUrlsList.add(array
-													.getJSONObject(i)
-													.getString("picture"));
-											flipper.addView(addImageById(imageUrlsList
-													.get(i)));
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									if (responseData.getRsCode() == 1) {
+										try {
+											JSONObject result = new JSONObject(
+													responseData.getJsonData()
+															.toString());
+											JSONArray array = result
+													.getJSONArray("records");
+											advCount = array.length();
+											imageUrlsList = new ArrayList<String>();
+											for (int i = 0; i < advCount; i++) {
+												imageUrlsList.add(array
+														.getJSONObject(i)
+														.getString("picture"));
+												flipper.addView(addImageById(imageUrlsList
+														.get(i)));
+											}
+											CharSequence text = getString(
+													R.string.viewpager_indicator,
+													1, advCount);
+											textView_indicator.setText(text);
+											textView_indicator
+													.setVisibility(View.VISIBLE);
+											setFlipper();
+										} catch (JSONException e) {
+											// TODO 自动生成的 catch 块
+											e.printStackTrace();
 										}
-										CharSequence text = getString(
-												R.string.viewpager_indicator,
-												1, advCount);
-										textView_indicator.setText(text);
-										textView_indicator
-												.setVisibility(View.VISIBLE);
-										setFlipper();
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
+									} else {
+										Utity.showToast(
+												getActivity()
+														.getApplicationContext(),
+												"查询广告失败"
+														+ responseData.getMsg());
 									}
-								} else {
-									Utity.showToast(getActivity()
-											.getApplicationContext(), "查询广告失败"
-											+ responseData.getMsg());
 								}
-							}
 
-						});
+							});
 					}
 
 					@Override
 					public void onError(Exception e) {
 						// TODO 自动生成的方法存根
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									Utity.showToast(getActivity()
+											.getApplicationContext(),
+											eDaoClientConfig.checkNet);
+								}
 
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getActivity()
-										.getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
+							});
 					}
 				});
 	}

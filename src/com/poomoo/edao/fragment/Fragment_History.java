@@ -77,71 +77,76 @@ public class Fragment_History extends Fragment {
 					@Override
 					public void onFinish(final ResponseData responseData) {
 						// TODO 自动生成的方法存根
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								closeProgressDialog();
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									closeProgressDialog();
+									// TODO 自动生成的方法存根
+									if (responseData.getRsCode() == 1
+											&& responseData.getJsonData()
+													.length() > 0) {
+										try {
+											JSONObject result = new JSONObject(
+													responseData.getJsonData()
+															.toString());
 
-										JSONArray pager = result
-												.getJSONArray("records");
-										int length = pager.length();
-										list = new ArrayList<Purchase_HistoryData>();
-										for (int i = 0; i < length; i++) {
-											Purchase_HistoryData purchase_History = new Purchase_HistoryData();
-											purchase_History = gson.fromJson(
-													pager.getJSONObject(i)
-															.toString(),
-													Purchase_HistoryData.class);
-											list.add(purchase_History);
-										}
-										if (isFirst) {
-											adapter = new Purchase_History_ListViewAdapter(
-													getActivity(), list);
-											listView.setAdapter(adapter);
-											isFirst = false;
-										} else {
-											adapter.notifyDataSetChanged();
-										}
-										curPage += 10;
-										pageSize += 10;
+											JSONArray pager = result
+													.getJSONArray("records");
+											int length = pager.length();
+											list = new ArrayList<Purchase_HistoryData>();
+											for (int i = 0; i < length; i++) {
+												Purchase_HistoryData purchase_History = new Purchase_HistoryData();
+												purchase_History = gson
+														.fromJson(
+																pager.getJSONObject(
+																		i)
+																		.toString(),
+																Purchase_HistoryData.class);
+												list.add(purchase_History);
+											}
+											if (isFirst) {
+												adapter = new Purchase_History_ListViewAdapter(
+														getActivity(), list);
+												listView.setAdapter(adapter);
+												isFirst = false;
+											} else {
+												adapter.notifyDataSetChanged();
+											}
+											curPage += 10;
+											pageSize += 10;
 
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
+										} catch (JSONException e) {
+											// TODO 自动生成的 catch 块
+											e.printStackTrace();
+										}
+									} else {
+										Utity.showToast(getActivity()
+												.getApplicationContext(),
+												responseData.getMsg());
 									}
-								} else {
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											responseData.getMsg());
+									listView.onRefreshComplete();
 								}
-								listView.onRefreshComplete();
-							}
 
-						});
+							});
 					}
 
 					@Override
 					public void onError(Exception e) {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								listView.onRefreshComplete();
-								Utity.showToast(getActivity()
-										.getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
+						if (getActivity() != null)
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO 自动生成的方法存根
+									closeProgressDialog();
+									listView.onRefreshComplete();
+									Utity.showToast(getActivity()
+											.getApplicationContext(),
+											eDaoClientConfig.checkNet);
+								}
 
-						});
+							});
 					}
 				});
 	}
