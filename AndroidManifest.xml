@@ -48,6 +48,7 @@
         <activity android:name=".activity.AllianceApplyActivity" />
         <activity android:name=".activity.AboutUsActivity" />
         <activity android:name=".activity.BuyKeyActivity" />
+        <activity android:name=".activity.BankCardManageActivity" />
         <activity android:name=".activity.CertificationActivity" />
         <activity android:name=".activity.CommodityInfomationActivity" />
         <activity android:name=".activity.CommodityListActivity" />

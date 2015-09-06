@@ -5,7 +5,7 @@
     android:background="@drawable/ic_shared_bg"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -15,6 +15,7 @@
             android:id="@+id/share_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
@@ -22,7 +23,7 @@
                 android:id="@+id/share_imageView_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/margin10"
                 android:src="@drawable/ic_return" />
 
             <TextView
@@ -35,32 +36,27 @@
                 android:textSize="@dimen/textsize20" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center" >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:scaleType="fitCenter"
                 android:src="@drawable/ic_leyidao" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
             android:orientation="vertical" >
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="@dimen/margin10" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,7 +68,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="@dimen/margin10" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -82,12 +78,12 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
         android:gravity="center"
         android:orientation="horizontal" >
 

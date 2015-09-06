@@ -116,6 +116,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		if (!application.getRealNameAuth().equals("1")) {
 			System.out.println("进行实名认证");
 			textView_username.setText(eDaoClientConfig.certificate);
+			textView_phonenum.setText("");
 			// spark();
 		} else
 			Utity.setUserAndTel(textView_username, textView_phonenum,
@@ -261,7 +262,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		if (!application.getRealNameAuth().equals("1")) {
 			System.out.println("进行实名认证");
 			textView_username.setText(eDaoClientConfig.certificate);
-			// spark();
+			textView_phonenum.setText("");
 		} else
 			Utity.setUserAndTel(textView_username, textView_phonenum,
 					application);
@@ -269,8 +270,4 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		textView_gold_coin.setText("" + application.getTotalGold());
 		textView_point.setText("" + application.getTotalIntegral());
 	}
-
-	// public void setHandler(Handler handler) {
-	// NavigationActivity.handler = handler;
-	// }
 }

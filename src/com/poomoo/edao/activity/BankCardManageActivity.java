@@ -28,13 +28,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.adapter.CitySpinnerAdapter;
-import com.poomoo.edao.adapter.ProvinceSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.database.CityInfo;
-import com.poomoo.edao.model.database.ProvinceInfo;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -63,8 +59,6 @@ public class BankCardManageActivity extends BaseActivity implements
 	private eDaoClientApplication applicaiton = null;
 	private final String[] strbank = new String[] { "中国建设银行", "中国工商银行",
 			"中国农业银行", "中国银行", "招商银行" };
-	private String province_name = "", province_id = "", city_name = "",
-			city_id = "";
 	private String bank = "", account1 = "", account2 = "";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();

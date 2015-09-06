@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.poomoo.edao.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -32,6 +33,7 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
  * @date 2015年8月10日 下午10:00:42
  */
 public class ShareActivity extends BaseActivity implements OnClickListener {
+	private ImageView imageView_return;
 	private Button button_share;
 
 	// 首先在您的Activity中添加如下成员变量
@@ -57,7 +59,11 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 
 	private void init() {
 		// TODO 自动生成的方法存根
+		imageView_return = (ImageView) findViewById(R.id.share_imageView_return);
+
 		button_share = (Button) findViewById(R.id.share_button);
+
+		imageView_return.setOnClickListener(this);
 		button_share.setOnClickListener(this);
 	}
 
@@ -191,11 +197,19 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		// 是否只有已登录用户才能打开分享选择页
-		mController.getConfig().setPlatforms(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
-				SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-				SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
-		mController.openShare(this, false);
+		switch (v.getId()) {
+		case R.id.share_imageView_return:
+			finish();
+			break;
+		case R.id.share_button:
+			// 是否只有已登录用户才能打开分享选择页
+			mController.getConfig().setPlatforms(SHARE_MEDIA.QQ,
+					SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
+					SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
+					SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
+			mController.openShare(this, false);
+			break;
+		}
 	}
 
 	@Override
