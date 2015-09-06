@@ -9,17 +9,21 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -111,12 +115,21 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 			public void afterTextChanged(Editable s) {
 				// TODO 自动生成的方法存根
 				if (s.length() == 11) {
+					InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					hideSoftInput(editText_payee_phonenum.getWindowToken(), im);
 					phoneNum = editText_payee_phonenum.getText().toString()
 							.trim();
 					getMerchantName();
 				}
 			}
 		});
+	}
+
+	public static void hideSoftInput(IBinder token, InputMethodManager im) {
+		if (token != null) {
+			im.hideSoftInputFromWindow(token,
+					InputMethodManager.HIDE_NOT_ALWAYS);
+		}
 	}
 
 	@Override
