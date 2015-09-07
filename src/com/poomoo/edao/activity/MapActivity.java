@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.Bitmap.Config;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,7 +43,9 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.overlayutil.OverlayManager;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -69,7 +71,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private TextView textView_curCity;
 
 	// 初始化全局 bitmap 信息，不用时及时 recycle
-	private BitmapDescriptor bdA;
+	private BitmapDescriptor bd;
 
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();;
@@ -81,6 +83,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	private final float maxRoom = 18;
 	// 当前图层中心点经纬度
 	private LatLng curCenterLatLng = null;
+	private OverlayManager overlayManager;
 
 	/**
 	 * 最新一次的经纬度
@@ -105,7 +108,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 
 		init();
 
-		bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
+		bd = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		imageView_center_dot = (ImageView) findViewById(R.id.map_imageView_center_dot);
 		imageView_mylocation = (ImageView) findViewById(R.id.map_imageView_mylocaiton);
@@ -116,7 +119,6 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
-		// showProgressDialog();
 	}
 
 	private void init() {
@@ -138,19 +140,68 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		LatLng latLng = null;
 		OverlayOptions overlayOptions = null;
 		Marker marker = null;
+		int i = 0;
+		final List<OverlayOptions> list = new ArrayList<OverlayOptions>();
 		for (StoreData info : infos) {
 			// 位置
 			latLng = new LatLng(info.getLatitude(), info.getLongitude());
 			// 图标
-			overlayOptions = new MarkerOptions().position(latLng).icon(bdA)
-					.zIndex(5);
+			overlayOptions = new MarkerOptions().position(latLng).icon(bd)
+					.zIndex(i++);
+			list.add(overlayOptions);
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("info", info);
 			marker.setExtraInfo(bundle);
 		}
-		// 将地图移到到最后一个经纬度位置
-		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(latLng);
+		// overlayManager = new OverlayManager(mBaiduMap) {
+		//
+		// @Override
+		// public boolean onMarkerClick(Marker marker) {
+		// // TODO Auto-generated method stub
+		// // 将marker所在的经纬度的信息转化成屏幕上的坐标
+		// final LatLng ll = marker.getPosition();
+		// if (mBaiduMap.getMapStatus().zoom != maxRoom) {
+		// showCurrtenStroeOnMap(ll);
+		// } else {
+		// showCurrtenStroeOnMap(ll);
+		// // 获得marker中的数据
+		// StoreData info = (StoreData) marker.getExtraInfo().get(
+		// "info");
+		// View linlayout = MapActivity.this.getLayoutInflater()
+		// .inflate(R.layout.popup_map_inform, null);
+		// // linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
+		// Point p = mBaiduMap.getProjection().toScreenLocation(ll);
+		// p.y -= 47;
+		// LatLng llInfo = mBaiduMap.getProjection()
+		// .fromScreenLocation(p);
+		// // 为弹出的InfoWindow添加点击事件
+		// mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
+		// info), llInfo, 1);
+		// // 显示InfoWindow
+		// mBaiduMap.showInfoWindow(mInfoWindow);
+		// }
+		//
+		// return true;
+		// }
+		//
+		// @Override
+		// public List<OverlayOptions> getOverlayOptions() {
+		//
+		// return list;
+		// }
+		//
+		// @Override
+		// public boolean onPolylineClick(Polyline arg0) {
+		// // TODO 自动生成的方法存根
+		// return false;
+		// }
+		// };
+		// overlayManager.addToMap();
+		// overlayManager.zoomToSpan();
+		// 将地图移到当前定位位置
+		LatLng myLL = new LatLng(mCurrentLantitude, mCurrentLongitude);
+		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
 		mBaiduMap.setMapStatus(u);
 	}
 
@@ -172,7 +223,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 							.inflate(R.layout.popup_map_inform, null);
 					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
 					Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-					p.y -= 47;
+					p.y -= 60;
 					LatLng llInfo = mBaiduMap.getProjection()
 							.fromScreenLocation(p);
 					// 为弹出的InfoWindow添加点击事件
@@ -219,17 +270,18 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		ImageLoader.getInstance().displayImage(store.getPictures(),
 				viewHolder.storeImg, options);
 
-		viewHolder.storeRatingBar.setRating(store.getAvgSore());
+		viewHolder.storeRatingBar.setRating(store.getAvgScore());
 		viewHolder.storeName.setText(store.getShopName());
-		viewHolder.storeScore.setText(store.getAvgSore() + "");
+		viewHolder.storeScore.setText(store.getAvgScore() + "");
 		viewHolder.storeDistance.setText(store.getDistance());
 		viewHolder.storeInfo.setText(store.getAddress());
 		mMarkerLy.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO 自动生成的方法存根
-				startActivity(new Intent(MapActivity.this,
-						AboutUsActivity.class));
+				Bundle pBundle = new Bundle();
+				pBundle.putSerializable("data", store);
+				openActivity(StoreInformationActivity.class, pBundle);
 			}
 		});
 		return mMarkerLy;
@@ -401,7 +453,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	protected void onDestroy() {
 		mMapView.onDestroy();
 		super.onDestroy(); // 回收 bitmap 资源 bdA.recycle();
-		bdA.recycle();
+		bd.recycle();
 	}
 
 	private void getData() {

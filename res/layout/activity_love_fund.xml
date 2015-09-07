@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="乐意道爱心基金接收全国人民的监督!"
+                android:text="乐意道爱心基金接受全国人民的监督!"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize10" />
         </LinearLayout>

@@ -12,19 +12,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
-import com.poomoo.edao.model.ShopListData;
+import com.poomoo.edao.model.StoreData;
 
 public class Shop_List_ListViewAdapter extends BaseAdapter {
 
-	private List<ShopListData> list;
+	private List<StoreData> list;
 	private LayoutInflater inflater;
 
-	public Shop_List_ListViewAdapter(Context context, List<ShopListData> list) {
+	public Shop_List_ListViewAdapter(Context context, List<StoreData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);

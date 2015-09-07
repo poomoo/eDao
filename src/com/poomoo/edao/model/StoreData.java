@@ -21,7 +21,7 @@ public class StoreData implements Serializable {
 	private String address = "";
 	private String pictures = "";
 	private String typeId = "";
-	private float avgSore = 0;
+	private float avgScore = 0;
 	private String tel = "";
 	private String distance = "";
 
@@ -89,12 +89,12 @@ public class StoreData implements Serializable {
 		this.typeId = typeId;
 	}
 
-	public float getAvgSore() {
-		return this.avgSore;
+	public float getAvgScore() {
+		return this.avgScore;
 	}
 
-	public void setAvgSore(float avgSore) {
-		this.avgSore = avgSore;
+	public void setAvgScore(float avgScore) {
+		this.avgScore = avgScore;
 	}
 
 	public String getTel() {

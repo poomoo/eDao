@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.KeyManageActivity;
 import com.poomoo.edao.model.KeyManageData;
 import com.poomoo.edao.util.Utity;
 
@@ -48,6 +49,7 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
+		KeyManageActivity.MyListener listener = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(
 					R.layout.item_listview_key_manage_apply, parent, false);
@@ -71,6 +73,8 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position)
 				.getTel()));
 		holder.textView_date.setText(list.get(position).getJoinDt());
+		holder.button_agree.setOnClickListener(listener);
+		holder.button_refuse.setOnClickListener(listener);
 		return convertView;
 	}
 

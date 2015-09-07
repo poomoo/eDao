@@ -229,7 +229,7 @@
             android:id="@+id/store_information_textView_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/textview_selector"
+            android:textColor="@color/textview_selector"
             android:gravity="center"
             android:text="查看更多评价"
             android:textSize="@dimen/textsize16" />

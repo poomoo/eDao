@@ -356,6 +356,21 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 				});
 	}
 
+	public static class MyListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
+			case R.id.item_key_manage_apply_button_agree:
+				break;
+			case R.id.item_key_manage_apply_button_refuse:
+				break;
+			}
+		}
+
+	}
+
 	/**
 	 * 
 	 * 

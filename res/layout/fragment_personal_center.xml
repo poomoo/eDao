@@ -23,6 +23,73 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/personalcenter_layout_operate_manage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:padding="@dimen/margin5" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_center_key_manage" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/margin5"
+                android:text="经营管理"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sidebar_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gainsboro" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/personalcenter_layout_store_manage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:padding="@dimen/margin5" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_center_store_manage" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/margin5"
+                android:text="店铺管理"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sidebar_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin15" >
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/personalcenter_layout_credit_manage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -177,74 +244,6 @@
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/margin5"
                 android:text="我的二维码"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textsize16" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sidebar_arrow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gainsboro" >
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/personalcenter_layout_operate_manage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:padding="@dimen/margin5" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_personal_center_key_manage" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/margin5"
-                android:text="经营管理"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textsize16" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sidebar_arrow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gainsboro" >
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/personalcenter_layout_store_manage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:padding="@dimen/margin5" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_personal_center_store_manage" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/margin5"
-                android:text="店铺管理"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textsize16" />
 
