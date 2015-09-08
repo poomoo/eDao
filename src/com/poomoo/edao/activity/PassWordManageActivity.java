@@ -65,12 +65,13 @@ public class PassWordManageActivity extends BaseActivity implements
 		button_cancle = (Button) findViewById(R.id.passwordmanage_btn_cancle);
 
 		layout_oldpw = (LinearLayout) findViewById(R.id.passwordmanage_layout_oldpassword);
-		layout_control = (LinearLayout) findViewById(R.id.passwordmanage_layout_control);
+		// layout_control = (LinearLayout)
+		// findViewById(R.id.passwordmanage_layout_control);
 
 		if (type.equals("2") && TextUtils.isEmpty(application.getPayPwdValue())) {
 			isNeedOldPW = false;
 			layout_oldpw.setVisibility(View.GONE);
-			layout_control.setVisibility(View.VISIBLE);
+			// layout_control.setVisibility(View.VISIBLE);
 		}
 
 		button_send.setOnClickListener(this);

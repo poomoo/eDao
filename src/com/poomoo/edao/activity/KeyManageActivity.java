@@ -1,5 +1,6 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lidroid.xutils.db.annotation.Check;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.KeyManage_Apply_ListViewAdapter;
 import com.poomoo.edao.adapter.KeyManage_Used_ListViewAdapter;
@@ -83,6 +85,16 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		button_apply.setOnClickListener(this);
 		button_used.setOnClickListener(this);
 		button_notUsed.setOnClickListener(this);
+
+		list_apply = new ArrayList<KeyManageData>();
+		list_used = new ArrayList<KeyManageData>();
+		showProgressDialog();
+		getApplyData();
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				getApplyData();
+			}
+		});
 	}
 
 	@Override
@@ -98,9 +110,12 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		case R.id.key_manage_radioButton_apply:
 			textView_content.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
-			if (apply_isFirst)
+			if (apply_isFirst) {
 				showProgressDialog();
-			getApplyData();
+				getApplyData();
+			} else
+				listView.setAdapter(adapter_apply);
+
 			listView.setonRefreshListener(new OnRefreshListener() {
 				public void onRefresh() {
 					getApplyData();
@@ -110,9 +125,11 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		case R.id.key_manage_radioButton_used:
 			textView_content.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
-			if (used_isFirst)
+			if (used_isFirst) {
 				showProgressDialog();
-			getUsedData();
+				getUsedData();
+			} else
+				listView.setAdapter(adapter_used);
 			listView.setonRefreshListener(new OnRefreshListener() {
 				public void onRefresh() {
 					getUsedData();
@@ -356,19 +373,78 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 				});
 	}
 
-	public static class MyListener implements OnClickListener {
+	public class MyListener implements OnClickListener {
+		private int position = 0;
+
+		public MyListener(int position) {
+			super();
+			this.position = position;
+		}
 
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
 			case R.id.item_key_manage_apply_button_agree:
+				check(position, 1);
 				break;
 			case R.id.item_key_manage_apply_button_refuse:
+				check(position, 0);
 				break;
 			}
 		}
 
+	}
+
+	private void check(int position, int status) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("bizName", "20000");
+		data.put("method", "20004");
+		data.put("userId", list_apply.get(position).getUserId());
+		data.put("checkUserId", application.getUserId());
+		data.put("status", status);
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
+				new HttpCallbackListener() {
+
+					@Override
+					public void onFinish(final ResponseData responseData) {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								if (responseData.getRsCode() == 1) {
+									showProgressDialog();
+									apply_curPage = 1;
+									apply_pageSize = 10;
+									list_apply.clear();
+									getApplyData();
+								} else {
+									Utity.showToast(getApplicationContext(),
+											responseData.getMsg());
+								}
+							}
+
+						});
+					}
+
+					@Override
+					public void onError(Exception e) {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO 自动生成的方法存根
+								Utity.showToast(getApplicationContext(),
+										eDaoClientConfig.checkNet);
+							}
+
+						});
+					}
+				});
 	}
 
 	/**

@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
 import android.os.Message;
 
@@ -20,6 +23,8 @@ import com.poomoo.edao.util.HttpUtil;
 public class Get_UserInfo_Service extends Service {
 	private Gson gson = new Gson();
 	private eDaoClientApplication application;
+	private SharedPreferences userInfo = null;
+	private Editor editor;
 
 	public void onCreate() {
 		super.onCreate();
@@ -28,6 +33,8 @@ public class Get_UserInfo_Service extends Service {
 	public void onStart(Intent intent, int startId) {
 		System.out.println("服务启动");
 		application = (eDaoClientApplication) getApplication();
+		userInfo = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		editor = userInfo.edit();
 		getUserInfoData();
 	};
 
@@ -61,6 +68,19 @@ public class Get_UserInfo_Service extends Service {
 							application.setType(infoData.getType());
 							application.setJoinType(infoData.getJoinType());
 							application.setJoinStatus(infoData.getJoinStatus());
+							editor.putString("realName",
+									application.getRealName());
+							editor.putString("realNameAuth",
+									application.getRealNameAuth());
+							editor.putString("type", application.getType());
+							editor.putString("payPwdValue",
+									application.getPayPwdValue());
+							editor.putString("joinType",
+									application.getJoinType());
+							editor.putString("joinStatus",
+									application.getJoinStatus());
+							editor.commit();
+
 							Message msg = new Message();
 							msg.what = eDaoClientConfig.freshFlag;
 							NavigationActivity.handler.sendMessage(msg);

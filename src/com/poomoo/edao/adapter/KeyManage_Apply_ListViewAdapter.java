@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.KeyManageActivity;
+import com.poomoo.edao.activity.KeyManageActivity.MyListener;
 import com.poomoo.edao.model.KeyManageData;
 import com.poomoo.edao.util.Utity;
 
@@ -19,12 +20,14 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 
 	private List<KeyManageData> list;
 	private LayoutInflater inflater;
+	private KeyManageActivity keyManageActivity;
 
 	public KeyManage_Apply_ListViewAdapter(Context context,
 			List<KeyManageData> list) {
 		super();
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
+		this.keyManageActivity = (KeyManageActivity) context;
 	}
 
 	@Override
@@ -49,7 +52,7 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
-		KeyManageActivity.MyListener listener = null;
+		MyListener listener = keyManageActivity.new MyListener(position);
 		if (convertView == null) {
 			convertView = inflater.inflate(
 					R.layout.item_listview_key_manage_apply, parent, false);

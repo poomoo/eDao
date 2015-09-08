@@ -161,19 +161,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 										editor.putString("passWord", passWord);
 										editor.putBoolean("isLogin", true);
 										editor.commit();
-										// application.setRealName(loginResData
-										// .getRealName());
-										// application.setTel(loginResData
-										// .getTel());
-										// application.setUserId(loginResData
-										// .getUserId());
-										// application.setType(loginResData
-										// .getType());
-										// application
-										// .setRealNameAuth(loginResData
-										// .getRealNameAuth());
-										// application.setPayPwdValue(loginResData
-										// .getPayPwdValue());
+										application.setRealName(loginResData
+												.getRealName());
+										application.setTel(loginResData
+												.getTel());
+										application.setUserId(loginResData
+												.getUserId());
+										application.setType(loginResData
+												.getType());
+										application
+												.setRealNameAuth(loginResData
+														.getRealNameAuth());
+										application.setPayPwdValue(loginResData
+												.getPayPwdValue());
 										startService(new Intent(
 												LoginActivity.this,
 												Get_UserInfo_Service.class));

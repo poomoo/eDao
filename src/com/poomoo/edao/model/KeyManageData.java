@@ -1,9 +1,18 @@
 package com.poomoo.edao.model;
 
 public class KeyManageData {
+	private String userId = "";
 	private String realName = "";
 	private String tel = "";
 	private String joinDt = "";
+
+	public String getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public String getRealName() {
 		return this.realName;

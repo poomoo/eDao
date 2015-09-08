@@ -81,26 +81,30 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				openActivity(LoginActivity.class);
+				loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+				if (loginsp.getBoolean("isLogin", false)) {
+					application.setRealName(loginsp.getString("realName", ""));
+					application.setTel(loginsp.getString("tel", ""));
+					application.setUserId(loginsp.getString("userId", ""));
+					application.setType(loginsp.getString("type", ""));
+					application.setRealNameAuth(loginsp.getString(
+							"realNameAuth", ""));
+					application.setPayPwdValue(loginsp.getString("payPwdValue",
+							""));
+					application.setJoinType(loginsp.getString("joinType", ""));
+					application.setJoinStatus(loginsp.getString("joinStatus",
+							""));
+					openActivity(NavigationActivity.class);
+					startService(new Intent(SplashActivity.this,
+							Get_UserInfo_Service.class));
+				} else
+					openActivity(LoginActivity.class);
 				overridePendingTransition(R.anim.push_left_in,
 						R.anim.push_left_out);
 				SplashActivity.this.finish();
 			}
 		});
 		imageView.setAnimation(translate);
-		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-		if (loginsp.getBoolean("isLogin", false)) {
-			application.setRealName(loginsp.getString("realName", ""));
-			application.setTel(loginsp.getString("tel", ""));
-			application.setUserId(loginsp.getString("userId", ""));
-			application.setType(loginsp.getString("type", ""));
-			application.setRealNameAuth(loginsp.getString("realNameAuth", ""));
-			application.setPayPwdValue(loginsp.getString("payPwdValue", ""));
-			openActivity(NavigationActivity.class);
-			startService(new Intent(this, Get_UserInfo_Service.class));
-			finish();
-		} else
-			openActivity(LoginActivity.class);
 	}
 
 	private void importDB() {
