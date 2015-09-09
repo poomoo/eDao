@@ -6,12 +6,6 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -19,6 +13,11 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.TextView;
 
 /**
  * 
