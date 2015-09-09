@@ -7,9 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -25,7 +23,6 @@ import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.PayInfoData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -44,7 +41,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 		OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_zone,
 			textView_money, textView_merchant_name;
-	private EditText editText_merchant_phone, editText_address;
+	private EditText editText_merchant_phone;
 	private LinearLayout layout_zone;
 	private Button button_confirm;
 
@@ -52,16 +49,14 @@ public class PartnerApplyActivity extends BaseActivity implements
 	private eDaoClientApplication application = null;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
-	private String zone = "", merchant_phone = "", merchant_name = "",
+	private String merchant_phone = "", merchant_name = "",
 			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "", curArea = "", address = "", money = "";
+			curCity = "", curArea = "", money = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_partner_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
@@ -79,7 +74,6 @@ public class PartnerApplyActivity extends BaseActivity implements
 		textView_merchant_name = (TextView) findViewById(R.id.partner_textView_merchant_name);
 
 		editText_merchant_phone = (EditText) findViewById(R.id.partner_editText_merchant_phone);
-		editText_address = (EditText) findViewById(R.id.partner_editText_address);
 
 		layout_zone = (LinearLayout) findViewById(R.id.partner_layout_zone);
 
@@ -121,7 +115,6 @@ public class PartnerApplyActivity extends BaseActivity implements
 				pBundle.putString("referrerTel", merchant_phone);
 				pBundle.putString("referrerUserId", referrerUserId);
 				pBundle.putString("referrerName", referrerName);
-				pBundle.putString("address", address);
 				pBundle.putString("joinType", "3");
 				openActivity(PaymentActivity.class, pBundle);
 				finish();
@@ -227,86 +220,6 @@ public class PartnerApplyActivity extends BaseActivity implements
 	/**
 	 * 
 	 * 
-	 * @Title: apply
-	 * @Description: TODO 提交申请
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-17下午4:53:39
-	 */
-	private void apply() {
-		progressDialog = null;
-		showProgressDialog("提交申请中...");
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("bizName", "20000");
-		data.put("method", "20003");
-		SharedPreferences sp = getSharedPreferences("userInfo",
-				Context.MODE_PRIVATE);
-		data.put("userId", sp.getString("userId", ""));
-		data.put("areaId", CityPicker.getArea_id());
-		data.put("joinType", "1");
-		data.put("address", address);
-		data.put("referrerTel", merchant_phone);
-		data.put("referrerUserId", referrerUserId);
-		data.put("referrerName", referrerName);
-
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
-
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									PayInfoData payInfo = gson.fromJson(
-											responseData.getJsonData(),
-											PayInfoData.class);
-									Bundle pBundle = new Bundle();
-									pBundle.putString("userId",
-											payInfo.getUserId());
-									pBundle.putString("realName",
-											payInfo.getRealName());
-									pBundle.putString("tel", payInfo.getTel());
-									pBundle.putString("money", textView_money
-											.getText().toString());
-									pBundle.putString("payType", "");
-									openActivity(PaymentActivity.class, pBundle);
-									finish();
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
-					}
-				});
-	}
-
-	/**
-	 * 
-	 * 
 	 * @Title: checkInput
 	 * @Description: TODO 检查输入项
 	 * @author 李苜菲
@@ -336,7 +249,7 @@ public class PartnerApplyActivity extends BaseActivity implements
 			Utity.showToast(getApplicationContext(), "请查询服务商户名");
 			return false;
 		}
-		address = editText_address.getText().toString().trim();
+
 		if (TextUtils.isEmpty(money)) {
 			Utity.showToast(getApplicationContext(), "请查询费用");
 			return false;

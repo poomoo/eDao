@@ -14,24 +14,23 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 
-public class Upload_Pics_PopupWindow extends PopupWindow {
+public class Key_Manage_PopupWindow extends PopupWindow {
 
-	private TextView textView_camera, textView_photograph;
+	private TextView textView_save, textView_dial;
 	private View mMenuView;
 
-	public Upload_Pics_PopupWindow(Activity context,
-			OnClickListener itemsOnClick) {
+	public Key_Manage_PopupWindow(Activity context, OnClickListener itemsOnClick) {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mMenuView = inflater.inflate(R.layout.popup_key_manage, null);
-		textView_camera = (TextView) mMenuView
-				.findViewById(R.id.popup_select_pic_res_camera);
-		textView_photograph = (TextView) mMenuView
-				.findViewById(R.id.popup_select_pic_res_photograph);
+		textView_save = (TextView) mMenuView
+				.findViewById(R.id.popup_key_manage_textView_save);
+		textView_dial = (TextView) mMenuView
+				.findViewById(R.id.popup_key_manage_textView_dial);
 
-		textView_camera.setOnClickListener(itemsOnClick);
-		textView_photograph.setOnClickListener(itemsOnClick);
+		textView_save.setOnClickListener(itemsOnClick);
+		textView_dial.setOnClickListener(itemsOnClick);
 		this.setContentView(mMenuView);
 		this.setWidth(LayoutParams.MATCH_PARENT);
 		this.setHeight(LayoutParams.MATCH_PARENT);
@@ -41,9 +40,9 @@ public class Upload_Pics_PopupWindow extends PopupWindow {
 		mMenuView.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				int height_top = mMenuView.findViewById(
-						R.id.popup_select_pic_res_layout).getTop();
+						R.id.popup_key_manage_layout).getTop();
 				int height_bottom = mMenuView.findViewById(
-						R.id.popup_select_pic_res_layout).getBottom();
+						R.id.popup_key_manage_layout).getBottom();
 				int y = (int) event.getY();
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					if (y < height_top || y > height_bottom) {

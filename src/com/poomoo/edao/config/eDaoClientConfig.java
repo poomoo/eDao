@@ -12,7 +12,8 @@ public class eDaoClientConfig {
 	// public static final String wxReUrl = BaseUrl +
 	// "orders/wxPayCallBack.json";
 	public static final String wxReUrl = "http://www.yidao7.com/app/orders/wxPayCallBack.json";
-	public static final String imageurl = BaseRemoteUrl + "user/uploadUserImage.json";
+	public static final String imageurl = BaseRemoteUrl
+			+ "user/uploadUserImage.json";
 	public static final String uploadStoreurl = BaseRemoteUrl + "shop/add.json";
 
 	public static final int timeout = 1 * 30 * 1000;// 网络通讯超时
@@ -27,6 +28,7 @@ public class eDaoClientConfig {
 	public static final String balanceIsNotEnough = "余额不足";
 	public static final String less500 = "不能低于500";
 	public static final String more5000 = "不能超过5000";
+	public static final String timeIllegal = "结束日期不能小于起始日期";
 
 	public static final int freshFlag = 1;// 刷新UI标志
 

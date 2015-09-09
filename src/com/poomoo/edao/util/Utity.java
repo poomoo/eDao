@@ -6,11 +6,13 @@ import java.io.FileInputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.conn.util.InetAddressUtils;
 import org.litepal.crud.DataSupport;
@@ -22,15 +24,12 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
@@ -52,8 +51,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws @date
-	 *             2015-8-13下午3:46:02
+	 * @throws @date 2015-8-13下午3:46:02
 	 */
 	public static void showToast(Context context, String msg) {
 		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -67,14 +65,14 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return ArrayList<ProvinceInfo>
-	 * @throws @date
-	 *             2015-8-17上午10:38:47
+	 * @throws @date 2015-8-17上午10:38:47
 	 */
 	public static ArrayList<ProvinceInfo> getProvinceList() {
 		// ProvinceInfo provinceInfo =
 		// DataSupport.findFirst(ProvinceInfo.class);
 		// System.out.println(provinceInfo.getProvince_name());
-		List<ProvinceInfo> provinceList = DataSupport.findAll(ProvinceInfo.class);
+		List<ProvinceInfo> provinceList = DataSupport
+				.findAll(ProvinceInfo.class);
 		return (ArrayList<ProvinceInfo>) provinceList;
 	}
 
@@ -86,11 +84,11 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return ArrayList<CityInfo>
-	 * @throws @date
-	 *             2015-8-17上午10:39:44
+	 * @throws @date 2015-8-17上午10:39:44
 	 */
 	public static ArrayList<CityInfo> getCityList(String province_id) {
-		List<CityInfo> cityList = DataSupport.where("provinceinfo_id = ?", province_id).find(CityInfo.class);
+		List<CityInfo> cityList = DataSupport.where("provinceinfo_id = ?",
+				province_id).find(CityInfo.class);
 		return (ArrayList<CityInfo>) cityList;
 	}
 
@@ -102,11 +100,11 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return ArrayList<AreaInfo>
-	 * @throws @date
-	 *             2015-8-17上午10:40:43
+	 * @throws @date 2015-8-17上午10:40:43
 	 */
 	public static ArrayList<AreaInfo> getAreaList(String city_id) {
-		List<AreaInfo> areaList = DataSupport.where("cityinfo_id = ?", city_id).find(AreaInfo.class);
+		List<AreaInfo> areaList = DataSupport.where("cityinfo_id = ?", city_id)
+				.find(AreaInfo.class);
 		return (ArrayList<AreaInfo>) areaList;
 	}
 
@@ -118,15 +116,16 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return int
-	 * @throws @date
-	 *             2015年8月17日下午9:53:53
+	 * @throws @date 2015年8月17日下午9:53:53
 	 */
-	public static int getProvincePosition(ArrayList<ProvinceInfo> provinceList, String province) {
+	public static int getProvincePosition(ArrayList<ProvinceInfo> provinceList,
+			String province) {
 		System.out.println("getProvincePosition:" + province);
 		int i = 0;
 		for (ProvinceInfo provinceInfo : provinceList) {
 			i++;
-			System.out.println("provinceInfo.getProvince_name():" + provinceInfo.getProvince_name() + "i:" + i);
+			System.out.println("provinceInfo.getProvince_name():"
+					+ provinceInfo.getProvince_name() + "i:" + i);
 			if (provinceInfo.getProvince_name().equals(province))
 				return i - 1;
 		}
@@ -141,15 +140,15 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return int
-	 * @throws @date
-	 *             2015年8月17日下午9:57:59
+	 * @throws @date 2015年8月17日下午9:57:59
 	 */
 	public static int getCityPosition(ArrayList<CityInfo> cityList, String city) {
 		System.out.println("getCityPosition:" + city);
 		int i = 0;
 		for (CityInfo cityInfo : cityList) {
 			i++;
-			System.out.println("cityInfo.getCity_name():" + cityInfo.getCity_name() + "i:" + i);
+			System.out.println("cityInfo.getCity_name():"
+					+ cityInfo.getCity_name() + "i:" + i);
 			if (cityInfo.getCity_name().equals(city))
 				return i - 1;
 		}
@@ -164,14 +163,14 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return int
-	 * @throws @date
-	 *             2015年8月31日下午11:41:41
+	 * @throws @date 2015年8月31日下午11:41:41
 	 */
 	public static int getAreaPosition(ArrayList<AreaInfo> areaList, String area) {
 		int i = 0;
 		for (AreaInfo areaInfo : areaList) {
 			i++;
-			System.out.println("areaInfo.getArea_name():" + areaInfo.getArea_name() + "  " + area);
+			System.out.println("areaInfo.getArea_name():"
+					+ areaInfo.getArea_name() + "  " + area);
 			if (areaInfo.getArea_name().equals(area))
 				return i - 1;
 		}
@@ -186,8 +185,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws @date
-	 *             2015-8-18下午3:14:34
+	 * @throws @date 2015-8-18下午3:14:34
 	 */
 	public static void setOnTextChanged(final EditText et) {
 		et.addTextChangedListener(new TextWatcher() {
@@ -201,11 +199,13 @@ public class Utity {
 			int konggeNumberB = 0;
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				// TODO Auto-generated method stub
 				onTextLength = s.length();
 				buffer.append(s.toString());
-				if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
+				if (onTextLength == beforeTextLength || onTextLength <= 3
+						|| isChanged) {
 					isChanged = false;
 					return;
 				}
@@ -213,7 +213,8 @@ public class Utity {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 				// TODO Auto-generated method stub
 				beforeTextLength = s.length();
 				if (buffer.length() > 0) {
@@ -281,8 +282,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return Bitmap
-	 * @throws @date
-	 *             2015年8月18日下午10:45:00
+	 * @throws @date 2015年8月18日下午10:45:00
 	 */
 	public static Bitmap revitionImageSize(String path) {
 		System.out.println("revitionImageSize:" + path);
@@ -298,8 +298,10 @@ public class Utity {
 			int i = 0;
 
 			while (true) {
-				if ((options.outWidth >> i <= 1000) && (options.outHeight >> i <= 1000)) {
-					in = new BufferedInputStream(new FileInputStream(new File(path)));
+				if ((options.outWidth >> i <= 1000)
+						&& (options.outHeight >> i <= 1000)) {
+					in = new BufferedInputStream(new FileInputStream(new File(
+							path)));
 					options.inSampleSize = (int) Math.pow(2.0D, i);
 					// options.inSampleSize = calculateInSampleSize(options,
 					// 480, 800);
@@ -328,8 +330,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return Bitmap
-	 * @throws @date
-	 *             2015-8-19下午3:28:53
+	 * @throws @date 2015-8-19下午3:28:53
 	 */
 	public static Bitmap getBitMap(String path) {
 		System.out.println("getBitMap path:" + path);
@@ -358,8 +359,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws @date
-	 *             2015-8-19下午3:01:50
+	 * @throws @date 2015-8-19下午3:01:50
 	 */
 	public static String trimAll(String string) {
 		return string.replaceAll(" ", "");
@@ -374,16 +374,16 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws @date
-	 *             2015-8-21下午3:31:32
+	 * @throws @date 2015-8-21下午3:31:32
 	 */
 	public static String addStarByNum(int begin, int end, String str) {
 		if (TextUtils.isEmpty(str))
 			return "";
-		if (str.length() < 23 && str.length() != 11)
+		if (str.length() != 11 && str.length() != 19)
 			return str;
 		String temp = "";
-		temp = str.substring(0, begin) + str.substring(begin, end).replaceAll("[0123456789]", "*")
+		temp = str.substring(0, begin)
+				+ str.substring(begin, end).replaceAll("[0123456789]", "*")
 				+ str.substring(end, str.length());
 		return temp;
 	}
@@ -396,8 +396,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws @date
-	 *             2015-8-21下午3:41:44
+	 * @throws @date 2015-8-21下午3:41:44
 	 */
 	public static String addStarByName(String str) {
 		if (TextUtils.isEmpty(str))
@@ -415,13 +414,13 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws @date
-	 *             2015-8-29下午4:56:18
+	 * @throws @date 2015-8-29下午4:56:18
 	 */
 	public static String getLocalHostIp() {
 		String ipaddress = "";
 		try {
-			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+			Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces();
 			// 遍历所用的网络接口
 			while (en.hasMoreElements()) {
 				NetworkInterface nif = en.nextElement();// 得到每一个网络接口绑定的所有ip
@@ -429,7 +428,9 @@ public class Utity {
 				// 遍历每一个接口绑定的所有ip
 				while (inet.hasMoreElements()) {
 					InetAddress ip = inet.nextElement();
-					if (!ip.isLoopbackAddress() && InetAddressUtils.isIPv4Address(ip.getHostAddress())) {
+					if (!ip.isLoopbackAddress()
+							&& InetAddressUtils.isIPv4Address(ip
+									.getHostAddress())) {
 						return ipaddress = ip.getHostAddress();
 					}
 				}
@@ -450,8 +451,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws @date
-	 *             2015-8-29下午6:06:02
+	 * @throws @date 2015-8-29下午6:06:02
 	 */
 	public static String subZeroAndDot(String s) {
 		if (s.indexOf(".") > 0) {
@@ -469,8 +469,7 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return int
-	 * @throws @date
-	 *             2015年8月30日上午12:51:58
+	 * @throws @date 2015年8月30日上午12:51:58
 	 */
 	public static int getLastNum(int num) {
 		String temp = String.valueOf(num);
@@ -488,13 +487,15 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return boolean
-	 * @throws @date
-	 *             2015年8月30日下午2:38:31
+	 * @throws @date 2015年8月30日下午2:38:31
 	 */
-	public static boolean isWXAppInstalledAndSupported(Context context, IWXAPI api) {
-		System.out.println("检查微信是否安装 api:" + api + "isWXAppInstalled：" + api.isWXAppInstalled() + "isWXAppSupportAPI:"
+	public static boolean isWXAppInstalledAndSupported(Context context,
+			IWXAPI api) {
+		System.out.println("检查微信是否安装 api:" + api + "isWXAppInstalled："
+				+ api.isWXAppInstalled() + "isWXAppSupportAPI:"
 				+ api.isWXAppSupportAPI());
-		boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled() && api.isWXAppSupportAPI();
+		boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled()
+				&& api.isWXAppSupportAPI();
 		return sIsWXAppInstalledAndSupported;
 	}
 
@@ -506,11 +507,40 @@ public class Utity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws @date
-	 *             2015年8月30日下午3:17:16
+	 * @throws @date 2015年8月30日下午3:17:16
 	 */
-	public static void setUserAndTel(TextView textView_user, TextView textView_tel, eDaoClientApplication application) {
+	public static void setUserAndTel(TextView textView_user,
+			TextView textView_tel, eDaoClientApplication application) {
 		textView_user.setText(Utity.addStarByName(application.getRealName()));
 		textView_tel.setText(Utity.addStarByNum(3, 7, application.getTel()));
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: isSmaller
+	 * @Description: TODO 时间比较大小
+	 * @author 李苜菲
+	 * @return
+	 * @return boolean
+	 * @throws
+	 * @date 2015年9月9日下午11:05:24
+	 */
+	public static boolean isSmaller(String startDate, String endDate) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar_start = Calendar.getInstance();
+		Calendar calendar_end = Calendar.getInstance();
+		try {
+			calendar_start.setTime(format.parse(startDate));
+			calendar_end.setTime(format.parse(endDate));
+		} catch (ParseException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
+		int result = calendar_start.compareTo(calendar_end);
+		if (result > 0)
+			return false;
+		return true;
 	}
 }

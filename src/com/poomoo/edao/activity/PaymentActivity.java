@@ -15,9 +15,7 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,7 +43,6 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.PayInfoData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -54,7 +51,6 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.weixinpay.MD5;
 import com.poomoo.edao.weixinpay.Util;
-import com.poomoo.edao.widget.CityPicker;
 import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.poomoo.edao.widget.MessageBox_YESNO;
@@ -87,7 +83,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	private eDaoClientApplication application = null;
 	private String money = "", payType = "1", payPwd = "", remark = "",
 			orderId = "", referrerTel = "", referrerUserId = "",
-			referrerName = "", address = "", joinType = "", areaId = "";
+			referrerName = "", joinType = "", areaId = "";
 	private static final String[] channel = new String[] { "意币支付", "微信支付" };
 	private boolean needPassword = true, isBalanceEnough = true;
 	private ProgressDialog progressDialog;
@@ -289,7 +285,6 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		data.put("userId", application.getUserId());
 		data.put("areaId", areaId);
 		data.put("joinType", joinType);
-		data.put("address", address);
 		data.put("referrerTel", referrerTel);
 		data.put("referrerUserId", referrerUserId);
 		data.put("referrerName", referrerName);

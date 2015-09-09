@@ -7,9 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -24,17 +22,12 @@ import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.PayInfoData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.weixinpay.Constants;
 import com.poomoo.edao.widget.CityPicker;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 
@@ -119,7 +112,6 @@ public class AllianceApplyActivity extends BaseActivity implements
 				pBundle.putString("referrerTel", merchant_num);
 				pBundle.putString("referrerUserId", referrerUserId);
 				pBundle.putString("referrerName", referrerName);
-				pBundle.putString("address", "");
 				pBundle.putString("joinType", "1");
 				openActivity(PaymentActivity.class, pBundle);
 				finish();

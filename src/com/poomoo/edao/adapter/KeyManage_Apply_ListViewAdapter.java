@@ -73,8 +73,7 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 		}
 		holder.textView_name.setText(Utity.addStarByName(list.get(position)
 				.getRealName()));
-		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position)
-				.getTel()));
+		holder.textView_tel.setText(list.get(position).getTel());
 		holder.textView_date.setText(list.get(position).getJoinDt());
 		holder.button_agree.setOnClickListener(listener);
 		holder.button_refuse.setOnClickListener(listener);

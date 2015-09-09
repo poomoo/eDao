@@ -53,8 +53,6 @@ public class DealerApplyActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_dealer_apply);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
@@ -100,7 +98,6 @@ public class DealerApplyActivity extends BaseActivity implements
 				pBundle.putString("referrerTel", merchant_phone);
 				pBundle.putString("referrerUserId", referrerUserId);
 				pBundle.putString("referrerName", referrerName);
-				pBundle.putString("address", "");
 				pBundle.putString("joinType", "2");
 				openActivity(PaymentActivity.class, pBundle);
 				finish();

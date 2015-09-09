@@ -268,6 +268,11 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			Utity.showToast(getActivity().getApplicationContext(),
 					eDaoClientConfig.notDevelop);
 			return;
+		} else if (arg2 == 6) {
+			if (application.getJoinStatus().equals("1"))
+				Utity.showToast(getActivity().getApplication(), "已经加盟");
+			else
+				startActivity(new Intent(getActivity(), outIntent[arg2]));
 		} else if (arg2 == 8) {
 			if (NavigationActivity.fragment_Store == null)
 				NavigationActivity.fragment_Store = new Fragment_Store();

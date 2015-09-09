@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -48,8 +47,6 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 
 	private String money = "";
 	private eDaoClientApplication application = null;
-	private SharedPreferences sharedPreferences_certification = null;
-	private static final String bankaccount = "6226622662266226123";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;

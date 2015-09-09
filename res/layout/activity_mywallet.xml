@@ -207,7 +207,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingRight="2dp"
-                    android:text="开户名称:"
+                    android:text="开户姓名:"
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
@@ -308,8 +308,8 @@
                         android:gravity="center"
                         android:text="余额不足"
                         android:textColor="@color/red"
-                        android:visibility="gone"
-                        android:textSize="@dimen/textsize10" />
+                        android:textSize="@dimen/textsize10"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

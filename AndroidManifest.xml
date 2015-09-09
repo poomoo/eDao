@@ -71,6 +71,7 @@
         <activity android:name=".activity.MapActivity" />
         <activity android:name=".activity.MyOrderActivity" />
         <activity android:name=".activity.MywalletActivity" />
+        <activity android:name=".activity.My2DimenCodeActivity" />
         <activity android:name=".activity.NavigationActivity" />
         <activity android:name=".activity.OrderInformationActivity" />
         <activity android:name=".activity.OperateManageActivity" />

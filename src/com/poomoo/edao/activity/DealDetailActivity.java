@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.fragment.Fragment_Classify;
+import com.poomoo.edao.fragment.Fragment_Date;
 import com.poomoo.edao.fragment.Fragment_Status;
 
 /**
@@ -23,8 +24,9 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 	public static String status = "2";
 	private Fragment_Status fragment_Status;
 	private Fragment_Classify fragment_Classify;
+	private Fragment_Date fragment_Date;
 	private Fragment curFragment;
-	private RadioButton button_status, button_classify;
+	private RadioButton button_status, button_classify, button_date;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,11 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 		// TODO 自动生成的方法存
 		button_status = (RadioButton) findViewById(R.id.deal_detail_radioButton_status);
 		button_classify = (RadioButton) findViewById(R.id.deal_detail_radioButton_classify);
+		button_date = (RadioButton) findViewById(R.id.deal_detail_radioButton_date);
 
 		button_status.setOnClickListener(this);
 		button_classify.setOnClickListener(this);
+		button_date.setOnClickListener(this);
 	}
 
 	@Override
@@ -74,7 +78,13 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 			curFragment = fragment_Classify;
 			break;
 		case R.id.deal_detail_radioButton_date:
+			System.out.println("点击时间");
+			if (fragment_Date == null)
+				fragment_Date = new Fragment_Date();
+			switchFragment(fragment_Date);
+			curFragment = fragment_Date;
 			break;
+
 		}
 	}
 

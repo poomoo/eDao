@@ -21,8 +21,8 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.activity.BankCardManageActivity;
 import com.poomoo.edao.activity.KeyAndOperateActivity;
 import com.poomoo.edao.activity.LoginActivity;
+import com.poomoo.edao.activity.My2DimenCodeActivity;
 import com.poomoo.edao.activity.PassWordManageActivity;
-import com.poomoo.edao.activity.ShareActivity;
 import com.poomoo.edao.activity.StoreManageActivity;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -131,7 +131,7 @@ public class Fragment_Personal_Center extends Fragment implements
 			break;
 		case R.id.personalcenter_layout_twodimencode:
 			Intent intent_2dimencode = new Intent(getActivity(),
-					ShareActivity.class);
+					My2DimenCodeActivity.class);
 			startActivity(intent_2dimencode);
 			break;
 		case R.id.personalcenter_layout_operate_manage:
@@ -152,6 +152,8 @@ public class Fragment_Personal_Center extends Fragment implements
 				}
 			} else
 				Utity.showToast(getActivity().getApplication(), "非加盟会员");
+			// startActivity(new Intent(getActivity(),
+			// KeyAndOperateActivity.class));
 			break;
 		case R.id.personalcenter_layout_store_manage:
 			System.out.println("application.getJoinStatus():"

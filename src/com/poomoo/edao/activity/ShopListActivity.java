@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -44,7 +45,7 @@ import com.poomoo.edao.widget.MyListView.OnRefreshListener;
  * @date 2015-8-4 下午3:43:49
  */
 public class ShopListActivity extends BaseActivity implements
-		OnItemClickListener {
+		OnItemClickListener, OnClickListener {
 	private EditText editText_keywords;
 	private ImageView imageView_back;
 	private TextView textView_classify;
@@ -101,6 +102,8 @@ public class ShopListActivity extends BaseActivity implements
 			}
 		});
 		listView.setOnItemClickListener(this);
+
+		imageView_back.setOnClickListener(this);
 
 	}
 
@@ -265,6 +268,16 @@ public class ShopListActivity extends BaseActivity implements
 		super.onDestroy();
 		ImageLoader.getInstance().clearMemoryCache();
 		ImageLoader.getInstance().clearDiskCache();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.shop_list_imageView_back:
+			finish();
+			break;
+		}
 	}
 
 }
