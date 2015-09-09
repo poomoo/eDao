@@ -17,6 +17,12 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
+import com.poomoo.edao.util.Utity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -40,12 +46,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
-import com.poomoo.edao.util.Utity;
 
 public class UploadPicsActivity extends BaseActivity implements OnClickListener {
 	private Button button_upload;

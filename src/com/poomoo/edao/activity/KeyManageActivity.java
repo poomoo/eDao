@@ -9,16 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
-import com.lidroid.xutils.db.annotation.Check;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.KeyManage_Apply_ListViewAdapter;
 import com.poomoo.edao.adapter.KeyManage_Used_ListViewAdapter;
@@ -31,6 +22,14 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 /**
  * 
@@ -50,8 +49,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
-	private int apply_curPage = 1, apply_pageSize = 10, used_curPage = 1,
-			used_pageSize = 10;
+	private int apply_curPage = 1, apply_pageSize = 10, used_curPage = 1, used_pageSize = 10;
 	private boolean apply_isFirst = true, used_isFirst = true;// 是否第一次加载
 	private eDaoClientApplication application;
 	private static final String apply = "1", used = "2", notUsed = "3";
@@ -88,6 +86,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 
 		list_apply = new ArrayList<KeyManageData>();
 		list_used = new ArrayList<KeyManageData>();
+		adapter_apply = new KeyManage_Apply_ListViewAdapter(KeyManageActivity.this, list_apply);
+		adapter_used = new KeyManage_Used_ListViewAdapter(KeyManageActivity.this, list_used);
 		showProgressDialog();
 		getApplyData();
 		listView.setonRefreshListener(new OnRefreshListener() {
@@ -113,9 +113,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			if (apply_isFirst) {
 				showProgressDialog();
 				getApplyData();
-			} else
-				listView.setAdapter(adapter_apply);
-
+			}
+			listView.setAdapter(adapter_apply);
 			listView.setonRefreshListener(new OnRefreshListener() {
 				public void onRefresh() {
 					getApplyData();
@@ -128,8 +127,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			if (used_isFirst) {
 				showProgressDialog();
 				getUsedData();
-			} else
-				listView.setAdapter(adapter_used);
+			}
+			listView.setAdapter(adapter_used);
 			listView.setonRefreshListener(new OnRefreshListener() {
 				public void onRefresh() {
 					getUsedData();
@@ -155,78 +154,63 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		data.put("currPage", apply_curPage);
 		data.put("pageSize", apply_pageSize);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-										JSONArray pager = result
-												.getJSONArray("records");
-										int length = pager.length();
-										for (int i = 0; i < length; i++) {
-											KeyManageData data = new KeyManageData();
-											data = gson.fromJson(pager
-													.getJSONObject(i)
-													.toString(),
-													KeyManageData.class);
-											list_apply.add(data);
-										}
-										if (apply_isFirst) {
-											adapter_apply = new KeyManage_Apply_ListViewAdapter(
-													KeyManageActivity.this,
-													list_apply);
-											listView.setAdapter(adapter_apply);
-											apply_isFirst = false;
-										} else {
-											adapter_apply
-													.notifyDataSetChanged();
-										}
-										apply_curPage += 10;
-										apply_pageSize += 10;
-
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+								JSONArray pager = result.getJSONArray("records");
+								int length = pager.length();
+								for (int i = 0; i < length; i++) {
+									KeyManageData data = new KeyManageData();
+									data = gson.fromJson(pager.getJSONObject(i).toString(), KeyManageData.class);
+									list_apply.add(data);
 								}
-								listView.onRefreshComplete();
-							}
+								if (apply_isFirst) {
+									apply_isFirst = false;
+								} else {
+									adapter_apply.notifyDataSetChanged();
+								}
+								apply_curPage += 10;
+								apply_pageSize += 10;
 
-						});
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
+							}
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+						listView.onRefreshComplete();
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								listView.onRefreshComplete();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						listView.onRefreshComplete();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	private void getUsedData() {
@@ -240,77 +224,63 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		data.put("currPage", used_curPage);
 		data.put("pageSize", used_pageSize);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-										JSONArray pager = result
-												.getJSONArray("records");
-										int length = pager.length();
-										for (int i = 0; i < length; i++) {
-											KeyManageData data = new KeyManageData();
-											data = gson.fromJson(pager
-													.getJSONObject(i)
-													.toString(),
-													KeyManageData.class);
-											list_used.add(data);
-										}
-										if (used_isFirst) {
-											adapter_used = new KeyManage_Used_ListViewAdapter(
-													KeyManageActivity.this,
-													list_used);
-											listView.setAdapter(adapter_used);
-											used_isFirst = false;
-										} else {
-											adapter_used.notifyDataSetChanged();
-										}
-										used_curPage += 10;
-										used_pageSize += 10;
-
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+								JSONArray pager = result.getJSONArray("records");
+								int length = pager.length();
+								for (int i = 0; i < length; i++) {
+									KeyManageData data = new KeyManageData();
+									data = gson.fromJson(pager.getJSONObject(i).toString(), KeyManageData.class);
+									list_used.add(data);
 								}
-								listView.onRefreshComplete();
-							}
+								if (used_isFirst) {
+									used_isFirst = false;
+								} else {
+									adapter_used.notifyDataSetChanged();
+								}
+								used_curPage += 10;
+								used_pageSize += 10;
 
-						});
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
+							}
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+						listView.onRefreshComplete();
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								listView.onRefreshComplete();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						listView.onRefreshComplete();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	private void getNotUsedData() {
@@ -322,55 +292,49 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		data.put("userId", application.getUserId());
 		data.put("status", notUsed);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
 
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										content = result.getString("content");
-										textView_content.setText(content);
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								content = result.getString("content");
+								textView_content.setText(content);
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
 
-						});
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	public class MyListener implements OnClickListener {
@@ -404,47 +368,44 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		data.put("checkUserId", application.getUserId());
 		data.put("status", status);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1) {
-									showProgressDialog();
-									apply_curPage = 1;
-									apply_pageSize = 10;
-									list_apply.clear();
-									getApplyData();
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-							}
-
-						});
+						if (responseData.getRsCode() == 1) {
+							showProgressDialog();
+							apply_curPage = 1;
+							apply_pageSize = 10;
+							list_apply.clear();
+							getApplyData();
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	/**
@@ -455,8 +416,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -475,8 +436,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

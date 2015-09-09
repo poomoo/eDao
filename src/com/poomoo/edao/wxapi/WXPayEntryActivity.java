@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.BaseActivity;
+import com.poomoo.edao.activity.BuyKeyActivity;
 import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.activity.RechargeActivity;
 import com.poomoo.edao.weixinpay.Constants;
@@ -16,8 +17,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-public class WXPayEntryActivity extends BaseActivity implements
-		IWXAPIEventHandler {
+public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 	private IWXAPI api;
 	private TextView textView;
 
@@ -33,6 +33,8 @@ public class WXPayEntryActivity extends BaseActivity implements
 			RechargeActivity.instance.finish();
 		if (PaymentActivity.instance != null)
 			PaymentActivity.instance.finish();
+		if (BuyKeyActivity.instance != null)
+			BuyKeyActivity.instance.finish();
 		api.handleIntent(getIntent(), this);
 	}
 

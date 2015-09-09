@@ -15,6 +15,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.weixinpay.Constants;
+import com.poomoo.edao.weixinpay.MD5;
+import com.poomoo.edao.weixinpay.Util;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -37,26 +57,6 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.service.Get_UserInfo_Service;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.weixinpay.Constants;
-import com.poomoo.edao.weixinpay.MD5;
-import com.poomoo.edao.weixinpay.Util;
-import com.poomoo.edao.widget.DialogResultListener;
-import com.poomoo.edao.widget.MessageBox_YES;
-import com.poomoo.edao.widget.MessageBox_YESNO;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-
 /**
  * 
  * @ClassName BuyKeyActivity
@@ -66,11 +66,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
-	private TextView textView_balance, textView_channel, textView_isEnough,
-			textView_pay_money, textView_count;
+	private TextView textView_balance, textView_channel, textView_isEnough, textView_pay_money, textView_count;
 	private EditText editText_pay_password, editText_remark;
-	private LinearLayout layout_count, layout_channel, layout_ecoin,
-			layout_control;
+	private LinearLayout layout_count, layout_channel, layout_ecoin, layout_control;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -80,8 +78,8 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 	private ListView listView;
 
 	private eDaoClientApplication application = null;
-	private String userId = "", realName = "", tel = "", money = "",
-			payType = "1", payPwd = "", remark = "", orderId = "", buyNum = "";
+	private String userId = "", realName = "", tel = "", money = "", payType = "1", payPwd = "", remark = "",
+			orderId = "", buyNum = "";
 	private static final String[] channel = new String[] { "意币支付", "微信支付" };
 	private boolean needPassword = true;
 	private ProgressDialog progressDialog;
@@ -154,12 +152,10 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.buy_key_layout_count:
-			showWindow_count(layout_count, listView, list_count,
-					textView_count, adapter_count);
+			showWindow_count(layout_count, listView, list_count, textView_count, adapter_count);
 			break;
 		case R.id.buy_key_layout_channel:
-			showWindow_payWay(layout_channel, listView, list_payWay,
-					textView_channel, adapter_channel);
+			showWindow_payWay(layout_channel, listView, list_payWay, textView_channel, adapter_channel);
 			break;
 		case R.id.buy_key_btn_pay:
 			if (checkInput()) {
@@ -193,8 +189,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 		if (Double.parseDouble(money) > (double) application.getTotalEb()) {
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.balanceIsNotEnough);
+			Utity.showToast(getApplicationContext(), eDaoClientConfig.balanceIsNotEnough);
 			textView_isEnough.setVisibility(View.VISIBLE);
 			return false;
 		}
@@ -214,82 +209,66 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		data.put("bizName", "20000");
 		data.put("method", "20009");
 		showProgressDialog("请稍后...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							box_YES = new MessageBox_YES(BuyKeyActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
 
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									box_YES = new MessageBox_YES(
-											BuyKeyActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+							try {
+								System.out.println("jsonData:" + responseData.getJsonData());
+								String jsonData = "{\"records\":" + responseData.getJsonData() + "}";
+								System.out.println("jsonData:" + responseData.getJsonData());
+								JSONObject result = new JSONObject(jsonData);
 
-									try {
-										System.out.println("jsonData:"
-												+ responseData.getJsonData());
-										String jsonData = "{\"records\":"
-												+ responseData.getJsonData()
-												+ "}";
-										System.out.println("jsonData:"
-												+ responseData.getJsonData());
-										JSONObject result = new JSONObject(
-												jsonData);
-
-										JSONArray array = result
-												.getJSONArray("records");
-										int length = array.length();
-										System.out.println("length:" + length);
-										HashMap<String, String> item;
-										list_count = new ArrayList<HashMap<String, String>>();
-										for (int i = 0; i < length; i++) {
-											item = new HashMap<String, String>();
-											item.put("name", array
-													.getJSONObject(i)
-													.getString("keysNum"));
-											item.put("payFee", array
-													.getJSONObject(i)
-													.getString("payFee"));
-											list_count.add(item);
-										}
-										adapter_count = new ChannelSpinnerAdapter(
-												BuyKeyActivity.this, list_count);
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-
+								JSONArray array = result.getJSONArray("records");
+								int length = array.length();
+								System.out.println("length:" + length);
+								HashMap<String, String> item;
+								list_count = new ArrayList<HashMap<String, String>>();
+								for (int i = 0; i < length; i++) {
+									item = new HashMap<String, String>();
+									item.put("name", array.getJSONObject(i).getString("keysNum"));
+									item.put("payFee", array.getJSONObject(i).getString("payFee"));
+									list_count.add(item);
 								}
-
+								adapter_count = new ChannelSpinnerAdapter(BuyKeyActivity.this, list_count);
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-						});
-					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
+						}
 
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	private void confirm() {
@@ -304,77 +283,64 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
 		showProgressDialog("提交中...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() != 1) {
-									closeProgressDialog();
-									box_YES = new MessageBox_YES(
-											BuyKeyActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-									if (payType.equals("1")) {
-										closeProgressDialog();
-										startService(new Intent(
-												BuyKeyActivity.this,
-												Get_UserInfo_Service.class));
-										finish();
-									} else {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											orderId = result
-													.getString("ordersId");
-											GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
-											getPrepayId.execute();
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									}
-
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
+						if (responseData.getRsCode() != 1) {
+							closeProgressDialog();
+							box_YES = new MessageBox_YES(BuyKeyActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							if (payType.equals("1")) {
 								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+								startService(new Intent(BuyKeyActivity.this, Get_UserInfo_Service.class));
+								finish();
+							} else {
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
+									orderId = result.getString("ordersId");
+									GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
+									getPrepayId.execute();
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
+								}
 							}
-						});
+
+						}
+
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
-	public void showWindow_count(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+	public void showWindow_count(View spinnerlayout, ListView listView, final List<HashMap<String, String>> list,
+			final TextView text, final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -404,8 +370,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				buyNum = list.get(arg2).get("name");
 				money = list.get(arg2).get("payFee");
@@ -422,13 +387,10 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	public void showWindow_payWay(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+	public void showWindow_payWay(View spinnerlayout, ListView listView, final List<HashMap<String, String>> list,
+			final TextView text, final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -458,8 +420,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
 				payType = list.get(arg2).get("id");
@@ -488,8 +449,8 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
@@ -508,16 +469,15 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
 			progressDialog.dismiss();
 	}
 
-	private class GetPrepayIdTask extends
-			AsyncTask<Void, Void, Map<String, String>> {
+	private class GetPrepayIdTask extends AsyncTask<Void, Void, Map<String, String>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -526,8 +486,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected void onPostExecute(Map<String, String> result) {
 			resultunifiedorder = result;
-			System.out.println("onPostExecute resultunifiedorder:"
-					+ resultunifiedorder);
+			System.out.println("onPostExecute resultunifiedorder:" + resultunifiedorder);
 			genPayReq();
 			sendPayReq();
 		}
@@ -540,8 +499,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected Map<String, String> doInBackground(Void... params) {
 			System.out.println("doInBackground");
-			String url = String
-					.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
+			String url = String.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
 			String entity = genProductArgs();
 
 			Log.e("orion", entity);
@@ -568,20 +526,16 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
 			xml.append("</xml>");
 			List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
-			packageParams
-					.add(new BasicNameValuePair("appid", Constants.APP_ID));
+			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
 			packageParams.add(new BasicNameValuePair("body", "充值"));
-			packageParams
-					.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
+			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-			packageParams.add(new BasicNameValuePair("notify_url",
-					eDaoClientConfig.wxReUrl));
+			packageParams.add(new BasicNameValuePair("notify_url", eDaoClientConfig.wxReUrl));
 			packageParams.add(new BasicNameValuePair("out_trade_no", orderId));
-			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity
-					.getLocalHostIp()));
+			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity.getLocalHostIp()));
 			Double fee = Double.parseDouble(money) * 100;
-			packageParams.add(new BasicNameValuePair("total_fee", String
-					.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
+			packageParams
+					.add(new BasicNameValuePair("total_fee", String.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 
 			String sign = genPackageSign(packageParams);
@@ -611,8 +565,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String packageSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String packageSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", packageSign);
 		return packageSign;
 	}
@@ -629,8 +582,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String appSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String appSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", appSign);
 		return appSign;
 	}
@@ -687,8 +639,7 @@ public class BuyKeyActivity extends BaseActivity implements OnClickListener {
 
 	private String genNonceStr() {
 		Random random = new Random();
-		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000))
-				.getBytes());
+		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
 	}
 
 	private long genTimeStamp() {

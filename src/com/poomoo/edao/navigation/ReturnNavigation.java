@@ -55,7 +55,7 @@ public class ReturnNavigation extends Fragment {
 		String[] activity_name = thisactivity[0].split("\\.");
 		switch (activity_name[4]) {
 		case "RebateActivity":
-			textView_title.setText("全国返利");
+			textView_title.setText("普惠全民");
 			break;
 		case "PurchaseAndGetDetailActivity":
 			textView_title.setText("消费领取");

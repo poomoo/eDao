@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,8 +50,8 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_front"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -77,8 +77,8 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -111,8 +111,8 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_identitycard_inhand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -138,8 +138,8 @@
 
                 <ImageView
                     android:id="@+id/uploadpics_imageView_businesss_license"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -158,7 +158,7 @@
         android:layout_weight="2"
         android:gravity="center_vertical|bottom"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="@dimen/margin10" >
 
         <Button
             android:id="@+id/uploadpics_btn_upload"
@@ -169,7 +169,7 @@
             android:gravity="center"
             android:text="上传"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
 </LinearLayout>

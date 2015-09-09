@@ -15,9 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin10"
-        android:paddingRight="@dimen/margin10" >
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/my_order_radioButton_payed"
@@ -27,11 +25,12 @@
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
             android:text="已支付"
             android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize14" />
+            android:textSize="@dimen/textsize16" />
 
         <RadioButton
             android:id="@+id/my_order_radioButton_nopay"
@@ -39,11 +38,12 @@
             android:layout_height="@dimen/margin40"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
             android:text="未支付"
             android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize14" />
+            android:textSize="@dimen/textsize16" />
 
         <RadioButton
             android:id="@+id/my_order_radioButton_delete"
@@ -52,11 +52,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
             android:text="已删除"
             android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize14" />
+            android:textSize="@dimen/textsize16" />
     </RadioGroup>
 
     <TextView
