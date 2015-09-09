@@ -78,6 +78,7 @@
         <activity android:name=".activity.PartnerApplyActivity" />
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.PersonalCenterActivity" />
+        <activity android:name=".activity.ProtocolActivity" />
         <activity android:name=".activity.PurchaseAndGetDetailActivity" />
         <activity android:name=".activity.RebateActivity" />
         <activity android:name=".activity.RechargeActivity" />

@@ -12,51 +12,12 @@
         android:layout_height="wrap_content" />
 
     <RadioGroup
-        android:id="@+id/navigation_radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <RadioButton
-            android:id="@+id/my_order_radioButton_status"
-            style="@null"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/margin40"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="true"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="状态"
-            android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
-
-        <RadioButton
-            android:id="@+id/my_order_radioButton_date"
-            style="@null"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/style_trade_detail_bottom_line"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="时间"
-            android:textColor="@drawable/style_navigation_text_background"
-            android:textSize="@dimen/textsize16" />
-    </RadioGroup>
-
-    <RadioGroup
-        android:id="@+id/my_order_radioGroup_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin10"
-        android:paddingRight="@dimen/margin10"
-        android:visibility="gone" >
+        android:paddingRight="@dimen/margin10" >
 
         <RadioButton
             android:id="@+id/my_order_radioButton_payed"

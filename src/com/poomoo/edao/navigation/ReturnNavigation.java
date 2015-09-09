@@ -32,24 +32,21 @@ public class ReturnNavigation extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		return inflater.inflate(R.layout.navigation_return, container, false);
 
 	}
 
 	public void init() {
-		layout_return = (LinearLayout) getView().findViewById(
-				R.id.navigation_layout_return);
+		layout_return = (LinearLayout) getView().findViewById(R.id.navigation_layout_return);
 		layout_return.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				getActivity().finish();
 			}
 		});
-		textView_title = (TextView) getView().findViewById(
-				R.id.navigation_textView_title);
+		textView_title = (TextView) getView().findViewById(R.id.navigation_textView_title);
 		setNavigationTitle();
 	}
 
@@ -173,6 +170,9 @@ public class ReturnNavigation extends Fragment {
 			break;
 		case "BankCardManageActivity":
 			textView_title.setText("银行卡管理");
+			break;
+		case "ProtocolActivity":
+			textView_title.setText("注册协议");
 			break;
 		}
 

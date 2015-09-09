@@ -107,12 +107,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			login();
 			break;
 		case R.id.login_textView_regist:
-			startActivity(new Intent(this, RegistrationActivity.class));
+			openActivity(ProtocolActivity.class);
 			break;
 		case R.id.login_textView_forget_password:
-			startActivity(new Intent(this, GetIdentityCodeActivity.class));
+			openActivity(GetIdentityCodeActivity.class);
 			break;
-
 		}
 	}
 
@@ -125,85 +124,62 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			data.put("password", passWord);
 
 			showProgressDialog();
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
+			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+				@Override
+				public void onFinish(final ResponseData responseData) {
+					// TODO 自动生成的方法存根
+					closeProgressDialog();
+					System.out.println("进入onFinish");
+					runOnUiThread(new Runnable() {
 						@Override
-						public void onFinish(final ResponseData responseData) {
+						public void run() {
 							// TODO 自动生成的方法存根
-							closeProgressDialog();
-							System.out.println("进入onFinish");
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() != 1) {
-										box_YESNO = new MessageBox_YESNO(
-												LoginActivity.this);
-										box_YESNO.showDialog(
-												responseData.getMsg(), null);
-									} else {
-										loginResData = new UserInfoData();
-										loginResData = gson.fromJson(
-												responseData.getJsonData(),
-												UserInfoData.class);
-										editor.putString("userId",
-												loginResData.getUserId());
-										editor.putString("realName",
-												loginResData.getRealName());
-										editor.putString("tel",
-												loginResData.getTel());
-										editor.putString("type",
-												loginResData.getType());
-										editor.putString("realNameAuth",
-												loginResData.getRealNameAuth());
-										editor.putString("payPwdValue",
-												loginResData.getPayPwdValue());
-										editor.putString("passWord", passWord);
-										editor.putBoolean("isLogin", true);
-										editor.commit();
-										application.setRealName(loginResData
-												.getRealName());
-										application.setTel(loginResData
-												.getTel());
-										application.setUserId(loginResData
-												.getUserId());
-										application.setType(loginResData
-												.getType());
-										application
-												.setRealNameAuth(loginResData
-														.getRealNameAuth());
-										application.setPayPwdValue(loginResData
-												.getPayPwdValue());
-										startService(new Intent(
-												LoginActivity.this,
-												Get_UserInfo_Service.class));
-										LoginActivity.this
-												.startActivity(new Intent(
-														LoginActivity.this,
-														NavigationActivity.class));
-										LoginActivity.this.finish();
-										System.out.println("跳转");
-									}
-								}
-							});
-
-						}
-
-						@Override
-						public void onError(final Exception e) {
-							// TODO 自动生成的方法存根
-							closeProgressDialog();
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									Utity.showToast(getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
-
-							});
+							if (responseData.getRsCode() != 1) {
+								box_YESNO = new MessageBox_YESNO(LoginActivity.this);
+								box_YESNO.showDialog(responseData.getMsg(), null);
+							} else {
+								loginResData = new UserInfoData();
+								loginResData = gson.fromJson(responseData.getJsonData(), UserInfoData.class);
+								editor.putString("userId", loginResData.getUserId());
+								editor.putString("realName", loginResData.getRealName());
+								editor.putString("tel", loginResData.getTel());
+								editor.putString("type", loginResData.getType());
+								editor.putString("realNameAuth", loginResData.getRealNameAuth());
+								editor.putString("payPwdValue", loginResData.getPayPwdValue());
+								editor.putString("passWord", passWord);
+								editor.putBoolean("isLogin", true);
+								editor.commit();
+								application.setRealName(loginResData.getRealName());
+								application.setTel(loginResData.getTel());
+								application.setUserId(loginResData.getUserId());
+								application.setType(loginResData.getType());
+								application.setRealNameAuth(loginResData.getRealNameAuth());
+								application.setPayPwdValue(loginResData.getPayPwdValue());
+								startService(new Intent(LoginActivity.this, Get_UserInfo_Service.class));
+								LoginActivity.this
+										.startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+								LoginActivity.this.finish();
+								System.out.println("跳转");
+							}
 						}
 					});
+
+				}
+
+				@Override
+				public void onError(final Exception e) {
+					// TODO 自动生成的方法存根
+					closeProgressDialog();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+						}
+
+					});
+				}
+			});
 		}
 	}
 
@@ -215,8 +191,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return boolean
-	 * @throws
-	 * @date 2015-8-12上午10:11:38
+	 * @throws @date
+	 *             2015-8-12上午10:11:38
 	 */
 	private boolean checkInput() {
 		phoneNum = editText_phone.getText().toString().trim();
@@ -246,8 +222,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -266,8 +242,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
