@@ -9,18 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Bitmap.Config;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -43,7 +31,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.overlayutil.OverlayManager;
 import com.google.gson.Gson;
@@ -57,6 +44,17 @@ import com.poomoo.edao.model.StoreData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+
+import android.app.ProgressDialog;
+import android.graphics.Bitmap.Config;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 public class MapActivity extends BaseActivity implements OnMapClickListener,
 		OnMapStatusChangeListener, OnClickListener {
@@ -338,7 +336,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			mBaiduMap.setMyLocationEnabled(true);
 			// 设置自定义图标
 			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
-					.fromResource(R.drawable.ic_maps_indicator_current_position);
+					.fromResource(R.drawable.ic_map_icon);
 			MyLocationConfiguration config = new MyLocationConfiguration(
 					MyLocationConfiguration.LocationMode.NORMAL, false,
 					mCurrentMarker);

@@ -49,12 +49,10 @@ import com.poomoo.edao.widget.MessageBox_YESNO;
  */
 public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
-	private TextView textView_payee_name, textView_payee_phonenum,
-			textView_balance, textView_channel, textView_isEnough;
-	private EditText editText_pay_money, editText_pay_password,
-			editText_remark;
-	private LinearLayout layout_channel, layout_password, layout_ecoin,
-			layout_control;
+	private TextView textView_payee_name, textView_payee_phonenum, textView_balance, textView_channel,
+			textView_isEnough;
+	private EditText editText_pay_money, editText_pay_password, editText_remark;
+	private LinearLayout layout_balance, layout_password;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -64,11 +62,9 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	private ListView listView;
 
 	private eDaoClientApplication application = null;
-	private String userId = "", realName = "", tel = "", money = "",
-			payType = "1", payPwd = "", remark = "";
+	private String userId = "", realName = "", tel = "", money = "", payType = "1", payPwd = "", remark = "";
 	private static final String[] channel = new String[] { "意币支付", "现金支付" };
-	private boolean isSelectedChannle = false, needPassword = true,
-			isBalanceEnough = true;
+	private boolean needPassword = false, isBalanceEnough = true;
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YESNO box_YESNO;
@@ -94,7 +90,6 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		tel = getIntent().getExtras().getString("tel");
 		money = getIntent().getExtras().getString("money");
 		transferType = getIntent().getExtras().getString("transferType");
-		// payType = getIntent().getExtras().getString("payType");
 	}
 
 	private void init() {
@@ -109,35 +104,37 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		editText_pay_password = (EditText) findViewById(R.id.transfer2_editText_pay_password);
 		editText_remark = (EditText) findViewById(R.id.transfer2_editText_remark);
 
-		layout_channel = (LinearLayout) findViewById(R.id.transfer2_layout_channel);
-		layout_ecoin = (LinearLayout) findViewById(R.id.transfer2_layout_by_ecoin);
-		layout_control = (LinearLayout) findViewById(R.id.transfer2_layout_control);
+		layout_balance = (LinearLayout) findViewById(R.id.transfer2_layout_balance);
+		layout_password = (LinearLayout) findViewById(R.id.transfer2_layout_password);
 
 		button_pay = (Button) findViewById(R.id.transfer2_btn_pay);
 
 		button_pay.setOnClickListener(this);
 
-		list = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> data = null;
-		int length = channel.length;
-		for (int i = 0; i < length; i++) {
-			data = new HashMap<String, String>();
-			data.put("name", channel[i]);
-			data.put("id", i + 1 + "");
-			list.add(data);
+		// list = new ArrayList<HashMap<String, String>>();
+		// HashMap<String, String> data = null;
+		// int length = channel.length;
+		// for (int i = 0; i < length; i++) {
+		// data = new HashMap<String, String>();
+		// data.put("name", channel[i]);
+		// data.put("id", i + 1 + "");
+		// list.add(data);
+		// }
+
+		if (transferType.equals("1")) {
+			textView_channel.setText(channel[0]);
+			needPassword = true;
+		} else {
+			layout_balance.setVisibility(View.GONE);
+			layout_password.setVisibility(View.GONE);
+			textView_channel.setText(channel[1]);
 		}
 
 		textView_payee_name.setText(realName);
 		textView_payee_phonenum.setText(tel);
-		textView_channel.setText(channel[0]);
-		layout_channel.setOnClickListener(this);
-		// 指定意币转账后不能选择支付类型
-		// if (TextUtils.isEmpty(payType)) {
-		// payType = "1";
+
 		// layout_channel.setOnClickListener(this);
-		// } else {
-		// isSelectedChannle = true;
-		// }
+
 		// 指定了金额时不能手动修改
 		if (!TextUtils.isEmpty(money)) {
 			editText_pay_money.setText(money);
@@ -149,14 +146,12 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		editText_pay_money.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO 自动生成的方法存根
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// TODO 自动生成的方法存根
 
 			}
@@ -180,8 +175,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 					double money = Double.parseDouble(s.toString().trim());
 					if (money > (double) application.getTotalEb()) {
 						textView_isEnough.setVisibility(View.VISIBLE);
-						textView_isEnough
-								.setText(eDaoClientConfig.balanceIsNotEnough);
+						textView_isEnough.setText(eDaoClientConfig.balanceIsNotEnough);
 						isBalanceEnough = false;
 					} else {
 						isBalanceEnough = true;
@@ -197,10 +191,10 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.transfer2_layout_channel:
-			showWindow(layout_channel, listView, list, textView_channel,
-					adapter);
-			break;
+		// case R.id.transfer2_layout_channel:
+		// showWindow(layout_channel, listView, list, textView_channel,
+		// adapter);
+		// break;
 		case R.id.transfer2_btn_pay:
 			if (checkInput()) {
 				confirm();
@@ -233,8 +227,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 			return false;
 		}
 		if (!isBalanceEnough) {
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.balanceIsNotEnough);
+			Utity.showToast(getApplicationContext(), eDaoClientConfig.balanceIsNotEnough);
 			return false;
 		}
 		money = editText_pay_money.getText().toString().trim();
@@ -265,61 +258,51 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		data.put("remark", remark);
 		data.put("transferType", transferType);
 		showProgressDialog("提交中...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							box_YES = new MessageBox_YES(TransferActivity2.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							if (payType.equals("1"))
+								startService(new Intent(TransferActivity2.this, Get_UserInfo_Service.class));
+							finish();
+						}
 
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									box_YES = new MessageBox_YES(
-											TransferActivity2.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-									if (payType.equals("1"))
-										startService(new Intent(
-												TransferActivity2.this,
-												Get_UserInfo_Service.class));
-									finish();
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
-	public void showWindow(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+	public void showWindow(View spinnerlayout, ListView listView, final List<HashMap<String, String>> list,
+			final TextView text, final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -349,21 +332,19 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
 				payType = list.get(arg2).get("id");
 				if (payType.equals("1")) {
 					needPassword = true;
-					layout_ecoin.setVisibility(View.VISIBLE);
-					layout_control.setVisibility(View.GONE);
+					// layout_ecoin.setVisibility(View.VISIBLE);
+					// layout_control.setVisibility(View.GONE);
 				} else {
 					needPassword = false;
-					layout_ecoin.setVisibility(View.GONE);
-					layout_control.setVisibility(View.VISIBLE);
+					// layout_ecoin.setVisibility(View.GONE);
+					// layout_control.setVisibility(View.VISIBLE);
 				}
-				isSelectedChannle = true;
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;
@@ -380,8 +361,8 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
@@ -400,8 +381,8 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

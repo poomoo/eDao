@@ -110,7 +110,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			openActivity(ProtocolActivity.class);
 			break;
 		case R.id.login_textView_forget_password:
-			openActivity(GetIdentityCodeActivity.class);
+			// openActivity(GetIdentityCodeActivity.class);
+			Bundle pBundle = new Bundle();
+			pBundle.putString("type", "3");
+			openActivity(PassWordManageActivity.class, pBundle);
 			break;
 		}
 	}
@@ -230,6 +233,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			progressDialog = new ProgressDialog(this);
 			progressDialog.setMessage("登录中...");
 			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setCancelable(false);
 		}
 		progressDialog.show();
 	}

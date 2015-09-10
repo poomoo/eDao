@@ -16,19 +16,19 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp" >
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:paddingTop="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
             android:orientation="vertical"
-            android:paddingBottom="10dp"
+            android:paddingBottom="@dimen/margin10"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="10dp" >
+            android:paddingTop="@dimen/margin10" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -129,8 +129,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="@dimen/item_height"
                     android:gravity="center"
                     android:orientation="horizontal" >
 
@@ -173,7 +172,8 @@
                             android:layout_height="wrap_content"
                             android:paddingRight="@dimen/margin10"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_xiala" />
+                            android:src="@drawable/ic_xiala"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <TextView
@@ -182,65 +182,19 @@
                         android:layout_weight="0.2" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/transfer2_layout_by_ecoin"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2.5"
+                    android:layout_height="@dimen/margin5" />
+
+                <LinearLayout
+                    android:id="@+id/transfer2_layout_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin5" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="支付密码 :"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="@dimen/margin5"
-                            android:layout_height="match_parent" />
-
-                        <EditText
-                            android:id="@+id/transfer2_editText_pay_password"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:background="@drawable/style_background"
-                            android:gravity="left|center"
-                            android:inputType="textPassword"
-                            android:paddingLeft="@dimen/margin10"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/item_height"
                         android:gravity="center"
                         android:orientation="horizontal" >
 
@@ -276,16 +230,15 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.2" />
                     </LinearLayout>
-                </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin5" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin5" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="@dimen/item_height"
                     android:gravity="center"
                     android:orientation="horizontal" >
 
@@ -346,9 +299,58 @@
                     android:layout_height="@dimen/margin5" />
 
                 <LinearLayout
+                    android:id="@+id/transfer2_layout_password"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="支付密码 :"
+                            android:textSize="@dimen/textsize14" />
+
+                        <TextView
+                            android:layout_width="@dimen/margin5"
+                            android:layout_height="match_parent" />
+
+                        <EditText
+                            android:id="@+id/transfer2_editText_pay_password"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:background="@drawable/style_background"
+                            android:gravity="left|center"
+                            android:inputType="textPassword"
+                            android:paddingLeft="@dimen/margin10"
+                            android:textSize="@dimen/textsize14" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin5" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
                     android:gravity="center"
                     android:orientation="horizontal" >
 
@@ -389,19 +391,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin10" />
 
-                <LinearLayout
-                    android:id="@+id/transfer2_layout_control"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3.3"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
-                </LinearLayout>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2.5" />
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

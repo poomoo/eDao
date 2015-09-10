@@ -25,18 +25,15 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.TimeCountUtil;
 import com.poomoo.edao.util.Utity;
 
-public class PassWordManageActivity extends BaseActivity implements
-		OnClickListener {
-	private EditText editText_oldpassword, editText_newpassword,
-			editText_newpasswordagain, editText_identifycode;
+public class PassWordManageActivity extends BaseActivity implements OnClickListener {
+	private EditText editText_oldpassword, editText_newpassword, editText_newpasswordagain, editText_identifycode;
 	private Button button_send, button_confirm, button_cancle;
-	private TextView textView_phone;
-	private LinearLayout layout_oldpw, layout_control;
+	private TextView textView_phone, textView_title;
+	private LinearLayout layout_oldpw;
 
 	private eDaoClientApplication application;
 	private Gson gson = new Gson();
-	private String type = "", tel = "", identyNum = "", oldPassWord = "",
-			passWord1 = "", passWord2 = "";
+	private String type = "", tel = "", identyNum = "", oldPassWord = "", passWord1 = "", passWord2 = "";
 	private ProgressDialog progressDialog = null;
 	private boolean isNeedOldPW = true;
 
@@ -65,13 +62,18 @@ public class PassWordManageActivity extends BaseActivity implements
 		button_cancle = (Button) findViewById(R.id.passwordmanage_btn_cancle);
 
 		layout_oldpw = (LinearLayout) findViewById(R.id.passwordmanage_layout_oldpassword);
-		// layout_control = (LinearLayout)
-		// findViewById(R.id.passwordmanage_layout_control);
 
-		if (type.equals("2") && TextUtils.isEmpty(application.getPayPwdValue())) {
+		textView_title = (TextView) findViewById(R.id.navigation_textView_title);
+		if (type.equals("1"))
+			textView_title.setText("账户密码");
+		else if (type.equals("2"))
+			textView_title.setText("支付密码");
+		else
+			textView_title.setText("重置账户密码");
+
+		if ((type.equals("2") && TextUtils.isEmpty(application.getPayPwdValue())) || type.equals("3")) {
 			isNeedOldPW = false;
 			layout_oldpw.setVisibility(View.GONE);
-			// layout_control.setVisibility(View.VISIBLE);
 		}
 
 		button_send.setOnClickListener(this);
@@ -105,13 +107,12 @@ public class PassWordManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-13下午3:19:34
+	 * @throws @date
+	 *             2015-8-13下午3:19:34
 	 */
 	private void sendSms() {
 		// TODO 自动生成的方法存根
-		TimeCountUtil timeCountUtil = new TimeCountUtil(
-				PassWordManageActivity.this, 60000, 1000, button_send);
+		TimeCountUtil timeCountUtil = new TimeCountUtil(PassWordManageActivity.this, 60000, 1000, button_send);
 		timeCountUtil.start();
 
 		Map<String, String> data = new HashMap<String, String>();
@@ -119,40 +120,36 @@ public class PassWordManageActivity extends BaseActivity implements
 		data.put("method", "10003");
 		data.put("tel", tel);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1)
-									Utity.showToast(getApplicationContext(),
-											"验证码发送成功");
-								else
-									Utity.showToast(getApplicationContext(),
-											"验证码发送失败");
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										"请检查网络");
-							}
-						});
+						if (responseData.getRsCode() == 1)
+							Utity.showToast(getApplicationContext(), "验证码发送成功");
+						else
+							Utity.showToast(getApplicationContext(), "验证码发送失败");
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), "请检查网络");
+					}
+				});
+			}
+		});
 	}
 
 	/**
@@ -163,16 +160,18 @@ public class PassWordManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015年8月30日下午5:54:16
+	 * @throws @date
+	 *             2015年8月30日下午5:54:16
 	 */
 	private void confirm() {
 		// TODO 自动生成的方法存根
 		if (checkInput()) {
 			if (type.equals("1"))
 				account();
-			else
+			else if (type.equals("2"))
 				pay();
+			else
+				forget();
 		}
 	}
 
@@ -186,43 +185,40 @@ public class PassWordManageActivity extends BaseActivity implements
 		data.put("code", identyNum);
 
 		showProgressDialog();
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								} else {
-									finish();
-								}
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						} else {
+							finish();
+						}
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	private void pay() {
@@ -235,47 +231,99 @@ public class PassWordManageActivity extends BaseActivity implements
 		data.put("code", identyNum);
 
 		showProgressDialog();
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								} else {
-									Intent intent = new Intent(
-											PassWordManageActivity.this,
-											Get_UserInfo_Service.class);
-									startService(intent);
-									finish();
-								}
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						} else {
+							Intent intent = new Intent(PassWordManageActivity.this, Get_UserInfo_Service.class);
+							startService(intent);
+							finish();
+						}
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: forget
+	 * @Description: TODO 忘记密码
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws @date
+	 *             2015年9月10日上午9:57:02
+	 */
+	private void forget() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10006");
+		data.put("tel", tel);
+		data.put("password", passWord1);
+		data.put("code", identyNum);
+
+		showProgressDialog();
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							finish();
+						}
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	private boolean checkInput() {
@@ -334,8 +382,8 @@ public class PassWordManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -354,8 +402,8 @@ public class PassWordManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

@@ -147,9 +147,9 @@ public class ReturnNavigation extends Fragment {
 		case "MyOrderActivity":
 			textView_title.setText("我的订单");
 			break;
-		case "PassWordManageActivity":
-			textView_title.setText("密码管理");
-			break;
+		// case "PassWordManageActivity":
+		// textView_title.setText("密码管理");
+		// break;
 		case "WXPayEntryActivity":
 			textView_title.setText("支付结果");
 			break;
