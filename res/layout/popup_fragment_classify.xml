@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="#55cccccc"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -16,6 +16,16 @@
             android:orientation="horizontal"
             android:paddingBottom="@dimen/margin10"
             android:paddingTop="@dimen/margin10" >
+
+            <TextView
+                android:id="@+id/fragment_classify_textView_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/textview_selector"
+                android:textSize="@dimen/textsize14" />
 
             <TextView
                 android:id="@+id/fragment_classify_textView_transfer"
@@ -85,16 +95,41 @@
                 android:textColor="@color/textview_selector"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin10"
+            android:paddingTop="@dimen/margin10" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="申请加盟"
+                android:textColor="@color/textview_selector"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="购买商品"
+                android:textColor="@color/textview_selector"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="提现申请"
+                android:textColor="@color/textview_selector"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gainsboro" />
-
-    <FrameLayout
-        android:id="@+id/fragment_classify_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>
