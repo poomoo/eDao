@@ -51,8 +51,7 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
 import com.poomoo.edao.widget.PhotoView.MyGestureListener;
 
-public class Fragment_Store extends Fragment implements OnItemClickListener,
-		OnClickListener {
+public class Fragment_Store extends Fragment implements OnItemClickListener, OnClickListener {
 	private TextView textView_indicator;
 	private EditText editText_keywords;
 	private LinearLayout layout_position, layout_map;
@@ -60,22 +59,12 @@ public class Fragment_Store extends Fragment implements OnItemClickListener,
 	private GridView gridView;
 	private Fragment_Store_GridViewAdapter gridViewAdapter;
 
-	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
-			"生活超市", "旅游度假", "美容保健", "广告印刷", "数码电器", "皮具箱包", "酒类服务", "户外摄影",
-			"汽车服务", "教育培训", "农林牧副", "医药服务", "交通运输", "办公家居", "房产建材", "机械五金" };
-	// 1金银首饰 2 酒店娱乐 3 餐饮美食 4 服装鞋类 5 生活超市 6 旅游度假 7 美容保健 8 宣传广告 9 数码电器
-	// 10 皮具箱包 11 酒店服务 12 户外休闲 13 汽车服务 14 教育培训 15 农副产品 16 医药服务 17 交通运输 18 办公家具
-	// 19 建房建材 20 机械设备
-	private final int[] list_image = { R.drawable.ic_store_jewelry,
-			R.drawable.ic_store_hotel, R.drawable.ic_store_food,
-			R.drawable.ic_store_clothing, R.drawable.ic_store_super_market,
-			R.drawable.ic_store_travel, R.drawable.ic_store_beauty,
-			R.drawable.ic_store_advertisement, R.drawable.ic_store_electronic,
-			R.drawable.ic_store_bags, R.drawable.ic_store_wine,
-			R.drawable.ic_store_relaxing, R.drawable.ic_store_car,
-			R.drawable.ic_store_education, R.drawable.ic_store_agricultural,
-			R.drawable.ic_store_medicine, R.drawable.ic_store_traffic,
-			R.drawable.ic_store_office, R.drawable.ic_store_housing,
+	private final int[] list_image = { R.drawable.ic_store_jewelry, R.drawable.ic_store_hotel, R.drawable.ic_store_food,
+			R.drawable.ic_store_clothing, R.drawable.ic_store_super_market, R.drawable.ic_store_travel,
+			R.drawable.ic_store_beauty, R.drawable.ic_store_advertisement, R.drawable.ic_store_electronic,
+			R.drawable.ic_store_bags, R.drawable.ic_store_wine, R.drawable.ic_store_relaxing, R.drawable.ic_store_car,
+			R.drawable.ic_store_education, R.drawable.ic_store_agricultural, R.drawable.ic_store_medicine,
+			R.drawable.ic_store_traffic, R.drawable.ic_store_office, R.drawable.ic_store_housing,
 			R.drawable.ic_store_machine };
 	private Gson gson = new Gson();
 	private ArrayList<String> imageUrlsList = null;
@@ -95,29 +84,22 @@ public class Fragment_Store extends Fragment implements OnItemClickListener,
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_store, container, false);
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		textView_indicator = (TextView) getView().findViewById(
-				R.id.fragment_store_indicator);
-		flipper = (ViewFlipper) getView().findViewById(
-				R.id.fragment_store_viewFlipper);
-		layout_position = (LinearLayout) getView().findViewById(
-				R.id.fragment_store_layout_position);
-		layout_map = (LinearLayout) getView().findViewById(
-				R.id.fragment_store_layout_map);
-		editText_keywords = (EditText) getView().findViewById(
-				R.id.fragment_store_editText_keywords);
-		gridView = (GridView) getView().findViewById(
-				R.id.fragment_store_gridView);
+		textView_indicator = (TextView) getView().findViewById(R.id.fragment_store_indicator);
+		flipper = (ViewFlipper) getView().findViewById(R.id.fragment_store_viewFlipper);
+		layout_position = (LinearLayout) getView().findViewById(R.id.fragment_store_layout_position);
+		layout_map = (LinearLayout) getView().findViewById(R.id.fragment_store_layout_map);
+		editText_keywords = (EditText) getView().findViewById(R.id.fragment_store_editText_keywords);
+		gridView = (GridView) getView().findViewById(R.id.fragment_store_gridView);
 
-		gridViewAdapter = new Fragment_Store_GridViewAdapter(getActivity(),
-				list_name, list_image, gridView);
+		gridViewAdapter = new Fragment_Store_GridViewAdapter(getActivity(), eDaoClientConfig.store_class, list_image,
+				gridView);
 		gridView.setAdapter(gridViewAdapter);
 		gridView.setOnItemClickListener(this);
 		layout_map.setOnClickListener(this);
@@ -129,85 +111,67 @@ public class Fragment_Store extends Fragment implements OnItemClickListener,
 		data.put("method", "70002");
 		data.put("type", "1");
 		data.put("position", "2");// 1-首页 2-商铺
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											JSONArray array = result
-													.getJSONArray("records");
-											advCount = array.length();
-											imageUrlsList = new ArrayList<String>();
-											for (int i = 0; i < advCount; i++) {
-												imageUrlsList.add(array
-														.getJSONObject(i)
-														.getString("picture"));
-												flipper.addView(addImageById(imageUrlsList
-														.get(i)));
-											}
-											CharSequence text = getString(
-													R.string.viewpager_indicator,
-													1, advCount);
-											textView_indicator.setText(text);
-											textView_indicator
-													.setVisibility(View.VISIBLE);
-											setFlipper();
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									} else {
-										Utity.showToast(
-												getActivity()
-														.getApplicationContext(),
-												"查询广告失败"
-														+ responseData.getMsg());
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							if (responseData.getRsCode() == 1) {
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
+									JSONArray array = result.getJSONArray("records");
+									advCount = array.length();
+									imageUrlsList = new ArrayList<String>();
+									for (int i = 0; i < advCount; i++) {
+										imageUrlsList.add(array.getJSONObject(i).getString("picture"));
+										flipper.addView(addImageById(imageUrlsList.get(i)));
 									}
+									CharSequence text = getString(R.string.viewpager_indicator, 1, advCount);
+									textView_indicator.setText(text);
+									textView_indicator.setVisibility(View.VISIBLE);
+									setFlipper();
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
 								}
+							} else {
+								Utity.showToast(getActivity().getApplicationContext(),
+										"查询广告失败" + responseData.getMsg());
+							}
+						}
 
-							});
-					}
+					});
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							Utity.showToast(getActivity().getApplicationContext(), eDaoClientConfig.checkNet);
+						}
 
-							});
-					}
-				});
+					});
+			}
+		});
 	}
 
 	private void setFlipper() {
 		// TODO 自动生成的方法存根
 		//
 		mGestureDetector = new GestureDetector(getActivity(),
-				new MyGestureListener(getActivity(), flipper,
-						textView_indicator, 4));
+				new MyGestureListener(getActivity(), flipper, textView_indicator, 4));
 
-		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.fade_in));
-		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.fade_out));
+		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 		flipper.setAutoStart(true); // 设置自动播放功能（点击事件，前自动播放）
 		flipper.setFlipInterval(eDaoClientConfig.advTime);
 		if (flipper.isAutoStart() && !flipper.isFlipping()) {
@@ -236,8 +200,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener,
 			@Override
 			public void onAnimationStart(Animation animation) {
 				// TODO 自动生成的方法存根
-				CharSequence text = getString(R.string.viewpager_indicator,
-						flipper.getDisplayedChild() + 1, advCount);
+				CharSequence text = getString(R.string.viewpager_indicator, flipper.getDisplayedChild() + 1, advCount);
 				textView_indicator.setText(text);
 			}
 
@@ -284,16 +247,14 @@ public class Fragment_Store extends Fragment implements OnItemClickListener,
 			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-			int statusBarHeight = getStatusBarHeight(getActivity()
-					.getBaseContext());
+			int statusBarHeight = getStatusBarHeight(getActivity().getBaseContext());
 			view.setPadding(0, statusBarHeight, 0, 0);
 		}
 	}
 
 	protected int getStatusBarHeight(Context context) {
 		int result = 0;
-		int resourceId = context.getResources().getIdentifier(
-				"status_bar_height", "dimen", "android");
+		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
 		if (resourceId > 0) {
 			result = context.getResources().getDimensionPixelSize(resourceId);
 		}

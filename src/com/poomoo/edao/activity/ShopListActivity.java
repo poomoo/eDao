@@ -9,16 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -37,6 +27,19 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewStub;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 /**
  * 
  * @ClassName ShopListActivity
@@ -44,12 +47,12 @@ import com.poomoo.edao.widget.MyListView.OnRefreshListener;
  * @author 李苜菲
  * @date 2015-8-4 下午3:43:49
  */
-public class ShopListActivity extends BaseActivity implements
-		OnItemClickListener, OnClickListener {
+public class ShopListActivity extends BaseActivity implements OnItemClickListener, OnClickListener {
 	private EditText editText_keywords;
 	private ImageView imageView_back;
 	private TextView textView_classify;
 	private MyListView listView;
+	private View noDataView;
 
 	private Shop_List_ListViewAdapter adapter;
 	private List<StoreData> list;
@@ -65,7 +68,6 @@ public class ShopListActivity extends BaseActivity implements
 									// 8宣传广告
 									// 9数码电器10皮具箱包11酒店服务12户外休闲13汽车服务14教育培训15农副产品16医药服务17交通运输18办公家具19
 									// 建房建材 20 机械设备
-	private boolean isFirst = true;// 是否第一次加载
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +82,13 @@ public class ShopListActivity extends BaseActivity implements
 	private void init() {
 		// TODO 自动生成的方法存根
 
-		imageView_back = (ImageView) this
-				.findViewById(R.id.shop_list_imageView_back);
-		textView_classify = (TextView) this
-				.findViewById(R.id.shop_list_textView_classify);
-		editText_keywords = (EditText) this
-				.findViewById(R.id.shop_list_editText_keywords);
-		listView = (MyListView) this.findViewById(R.id.shop_list_listView);
+		imageView_back = (ImageView) findViewById(R.id.shop_list_imageView_back);
+		textView_classify = (TextView) findViewById(R.id.shop_list_textView_classify);
+		editText_keywords = (EditText) findViewById(R.id.shop_list_editText_keywords);
+		listView = (MyListView) findViewById(R.id.shop_list_listView);
 
 		categoryId = getIntent().getStringExtra("categoryId");
+		textView_classify.setText(eDaoClientConfig.store_class[Integer.parseInt(categoryId) - 1]);
 
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		mLocationClient.registerLocationListener(myListener);
@@ -96,14 +96,17 @@ public class ShopListActivity extends BaseActivity implements
 		mLocationClient.start();
 
 		list = new ArrayList<StoreData>();
+		adapter = new Shop_List_ListViewAdapter(ShopListActivity.this, list);
+		listView.setAdapter(adapter);
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 				getData();
 			}
 		});
-		listView.setOnItemClickListener(this);
 
+		listView.setOnItemClickListener(this);
 		imageView_back.setOnClickListener(this);
+		textView_classify.setOnClickListener(this);
 
 	}
 
@@ -130,7 +133,6 @@ public class ShopListActivity extends BaseActivity implements
 		public void onReceiveLocation(BDLocation location) {
 			curLat = location.getLatitude();
 			curLon = location.getLongitude();
-			showProgressDialog();
 			getData();
 			mLocationClient.unRegisterLocationListener(myListener);
 		}
@@ -138,7 +140,13 @@ public class ShopListActivity extends BaseActivity implements
 
 	private void getData() {
 		// TODO 自动生成的方法存根
-		System.out.println("调用getData");
+		showProgressDialog();
+		int size = list.size();
+		if (size > 0) {
+			list.removeAll(list);
+			adapter.notifyDataSetChanged();
+			listView.setAdapter(adapter);
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
 		data.put("method", "30003");
@@ -148,76 +156,62 @@ public class ShopListActivity extends BaseActivity implements
 		data.put("goodsName", "");
 		data.put("centerLon ", curLon);
 		data.put("centerLat", curLat);
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
 						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						System.out.println("onFinish");
+						System.out.println("getJsonData:" + responseData.getJsonData().length());
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							showListView();
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-										JSONArray pager = result
-												.getJSONArray("records");
-										int length = pager.length();
-										for (int i = 0; i < length; i++) {
-											StoreData shopList = new StoreData();
-											shopList = gson.fromJson(pager
-													.getJSONObject(i)
-													.toString(),
-													StoreData.class);
-											list.add(shopList);
-										}
-										if (isFirst) {
-											adapter = new Shop_List_ListViewAdapter(
-													ShopListActivity.this, list);
-											listView.setAdapter(adapter);
-											isFirst = false;
-										} else {
-											adapter.notifyDataSetChanged();
-										}
-										curPage += 10;
-										pageSize += 10;
-
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+								JSONArray pager = result.getJSONArray("records");
+								int length = pager.length();
+								for (int i = 0; i < length; i++) {
+									StoreData shopList = new StoreData();
+									shopList = gson.fromJson(pager.getJSONObject(i).toString(), StoreData.class);
+									list.add(shopList);
 								}
-								listView.onRefreshComplete();
+								adapter.notifyDataSetChanged();
+
+								curPage += 10;
+								pageSize += 10;
+
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								listView.onRefreshComplete();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
+						} else
+							showEmptyView();
+						listView.onRefreshComplete();
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						System.out.println("onError");
+						closeProgressDialog();
+						listView.onRefreshComplete();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	@Override
@@ -225,6 +219,50 @@ public class ShopListActivity extends BaseActivity implements
 		Bundle pBundle = new Bundle();
 		pBundle.putSerializable("data", list.get(arg2));
 		openActivity(StoreInformationActivity.class, pBundle);
+	}
+
+	public void showEmptyView() {
+		listView.setVisibility(View.GONE);
+		if (noDataView == null) {
+			ViewStub noDataViewStub = (ViewStub) findViewById(R.id.shop_list_viewStub);
+			noDataView = noDataViewStub.inflate();
+		} else {
+			noDataView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void showListView() {
+		listView.setVisibility(View.VISIBLE);
+		if (noDataView != null) {
+			noDataView.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch (v.getId()) {
+		case R.id.shop_list_imageView_back:
+			finish();
+			break;
+		case R.id.shop_list_textView_classify:
+			openActivityForResult(PubActivity.class, 1);
+			break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1 && resultCode == 1) {
+			String name = data.getStringExtra("name");
+			categoryId = data.getStringExtra("id");
+			textView_classify.setText(name);
+			curPage = 1;
+			pageSize = 10;
+			getData();
+		}
 	}
 
 	/**
@@ -235,8 +273,8 @@ public class ShopListActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -255,8 +293,8 @@ public class ShopListActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
@@ -268,16 +306,6 @@ public class ShopListActivity extends BaseActivity implements
 		super.onDestroy();
 		ImageLoader.getInstance().clearMemoryCache();
 		ImageLoader.getInstance().clearDiskCache();
-	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO 自动生成的方法存根
-		switch (v.getId()) {
-		case R.id.shop_list_imageView_back:
-			finish();
-			break;
-		}
 	}
 
 }

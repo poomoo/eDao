@@ -16,4 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ViewStub
+        android:id="@+id/shop_list_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/shop_list_textView_noData"
+        android:layout="@layout/view_nodata" />
+
 </LinearLayout>
