@@ -3,10 +3,22 @@ package com.poomoo.edao.activity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.fragment.Fragment_Home;
+import com.poomoo.edao.fragment.Fragment_Personal_Center;
+import com.poomoo.edao.fragment.Fragment_Store;
+import com.poomoo.edao.receiver.NetWorkConnectionChangeReceiver;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.SideBar;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,19 +30,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.fragment.Fragment_Home;
-import com.poomoo.edao.fragment.Fragment_Personal_Center;
-import com.poomoo.edao.fragment.Fragment_Store;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.SideBar;
-
 public class NavigationActivity extends BaseActivity implements OnClickListener {
-	private LinearLayout layout_myOrder, layout_shopping_cart, layout_messages,
-			layout_shared, layout_check_update, layout_feed_back,
-			layout_help_center, layout_about_us;
+	private LinearLayout layout_myOrder, layout_shopping_cart, layout_messages, layout_shared, layout_check_update,
+			layout_feed_back, layout_help_center, layout_about_us;
 	private FrameLayout frameLayout;
 	private RadioButton radioButton_home, radioButton_myown;
 	public static RadioButton radioButton_shop;
@@ -42,11 +44,12 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	// 侧边栏
 	public static SideBar sideBar;
 	private int clo = 0;
-	private TextView textView_username, textView_phonenum, textView_ecoin,
-			textView_gold_coin, textView_point;
+	private TextView textView_username, textView_phonenum, textView_ecoin, textView_gold_coin, textView_point;
 	private eDaoClientApplication application = null;
 	public static NavigationActivity instance = null;
 	public static Handler handler = null;
+
+	private NetWorkConnectionChangeReceiver myReceiver = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			}
 
 		};
+		// 注册网络状态监听
+		registerReceiver();
 	}
 
 	private void init() {
@@ -118,16 +123,14 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			textView_phonenum.setText("");
 			// spark();
 		} else
-			Utity.setUserAndTel(textView_username, textView_phonenum,
-					application);
+			Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_username.setOnClickListener(this);
 	}
 
 	private void setDefaultFragment() {
 		// TODO 自动生成的方法存根
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragment_Home = new Fragment_Home();
 		curFragment = fragment_Home;
 		fragmentTransaction.add(R.id.navigation_frameLayout, fragment_Home);
@@ -192,23 +195,19 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			openActivity(MyOrderActivity.class);
 			break;
 		case R.id.sidebar_layout_shopping_cart:
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.notDevelop);
+			Utity.showToast(getApplicationContext(), eDaoClientConfig.notDevelop);
 			break;
 		case R.id.sidebar_layout_messges:
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.notDevelop);
+			Utity.showToast(getApplicationContext(), eDaoClientConfig.notDevelop);
 			break;
 		}
 	}
 
 	public void switchFragment(Fragment to) {
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (!to.isAdded()) { // 先判断是否被add过
-			fragmentTransaction.hide(curFragment).add(
-					R.id.navigation_frameLayout, to); // 隐藏当前的fragment，add下一个到Activity中
+			fragmentTransaction.hide(curFragment).add(R.id.navigation_frameLayout, to); // 隐藏当前的fragment，add下一个到Activity中
 		} else {
 			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}
@@ -263,10 +262,22 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			textView_username.setText(eDaoClientConfig.certificate);
 			textView_phonenum.setText("");
 		} else
-			Utity.setUserAndTel(textView_username, textView_phonenum,
-					application);
+			Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_ecoin.setText("" + application.getTotalEb());
 		textView_gold_coin.setText("" + application.getTotalGold());
 		textView_point.setText("" + application.getTotalIntegral());
+	}
+
+	private void registerReceiver() {
+		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+		myReceiver = new NetWorkConnectionChangeReceiver();
+		this.registerReceiver(myReceiver, filter);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		this.unregisterReceiver(myReceiver);
 	}
 }

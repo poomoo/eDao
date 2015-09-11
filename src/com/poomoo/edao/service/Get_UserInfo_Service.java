@@ -43,61 +43,50 @@ public class Get_UserInfo_Service extends Service {
 		data.put("bizName", "10000");
 		data.put("method", "10013");
 		data.put("userId", application.getUserId());
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						System.out.println("getUserInfoData onFinish");
-						// TODO 自动生成的方法存根
-						if (responseData.getRsCode() == 1) {
-							UserInfoData infoData = new UserInfoData();
-							infoData = gson.fromJson(
-									responseData.getJsonData(),
-									UserInfoData.class);
-							application.setTotalEb(infoData.getTotalEb());
-							application.setTotalGold(infoData.getTotalGold());
-							application.setTotalIntegral(infoData
-									.getTotalIntegral());
-							application.setPayPwdValue(infoData
-									.getPayPwdValue());
-							application.setRealNameAuth(infoData
-									.getRealNameAuth());
-							application.setRealName(infoData.getRealName());
-							application.setType(infoData.getType());
-							application.setJoinType(infoData.getJoinType());
-							application.setJoinStatus(infoData.getJoinStatus());
-							editor.putString("realName",
-									application.getRealName());
-							editor.putString("realNameAuth",
-									application.getRealNameAuth());
-							editor.putString("type", application.getType());
-							editor.putString("payPwdValue",
-									application.getPayPwdValue());
-							editor.putString("joinType",
-									application.getJoinType());
-							editor.putString("joinStatus",
-									application.getJoinStatus());
-							editor.commit();
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				System.out.println("getUserInfoData onFinish");
+				// TODO 自动生成的方法存根
+				if (responseData.getRsCode() == 1) {
+					UserInfoData infoData = new UserInfoData();
+					infoData = gson.fromJson(responseData.getJsonData(), UserInfoData.class);
+					application.setTotalEb(infoData.getTotalEb());
+					application.setTotalGold(infoData.getTotalGold());
+					application.setTotalIntegral(infoData.getTotalIntegral());
+					application.setPayPwdValue(infoData.getPayPwdValue());
+					application.setRealNameAuth(infoData.getRealNameAuth());
+					application.setRealName(infoData.getRealName());
+					application.setType(infoData.getType());
+					application.setJoinType(infoData.getJoinType());
+					application.setJoinStatus(infoData.getJoinStatus());
+					editor.putString("realName", application.getRealName());
+					editor.putString("realNameAuth", application.getRealNameAuth());
+					editor.putString("type", application.getType());
+					editor.putString("payPwdValue", application.getPayPwdValue());
+					editor.putString("joinType", application.getJoinType());
+					editor.putString("joinStatus", application.getJoinStatus());
+					editor.commit();
 
-							Message msg = new Message();
-							msg.what = eDaoClientConfig.freshFlag;
-							NavigationActivity.handler.sendMessage(msg);
-							System.out.println("返回成功1");
-							stopSelf();
-						} else
-							stopSelf();
-					}
+					Message msg = new Message();
+					msg.what = eDaoClientConfig.freshFlag;
+					NavigationActivity.handler.sendMessage(msg);
+					System.out.println("返回成功1");
+					stopSelf();
+				} else
+					stopSelf();
+				// getUserInfoData();
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						System.out.println("getUserInfoData onError:"
-								+ e.getMessage());
-						// stopSelf();
-					}
-				});
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				System.out.println("getUserInfoData onError:" + e.getMessage());
+				// getUserInfoData();
+			}
+		});
 	}
 
 	@Override

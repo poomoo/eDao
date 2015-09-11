@@ -140,7 +140,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 	private int mScrollEdge = EDGE_BOTH;
 
 	private boolean mZoomEnabled;
-	private ScaleType mScaleType = ScaleType.FIT_CENTER;
+	private ScaleType mScaleType = ScaleType.FIT_XY;
 
 	public PhotoViewAttacher(ImageView imageView) {
 		mImageView = new WeakReference<ImageView>(imageView);

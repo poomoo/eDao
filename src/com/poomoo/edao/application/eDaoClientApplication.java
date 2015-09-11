@@ -250,13 +250,10 @@ public class eDaoClientApplication extends LitePalApplication {
 		SDKInitializer.initialize(getApplicationContext());
 
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisk(true).build();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				getApplicationContext())
-				.defaultDisplayImageOptions(defaultOptions)
-				.memoryCache(new WeakMemoryCache())
+				.showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
+				.cacheInMemory(true).cacheOnDisk(true).build();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+				.defaultDisplayImageOptions(defaultOptions).memoryCache(new WeakMemoryCache())
 				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100)// 缓存一百张图片
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);

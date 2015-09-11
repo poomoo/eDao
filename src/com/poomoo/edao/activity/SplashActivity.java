@@ -62,14 +62,13 @@ public class SplashActivity extends BaseActivity {
 		initLocation();
 		mLocationClient.start();
 		imageView = (ImageView) findViewById(R.id.splash_loading_item);
-		Animation translate = AnimationUtils.loadAnimation(this,
-				R.anim.splash_loading);
+		Animation translate = AnimationUtils.loadAnimation(this, R.anim.splash_loading);
+		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		translate.setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationStart(Animation animation) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -81,26 +80,20 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 				if (loginsp.getBoolean("isLogin", false)) {
 					application.setRealName(loginsp.getString("realName", ""));
 					application.setTel(loginsp.getString("tel", ""));
 					application.setUserId(loginsp.getString("userId", ""));
 					application.setType(loginsp.getString("type", ""));
-					application.setRealNameAuth(loginsp.getString(
-							"realNameAuth", ""));
-					application.setPayPwdValue(loginsp.getString("payPwdValue",
-							""));
+					application.setRealNameAuth(loginsp.getString("realNameAuth", ""));
+					application.setPayPwdValue(loginsp.getString("payPwdValue", ""));
 					application.setJoinType(loginsp.getString("joinType", ""));
-					application.setJoinStatus(loginsp.getString("joinStatus",
-							""));
+					application.setJoinStatus(loginsp.getString("joinStatus", ""));
 					openActivity(NavigationActivity.class);
-					startService(new Intent(SplashActivity.this,
-							Get_UserInfo_Service.class));
+					startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
 				} else
 					openActivity(LoginActivity.class);
-				overridePendingTransition(R.anim.push_left_in,
-						R.anim.push_left_out);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				SplashActivity.this.finish();
 			}
 		});
@@ -133,8 +126,8 @@ public class SplashActivity extends BaseActivity {
 				}
 				fos.close();
 				is.close();
+				System.out.println("导入数据库文件结束");
 			}
-			System.out.println("导入数据库文件结束");
 		} catch (Exception e) {
 		}
 	}

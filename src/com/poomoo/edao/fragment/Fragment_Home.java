@@ -71,10 +71,8 @@ import com.poomoo.edao.widget.PhotoView.MyGestureListener;
  * @author 李苜菲
  * @date 2015-8-4 下午3:59:10
  */
-public class Fragment_Home extends Fragment implements OnClickListener,
-		OnItemClickListener {
-	private TextView textView_inform, textView_ecoin, textView_goldcoin,
-			textView_point, textView_indicator;
+public class Fragment_Home extends Fragment implements OnClickListener, OnItemClickListener {
+	private TextView textView_inform, textView_ecoin, textView_goldcoin, textView_point, textView_indicator;
 	private LinearLayout layout_user, layout_map;
 	private RadioButton radioButton_shop;
 	private GridView gridView;
@@ -83,28 +81,26 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private GestureDetector mGestureDetector;
 
 	private Fragment_Home_GridViewAdapter gridViewAdapter;
-	private static final String[] list_name = { "普惠全民", "消费领取", "我的钱包", "交易明细",
-			"信用管理", "转账支付", "合作加盟", "爱心基金", "乐意道商城" };
-	private static final int[] list_image = { R.drawable.ic_rebate,
-			R.drawable.ic_get_detail, R.drawable.ic_my_wallet,
-			R.drawable.ic_purchase_history, R.drawable.ic_credit_manage,
-			R.drawable.ic_transfer_payment, R.drawable.ic_cooperation,
-			R.drawable.ic_love_fund, R.drawable.ic_shop };
+	private static final String[] list_name = { "普惠全民", "消费领取", "我的钱包", "交易明细", "信用管理", "转账支付", "合作加盟", "爱心基金",
+			"乐意道商城" };
+	private static final int[] list_image = { R.drawable.ic_rebate, R.drawable.ic_get_detail, R.drawable.ic_my_wallet,
+			R.drawable.ic_purchase_history, R.drawable.ic_credit_manage, R.drawable.ic_transfer_payment,
+			R.drawable.ic_cooperation, R.drawable.ic_love_fund, R.drawable.ic_shop };
 
-	private static final Class[] outIntent = { RebateActivity.class,
-			PurchaseAndGetDetailActivity.class, MywalletActivity.class,
-			DealDetailActivity.class, CreditManageActivity.class,
-			TransferActivity1.class, CooperationActivity.class,
-			LoveFundActivity.class, Fragment_Store.class };
+	private static final Class[] outIntent = { RebateActivity.class, PurchaseAndGetDetailActivity.class,
+			MywalletActivity.class, DealDetailActivity.class, CreditManageActivity.class, TransferActivity1.class,
+			CooperationActivity.class, LoveFundActivity.class, Fragment_Store.class };
 
 	private eDaoClientApplication application = null;
 	private Gson gson = new Gson();
 	private ArrayList<String> imageUrlsList = null;
-	private static final int[] pics = { R.drawable.a01, R.drawable.a02,
-			R.drawable.a03, R.drawable.a04 };
+	private static final int[] pics = { R.drawable.a01, R.drawable.a02, R.drawable.a03, R.drawable.a04 };
 	private int advCount = 0;// 广告数量
 	public static Handler handler = null;
 	private NavigationActivity mActivity = null;
+	public boolean hasPics = false, inform = false;// 广告图片加载标志,通知标志
+
+	public static Fragment_Home instance = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -113,6 +109,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_home_layout));
 		application = (eDaoClientApplication) getActivity().getApplication();
+		instance = this;
 		init();
 		// 查询通知
 		getInformData();
@@ -133,8 +130,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_home, container, false);
 	}
@@ -148,26 +144,17 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		flipper = (ViewFlipper) getView().findViewById(
-				R.id.fragment_home_viewFlipper);
-		textView_inform = (TextView) getView().findViewById(
-				R.id.main_textView_inform);
-		textView_ecoin = (TextView) getView().findViewById(
-				R.id.main_textView_ecoin);
-		textView_goldcoin = (TextView) getView().findViewById(
-				R.id.main_textView_goldcoin);
-		textView_point = (TextView) getView().findViewById(
-				R.id.main_textView_point);
-		layout_user = (LinearLayout) getView().findViewById(
-				R.id.main_layout_user);
-		layout_map = (LinearLayout) getView()
-				.findViewById(R.id.main_layout_map);
-		textView_indicator = (TextView) getView().findViewById(
-				R.id.fragment_home_indicator);
+		flipper = (ViewFlipper) getView().findViewById(R.id.fragment_home_viewFlipper);
+		textView_inform = (TextView) getView().findViewById(R.id.main_textView_inform);
+		textView_ecoin = (TextView) getView().findViewById(R.id.main_textView_ecoin);
+		textView_goldcoin = (TextView) getView().findViewById(R.id.main_textView_goldcoin);
+		textView_point = (TextView) getView().findViewById(R.id.main_textView_point);
+		layout_user = (LinearLayout) getView().findViewById(R.id.main_layout_user);
+		layout_map = (LinearLayout) getView().findViewById(R.id.main_layout_map);
+		textView_indicator = (TextView) getView().findViewById(R.id.fragment_home_indicator);
 		gridView = (GridView) getView().findViewById(R.id.main_gridView);
 
-		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(),
-				list_name, list_image, gridView);
+		gridViewAdapter = new Fragment_Home_GridViewAdapter(getActivity(), list_name, list_image, gridView);
 		gridView.setAdapter(gridViewAdapter);
 		gridView.setOnItemClickListener(this);
 
@@ -181,17 +168,12 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 	private void setFlipper() {
 		// TODO 自动生成的方法存根
-
-		mGestureDetector = new GestureDetector(getActivity(),
-				new MyGestureListener(getActivity(), flipper,
-						textView_indicator, pics.length));
-
-		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.fade_in));
-		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.fade_out));
+		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 		flipper.setAutoStart(true); // 设置自动播放功能（点击事件，前自动播放）
 		flipper.setFlipInterval(eDaoClientConfig.advTime);
+		mGestureDetector = new GestureDetector(getActivity(),
+				new MyGestureListener(getActivity(), flipper, textView_indicator, advCount));
 		if (flipper.isAutoStart() && !flipper.isFlipping()) {
 			flipper.startFlipping();
 		}
@@ -200,7 +182,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				System.out.println("flipper onTouch");
+				// System.out.println("flipper:" + flipper.getInAnimation());
 				v.getParent().requestDisallowInterceptTouchEvent(true);// 防止与父类的onTouch冲突
 				return mGestureDetector.onTouchEvent(event);
 			}
@@ -214,26 +196,27 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 				imageBrower(position, imageUrlsList);
 			}
 		});
+
 		flipper.getInAnimation().setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationStart(Animation animation) {
 				// TODO 自动生成的方法存根
-				CharSequence text = getString(R.string.viewpager_indicator,
-						flipper.getDisplayedChild() + 1, advCount);
+				System.out.println("onAnimationStart");
+				CharSequence text = getString(R.string.viewpager_indicator, flipper.getDisplayedChild() + 1, advCount);
 				textView_indicator.setText(text);
 			}
 
 			@Override
 			public void onAnimationRepeat(Animation animation) {
 				// TODO 自动生成的方法存根
-
+				System.out.println("onAnimationRepeat");
 			}
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO 自动生成的方法存根
-
+				System.out.println("onAnimationEnd");
 			}
 		});
 	}
@@ -265,8 +248,7 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 	private void showActivity(int arg2) {
 		// TODO 自动生成的方法存根
 		if (arg2 == 4) {
-			Utity.showToast(getActivity().getApplicationContext(),
-					eDaoClientConfig.notDevelop);
+			Utity.showToast(getActivity().getApplicationContext(), eDaoClientConfig.notDevelop);
 			return;
 		} else if (arg2 == 6) {
 			if (application.getJoinStatus().equals("1"))
@@ -276,142 +258,126 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 		} else if (arg2 == 8) {
 			if (NavigationActivity.fragment_Store == null)
 				NavigationActivity.fragment_Store = new Fragment_Store();
-			NavigationActivity.instance
-					.switchFragment(NavigationActivity.fragment_Store);
+			NavigationActivity.instance.switchFragment(NavigationActivity.fragment_Store);
 			NavigationActivity.curFragment = NavigationActivity.fragment_Store;
 			radioButton_shop.setChecked(true);
 		} else
 			startActivity(new Intent(getActivity(), outIntent[arg2]));
 	}
 
-	private void getInformData() {
+	public void getInformData() {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "70000");
 		data.put("method", "70003");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											textView_inform.setText(result
-													.getString("title"));
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									} else {
-										Utity.showToast(
-												getActivity()
-														.getApplicationContext(),
-												"查询通知失败"
-														+ responseData.getMsg());
-									}
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				System.out.println("getInformData" + getActivity());
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							if (responseData.getRsCode() == 1) {
+								System.out.println("getRsCode");
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
+									textView_inform.setText(result.getString("title"));
+									inform = true;
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
 								}
+							} else {
+								Utity.showToast(getActivity().getApplicationContext(),
+										"查询通知失败" + responseData.getMsg());
+							}
+						}
 
-							});
-					}
+					});
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							// Utity.showToast(getActivity().getApplicationContext(),
+							// eDaoClientConfig.checkNet);
+						}
 
-							});
-					}
-				});
+					});
+			}
+		});
 	}
 
-	private void getAdvData() {
+	public void getAdvData() {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "70000");
 		data.put("method", "70002");
 		data.put("type", "1");
 		data.put("position", "1");// 1-首页 2-商铺
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											JSONArray array = result
-													.getJSONArray("records");
-											advCount = array.length();
-											imageUrlsList = new ArrayList<String>();
-											for (int i = 0; i < advCount; i++) {
-												imageUrlsList.add(array
-														.getJSONObject(i)
-														.getString("picture"));
-												flipper.addView(addImageById(imageUrlsList
-														.get(i)));
-											}
-											CharSequence text = getString(
-													R.string.viewpager_indicator,
-													1, advCount);
-											textView_indicator.setText(text);
-											textView_indicator
-													.setVisibility(View.VISIBLE);
-											setFlipper();
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									} else {
-										Utity.showToast(
-												getActivity()
-														.getApplicationContext(),
-												"查询广告失败"
-														+ responseData.getMsg());
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							if (responseData.getRsCode() == 1) {
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
+									JSONArray array = result.getJSONArray("records");
+									advCount = array.length();
+									System.out.println("advCount:" + advCount);
+									imageUrlsList = new ArrayList<String>();
+									flipper.removeAllViews();
+									for (int i = 0; i < advCount; i++) {
+										imageUrlsList.add(array.getJSONObject(i).getString("picture"));
+										flipper.addView(addImageById(imageUrlsList.get(i)));
 									}
+									CharSequence text = getString(R.string.viewpager_indicator, 1, advCount);
+									textView_indicator.setText(text);
+									textView_indicator.setVisibility(View.VISIBLE);
+									hasPics = true;
+									setFlipper();
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
 								}
+							} else {
+								Utity.showToast(getActivity().getApplicationContext(),
+										"查询广告失败" + responseData.getMsg());
+							}
+						}
 
-							});
-					}
+					});
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
-
-							});
-					}
-				});
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							// Utity.showToast(getActivity().getApplicationContext(),
+							// eDaoClientConfig.checkNet);
+							// getAdvData();
+							setFlipper();
+						}
+					});
+			}
+		});
 	}
 
 	protected void imageBrower(int position, ArrayList<String> urls2) {
@@ -443,16 +409,14 @@ public class Fragment_Home extends Fragment implements OnClickListener,
 			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-			int statusBarHeight = getStatusBarHeight(getActivity()
-					.getBaseContext());
+			int statusBarHeight = getStatusBarHeight(getActivity().getBaseContext());
 			view.setPadding(0, statusBarHeight, 0, 0);
 		}
 	}
 
 	protected int getStatusBarHeight(Context context) {
 		int result = 0;
-		int resourceId = context.getResources().getIdentifier(
-				"status_bar_height", "dimen", "android");
+		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
 		if (resourceId > 0) {
 			result = context.getResources().getDimensionPixelSize(resourceId);
 		}

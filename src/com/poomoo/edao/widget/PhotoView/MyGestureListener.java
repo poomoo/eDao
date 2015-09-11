@@ -1,13 +1,12 @@
 package com.poomoo.edao.widget.PhotoView;
 
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import com.poomoo.edao.R;
 
 public class MyGestureListener implements OnGestureListener {
 
@@ -16,8 +15,7 @@ public class MyGestureListener implements OnGestureListener {
 	private TextView textView_indicator;
 	private int count = 0;
 
-	public MyGestureListener(Context context, ViewFlipper vf,
-			TextView indicator, int count) {
+	public MyGestureListener(Context context, ViewFlipper vf, TextView indicator, int count) {
 		this.context = context;
 		this.vf = vf;
 		this.textView_indicator = indicator;
@@ -32,33 +30,22 @@ public class MyGestureListener implements OnGestureListener {
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		// TODO Auto-generated method stub
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		// TODO Auto-generated method
 		vf.setClickable(false);
-		System.out.println("滑动图片");
+		// System.out.println("滑动图片 count:" + count + " " + "vf:" +
+		// vf.getInAnimation());
 
-		if (e1.getX() - e2.getX() > 0) {
-			// 设置View进入和退出的动画效果
-			vf.setInAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.left_in));
-			vf.setOutAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.left_out));
+		if (e1.getX() - e2.getX() > 100) { // 设置View进入和退出的动画效果
 			vf.showNext();
-			CharSequence text = context.getString(R.string.viewpager_indicator,
-					vf.getDisplayedChild() + 1, count);
+			CharSequence text = context.getString(R.string.viewpager_indicator, vf.getDisplayedChild() + 1, count);
 			textView_indicator.setText(text);
 			return true;
 		}
-		if (e1.getX() - e2.getX() < -0) {
-			this.vf.setInAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.right_in));
-			this.vf.setOutAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.right_out));
+		if (e1.getX() - e2.getX() < -100) {
 			vf.showPrevious();
 
-			CharSequence text = context.getString(R.string.viewpager_indicator,
-					vf.getDisplayedChild() + 1, count);
+			CharSequence text = context.getString(R.string.viewpager_indicator, vf.getDisplayedChild() + 1, count);
 			textView_indicator.setText(text);
 			return true;
 		}
@@ -73,8 +60,7 @@ public class MyGestureListener implements OnGestureListener {
 	}
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		// TODO Auto-generated method stub
 		return false;
 	}

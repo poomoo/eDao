@@ -70,6 +70,8 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 	private ArrayList<String> imageUrlsList = null;
 	private GestureDetector mGestureDetector;
 	private int advCount = 0;// 广告数量
+	public boolean hasPics = false;// 广告图片加载标志
+	public static Fragment_Store instance = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 		super.onActivityCreated(savedInstanceState);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
-
+		instance = this;
 		init();
 		// 查询广告
 		getAdvData();
@@ -105,7 +107,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 		layout_map.setOnClickListener(this);
 	}
 
-	private void getAdvData() {
+	public void getAdvData() {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "70000");
 		data.put("method", "70002");
@@ -127,6 +129,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 									JSONArray array = result.getJSONArray("records");
 									advCount = array.length();
 									imageUrlsList = new ArrayList<String>();
+									flipper.removeAllViews();
 									for (int i = 0; i < advCount; i++) {
 										imageUrlsList.add(array.getJSONObject(i).getString("picture"));
 										flipper.addView(addImageById(imageUrlsList.get(i)));
@@ -135,6 +138,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 									textView_indicator.setText(text);
 									textView_indicator.setVisibility(View.VISIBLE);
 									setFlipper();
+									hasPics = true;
 								} catch (JSONException e) {
 									// TODO 自动生成的 catch 块
 									e.printStackTrace();
@@ -168,7 +172,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 		// TODO 自动生成的方法存根
 		//
 		mGestureDetector = new GestureDetector(getActivity(),
-				new MyGestureListener(getActivity(), flipper, textView_indicator, 4));
+				new MyGestureListener(getActivity(), flipper, textView_indicator, advCount));
 
 		flipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
 		flipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));

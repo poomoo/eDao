@@ -103,7 +103,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 				getData();
 			}
 		});
-
 		listView.setOnItemClickListener(this);
 		imageView_back.setOnClickListener(this);
 		textView_classify.setOnClickListener(this);
@@ -181,7 +180,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 									list.add(shopList);
 								}
 								adapter.notifyDataSetChanged();
-
 								curPage += 10;
 								pageSize += 10;
 
@@ -208,7 +206,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 						listView.onRefreshComplete();
 						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
 					}
-
 				});
 			}
 		});
