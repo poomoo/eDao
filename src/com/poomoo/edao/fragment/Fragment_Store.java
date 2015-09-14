@@ -269,6 +269,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO 自动生成的方法存根
 		Intent intent = new Intent(getActivity(), ShopListActivity.class);
+		intent.putExtra("fromFlag", "store");
 		intent.putExtra("categoryId", Integer.toString(arg2 + 1));
 		startActivity(intent);
 	}

@@ -110,9 +110,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			openActivity(ProtocolActivity.class);
 			break;
 		case R.id.login_textView_forget_password:
-			// openActivity(GetIdentityCodeActivity.class);
+			phoneNum = editText_phone.getText().toString().trim();
+			if (TextUtils.isEmpty(phoneNum)) {
+				Utity.showToast(getApplicationContext(), "请输入手机号!");
+				return;
+			}
+			if (phoneNum.length() != 11) {
+				Utity.showToast(getApplicationContext(), "手机号长度不正确,请重新输入!");
+				return;
+			}
 			Bundle pBundle = new Bundle();
 			pBundle.putString("type", "3");
+			pBundle.putString("tel", phoneNum);
 			openActivity(PassWordManageActivity.class, pBundle);
 			break;
 		}

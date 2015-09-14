@@ -1,5 +1,6 @@
 package com.poomoo.edao.activity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +57,8 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class MapActivity extends BaseActivity implements OnMapClickListener,
-		OnMapStatusChangeListener, OnClickListener {
+public class MapActivity extends BaseActivity
+		implements OnMapClickListener, OnMapStatusChangeListener, OnClickListener {
 	/**
 	 * MapView 是地图主控件
 	 */
@@ -144,8 +145,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			// 位置
 			latLng = new LatLng(info.getLatitude(), info.getLongitude());
 			// 图标
-			overlayOptions = new MarkerOptions().position(latLng).icon(bd)
-					.zIndex(i++);
+			overlayOptions = new MarkerOptions().position(latLng).icon(bd).zIndex(i++);
 			list.add(overlayOptions);
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
@@ -215,18 +215,14 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				} else {
 					showCurrtenStroeOnMap(ll);
 					// 获得marker中的数据
-					StoreData info = (StoreData) marker.getExtraInfo().get(
-							"info");
-					View linlayout = MapActivity.this.getLayoutInflater()
-							.inflate(R.layout.popup_map_inform, null);
+					StoreData info = (StoreData) marker.getExtraInfo().get("info");
+					View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
 					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
 					Point p = mBaiduMap.getProjection().toScreenLocation(ll);
 					p.y -= 60;
-					LatLng llInfo = mBaiduMap.getProjection()
-							.fromScreenLocation(p);
+					LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
 					// 为弹出的InfoWindow添加点击事件
-					mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
-							info), llInfo, 1);
+					mInfoWindow = new InfoWindow(getInfoWindowView(linlayout, info), llInfo, 1);
 					// 显示InfoWindow
 					mBaiduMap.showInfoWindow(mInfoWindow);
 				}
@@ -240,18 +236,12 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 		ViewHolder viewHolder = null;
 		if (mMarkerLy.getTag() == null) {
 			viewHolder = new ViewHolder();
-			viewHolder.storeImg = (ImageView) mMarkerLy
-					.findViewById(R.id.popup_map_inform_imageView_pic);
-			viewHolder.storeRatingBar = (RatingBar) mMarkerLy
-					.findViewById(R.id.popup_map_inform_ratingbar);
-			viewHolder.storeName = (TextView) mMarkerLy
-					.findViewById(R.id.popup_map_inform_textView_name);
-			viewHolder.storeScore = (TextView) mMarkerLy
-					.findViewById(R.id.popup_map_inform_textView_score);
-			viewHolder.storeDistance = (TextView) mMarkerLy
-					.findViewById(R.id.popup_map_inform_textView_distance);
-			viewHolder.storeInfo = (TextView) mMarkerLy
-					.findViewById(R.id.popup_map_inform_textView_inform);
+			viewHolder.storeImg = (ImageView) mMarkerLy.findViewById(R.id.popup_map_inform_imageView_pic);
+			viewHolder.storeRatingBar = (RatingBar) mMarkerLy.findViewById(R.id.popup_map_inform_ratingbar);
+			viewHolder.storeName = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_name);
+			viewHolder.storeScore = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_score);
+			viewHolder.storeDistance = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_distance);
+			viewHolder.storeInfo = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_inform);
 
 			mMarkerLy.setTag(viewHolder);
 		}
@@ -265,8 +255,7 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
 				.build();
-		ImageLoader.getInstance().displayImage(store.getPictures(),
-				viewHolder.storeImg, options);
+		ImageLoader.getInstance().displayImage(store.getPictures(), viewHolder.storeImg, options);
 
 		viewHolder.storeRatingBar.setRating(store.getAvgScore());
 		viewHolder.storeName.setText(store.getShopName());
@@ -326,20 +315,16 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			curCity = location.getCity();
 			textView_curCity.setText(curCity);
 
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
+			MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(100).latitude(mCurrentLantitude)
-					.longitude(mCurrentLongitude).build();
+					.direction(100).latitude(mCurrentLantitude).longitude(mCurrentLongitude).build();
 			// 设置定位数据
 			mBaiduMap.setMyLocationData(locData);
 			mBaiduMap.setMyLocationEnabled(true);
 			// 设置自定义图标
-			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
-					.fromResource(R.drawable.ic_map_icon);
-			MyLocationConfiguration config = new MyLocationConfiguration(
-					MyLocationConfiguration.LocationMode.NORMAL, false,
-					mCurrentMarker);
+			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
+			MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
+					false, mCurrentMarker);
 			mBaiduMap.setMyLocationConfigeration(config);
 			if (isFirstLoc) {
 				isFirstLoc = false;
@@ -360,12 +345,10 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	 */
 	private void showCurrtenStroeOnMap(LatLng cenpt) {
 		// 定义地图状态
-		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18)
-				.build();
+		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18).build();
 		// 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
 
-		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory
-				.newMapStatus(mMapStatus);
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		// 改变地图状态
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
 	}
@@ -408,7 +391,10 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 			mBaiduMap.animateMapStatus(u);
 			break;
 		case R.id.map_layout_store:
-			openActivity(ShopListActivity.class, null);
+			Bundle pBundle = new Bundle();
+			pBundle.putString("fromFlag", "map");
+			pBundle.putSerializable("list", (Serializable) list);
+			openActivity(ShopListActivity.class, pBundle);
 			break;
 		}
 
@@ -463,65 +449,55 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 
 		data.put("longitude", mCurrentLongitude);
 		data.put("latitude", mCurrentLantitude);
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-										JSONArray data = result
-												.getJSONArray("records");
-										int length = data.length();
-										for (int i = 0; i < length; i++) {
-											StoreData storeData = new StoreData();
-											storeData = gson.fromJson(data
-													.getJSONObject(i)
-													.toString(),
-													StoreData.class);
-											list.add(storeData);
-										}
-										addInfosOverlay(list);
-										initMarkerClickEvent();
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+								JSONArray data = result.getJSONArray("records");
+								int length = data.length();
+								for (int i = 0; i < length; i++) {
+									StoreData storeData = new StoreData();
+									storeData = gson.fromJson(data.getJSONObject(i).toString(), StoreData.class);
+									list.add(storeData);
 								}
+								addInfosOverlay(list);
+								initMarkerClickEvent();
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-
-						});
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	/**
@@ -532,8 +508,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -552,8 +528,8 @@ public class MapActivity extends BaseActivity implements OnMapClickListener,
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

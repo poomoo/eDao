@@ -9,6 +9,7 @@ import com.poomoo.edao.activity.BaseActivity;
 import com.poomoo.edao.activity.BuyKeyActivity;
 import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.activity.RechargeActivity;
+import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.weixinpay.Constants;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -56,9 +57,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			System.out.println("onResp:" + resp.errCode + ":" + resp.errStr);
 			String msg = "";
-			if (resp.errCode == 0)
+			if (resp.errCode == 0) {
 				msg = "支付成功！";
-			else if (resp.errCode == -1)
+				Intent intent = new Intent(this, Get_UserInfo_Service.class);
+				startService(intent);
+			} else if (resp.errCode == -1)
 				msg = "支付失败！";
 			else
 				msg = "取消支付！";

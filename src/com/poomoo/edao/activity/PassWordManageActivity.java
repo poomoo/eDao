@@ -46,6 +46,10 @@ public class PassWordManageActivity extends BaseActivity implements OnClickListe
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
 		type = getIntent().getStringExtra("type");// 1-账户密码 2-支付密码
+		if (type.equals("3"))
+			tel = getIntent().getStringExtra("tel");
+		else
+			tel = application.getTel();
 		init();
 	}
 
@@ -79,7 +83,6 @@ public class PassWordManageActivity extends BaseActivity implements OnClickListe
 		button_send.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
 		button_cancle.setOnClickListener(this);
-		tel = application.getTel();
 		textView_phone.setText(Utity.addStarByNum(3, 7, tel));
 	}
 
@@ -199,6 +202,9 @@ public class PassWordManageActivity extends BaseActivity implements OnClickListe
 						if (responseData.getRsCode() != 1) {
 							Utity.showToast(getApplicationContext(), responseData.getMsg());
 						} else {
+							openActivity(LoginActivity.class);
+							if (NavigationActivity.instance != null)
+								NavigationActivity.instance.finish();
 							finish();
 						}
 					}

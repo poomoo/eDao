@@ -55,8 +55,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	private static final int READCONTRACT = 1;
 	private final static int TWODIMENCODE = 2;
 
-	private String name = "", phoneNum = "", userId = "", userName = "",
-			joinType = "";
+	private String name = "", phoneNum = "", userId = "", userName = "", joinType = "";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 
@@ -96,15 +95,13 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		editText_payee_phonenum.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO 自动生成的方法存根
 
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// TODO 自动生成的方法存根
 
 			}
@@ -115,8 +112,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 				if (s.length() == 11) {
 					InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 					hideSoftInput(editText_payee_phonenum.getWindowToken(), im);
-					phoneNum = editText_payee_phonenum.getText().toString()
-							.trim();
+					phoneNum = editText_payee_phonenum.getText().toString().trim();
 					getMerchantName();
 				}
 			}
@@ -125,8 +121,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 
 	public static void hideSoftInput(IBinder token, InputMethodManager im) {
 		if (token != null) {
-			im.hideSoftInputFromWindow(token,
-					InputMethodManager.HIDE_NOT_ALWAYS);
+			im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 
@@ -140,8 +135,7 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		}
 		switch (v.getId()) {
 		case R.id.transfer1_layout_payby_phone:
-			startActivityForResult(new Intent(Intent.ACTION_PICK,
-					ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
+			startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
 			break;
 		case R.id.transfer1_layout_payby_2dimencode:
 			openActivityForResult(CaptureActivity.class, TWODIMENCODE);
@@ -191,66 +185,58 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 		data.put("method", "20011");
 		data.put("tel", phoneNum);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										userId = result.getString("userId");
-										userName = result.getString("userName");
-										joinType = result.getString("joinType");
-										if (!joinType.equals("3")) {
-											button_buy.setClickable(false);
-											button_buy
-													.setBackgroundResource(R.drawable.style_btn_no_background);
-											button_buy.setTextColor(color.gray);
-										} else {
-											button_buy.setClickable(true);
-											button_buy
-													.setBackgroundResource(R.drawable.style_btn_yes_background);
-											button_buy
-													.setTextColor(color.white);
-										}
-
-									} catch (JSONException e) {
-									}
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								userId = result.getString("userId");
+								userName = result.getString("userName");
+								joinType = result.getString("joinType");
+								if (!joinType.equals("3")) {
+									button_buy.setTextColor(color.white);
+									button_buy.setBackgroundResource(R.drawable.style_btn_no_background);
+									button_buy.setClickable(false);
 								} else {
-									editText_payee_phonenum.setText("");
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+									button_buy.setTextColor(color.white);
+									button_buy.setBackgroundResource(R.drawable.style_btn_yes_background);
+									button_buy.setClickable(true);
 								}
 
+							} catch (JSONException e) {
 							}
-						});
-					}
+						} else {
+							editText_payee_phonenum.setText("");
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	@Override
@@ -265,25 +251,18 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 			Cursor cursor = managedQuery(contactData, null, null, null, null);
 			cursor.moveToFirst();
 			// 获得DATA表中的名字
-			name = cursor.getString(cursor
-					.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+			name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 			// 条件为联系人ID
-			String contactId = cursor.getString(cursor
-					.getColumnIndex(ContactsContract.Contacts._ID));
+			String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 			// 获得DATA表中的电话号码，条件为联系人ID,因为手机号码可能会有多个
-			Cursor phone = reContentResolverol.query(
-					ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-					ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = "
-							+ contactId, null, null);
+			Cursor phone = reContentResolverol.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+					ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
 			while (phone.moveToNext()) {
-				phoneNum = phone
-						.getString(phone
-								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				phoneNum = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 			}
 
 			editText_payee_phonenum.setText(phoneNum);
-			editText_payee_phonenum.setSelection(editText_payee_phonenum
-					.getText().toString().length());
+			editText_payee_phonenum.setSelection(editText_payee_phonenum.getText().toString().length());
 			getMerchantName();
 			return;
 		}
@@ -314,8 +293,8 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
@@ -334,8 +313,8 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

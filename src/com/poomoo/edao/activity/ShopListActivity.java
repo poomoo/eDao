@@ -37,7 +37,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -68,6 +67,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 									// 8宣传广告
 									// 9数码电器10皮具箱包11酒店服务12户外休闲13汽车服务14教育培训15农副产品16医药服务17交通运输18办公家具19
 									// 建房建材 20 机械设备
+	private String fromFlag = "";// 来源activity map-地图 store-商城
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +87,21 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 		editText_keywords = (EditText) findViewById(R.id.shop_list_editText_keywords);
 		listView = (MyListView) findViewById(R.id.shop_list_listView);
 
-		categoryId = getIntent().getStringExtra("categoryId");
-		textView_classify.setText(eDaoClientConfig.store_class[Integer.parseInt(categoryId) - 1]);
+		fromFlag = getIntent().getStringExtra("fromFlag");
+		if (fromFlag.equals("map")) {
+			list = (ArrayList<StoreData>) getIntent().getSerializableExtra("list");
+		} else {
+			categoryId = getIntent().getStringExtra("categoryId");
+			textView_classify.setText(eDaoClientConfig.store_class[Integer.parseInt(categoryId) - 1]);
 
-		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-		mLocationClient.registerLocationListener(myListener);
-		initLocation();
-		mLocationClient.start();
+			mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+			mLocationClient.registerLocationListener(myListener);
+			initLocation();
+			mLocationClient.start();
 
-		list = new ArrayList<StoreData>();
+			list = new ArrayList<StoreData>();
+		}
+
 		adapter = new Shop_List_ListViewAdapter(ShopListActivity.this, list);
 		listView.setAdapter(adapter);
 		listView.setonRefreshListener(new OnRefreshListener() {
@@ -103,6 +109,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 				getData();
 			}
 		});
+
 		listView.setOnItemClickListener(this);
 		imageView_back.setOnClickListener(this);
 		textView_classify.setOnClickListener(this);

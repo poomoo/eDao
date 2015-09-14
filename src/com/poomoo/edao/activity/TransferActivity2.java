@@ -5,6 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -26,20 +40,6 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.service.Get_UserInfo_Service;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.DialogResultListener;
-import com.poomoo.edao.widget.MessageBox_YES;
-import com.poomoo.edao.widget.MessageBox_YESNO;
-
 /**
  * 
  * @ClassName TransferOfPaymentActivity2
@@ -52,7 +52,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	private TextView textView_payee_name, textView_payee_phonenum, textView_balance, textView_channel,
 			textView_isEnough;
 	private EditText editText_pay_money, editText_pay_password, editText_remark;
-	private LinearLayout layout_balance, layout_password;
+	private LinearLayout layout_balance, layout_password, layout_channel;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -106,34 +106,30 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 		layout_balance = (LinearLayout) findViewById(R.id.transfer2_layout_balance);
 		layout_password = (LinearLayout) findViewById(R.id.transfer2_layout_password);
+		layout_channel = (LinearLayout) findViewById(R.id.transfer2_layout_channel);
 
 		button_pay = (Button) findViewById(R.id.transfer2_btn_pay);
 
 		button_pay.setOnClickListener(this);
 
-		// list = new ArrayList<HashMap<String, String>>();
-		// HashMap<String, String> data = null;
-		// int length = channel.length;
-		// for (int i = 0; i < length; i++) {
-		// data = new HashMap<String, String>();
-		// data.put("name", channel[i]);
-		// data.put("id", i + 1 + "");
-		// list.add(data);
-		// }
-
-		if (transferType.equals("1")) {
-			textView_channel.setText(channel[0]);
-			needPassword = true;
-		} else {
-			layout_balance.setVisibility(View.GONE);
-			layout_password.setVisibility(View.GONE);
-			textView_channel.setText(channel[1]);
+		textView_channel.setText(channel[0]);
+		needPassword = true;
+		// 转账
+		if (transferType.equals("2")) {
+			layout_channel.setOnClickListener(this);
+			list = new ArrayList<HashMap<String, String>>();
+			HashMap<String, String> data = null;
+			int length = channel.length;
+			for (int i = 0; i < length; i++) {
+				data = new HashMap<String, String>();
+				data.put("name", channel[i]);
+				data.put("id", i + 1 + "");
+				list.add(data);
+			}
 		}
 
 		textView_payee_name.setText(realName);
 		textView_payee_phonenum.setText(tel);
-
-		// layout_channel.setOnClickListener(this);
 
 		// 指定了金额时不能手动修改
 		if (!TextUtils.isEmpty(money)) {
@@ -191,10 +187,9 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		// case R.id.transfer2_layout_channel:
-		// showWindow(layout_channel, listView, list, textView_channel,
-		// adapter);
-		// break;
+		case R.id.transfer2_layout_channel:
+			showWindow(layout_channel, listView, list, textView_channel, adapter);
+			break;
 		case R.id.transfer2_btn_pay:
 			if (checkInput()) {
 				confirm();
@@ -338,12 +333,12 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 				payType = list.get(arg2).get("id");
 				if (payType.equals("1")) {
 					needPassword = true;
-					// layout_ecoin.setVisibility(View.VISIBLE);
-					// layout_control.setVisibility(View.GONE);
+					layout_balance.setVisibility(View.VISIBLE);
+					layout_password.setVisibility(View.VISIBLE);
 				} else {
 					needPassword = false;
-					// layout_ecoin.setVisibility(View.GONE);
-					// layout_control.setVisibility(View.VISIBLE);
+					layout_balance.setVisibility(View.GONE);
+					layout_password.setVisibility(View.GONE);
 				}
 				// 弹框消失
 				popupWindow.dismiss();

@@ -172,8 +172,7 @@
                             android:layout_height="wrap_content"
                             android:paddingRight="@dimen/margin10"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_xiala"
-                            android:visibility="gone" />
+                            android:src="@drawable/ic_xiala" />
                     </LinearLayout>
 
                     <TextView
