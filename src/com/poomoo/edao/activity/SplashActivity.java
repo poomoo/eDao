@@ -89,6 +89,7 @@ public class SplashActivity extends BaseActivity {
 					application.setPayPwdValue(loginsp.getString("payPwdValue", ""));
 					application.setJoinType(loginsp.getString("joinType", ""));
 					application.setJoinStatus(loginsp.getString("joinStatus", ""));
+					application.setQuickmarkPic(loginsp.getString("quickmarkPic", ""));
 					openActivity(NavigationActivity.class);
 					startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
 				} else

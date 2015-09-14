@@ -159,6 +159,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								editor.putString("realNameAuth", loginResData.getRealNameAuth());
 								editor.putString("payPwdValue", loginResData.getPayPwdValue());
 								editor.putString("passWord", passWord);
+								editor.putString("quickmarkPic", loginResData.getQuickmarkPic());
 								editor.putBoolean("isLogin", true);
 								editor.commit();
 								application.setRealName(loginResData.getRealName());
@@ -167,6 +168,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								application.setType(loginResData.getType());
 								application.setRealNameAuth(loginResData.getRealNameAuth());
 								application.setPayPwdValue(loginResData.getPayPwdValue());
+								application.setQuickmarkPic(loginResData.getQuickmarkPic());
 								startService(new Intent(LoginActivity.this, Get_UserInfo_Service.class));
 								LoginActivity.this
 										.startActivity(new Intent(LoginActivity.this, NavigationActivity.class));

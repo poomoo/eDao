@@ -62,6 +62,7 @@ public class Get_UserInfo_Service extends Service {
 					application.setType(infoData.getType());
 					application.setJoinType(infoData.getJoinType());
 					application.setJoinStatus(infoData.getJoinStatus());
+					application.setQuickmarkPic(infoData.getQuickmarkPic());
 					editor.putString("realName", application.getRealName());
 					editor.putString("realNameAuth", application.getRealNameAuth());
 					editor.putString("type", application.getType());
