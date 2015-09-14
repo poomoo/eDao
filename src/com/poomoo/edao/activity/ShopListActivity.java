@@ -94,13 +94,12 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 			categoryId = getIntent().getStringExtra("categoryId");
 			textView_classify.setText(eDaoClientConfig.store_class[Integer.parseInt(categoryId) - 1]);
 
-			mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-			mLocationClient.registerLocationListener(myListener);
-			initLocation();
-			mLocationClient.start();
-
 			list = new ArrayList<StoreData>();
 		}
+		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener);
+		initLocation();
+		mLocationClient.start();
 
 		adapter = new Shop_List_ListViewAdapter(ShopListActivity.this, list);
 		listView.setAdapter(adapter);
