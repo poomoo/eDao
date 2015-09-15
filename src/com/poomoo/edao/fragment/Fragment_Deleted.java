@@ -66,8 +66,8 @@ public class Fragment_Deleted extends Fragment {
 		list = new ArrayList<OrderListData>();
 		if (isFirst)
 			showProgressDialog();
-		DealDetailActivity.status = "3";
-		getData(DealDetailActivity.status, orderType);
+		eDaoClientConfig.status = "3";
+		getData(eDaoClientConfig.status, orderType);
 	}
 
 	private void getData(String status, String orderType) {

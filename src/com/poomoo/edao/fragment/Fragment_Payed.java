@@ -9,16 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.DealDetailActivity;
+import com.poomoo.edao.activity.MyOrderActivity;
 import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -28,6 +22,14 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
+
+import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 
 public class Fragment_Payed extends Fragment {
 	private MyListView listView;
@@ -51,8 +53,7 @@ public class Fragment_Payed extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_pub, container, false);
 	}
@@ -60,14 +61,15 @@ public class Fragment_Payed extends Fragment {
 	private void init() {
 		// TODO 自动生成的方法存根
 		System.out.println("Fragment_Payed init");
-		listView = (MyListView) getView().findViewById(
-				R.id.fragment_pub_listView);
+		listView = (MyListView) getView().findViewById(R.id.fragment_pub_listView);
 		application = (eDaoClientApplication) getActivity().getApplication();
 		list = new ArrayList<OrderListData>();
+		adapter = new Deal_Detail_ListViewAdapter(getActivity(), list);
+		listView.setAdapter(adapter);
 		if (isFirst)
 			showProgressDialog();
-		DealDetailActivity.status = "2";
-		getData(DealDetailActivity.status, orderType);
+		eDaoClientConfig.status = "2";
+		getData(eDaoClientConfig.status, orderType);
 	}
 
 	private void getData(String status, String orderType) {
@@ -83,82 +85,66 @@ public class Fragment_Payed extends Fragment {
 		data.put("ordersType", orderType);
 		data.put("startDt", "");
 		data.put("endDt", "");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									if (responseData.getRsCode() == 1
-											&& responseData.getJsonData()
-													.length() > 0) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+							if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-											JSONArray pager = result
-													.getJSONArray("records");
-											int length = pager.length();
-											for (int i = 0; i < length; i++) {
-												OrderListData data = new OrderListData();
-												data = gson.fromJson(pager
-														.getJSONObject(i)
-														.toString(),
-														OrderListData.class);
-												list.add(data);
-											}
-											if (isFirst) {
-												adapter = new Deal_Detail_ListViewAdapter(
-														getActivity(), list);
-												listView.setAdapter(adapter);
-												isFirst = false;
-											} else {
-												adapter.notifyDataSetChanged();
-											}
-											curPage += 10;
-											pageSize += 10;
-
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									} else {
-										Utity.showToast(getActivity()
-												.getApplicationContext(),
-												responseData.getMsg());
+									JSONArray pager = result.getJSONArray("records");
+									int length = pager.length();
+									for (int i = 0; i < length; i++) {
+										OrderListData data = new OrderListData();
+										data = gson.fromJson(pager.getJSONObject(i).toString(), OrderListData.class);
+										list.add(data);
 									}
-									listView.onRefreshComplete();
+									if (isFirst) {
+										isFirst = false;
+									}
+									adapter.notifyDataSetChanged();
+
+									curPage += 10;
+									pageSize += 10;
+
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
 								}
+							} else {
+								Utity.showToast(getActivity().getApplicationContext(), responseData.getMsg());
+							}
+							listView.onRefreshComplete();
+						}
 
-							});
-					}
+					});
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
 
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									listView.onRefreshComplete();
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+							listView.onRefreshComplete();
+							Utity.showToast(getActivity().getApplicationContext(), eDaoClientConfig.checkNet);
+						}
 
-							});
-					}
-				});
+					});
+			}
+		});
 	}
 
 	/**
@@ -169,8 +155,8 @@ public class Fragment_Payed extends Fragment {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -189,8 +175,8 @@ public class Fragment_Payed extends Fragment {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

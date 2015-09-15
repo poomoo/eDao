@@ -1,5 +1,19 @@
 package com.poomoo.edao.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.fragment.Fragment_Deleted;
+import com.poomoo.edao.fragment.Fragment_Payed;
+import com.poomoo.edao.fragment.Fragment_UnPayed;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -7,12 +21,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.fragment.Fragment_Deleted;
-import com.poomoo.edao.fragment.Fragment_Payed;
-import com.poomoo.edao.fragment.Fragment_Status;
-import com.poomoo.edao.fragment.Fragment_UnPayed;
 
 /**
  * 
@@ -28,6 +36,8 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private Fragment_UnPayed fragment_UnPayed;
 	private Fragment_Deleted fragment_Deleted;
 	private Fragment curFragment;
+
+	private Gson gson = new Gson();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,27 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	public class MyListener implements OnClickListener {
+		private int position = 0;
+
+		public MyListener(int position) {
+			super();
+			this.position = position;
+		}
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if (v.getTag().equals("evaluate")) {
+
+			} else {
+				Fragment_UnPayed.instance.showProgressDialog();
+				confirm(position);
+			}
+		}
+
+	}
+
 	public void switchFragment(Fragment to) {
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -95,5 +126,49 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}
 		fragmentTransaction.commit();
+	}
+
+	public void confirm(int position) {
+		// TODO 自动生成的方法存根
+		System.out.println("调用confirm");
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("bizName", "50000");
+		data.put("method", "50004");
+		data.put("ordersId", Fragment_UnPayed.instance.list.get(position).getOrdersId());
+		data.put("opType", 1);
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+
+						if (responseData.getRsCode() == 1) {
+							Fragment_UnPayed.instance.getData(eDaoClientConfig.status);
+						} else {
+							Fragment_UnPayed.instance.closeProgressDialog();
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+					}
+
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Fragment_UnPayed.instance.closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 }

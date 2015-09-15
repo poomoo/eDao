@@ -21,7 +21,6 @@ import com.poomoo.edao.fragment.Fragment_Status;
  * @date 2015年8月30日 下午3:42:38
  */
 public class DealDetailActivity extends BaseActivity implements OnClickListener {
-	public static String status = "2";
 	private Fragment_Status fragment_Status;
 	private Fragment_Classify fragment_Classify;
 	private Fragment_Date fragment_Date;

@@ -3,9 +3,11 @@ package com.poomoo.edao.adapter;
 import java.util.List;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.MyOrderActivity;
+import com.poomoo.edao.activity.MyOrderActivity.MyListener;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.model.OrderListData;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +17,24 @@ import android.widget.TextView;
 
 /**
  * 
- * @ClassName Order_List_ListViewAdapter
- * @Description TODO 全部订单列表适配器
+ * @ClassName MyOrder_ListViewAdapter
+ * @Description TODO 我的订单
  * @author 李苜菲
- * @date 2015-8-3 上午10:37:42
+ * @date 2015年9月15日 下午4:00:52
  */
-public class Deal_Detail_ListViewAdapter extends BaseAdapter {
+public class MyOrder_ListViewAdapter extends BaseAdapter {
 
 	private List<OrderListData> list;
 	private LayoutInflater inflater;
-	private Activity activity;
+	private MyOrderActivity myOrderActivity;
+	private eDaoClientApplication application = null;
 
-	public Deal_Detail_ListViewAdapter(Activity activity, List<OrderListData> list) {
+	public MyOrder_ListViewAdapter(MyOrderActivity activity, List<OrderListData> list) {
 		super();
-		this.activity = activity;
+		this.myOrderActivity = activity;
 		this.list = list;
 		this.inflater = LayoutInflater.from(activity);
+		this.application = (eDaoClientApplication) activity.getApplication();
 	}
 
 	@Override
@@ -55,6 +59,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
+		MyListener listener = myOrderActivity.new MyListener(position);
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_listview_order_list, parent, false);
 			holder = new ViewHolder();
@@ -72,6 +77,24 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		System.out.println("list.get(position).getOrdersDt():" + list.get(position).getOrdersDt());
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
+		// 客户
+		if (application.getType().equals("1")) {
+			if (list.get(position).getStatus().equals("已支付")) {
+				holder.button_pay.setVisibility(View.VISIBLE);
+				holder.button_pay.setText("去评价");
+				holder.button_pay.setOnClickListener(listener);
+				holder.button_pay.setTag("evaluate");
+			}
+		}
+		// 商户
+		else {
+			if (list.get(position).getStatus().equals("未支付")) {
+				holder.button_pay.setVisibility(View.VISIBLE);
+				holder.button_pay.setText("确认支付");
+				holder.button_pay.setOnClickListener(listener);
+				holder.button_pay.setTag("confirm");
+			}
+		}
 
 		return convertView;
 	}

@@ -63,7 +63,7 @@ public class Fragment_Handing extends Fragment {
 		list = new ArrayList<OrderListData>();
 		if (isFirst)
 			showProgressDialog();
-		getData(DealDetailActivity.status, orderType);
+		getData(eDaoClientConfig.status, orderType);
 	}
 
 	private void getData(String status, String orderType) {
