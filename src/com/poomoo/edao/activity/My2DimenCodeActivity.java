@@ -62,14 +62,12 @@ public class My2DimenCodeActivity extends BaseActivity implements OnClickListene
 		DisplayImageOptions options = new DisplayImageOptions.Builder()//
 				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
 				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
-				.cacheInMemory(true) // 内存缓存
-				.cacheOnDisk(false) // sdcard缓存
+				.cacheInMemory(false) // 内存缓存
+				.cacheOnDisk(true) // sdcard缓存
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
-				.imageScaleType(ImageScaleType.EXACTLY)
 				.build();
-//		ImageLoader.getInstance().displayImage(application.getQuickmarkPic(), imageView_2code,options);
-		bitmap = ImageLoader.getInstance().loadImageSync(application.getQuickmarkPic(),options);
-		System.out.println("url:" + application.getQuickmarkPic() + "  bitmap:" + bitmap);
+		bitmap = ImageLoader.getInstance().loadImageSync(application.getQuickmarkPic(), options);
+		System.out.println("url:" + application.getQuickmarkPic() + "bitmap:" + bitmap);
 		imageView_2code.setImageBitmap(bitmap);
 	}
 
@@ -87,6 +85,10 @@ public class My2DimenCodeActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void saveBitmap(Bitmap bitmap) {
+		if (bitmap == null) {
+			Utity.showToast(getApplicationContext(), "图片不存在");
+			return;
+		}
 		if (my2code.exists()) {
 			my2code.delete();
 		}

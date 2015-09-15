@@ -43,10 +43,9 @@
 
             <ImageView
                 android:id="@+id/my2dimencode_imageView_2code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_leyidao" />
+                android:layout_width="@dimen/twodimencode"
+                android:layout_height="@dimen/twodimencode"
+                android:src="@drawable/my2code_download" />
         </LinearLayout>
 
         <LinearLayout

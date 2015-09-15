@@ -51,7 +51,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical" >
 
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="我的二维码"
+                android:text="乐意道二维码"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize16" />
 
