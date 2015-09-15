@@ -196,7 +196,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 			@Override
 			public void onClick(View v) {
 				int position = flipper.getDisplayedChild();
-				imageBrower(position, imageUrlsList);
+				// imageBrower(position, imageUrlsList);
 			}
 		});
 		flipper.getInAnimation().setAnimationListener(new AnimationListener() {

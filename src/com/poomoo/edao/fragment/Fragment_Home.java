@@ -193,7 +193,7 @@ public class Fragment_Home extends Fragment implements OnClickListener, OnItemCl
 			@Override
 			public void onClick(View v) {
 				int position = flipper.getDisplayedChild();
-				imageBrower(position, imageUrlsList);
+				// imageBrower(position, imageUrlsList);
 			}
 		});
 
