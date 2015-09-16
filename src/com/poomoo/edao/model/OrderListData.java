@@ -12,6 +12,7 @@ public class OrderListData {
 	private String payFee = "";
 	private String status = "";
 	private String ordersDt = "";
+	private String remark = "";
 
 	public String getOrdersId() {
 		return this.ordersId;
@@ -43,6 +44,14 @@ public class OrderListData {
 
 	public void setOrdersDt(String ordersDt) {
 		this.ordersDt = ordersDt;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

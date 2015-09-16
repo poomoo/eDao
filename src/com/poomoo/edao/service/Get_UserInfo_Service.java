@@ -3,14 +3,6 @@ package com.poomoo.edao.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.IBinder;
-import android.os.Message;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.activity.NavigationActivity;
 import com.poomoo.edao.application.eDaoClientApplication;
@@ -19,6 +11,14 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
+
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.IBinder;
+import android.os.Message;
 
 public class Get_UserInfo_Service extends Service {
 	private Gson gson = new Gson();

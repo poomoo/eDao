@@ -1,5 +1,9 @@
 package com.poomoo.edao.activity;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.fragment.Fragment_Detail;
+import com.poomoo.edao.fragment.Fragment_History;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,10 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.fragment.Fragment_Detail;
-import com.poomoo.edao.fragment.Fragment_History;
 
 /**
  * 

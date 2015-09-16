@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.MyOrderActivity;
 import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -21,6 +20,7 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
+import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -40,13 +40,10 @@ public class Fragment_UnPayed extends Fragment {
 	private boolean isFirst = true;// 是否第一次加载
 	private String orderType = "";// orderType订单类型
 
-	public static Fragment_UnPayed instance = null;
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onActivityCreated(savedInstanceState);
-		instance = this;
 		init();
 	}
 
@@ -68,6 +65,11 @@ public class Fragment_UnPayed extends Fragment {
 			showProgressDialog();
 		eDaoClientConfig.status = "1";
 		getData(eDaoClientConfig.status);
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				getData(eDaoClientConfig.status);
+			}
+		});
 	}
 
 	public void getData(String status) {

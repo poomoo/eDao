@@ -21,6 +21,8 @@ import static android.view.MotionEvent.ACTION_UP;
 
 import java.lang.ref.WeakReference;
 
+import com.poomoo.edao.widget.PhotoView.scrollerproxy.ScrollerProxy;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -39,8 +41,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
-import com.poomoo.edao.widget.PhotoView.scrollerproxy.ScrollerProxy;
 
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 		OnGestureListener, ViewTreeObserver.OnGlobalLayoutListener {

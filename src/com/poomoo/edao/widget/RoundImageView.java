@@ -1,5 +1,7 @@
 package com.poomoo.edao.widget;
 
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -14,8 +16,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.poomoo.edao.R;
 
 /**
  * 

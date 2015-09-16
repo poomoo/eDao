@@ -8,6 +8,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.poomoo.edao.R;
+import com.poomoo.edao.activity.MapActivity;
+import com.poomoo.edao.activity.ShopListActivity;
+import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
+import com.poomoo.edao.widget.PhotoView.MyGestureListener;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -35,21 +50,6 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.poomoo.edao.R;
-import com.poomoo.edao.activity.MapActivity;
-import com.poomoo.edao.activity.ShopListActivity;
-import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
-import com.poomoo.edao.widget.PhotoView.MyGestureListener;
 
 public class Fragment_Store extends Fragment implements OnItemClickListener, OnClickListener {
 	private TextView textView_indicator;

@@ -2,6 +2,11 @@ package com.zbar.lib;
 
 import java.io.IOException;
 
+import com.poomoo.edao.R;
+import com.zbar.lib.camera.CameraManager;
+import com.zbar.lib.decode.CaptureActivityHandler;
+import com.zbar.lib.decode.InactivityTimer;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -20,11 +25,6 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.poomoo.edao.R;
-import com.zbar.lib.camera.CameraManager;
-import com.zbar.lib.decode.CaptureActivityHandler;
-import com.zbar.lib.decode.InactivityTimer;
 
 /**
  * 作者: 陈涛(1076559197@qq.com)

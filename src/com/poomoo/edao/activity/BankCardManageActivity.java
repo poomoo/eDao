@@ -5,6 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.adapter.CitySpinnerAdapter;
+import com.poomoo.edao.adapter.ProvinceSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.database.CityInfo;
+import com.poomoo.edao.model.database.ProvinceInfo;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.MessageBox_YES;
+
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,21 +37,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.adapter.CitySpinnerAdapter;
-import com.poomoo.edao.adapter.ProvinceSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.database.CityInfo;
-import com.poomoo.edao.model.database.ProvinceInfo;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.MessageBox_YES;
 
 /**
  * 

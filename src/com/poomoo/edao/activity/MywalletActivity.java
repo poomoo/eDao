@@ -3,19 +3,6 @@ package com.poomoo.edao.activity;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
@@ -29,6 +16,19 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * 

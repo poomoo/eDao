@@ -6,6 +6,17 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.CityPicker;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,17 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.CityPicker;
 
 /**
  * 

@@ -1,5 +1,7 @@
 package com.poomoo.edao.adapter;
 
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 public class Fragment_Home_GridViewAdapter extends BaseAdapter {
 

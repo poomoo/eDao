@@ -8,6 +8,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.poomoo.edao.R;
+import com.poomoo.edao.activity.CooperationActivity;
+import com.poomoo.edao.activity.CreditManageActivity;
+import com.poomoo.edao.activity.DealDetailActivity;
+import com.poomoo.edao.activity.LoveFundActivity;
+import com.poomoo.edao.activity.MapActivity;
+import com.poomoo.edao.activity.MywalletActivity;
+import com.poomoo.edao.activity.NavigationActivity;
+import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
+import com.poomoo.edao.activity.RebateActivity;
+import com.poomoo.edao.activity.TransferActivity1;
+import com.poomoo.edao.activity.WebViewActivity;
+import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.SideBar;
+import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
+import com.poomoo.edao.widget.PhotoView.MyGestureListener;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -37,32 +63,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.poomoo.edao.R;
-import com.poomoo.edao.activity.CooperationActivity;
-import com.poomoo.edao.activity.CreditManageActivity;
-import com.poomoo.edao.activity.DealDetailActivity;
-import com.poomoo.edao.activity.LoveFundActivity;
-import com.poomoo.edao.activity.MapActivity;
-import com.poomoo.edao.activity.MywalletActivity;
-import com.poomoo.edao.activity.NavigationActivity;
-import com.poomoo.edao.activity.PurchaseAndGetDetailActivity;
-import com.poomoo.edao.activity.RebateActivity;
-import com.poomoo.edao.activity.TransferActivity1;
-import com.poomoo.edao.activity.WebViewActivity;
-import com.poomoo.edao.adapter.Fragment_Home_GridViewAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.SideBar;
-import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
-import com.poomoo.edao.widget.PhotoView.MyGestureListener;
 
 /**
  * 

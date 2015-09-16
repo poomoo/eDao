@@ -5,6 +5,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.TimeCountUtil;
+import com.poomoo.edao.util.Utity;
+
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -24,15 +33,6 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.TimeCountUtil;
-import com.poomoo.edao.util.Utity;
 
 /**
  * 

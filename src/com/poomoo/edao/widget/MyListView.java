@@ -2,6 +2,8 @@ package com.poomoo.edao.widget;
 
 import java.util.Date;
 
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 public class MyListView extends ListView implements OnScrollListener {
 

@@ -14,6 +14,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
+import com.google.gson.Gson;
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.service.Get_UserInfo_Service;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.weixinpay.Constants;
+import com.poomoo.edao.weixinpay.MD5;
+import com.poomoo.edao.weixinpay.Util;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YES;
+import com.poomoo.edao.widget.MessageBox_YESNO;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -37,26 +57,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.service.Get_UserInfo_Service;
-import com.poomoo.edao.util.HttpCallbackListener;
-import com.poomoo.edao.util.HttpUtil;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.weixinpay.Constants;
-import com.poomoo.edao.weixinpay.MD5;
-import com.poomoo.edao.weixinpay.Util;
-import com.poomoo.edao.widget.DialogResultListener;
-import com.poomoo.edao.widget.MessageBox_YES;
-import com.poomoo.edao.widget.MessageBox_YESNO;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 

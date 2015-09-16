@@ -69,12 +69,12 @@
         android:id="@+id/my_order_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/my_order_layout"
+        android:scrollbars="none" />
+    <ViewStub
+        android:id="@+id/my_order_viewStub"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/my_order_textView_noData"
+        android:layout="@layout/view_nodata" />
 
 </LinearLayout>

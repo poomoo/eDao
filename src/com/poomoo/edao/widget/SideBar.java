@@ -1,5 +1,8 @@
 package com.poomoo.edao.widget;
 
+import com.nineoldandroids.view.ViewHelper;
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -10,11 +13,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
-import com.nineoldandroids.view.ViewHelper;
-import com.poomoo.edao.R;
-import com.poomoo.edao.activity.NavigationActivity;
-import com.poomoo.edao.config.eDaoClientConfig;
 
 /**
  * 

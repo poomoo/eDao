@@ -1,9 +1,5 @@
 package com.poomoo.edao.wxapi;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
-
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.BaseActivity;
 import com.poomoo.edao.activity.BuyKeyActivity;
@@ -17,6 +13,10 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
 
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 	private IWXAPI api;

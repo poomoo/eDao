@@ -4,6 +4,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
+import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.service.Get_UserInfo_Service;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,15 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.LocationClientOption.LocationMode;
-import com.poomoo.edao.R;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.service.Get_UserInfo_Service;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 3000;

@@ -9,16 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.DealDetailActivity;
 import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -28,6 +20,14 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
+import com.poomoo.edao.widget.MyListView.OnRefreshListener;
+
+import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class Fragment_Apply extends Fragment {
 	private MyListView listView;
@@ -64,6 +64,11 @@ public class Fragment_Apply extends Fragment {
 		if (isFirst)
 			showProgressDialog();
 		getData(eDaoClientConfig.status, orderType);
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				getData(eDaoClientConfig.status, orderType);
+			}
+		});
 	}
 
 	private void getData(String status, String orderType) {

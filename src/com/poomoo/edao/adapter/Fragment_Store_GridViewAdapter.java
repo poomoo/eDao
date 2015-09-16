@@ -1,5 +1,7 @@
 package com.poomoo.edao.adapter;
 
+import com.poomoo.edao.R;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 public class Fragment_Store_GridViewAdapter extends BaseAdapter {
 

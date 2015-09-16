@@ -2,6 +2,10 @@ package com.poomoo.edao.fragment;
 
 import java.util.Calendar;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.util.Utity;
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -13,10 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.util.Utity;
 
 public class Fragment_Date extends Fragment implements OnClickListener {
 	private TextView textView_start_date, textView_end_date;

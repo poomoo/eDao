@@ -1,5 +1,7 @@
 package com.poomoo.edao.util;
 
+import com.poomoo.edao.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
@@ -8,8 +10,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.Button;
-
-import com.poomoo.edao.R;
 
 /**
  * 

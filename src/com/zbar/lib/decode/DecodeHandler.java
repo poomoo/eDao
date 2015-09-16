@@ -3,16 +3,16 @@ package com.zbar.lib.decode;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.poomoo.edao.R;
+import com.zbar.lib.CaptureActivity;
+import com.zbar.lib.ZbarManager;
+import com.zbar.lib.bitmap.PlanarYUVLuminanceSource;
+
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-
-import com.poomoo.edao.R;
-import com.zbar.lib.CaptureActivity;
-import com.zbar.lib.ZbarManager;
-import com.zbar.lib.bitmap.PlanarYUVLuminanceSource;
 
 /**
  * 作者: 陈涛(1076559197@qq.com)

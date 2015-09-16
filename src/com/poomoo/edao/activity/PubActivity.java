@@ -3,10 +3,8 @@ package com.poomoo.edao.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.config.eDaoClientConfig;
 
 import android.content.Intent;

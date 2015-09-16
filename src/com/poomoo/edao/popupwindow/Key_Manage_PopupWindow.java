@@ -1,5 +1,7 @@
 package com.poomoo.edao.popupwindow;
 
+import com.poomoo.edao.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -11,8 +13,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 public class Key_Manage_PopupWindow extends PopupWindow {
 

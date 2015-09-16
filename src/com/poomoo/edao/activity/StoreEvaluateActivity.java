@@ -1,8 +1,8 @@
 package com.poomoo.edao.activity;
 
-import android.os.Bundle;
-
 import com.poomoo.edao.R;
+
+import android.os.Bundle;
 
 /**
  * 

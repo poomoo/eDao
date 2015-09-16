@@ -1,10 +1,10 @@
 package com.poomoo.edao.activity;
 
+import com.poomoo.edao.R;
+
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 /**
  * 

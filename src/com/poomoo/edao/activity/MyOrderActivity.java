@@ -1,25 +1,33 @@
 package com.poomoo.edao.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.MyOrder_ListViewAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.fragment.Fragment_Deleted;
-import com.poomoo.edao.fragment.Fragment_Payed;
 import com.poomoo.edao.fragment.Fragment_UnPayed;
+import com.poomoo.edao.model.OrderListData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.MyListView;
+import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.RadioButton;
 
 /**
@@ -31,13 +39,19 @@ import android.widget.RadioButton;
  */
 public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private RadioButton button_unpay, button_payed, button_delete;
+	private View noDataView;
 
-	private Fragment_Payed fragment_Payed;
-	private Fragment_UnPayed fragment_UnPayed;
-	private Fragment_Deleted fragment_Deleted;
-	private Fragment curFragment;
+	private eDaoClientApplication application = null;
 
+	private MyListView listView;
+	private MyOrder_ListViewAdapter adapter;
+	private List<OrderListData> list;
 	private Gson gson = new Gson();
+	private ProgressDialog progressDialog = null;
+	private int curPage = 1, pageSize = 10;
+	private String status = "2";// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
+	private boolean isFirst = true;// 是否第一次加载
+	private boolean isFresh = false;// 是否刷新标志
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +60,8 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_my_order);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		setDefaultFragment();
+		application = (eDaoClientApplication) getApplication();
 		init();
-	}
-
-	private void setDefaultFragment() {
-		// TODO 自动生成的方法存根
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragment_Payed = new Fragment_Payed();
-		curFragment = fragment_Payed;
-		fragmentTransaction.add(R.id.my_order_layout, fragment_Payed);
-		fragmentTransaction.commit();
 	}
 
 	private void init() {
@@ -65,9 +69,23 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		button_payed = (RadioButton) findViewById(R.id.my_order_radioButton_payed);
 		button_unpay = (RadioButton) findViewById(R.id.my_order_radioButton_nopay);
 		button_delete = (RadioButton) findViewById(R.id.my_order_radioButton_delete);
+		listView = (MyListView) findViewById(R.id.my_order_listView);
+
 		button_unpay.setOnClickListener(this);
 		button_payed.setOnClickListener(this);
 		button_delete.setOnClickListener(this);
+
+		list = new ArrayList<OrderListData>();
+		adapter = new MyOrder_ListViewAdapter(this, list);
+		listView.setAdapter(adapter);
+
+		getData(status);
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				isFresh = true;
+				getData(eDaoClientConfig.status);
+			}
+		});
 	}
 
 	@Override
@@ -75,25 +93,26 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.my_order_radioButton_payed:
-			if (fragment_Payed == null)
-				fragment_Payed = new Fragment_Payed();
-			switchFragment(fragment_Payed);
-			curFragment = fragment_Payed;
+			status = "2";
 			break;
 		case R.id.my_order_radioButton_nopay:
-			if (fragment_UnPayed == null)
-				fragment_UnPayed = new Fragment_UnPayed();
-			switchFragment(fragment_UnPayed);
-			curFragment = fragment_UnPayed;
+			status = "1";
 			break;
 		case R.id.my_order_radioButton_delete:
-			if (fragment_Deleted == null)
-				fragment_Deleted = new Fragment_Deleted();
-			switchFragment(fragment_Deleted);
-			curFragment = fragment_Deleted;
+			status = "3";
 			break;
-
 		}
+		isFirst = true;
+		isFresh = false;
+		curPage = 1;
+		pageSize = 10;
+		int size = list.size();
+		if (size > 0) {
+			list.removeAll(list);
+			adapter.notifyDataSetChanged();
+			listView.setAdapter(adapter);
+		}
+		getData(status);
 	}
 
 	public class MyListener implements OnClickListener {
@@ -110,31 +129,97 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 			if (v.getTag().equals("evaluate")) {
 
 			} else {
-				Fragment_UnPayed.instance.showProgressDialog();
 				confirm(position);
 			}
 		}
 
 	}
 
-	public void switchFragment(Fragment to) {
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		if (!to.isAdded()) { // 先判断是否被add过
-			fragmentTransaction.hide(curFragment).add(R.id.my_order_layout, to); // 隐藏当前的fragment，add下一个到Activity中
-		} else {
-			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
-		}
-		fragmentTransaction.commit();
+	private void getData(String status) {
+		// TODO 自动生成的方法存根
+		if (isFirst)
+			showProgressDialog();
+		System.out.println("调用getData");
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("bizName", "50000");
+		data.put("method", "50005");
+		data.put("userId", application.getUserId());
+		data.put("currPage", curPage);
+		data.put("pageSize", pageSize);
+		data.put("status", status);
+		data.put("ordersType", "");
+		data.put("startDt", "");
+		data.put("endDt", "");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							showListView();
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+
+								JSONArray pager = result.getJSONArray("records");
+								int length = pager.length();
+								for (int i = 0; i < length; i++) {
+									OrderListData data = new OrderListData();
+									data = gson.fromJson(pager.getJSONObject(i).toString(), OrderListData.class);
+									list.add(data);
+								}
+								if (isFirst) {
+									isFirst = false;
+								}
+								adapter.notifyDataSetChanged();
+
+								curPage += 10;
+								pageSize += 10;
+
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
+							}
+						} else {
+							if (!isFresh)
+								showEmptyView();
+							else
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+
+						listView.onRefreshComplete();
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						listView.onRefreshComplete();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	public void confirm(int position) {
 		// TODO 自动生成的方法存根
 		System.out.println("调用confirm");
+		showProgressDialog();
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "50000");
 		data.put("method", "50004");
-		data.put("ordersId", Fragment_UnPayed.instance.list.get(position).getOrdersId());
+		data.put("ordersId", list.get(position).getOrdersId());
 		data.put("opType", 1);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
@@ -147,13 +232,21 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 						// TODO 自动生成的方法存根
 
 						if (responseData.getRsCode() == 1) {
-							Fragment_UnPayed.instance.getData(eDaoClientConfig.status);
+							isFresh = false;
+							curPage = 1;
+							pageSize = 10;
+							int size = list.size();
+							if (size > 0) {
+								list.removeAll(list);
+								adapter.notifyDataSetChanged();
+								listView.setAdapter(adapter);
+							}
+							getData(status);
 						} else {
-							Fragment_UnPayed.instance.closeProgressDialog();
+							closeProgressDialog();
 							Utity.showToast(getApplicationContext(), responseData.getMsg());
 						}
 					}
-
 				});
 			}
 
@@ -164,11 +257,64 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void run() {
 						// TODO 自动生成的方法存根
-						Fragment_UnPayed.instance.closeProgressDialog();
+						closeProgressDialog();
 						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
 					}
 				});
 			}
 		});
+	}
+
+	public void showEmptyView() {
+		listView.setVisibility(View.GONE);
+		if (noDataView == null) {
+			ViewStub noDataViewStub = (ViewStub) findViewById(R.id.my_order_viewStub);
+			noDataView = noDataViewStub.inflate();
+		} else {
+			noDataView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void showListView() {
+		listView.setVisibility(View.VISIBLE);
+		if (noDataView != null) {
+			noDataView.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: showProgressDialog
+	 * @Description: TODO 显示进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
+	 */
+	private void showProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("请稍后...");
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @Title: closeProgressDialog
+	 * @Description: TODO 关闭进度对话框
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
 	}
 }

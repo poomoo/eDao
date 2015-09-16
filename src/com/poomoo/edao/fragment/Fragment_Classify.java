@@ -1,5 +1,7 @@
 package com.poomoo.edao.fragment;
 
+import com.poomoo.edao.R;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,8 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 public class Fragment_Classify extends Fragment implements OnClickListener {
 	private TextView textView_transfer, textView_recharge, textView_buy_keys,

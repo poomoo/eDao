@@ -1,5 +1,18 @@
 package com.poomoo.edao.fragment;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.activity.BankCardManageActivity;
+import com.poomoo.edao.activity.KeyAndOperateActivity;
+import com.poomoo.edao.activity.LoginActivity;
+import com.poomoo.edao.activity.My2DimenCodeActivity;
+import com.poomoo.edao.activity.PassWordManageActivity;
+import com.poomoo.edao.activity.StoreManageActivity;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YESNO;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,19 +29,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.activity.BankCardManageActivity;
-import com.poomoo.edao.activity.KeyAndOperateActivity;
-import com.poomoo.edao.activity.LoginActivity;
-import com.poomoo.edao.activity.My2DimenCodeActivity;
-import com.poomoo.edao.activity.PassWordManageActivity;
-import com.poomoo.edao.activity.StoreManageActivity;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.DialogResultListener;
-import com.poomoo.edao.widget.MessageBox_YESNO;
 
 /**
  * 

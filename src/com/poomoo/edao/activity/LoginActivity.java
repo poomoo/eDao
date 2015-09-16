@@ -3,19 +3,6 @@ package com.poomoo.edao.activity;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
@@ -28,6 +15,19 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.poomoo.edao.widget.MessageBox_YESNO;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * 

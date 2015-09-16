@@ -2,6 +2,12 @@ package com.poomoo.edao.adapter;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.poomoo.edao.R;
+import com.poomoo.edao.model.StoreData;
+
 import android.content.Context;
 import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
@@ -11,12 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.poomoo.edao.R;
-import com.poomoo.edao.model.StoreData;
 
 public class Shop_List_ListViewAdapter extends BaseAdapter {
 

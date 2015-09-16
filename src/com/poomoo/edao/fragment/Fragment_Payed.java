@@ -11,8 +11,6 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.activity.DealDetailActivity;
-import com.poomoo.edao.activity.MyOrderActivity;
 import com.poomoo.edao.adapter.Deal_Detail_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -22,6 +20,7 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
+import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -29,7 +28,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 
 public class Fragment_Payed extends Fragment {
 	private MyListView listView;
@@ -40,10 +38,6 @@ public class Fragment_Payed extends Fragment {
 	private int curPage = 1, pageSize = 10;
 	private eDaoClientApplication application = null;
 	private boolean isFirst = true;// 是否第一次加载
-	private String orderType = "";// Status
-
-	// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
-	// orderType订单类型
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -69,10 +63,15 @@ public class Fragment_Payed extends Fragment {
 		if (isFirst)
 			showProgressDialog();
 		eDaoClientConfig.status = "2";
-		getData(eDaoClientConfig.status, orderType);
+		getData(eDaoClientConfig.status);
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				getData(eDaoClientConfig.status);
+			}
+		});
 	}
 
-	private void getData(String status, String orderType) {
+	private void getData(String status) {
 		// TODO 自动生成的方法存根
 		System.out.println("调用getData");
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -82,7 +81,7 @@ public class Fragment_Payed extends Fragment {
 		data.put("currPage", curPage);
 		data.put("pageSize", pageSize);
 		data.put("status", status);
-		data.put("ordersType", orderType);
+		data.put("ordersType", "");
 		data.put("startDt", "");
 		data.put("endDt", "");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {

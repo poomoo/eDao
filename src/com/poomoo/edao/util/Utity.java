@@ -10,12 +10,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.http.conn.util.InetAddressUtils;
 import org.litepal.crud.DataSupport;
+
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.model.database.AreaInfo;
+import com.poomoo.edao.model.database.CityInfo;
+import com.poomoo.edao.model.database.ProvinceInfo;
+import com.tencent.mm.sdk.openapi.IWXAPI;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -24,16 +29,9 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.model.database.AreaInfo;
-import com.poomoo.edao.model.database.CityInfo;
-import com.poomoo.edao.model.database.ProvinceInfo;
-import com.tencent.mm.sdk.openapi.IWXAPI;
 
 /**
  * 

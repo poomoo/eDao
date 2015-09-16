@@ -7,6 +7,8 @@
  */
 package com.poomoo.edao.widget;
 
+import com.poomoo.edao.R;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,8 +18,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 /**
  * 

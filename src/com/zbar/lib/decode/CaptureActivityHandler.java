@@ -1,11 +1,11 @@
 package com.zbar.lib.decode;
 
-import android.os.Handler;
-import android.os.Message;
-
 import com.poomoo.edao.R;
 import com.zbar.lib.CaptureActivity;
 import com.zbar.lib.camera.CameraManager;
+
+import android.os.Handler;
+import android.os.Message;
 
 
 

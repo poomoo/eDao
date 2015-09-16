@@ -2,6 +2,8 @@ package com.poomoo.edao.widget.PhotoView;
 
 import java.util.ArrayList;
 
+import com.poomoo.edao.R;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,8 +12,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Window;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 /**
  * 

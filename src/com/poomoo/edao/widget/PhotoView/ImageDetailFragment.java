@@ -1,5 +1,11 @@
 package com.poomoo.edao.widget.PhotoView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.poomoo.edao.R;
+import com.poomoo.edao.widget.PhotoView.PhotoViewAttacher.OnPhotoTapListener;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.ImageView.ScaleType;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.poomoo.edao.R;
-import com.poomoo.edao.widget.PhotoView.PhotoViewAttacher.OnPhotoTapListener;
 
 public class ImageDetailFragment extends Fragment {
 	private String mImageUrl;

@@ -18,6 +18,17 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.database.AreaInfo;
+import com.poomoo.edao.model.database.CityInfo;
+import com.poomoo.edao.model.database.ProvinceInfo;
+import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
+import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.CityPicker;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,17 +57,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
-import com.poomoo.edao.application.eDaoClientApplication;
-import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.model.database.AreaInfo;
-import com.poomoo.edao.model.database.CityInfo;
-import com.poomoo.edao.model.database.ProvinceInfo;
-import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
-import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.CityPicker;
 
 /**
  * 

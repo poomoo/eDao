@@ -68,6 +68,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 									// 9数码电器10皮具箱包11酒店服务12户外休闲13汽车服务14教育培训15农副产品16医药服务17交通运输18办公家具19
 									// 建房建材 20 机械设备
 	private String fromFlag = "";// 来源activity map-地图 store-商城
+	private boolean isFresh = false;// 是否刷新标志
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 		listView.setAdapter(adapter);
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
+				isFresh = true;
 				getData();
 			}
 		});
@@ -193,8 +195,13 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
 							}
-						} else
-							showEmptyView();
+						} else {
+							if (!isFresh)
+								showEmptyView();
+							else
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+
 						listView.onRefreshComplete();
 					}
 				});
@@ -264,6 +271,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 			textView_classify.setText(name);
 			curPage = 1;
 			pageSize = 10;
+			isFresh = false;
 			getData();
 		}
 	}

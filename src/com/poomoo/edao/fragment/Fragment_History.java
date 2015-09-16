@@ -9,13 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Purchase_History_ListViewAdapter;
@@ -27,6 +20,14 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
+import com.poomoo.edao.widget.MyListView.OnRefreshListener;
+
+import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class Fragment_History extends Fragment {
 	private MyListView listView;
@@ -60,6 +61,11 @@ public class Fragment_History extends Fragment {
 		application = (eDaoClientApplication) getActivity().getApplication();
 		showProgressDialog();
 		getData();
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				getData();
+			}
+		});
 	}
 
 	private void getData() {

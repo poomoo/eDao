@@ -9,9 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.Rebate_ListViewAdapter;
@@ -23,6 +20,9 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
 
 /**
  * 

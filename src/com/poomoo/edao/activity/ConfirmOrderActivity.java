@@ -1,5 +1,7 @@
 package com.poomoo.edao.activity;
 
+import com.poomoo.edao.R;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -7,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
-
-import com.poomoo.edao.R;
 
 /**
  * 

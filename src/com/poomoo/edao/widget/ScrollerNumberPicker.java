@@ -3,6 +3,11 @@ package com.poomoo.edao.widget;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.model.database.AreaInfo;
+import com.poomoo.edao.model.database.CityInfo;
+import com.poomoo.edao.model.database.ProvinceInfo;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,11 +21,6 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.model.database.AreaInfo;
-import com.poomoo.edao.model.database.CityInfo;
-import com.poomoo.edao.model.database.ProvinceInfo;
 
 /**
  * 

@@ -1,5 +1,7 @@
 package com.poomoo.edao.navigation;
 
+import com.poomoo.edao.R;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,8 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.poomoo.edao.R;
 
 @SuppressLint("NewApi")
 public class ReturnNavigation extends Fragment {

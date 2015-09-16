@@ -43,10 +43,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/margin5" >
+        android:paddingLeft="@dimen/margin5"
+        android:paddingRight="@dimen/margin5"
+        android:paddingTop="@dimen/margin10" >
 
         <ImageView
             android:id="@+id/order_list_item_imageView_pic"
@@ -56,14 +58,10 @@
             android:src="@drawable/ic_love_fund"
             android:visibility="gone" />
 
-        <TextView
-            android:layout_width="@dimen/margin5"
-            android:layout_height="match_parent" />
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
@@ -112,42 +110,81 @@
                     android:textColor="@color/orange"
                     android:textSize="@dimen/textsize16" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin5" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="下单时间:　　"
-                    android:textSize="@dimen/textsize16" />
-
-                <TextView
-                    android:id="@+id/order_list_item_textView_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2015-06-06"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/textsize16" />
-            </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/order_list_item_button_pay"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/order_list_item_button_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_btn_yes_background"
+                android:gravity="center"
+                android:paddingLeft="@dimen/margin2"
+                android:paddingRight="@dimen/margin2"
+                android:text="确认支付"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize14"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin5"
+        android:paddingRight="@dimen/margin5" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_btn_yes_background"
-            android:text="去支付"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize14"
-            android:visibility="gone" />
+            android:text="下单时间:　　"
+            android:textSize="@dimen/textsize16" />
+
+        <TextView
+            android:id="@+id/order_list_item_textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-06-06 19:21:36"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize16" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin5"
+        android:paddingRight="@dimen/margin5" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备　　注:　　"
+            android:textSize="@dimen/textsize16" />
+
+        <TextView
+            android:id="@+id/order_list_item_textView_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注信息"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
     <TextView

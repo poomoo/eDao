@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.poomoo.edao.R;
+import com.poomoo.edao.adapter.CommodityListSpinnerAdapter;
+
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,9 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-
-import com.poomoo.edao.R;
-import com.poomoo.edao.adapter.CommodityListSpinnerAdapter;
 
 /**
  * 
