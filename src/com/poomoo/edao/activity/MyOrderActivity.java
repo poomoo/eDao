@@ -14,7 +14,6 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.MyOrder_ListViewAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
-import com.poomoo.edao.fragment.Fragment_UnPayed;
 import com.poomoo.edao.model.OrderListData;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -127,7 +126,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if (v.getTag().equals("evaluate")) {
-
+				openActivity(StoreEvaluateActivity.class);
 			} else {
 				confirm(position);
 			}

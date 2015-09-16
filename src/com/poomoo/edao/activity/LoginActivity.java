@@ -80,23 +80,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		loginsp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		editor = loginsp.edit();
-		// if (loginsp.getBoolean("isLogin", false)) {
-		// applicaiton.setRealName(loginsp.getString("realName", ""));
-		// applicaiton.setTel(loginsp.getString("tel", ""));
-		// applicaiton.setUserId(loginsp.getString("userId", ""));
-		// applicaiton.setType(loginsp.getString("type", ""));
-		// applicaiton.setRealNameAuth(loginsp.getString("realNameAuth", ""));
-		// startActivity(new Intent(LoginActivity.this,
-		// NavigationActivity.class));
-		// System.out.println("login:" + applicaiton.getRealName());
-		// startService(new Intent(this, Get_UserInfo_Service.class));
-		// finish();
-		// } else {
+
 		if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
 			editText_phone.setText(loginsp.getString("tel", ""));
-		if (!TextUtils.isEmpty(loginsp.getString("passWord", "")))
-			editText_password.setText(loginsp.getString("passWord", ""));
-		// }
+		if (!TextUtils.isEmpty(loginsp.getString("passWord", ""))) {
+			passWord = loginsp.getString("passWord", "");
+			// 对密码进行AES解密
+			try {
+				passWord = Utity.decrypt(eDaoClientConfig.key, passWord);
+			} catch (Exception e) {
+				System.out.println("密码解密错误:" + e.getMessage());
+				Utity.showToast(getApplicationContext(), "密码解密错误:" + e.getMessage());
+				passWord = "";
+			}
+			editText_password.setText(passWord);
+		}
 	}
 
 	@Override
@@ -158,6 +156,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								editor.putString("type", loginResData.getType());
 								editor.putString("realNameAuth", loginResData.getRealNameAuth());
 								editor.putString("payPwdValue", loginResData.getPayPwdValue());
+								try {
+									passWord = Utity.encrypt(eDaoClientConfig.key, passWord);
+								} catch (Exception e) {
+									Utity.showToast(getApplicationContext(), "密码加密错误:" + e.getMessage());
+									passWord = "";
+								}
 								editor.putString("passWord", passWord);
 								editor.putString("quickmarkPic", loginResData.getQuickmarkPic());
 								editor.putBoolean("isLogin", true);

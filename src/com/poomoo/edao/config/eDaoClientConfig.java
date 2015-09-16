@@ -34,6 +34,9 @@ public class eDaoClientConfig {
 	// 更新用户信息
 	public static final int freshFlag = 1;// 刷新UI标志
 
+	// 加解密公钥
+	public static final String key = "leyidaoB1AF"; // B1AF本机MD5值最后两位
+
 	// 关于我们
 	public static String tel = "", web = "", weibo = "", weixin = "";
 
