@@ -6,11 +6,13 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.model.OrderListData;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -62,6 +64,11 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 			holder.textView_order_money = (TextView) convertView.findViewById(R.id.order_list_item_textView_money);
 			holder.textView_order_state = (TextView) convertView.findViewById(R.id.order_list_item_textView_state);
 			holder.textView_order_date = (TextView) convertView.findViewById(R.id.order_list_item_textView_date);
+			holder.textView_order_remark = (TextView) convertView.findViewById(R.id.order_list_item_textView_remark);
+			holder.textView_order_handing_fee = (TextView) convertView
+					.findViewById(R.id.order_list_item_textView_handing_fee);
+			holder.layout_handing_fee = (LinearLayout) convertView
+					.findViewById(R.id.order_list_item_layout_handing_fee);
 			holder.button_pay = (Button) convertView.findViewById(R.id.order_list_item_button_pay);
 			convertView.setTag(holder);
 		} else {
@@ -70,15 +77,23 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
-		System.out.println("list.get(position).getOrdersDt():" + list.get(position).getOrdersDt());
+		holder.textView_order_remark.setText(list.get(position).getRemark());
+
+		if (!TextUtils.isEmpty(list.get(position).getHandlingFee())) {
+			holder.layout_handing_fee.setVisibility(View.VISIBLE);
+			holder.textView_order_handing_fee.setText(list.get(position).getHandlingFee());
+		}
+
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
 
 		return convertView;
 	}
 
 	private class ViewHolder {
-		private TextView textView_order_id, textView_order_money, textView_order_state, textView_order_date;
+		private TextView textView_order_id, textView_order_money, textView_order_state, textView_order_date,
+				textView_order_remark, textView_order_handing_fee;
 		private Button button_pay;
+		private LinearLayout layout_handing_fee;
 	}
 
 }
