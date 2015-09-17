@@ -86,6 +86,41 @@
                     android:textSize="@dimen/textsize16" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/order_list_item_layout_handing_fee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin5"
+                    android:paddingRight="@dimen/margin5" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="费　　率:　　"
+                        android:textSize="@dimen/textsize16" />
+
+                    <TextView
+                        android:id="@+id/order_list_item_textView_handing_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥10"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/textsize16" />
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin5" />
@@ -184,35 +219,6 @@
             android:layout_height="wrap_content"
             android:text="备注信息"
             android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin5" />
-
-    <LinearLayout
-        android:id="@+id/order_list_item_layout_handing_fee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin5"
-        android:paddingRight="@dimen/margin5"
-        android:visibility="gone" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="费　　率:　　"
-            android:textSize="@dimen/textsize16" />
-
-        <TextView
-            android:id="@+id/order_list_item_textView_handing_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="￥10"
-            android:textColor="@color/red"
             android:textSize="@dimen/textsize16" />
     </LinearLayout>
 

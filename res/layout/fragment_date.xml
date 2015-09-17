@@ -80,7 +80,14 @@
     <com.poomoo.edao.widget.MyListView
         android:id="@+id/fragment_date_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbars="none" />
+
+    <ViewStub
+        android:id="@+id/fragment_date_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/fragment_date_textView_noData"
+        android:layout="@layout/view_nodata" />
 
 </LinearLayout>

@@ -25,7 +25,8 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 	private Fragment_Classify fragment_Classify;
 	private Fragment_Date fragment_Date;
 	private Fragment curFragment;
-	private RadioButton button_status, button_classify, button_date;
+	public RadioButton button_status, button_classify, button_date;
+	public static DealDetailActivity instance = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 		setContentView(R.layout.activity_deal_detail);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
+		instance = this;
 		setDefaultFragment();
 		init();
 	}
@@ -41,8 +43,7 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 	private void setDefaultFragment() {
 		// TODO 自动生成的方法存根
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragment_Status = new Fragment_Status();
 		curFragment = fragment_Status;
 		fragmentTransaction.add(R.id.deal_detail_layout, fragment_Status);
@@ -89,11 +90,9 @@ public class DealDetailActivity extends BaseActivity implements OnClickListener 
 
 	public void switchFragment(Fragment to) {
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (!to.isAdded()) { // 先判断是否被add过
-			fragmentTransaction.hide(curFragment).add(R.id.deal_detail_layout,
-					to); // 隐藏当前的fragment，add下一个到Activity中
+			fragmentTransaction.hide(curFragment).add(R.id.deal_detail_layout, to); // 隐藏当前的fragment，add下一个到Activity中
 		} else {
 			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}

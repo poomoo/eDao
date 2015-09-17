@@ -1,6 +1,7 @@
 package com.poomoo.edao.fragment;
 
 import com.poomoo.edao.R;
+import com.poomoo.edao.activity.DealDetailActivity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -29,20 +30,16 @@ public class Fragment_Status extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		return inflater.inflate(R.layout.fragment_status, container, false);
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		button_payed = (RadioButton) getView().findViewById(
-				R.id.fragment_status_radioButton_payed);
-		button_unpay = (RadioButton) getView().findViewById(
-				R.id.fragment_status_radioButton_nopay);
-		button_delete = (RadioButton) getView().findViewById(
-				R.id.fragment_status_radioButton_delete);
+		button_payed = (RadioButton) getView().findViewById(R.id.fragment_status_radioButton_payed);
+		button_unpay = (RadioButton) getView().findViewById(R.id.fragment_status_radioButton_nopay);
+		button_delete = (RadioButton) getView().findViewById(R.id.fragment_status_radioButton_delete);
 		button_unpay.setOnClickListener(this);
 		button_payed.setOnClickListener(this);
 		button_delete.setOnClickListener(this);
@@ -51,8 +48,7 @@ public class Fragment_Status extends Fragment implements OnClickListener {
 	private void setDefaultFragment() {
 		// TODO 自动生成的方法存根
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragment_Payed = new Fragment_Payed();
 		fragmentTransaction.add(R.id.fragment_status_layout, fragment_Payed);
 		curFragment = fragment_Payed;
@@ -68,29 +64,30 @@ public class Fragment_Status extends Fragment implements OnClickListener {
 				fragment_Payed = new Fragment_Payed();
 			switchFragment(fragment_Payed);
 			curFragment = fragment_Payed;
+			DealDetailActivity.instance.button_status.setText("已支付");
 			break;
 		case R.id.fragment_status_radioButton_nopay:
 			if (fragment_UnPayed == null)
 				fragment_UnPayed = new Fragment_UnPayed();
 			switchFragment(fragment_UnPayed);
 			curFragment = fragment_UnPayed;
+			DealDetailActivity.instance.button_status.setText("未支付");
 			break;
 		case R.id.fragment_status_radioButton_delete:
 			if (fragment_Deleted == null)
 				fragment_Deleted = new Fragment_Deleted();
 			switchFragment(fragment_Deleted);
 			curFragment = fragment_Deleted;
+			DealDetailActivity.instance.button_status.setText("已删除");
 			break;
 		}
 	}
 
 	public void switchFragment(Fragment to) {
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (!to.isAdded()) { // 先判断是否被add过
-			fragmentTransaction.hide(curFragment).add(
-					R.id.fragment_status_layout, to); // 隐藏当前的fragment，add下一个到Activity中
+			fragmentTransaction.hide(curFragment).add(R.id.fragment_status_layout, to); // 隐藏当前的fragment，add下一个到Activity中
 		} else {
 			fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
 		}

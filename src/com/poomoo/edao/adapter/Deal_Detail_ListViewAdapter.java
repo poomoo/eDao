@@ -56,6 +56,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
+		System.out.println("getView");
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_listview_order_list, parent, false);
