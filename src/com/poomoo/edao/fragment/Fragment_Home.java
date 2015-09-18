@@ -202,7 +202,6 @@ public class Fragment_Home extends Fragment implements OnClickListener, OnItemCl
 			@Override
 			public void onAnimationStart(Animation animation) {
 				// TODO 自动生成的方法存根
-				System.out.println("onAnimationStart");
 				CharSequence text = getString(R.string.viewpager_indicator, flipper.getDisplayedChild() + 1, advCount);
 				textView_indicator.setText(text);
 			}
@@ -210,13 +209,11 @@ public class Fragment_Home extends Fragment implements OnClickListener, OnItemCl
 			@Override
 			public void onAnimationRepeat(Animation animation) {
 				// TODO 自动生成的方法存根
-				System.out.println("onAnimationRepeat");
 			}
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO 自动生成的方法存根
-				System.out.println("onAnimationEnd");
 			}
 		});
 	}
