@@ -1,69 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_operate_manage_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
     android:orientation="vertical" >
-
-    <fragment
-        android:id="@+id/navigation_fragment"
-        android:name="com.poomoo.edao.navigation.ReturnNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/margin5" >
 
         <TextView
+            android:id="@+id/operate_manage_item_textView_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="姓名"
+            android:text="张玲"
             android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/operate_manage_item_textView_tel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
+            android:layout_weight="1.3"
             android:gravity="center"
-            android:text="电话"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:text="18188889910"
+            android:textColor="@color/green"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/operate_manage_item_textView_level"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="级别"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:text="1"
+            android:textColor="@color/red"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/operate_manage_item_textView_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:gravity="center"
-            android:text="时间"
+            android:text="2015-08-13"
             android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textSize="@dimen/textsize14" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin2"
-        android:background="@color/gainsboro" />
-
-    <com.poomoo.edao.widget.MyListView
-        android:id="@+id/operate_manage_listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -83,18 +83,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		if (!TextUtils.isEmpty(loginsp.getString("tel", "")))
 			editText_phone.setText(loginsp.getString("tel", ""));
-		if (!TextUtils.isEmpty(loginsp.getString("passWord", ""))) {
-			passWord = loginsp.getString("passWord", "");
-			// 对密码进行AES解密
-			try {
-				passWord = Utity.decrypt(eDaoClientConfig.key, passWord);
-			} catch (Exception e) {
-				System.out.println("密码解密错误:" + e.getMessage());
-				Utity.showToast(getApplicationContext(), "密码解密错误:" + e.getMessage());
-				passWord = "";
-			}
-			editText_password.setText(passWord);
-		}
+		// if (!TextUtils.isEmpty(loginsp.getString("passWord", ""))) {
+		// passWord = loginsp.getString("passWord", "");
+		// // 对密码进行AES解密
+		// try {
+		// passWord = Utity.decrypt(eDaoClientConfig.key, passWord);
+		// } catch (Exception e) {
+		// System.out.println("密码解密错误:" + e.getMessage());
+		// Utity.showToast(getApplicationContext(), "密码解密错误:" + e.getMessage());
+		// passWord = "";
+		// }
+		// editText_password.setText(passWord);
+		// }
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 									Utity.showToast(getApplicationContext(), "密码加密错误:" + e.getMessage());
 									passWord = "";
 								}
-								editor.putString("passWord", passWord);
+								// editor.putString("passWord", passWord);
 								editor.putString("quickmarkPic", loginResData.getQuickmarkPic());
 								editor.putBoolean("isLogin", true);
 								editor.commit();

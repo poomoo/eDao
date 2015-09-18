@@ -14,12 +14,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class Key_Manage_PopupWindow extends PopupWindow {
+public class Operate_Manage_PopupWindow extends PopupWindow {
 
 	private TextView textView_save, textView_dial;
 	private View mMenuView;
 
-	public Key_Manage_PopupWindow(Activity context, OnClickListener itemsOnClick) {
+	public Operate_Manage_PopupWindow(Activity context, OnClickListener itemsOnClick) {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

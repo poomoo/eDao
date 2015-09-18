@@ -17,7 +17,7 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.KeyManageData;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.popupwindow.Key_Manage_PopupWindow;
+import com.poomoo.edao.popupwindow.Operate_Manage_PopupWindow;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -61,7 +61,6 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 	private static final String apply = "1", used = "2", notUsed = "3";
 	private List<KeyManageData> list_apply, list_used;
 	private String content = "", tel = "", realName = "";
-	private Key_Manage_PopupWindow key_Manage_PopupWindow;
 	private boolean isFresh = false;// 是否刷新标志
 
 	@Override
@@ -363,11 +362,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			case R.id.item_key_manage_apply_button_refuse:
 				check(position, 0);
 				break;
-			case R.id.item_key_manage_apply_textView_tel:
-				tel = list_used.get(position).getTel();
-				realName = list_used.get(position).getRealName();
-				show();
-				break;
+
 			}
 		}
 
@@ -420,41 +415,6 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 	}
-
-	private void show() {
-		// 实例化SelectPicPopupWindow
-		key_Manage_PopupWindow = new Key_Manage_PopupWindow(KeyManageActivity.this, itemsOnClick);
-		// 显示窗口
-		key_Manage_PopupWindow.showAtLocation(KeyManageActivity.this.findViewById(R.id.activity_key_manage_layout),
-				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
-	}
-
-	// 为弹出窗口实现监听类
-	private OnClickListener itemsOnClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View view) {
-			key_Manage_PopupWindow.dismiss();
-			switch (view.getId()) {
-			case R.id.popup_key_manage_textView_save:
-				Intent intent_save = new Intent(Intent.ACTION_INSERT);
-				intent_save.setType("vnd.android.cursor.dir/person");
-				intent_save.setType("vnd.android.cursor.dir/contact");
-				intent_save.setType("vnd.android.cursor.dir/raw_contact");
-				// 添加姓名
-				intent_save.putExtra(Insert.NAME, realName);
-				// 添加手机
-				intent_save.putExtra(Insert.PHONE_TYPE, Phone.TYPE_MOBILE);
-				intent_save.putExtra(Insert.PHONE, tel);
-				startActivity(intent_save);
-				break;
-			case R.id.popup_key_manage_textView_dial:
-				Intent intent_dial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tel));
-				startActivity(intent_dial);
-				break;
-			}
-		}
-	};
 
 	/**
 	 * 
