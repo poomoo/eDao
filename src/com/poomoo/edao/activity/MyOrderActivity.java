@@ -23,6 +23,7 @@ import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -126,7 +127,11 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if (v.getTag().equals("evaluate")) {
-				openActivity(StoreEvaluateActivity.class);
+				System.out.println("shopId:" + list.get(position).getShopId());
+				Bundle pBundle = new Bundle();
+				pBundle.putString("shopId", list.get(position).getShopId());
+				pBundle.putString("ordersId", list.get(position).getOrdersId());
+				openActivityForResult(StoreEvaluateActivity.class, pBundle, 1);
 			} else {
 				confirm(position);
 			}
@@ -169,6 +174,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 								for (int i = 0; i < length; i++) {
 									OrderListData data = new OrderListData();
 									data = gson.fromJson(pager.getJSONObject(i).toString(), OrderListData.class);
+									System.out.println("data shopId:" + data.getShopId());
 									list.add(data);
 								}
 								if (isFirst) {
@@ -278,6 +284,15 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		listView.setVisibility(View.VISIBLE);
 		if (noDataView != null) {
 			noDataView.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1 && resultCode == 1) {
+			System.out.println("评价成功！");
 		}
 	}
 

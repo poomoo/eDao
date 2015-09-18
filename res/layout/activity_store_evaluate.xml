@@ -12,6 +12,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/store_evaluate_textView_store_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -31,7 +32,7 @@
         android:padding="@dimen/margin10" >
 
         <ImageView
-            android:id="@+id/order_list_item_imageView_pic"
+            android:id="@+id/store_evaluate_imageView_pic"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
@@ -57,6 +58,7 @@
                 android:orientation="vertical" >
 
                 <RatingBar
+                    android:id="@+id/store_evaluate_ratingBar_total_score"
                     style="@style/myRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +67,7 @@
                     android:rating="5"
                     android:stepSize="1" />
 
-                <View
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin10" />
 
@@ -86,6 +88,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:id="@+id/store_evaluate_textView_total_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5.0"
@@ -114,6 +117,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:id="@+id/store_evaluate_textView_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="345m"
@@ -125,6 +129,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:id="@+id/store_evaluate_textView_remark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="起送100元"
@@ -143,6 +148,7 @@
         android:padding="@dimen/margin10" >
 
         <EditText
+            android:id="@+id/store_evaluate_editText_content"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@color/white"
@@ -153,12 +159,12 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textView_publication_cannum"
+            android:id="@+id/store_evaluate_textView_canNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="right"
-            android:text="还能输入500字"
+            android:text="还能输入100字"
             android:textColor="@color/lightgray" />
     </LinearLayout>
 
@@ -189,6 +195,7 @@
                 android:layout_weight="1" />
 
             <com.poomoo.edao.widget.FlexibleRatingBar
+                android:id="@+id/store_evaluate_ratingBar_service"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"
@@ -228,6 +235,7 @@
                 android:layout_weight="1" />
 
             <com.poomoo.edao.widget.FlexibleRatingBar
+                android:id="@+id/store_evaluate_ratingBar_goods"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"
@@ -262,6 +270,7 @@
         android:padding="@dimen/margin10" >
 
         <Button
+            android:id="@+id/store_evaluate_btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/style_btn_yes_background"

@@ -51,6 +51,7 @@ public class KeyManage_Apply_ListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
+		System.out.println("申请秘钥getView");
 		ViewHolder holder = null;
 		MyListener listener = keyManageActivity.new MyListener(position);
 		if (convertView == null) {
