@@ -172,7 +172,8 @@ public class OperateManageActivity extends BaseActivity {
 
 	private void show() {
 		// 实例化SelectPicPopupWindow
-		operate_Manage_PopupWindow = new Operate_Manage_PopupWindow(OperateManageActivity.this, itemsOnClick);
+		operate_Manage_PopupWindow = new Operate_Manage_PopupWindow(OperateManageActivity.this, itemsOnClick, realName,
+				tel);
 		// 显示窗口
 		operate_Manage_PopupWindow.showAtLocation(
 				OperateManageActivity.this.findViewById(R.id.activity_operate_manage_layout), Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置

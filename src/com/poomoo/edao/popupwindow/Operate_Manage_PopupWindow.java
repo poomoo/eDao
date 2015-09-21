@@ -19,15 +19,15 @@ public class Operate_Manage_PopupWindow extends PopupWindow {
 	private TextView textView_save, textView_dial;
 	private View mMenuView;
 
-	public Operate_Manage_PopupWindow(Activity context, OnClickListener itemsOnClick) {
+	public Operate_Manage_PopupWindow(Activity context, OnClickListener itemsOnClick, String name, String tel) {
 		super(context);
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mMenuView = inflater.inflate(R.layout.popup_key_manage, null);
-		textView_save = (TextView) mMenuView
-				.findViewById(R.id.popup_key_manage_textView_save);
-		textView_dial = (TextView) mMenuView
-				.findViewById(R.id.popup_key_manage_textView_dial);
+		textView_save = (TextView) mMenuView.findViewById(R.id.popup_key_manage_textView_save);
+		textView_dial = (TextView) mMenuView.findViewById(R.id.popup_key_manage_textView_dial);
+
+		textView_save.setText("保存联系人　" + name);
+		textView_dial.setText("拨打　" + tel);
 
 		textView_save.setOnClickListener(itemsOnClick);
 		textView_dial.setOnClickListener(itemsOnClick);
@@ -39,10 +39,8 @@ public class Operate_Manage_PopupWindow extends PopupWindow {
 		this.setBackgroundDrawable(dw);
 		mMenuView.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				int height_top = mMenuView.findViewById(
-						R.id.popup_key_manage_layout).getTop();
-				int height_bottom = mMenuView.findViewById(
-						R.id.popup_key_manage_layout).getBottom();
+				int height_top = mMenuView.findViewById(R.id.popup_key_manage_layout).getTop();
+				int height_bottom = mMenuView.findViewById(R.id.popup_key_manage_layout).getBottom();
 				int y = (int) event.getY();
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					if (y < height_top || y > height_bottom) {

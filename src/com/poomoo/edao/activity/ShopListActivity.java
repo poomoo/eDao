@@ -148,12 +148,15 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 	private void getData() {
 		// TODO 自动生成的方法存根
 		showProgressDialog();
-		int size = list.size();
-		if (size > 0) {
-			list.removeAll(list);
-			adapter.notifyDataSetChanged();
-			listView.setAdapter(adapter);
+		if (!isFresh) {
+			int size = list.size();
+			if (size > 0) {
+				list.removeAll(list);
+				adapter.notifyDataSetChanged();
+				listView.setAdapter(adapter);
+			}
 		}
+
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
 		data.put("method", "30003");

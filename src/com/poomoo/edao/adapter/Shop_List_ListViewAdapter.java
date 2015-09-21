@@ -52,19 +52,14 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_listview_shop_list,
-					parent, false);
+			convertView = inflater.inflate(R.layout.item_listview_shop_list, parent, false);
 			holder = new ViewHolder();
-			holder.imageView = (ImageView) convertView
-					.findViewById(R.id.shop_list_item_imageView);
-			holder.textView_shopname = (TextView) convertView
-					.findViewById(R.id.shop_list_item_textView_name);
-			holder.textView_position = (TextView) convertView
-					.findViewById(R.id.shop_list_item_textView_position);
-			holder.textView_distance = (TextView) convertView
-					.findViewById(R.id.shop_list_item_textView_distance);
-			holder.bar = (RatingBar) convertView
-					.findViewById(R.id.shop_list_item_ratingBar);
+			holder.imageView = (ImageView) convertView.findViewById(R.id.shop_list_item_imageView);
+			holder.textView_shopname = (TextView) convertView.findViewById(R.id.shop_list_item_textView_name);
+			holder.textView_owner = (TextView) convertView.findViewById(R.id.shop_list_item_textView_owner);
+			holder.textView_tel = (TextView) convertView.findViewById(R.id.shop_list_item_textView_tel);
+			holder.textView_distance = (TextView) convertView.findViewById(R.id.shop_list_item_textView_distance);
+			holder.bar = (RatingBar) convertView.findViewById(R.id.shop_list_item_ratingBar);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -78,20 +73,19 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
 				.build();
-		ImageLoader.getInstance().displayImage(
-				list.get(position).getPictures(), holder.imageView, options);
+		ImageLoader.getInstance().displayImage(list.get(position).getPictures(), holder.imageView, options);
 
 		holder.textView_shopname.setText(list.get(position).getShopName());
-		holder.textView_position.setText(list.get(position).getAddress());
-		holder.textView_distance.setText(list.get(position).getDistance());
+		holder.textView_owner.setText(list.get(position).getRealName());
+		holder.textView_tel.setText(list.get(position).getTel());
+		holder.textView_distance.setText("距离:　　" + list.get(position).getDistance());
 		holder.bar.setRating(list.get(position).getAvgScore());
 		return convertView;
 	}
 
 	private class ViewHolder {
 		private ImageView imageView;
-		private TextView textView_shopname, textView_position,
-				textView_distance;
+		private TextView textView_shopname, textView_owner, textView_tel, textView_distance;
 		private RatingBar bar;
 	}
 
