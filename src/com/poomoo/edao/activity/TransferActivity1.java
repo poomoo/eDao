@@ -128,11 +128,11 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		if (!application.getRealNameAuth().equals("1")) {
-			openActivity(CertificationActivity.class);
-			finish();
-			return;
-		}
+		// if (!application.getRealNameAuth().equals("1")) {
+		// openActivity(CertificationActivity.class);
+		// finish();
+		// return;
+		// }
 		switch (v.getId()) {
 		case R.id.transfer1_layout_payby_phone:
 			startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), READCONTRACT);
