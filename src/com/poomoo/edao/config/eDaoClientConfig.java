@@ -10,7 +10,7 @@ package com.poomoo.edao.config;
 public class eDaoClientConfig {
 	// IP
 	public static final String BaseLocalUrl = "http://192.168.0.112:8080/yidao/app/";// 本地
-	public static final String BaseRemoteUrl = "http://www.yidao7.com/yidao/app/";// 远程
+	public static final String BaseRemoteUrl = "http://www.leyidao.com/yidao/app/";// 远程
 	public static final String url = BaseRemoteUrl + "call.htm";
 	public static final String wxReUrl = BaseRemoteUrl + "orders/wxPayCallBack.json";
 	public static final String imageurl = BaseRemoteUrl + "user/uploadUserImage.json";

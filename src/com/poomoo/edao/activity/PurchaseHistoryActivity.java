@@ -28,14 +28,6 @@ public class PurchaseHistoryActivity extends BaseActivity {
 		setContentView(R.layout.fragment_purchase_history);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		init();
-	}
-
-	private void init() {
-		// TODO 自动生成的方法存根
-		listView = (ListView) findViewById(R.id.purchase_history_listView);
-		// adapter = new Purchase_History_ListViewAdapter(this, list);
-		listView.setAdapter(adapter);
 	}
 
 }

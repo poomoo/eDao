@@ -63,6 +63,14 @@
     <com.poomoo.edao.widget.MyListView
         android:id="@+id/rebate_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
+    <ViewStub
+        android:id="@+id/rebate_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/rebate_textView_noData"
+        android:layout="@layout/view_nodata" />
 
 </LinearLayout>

@@ -154,8 +154,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private void initData() {
 		textView_balance.setText("￥" + application.getTotalEb());
 		textView_handing_charge.setText(application.getHandlingFee() + "元/笔");
-		textView_handing_toplimit
-				.setText(application.getCovertMinFee() + "-" + application.getCorvertMaxFee() + "元以内/笔");
+		textView_handing_toplimit.setText(application.getCorvertMaxFee() + "元以内/笔");
 		textView_allow.setText("￥" + application.getCanCovertFee());
 		textView_bankname.setText(application.getBankName());
 		textView_bankaccount.setText(Utity.addStarByNum(3, 16, application.getBankCardId()));

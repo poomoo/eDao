@@ -23,6 +23,8 @@ import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewStub;
 
 /**
  * 
@@ -32,6 +34,7 @@ import android.os.Bundle;
  * @date 2015-7-29 下午2:14:43
  */
 public class RebateActivity extends BaseActivity {
+	private View noDataView;
 	private MyListView listView;
 	private Rebate_ListViewAdapter adapter;
 	private List<UserRebateData> list;
@@ -40,6 +43,7 @@ public class RebateActivity extends BaseActivity {
 	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
 	private boolean isFirst = true;// 是否第一次加载
+	private boolean isFresh = false;// 是否刷新
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class RebateActivity extends BaseActivity {
 		getData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
+				isFresh = true;
 				getData();
 			}
 		});
@@ -75,76 +80,86 @@ public class RebateActivity extends BaseActivity {
 		data.put("currPage", curPage);
 		data.put("pageSize", pageSize);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1
-										&& responseData.getJsonData().length() > 0) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
+						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							showListView();
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-										JSONArray pager = result
-												.getJSONArray("records");
-										int length = pager.length();
-										for (int i = 0; i < length; i++) {
-											UserRebateData data = new UserRebateData();
-											data = gson.fromJson(pager
-													.getJSONObject(i)
-													.toString(),
-													UserRebateData.class);
-											list.add(data);
-										}
-										if (isFirst) {
-											adapter = new Rebate_ListViewAdapter(
-													RebateActivity.this, list);
-											listView.setAdapter(adapter);
-											isFirst = false;
-										} else {
-											adapter.notifyDataSetChanged();
-										}
-										curPage += 10;
-										pageSize += 10;
-
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
+								JSONArray pager = result.getJSONArray("records");
+								int length = pager.length();
+								for (int i = 0; i < length; i++) {
+									UserRebateData data = new UserRebateData();
+									data = gson.fromJson(pager.getJSONObject(i).toString(), UserRebateData.class);
+									list.add(data);
 								}
-								listView.onRefreshComplete();
-							}
+								if (isFirst) {
+									adapter = new Rebate_ListViewAdapter(RebateActivity.this, list);
+									listView.setAdapter(adapter);
+									isFirst = false;
+								} else {
+									adapter.notifyDataSetChanged();
+								}
+								curPage += 10;
+								pageSize += 10;
 
-						});
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
+							}
+						} else {
+							if (isFresh)
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+							else
+								showEmptyView();
+						}
+						listView.onRefreshComplete();
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								listView.onRefreshComplete();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						listView.onRefreshComplete();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
+	}
+
+	public void showEmptyView() {
+		listView.setVisibility(View.GONE);
+		if (noDataView == null) {
+			ViewStub noDataViewStub = (ViewStub)findViewById(R.id.rebate_viewStub);
+			noDataView = noDataViewStub.inflate();
+		} else {
+			noDataView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void showListView() {
+		listView.setVisibility(View.VISIBLE);
+		if (noDataView != null) {
+			noDataView.setVisibility(View.GONE);
+		}
 	}
 
 	/**
@@ -155,8 +170,8 @@ public class RebateActivity extends BaseActivity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -175,8 +190,8 @@ public class RebateActivity extends BaseActivity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

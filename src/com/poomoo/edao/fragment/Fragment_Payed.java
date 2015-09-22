@@ -28,9 +28,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 
 public class Fragment_Payed extends Fragment {
+	private View noDataView;
 	private MyListView listView;
+
 	private Deal_Detail_ListViewAdapter adapter;
 	private List<OrderListData> list;
 	private Gson gson = new Gson();
@@ -38,6 +41,7 @@ public class Fragment_Payed extends Fragment {
 	private int curPage = 1, pageSize = 10;
 	private eDaoClientApplication application = null;
 	private boolean isFirst = true;// 是否第一次加载
+	private boolean isFresh = false;// 是否刷新
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class Fragment_Payed extends Fragment {
 		getData(eDaoClientConfig.status);
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
+				isFresh = true;
 				getData(eDaoClientConfig.status);
 			}
 		});
@@ -96,6 +101,7 @@ public class Fragment_Payed extends Fragment {
 							// TODO 自动生成的方法存根
 							closeProgressDialog();
 							if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+								showListView();
 								try {
 									JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
@@ -119,7 +125,10 @@ public class Fragment_Payed extends Fragment {
 									e.printStackTrace();
 								}
 							} else {
-								Utity.showToast(getActivity().getApplicationContext(), responseData.getMsg());
+								if (isFresh)
+									Utity.showToast(getActivity().getApplicationContext(), responseData.getMsg());
+								else
+									showEmptyView();
 							}
 							listView.onRefreshComplete();
 						}
@@ -144,6 +153,23 @@ public class Fragment_Payed extends Fragment {
 					});
 			}
 		});
+	}
+
+	public void showEmptyView() {
+		listView.setVisibility(View.GONE);
+		if (noDataView == null) {
+			ViewStub noDataViewStub = (ViewStub) getView().findViewById(R.id.fragment_pub_viewStub);
+			noDataView = noDataViewStub.inflate();
+		} else {
+			noDataView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void showListView() {
+		listView.setVisibility(View.VISIBLE);
+		if (noDataView != null) {
+			noDataView.setVisibility(View.GONE);
+		}
 	}
 
 	/**

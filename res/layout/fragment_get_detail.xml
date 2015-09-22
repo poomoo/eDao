@@ -57,6 +57,14 @@
     <com.poomoo.edao.widget.MyListView
         android:id="@+id/get_detail_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
+    <ViewStub
+        android:id="@+id/get_detail_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/get_detail_textView_noData"
+        android:layout="@layout/view_nodata" />
 
 </LinearLayout>

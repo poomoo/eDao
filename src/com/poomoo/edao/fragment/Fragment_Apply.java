@@ -33,7 +33,7 @@ import android.view.ViewStub;
 public class Fragment_Apply extends Fragment {
 	private View noDataView;
 	private MyListView listView;
-	
+
 	private Deal_Detail_ListViewAdapter adapter;
 	private List<OrderListData> list;
 	private Gson gson = new Gson();
@@ -41,6 +41,7 @@ public class Fragment_Apply extends Fragment {
 	private int curPage = 1, pageSize = 10;
 	private eDaoClientApplication application = null;
 	private boolean isFirst = true;// 是否第一次加载
+	private boolean isFresh = false;// 是否刷新
 	private String orderType = "4"; // orderType订单类型
 
 	@Override
@@ -67,6 +68,7 @@ public class Fragment_Apply extends Fragment {
 		getData(eDaoClientConfig.status, orderType);
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
+				isFresh = true;
 				getData(eDaoClientConfig.status, orderType);
 			}
 		});
@@ -124,7 +126,10 @@ public class Fragment_Apply extends Fragment {
 									e.printStackTrace();
 								}
 							} else {
-								showEmptyView();
+								if (isFresh)
+									Utity.showToast(getActivity().getApplicationContext(), responseData.getMsg());
+								else
+									showEmptyView();
 							}
 							listView.onRefreshComplete();
 						}

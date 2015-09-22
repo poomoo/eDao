@@ -28,9 +28,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.TextView;
 
 public class Fragment_History extends Fragment {
+	private View noDataView;
 	private MyListView listView;
+
 	private Purchase_History_ListViewAdapter adapter;
 	private List<Purchase_HistoryData> list;
 	private Gson gson = new Gson();
@@ -38,6 +42,7 @@ public class Fragment_History extends Fragment {
 	private int curPage = 1, pageSize = 10;
 	private eDaoClientApplication application = null;
 	private boolean isFirst = true;// 是否第一次加载
+	private boolean isFresh = false;// 是否刷新
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -47,22 +52,20 @@ public class Fragment_History extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
-		return inflater.inflate(R.layout.fragment_purchase_history, container,
-				false);
+		return inflater.inflate(R.layout.fragment_purchase_history, container, false);
 	}
 
 	private void init() {
 		// TODO 自动生成的方法存根
-		listView = (MyListView) getView().findViewById(
-				R.id.purchase_history_listView);
+		listView = (MyListView) getView().findViewById(R.id.purchase_history_listView);
 		application = (eDaoClientApplication) getActivity().getApplication();
 		showProgressDialog();
 		getData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
+				isFresh = true;
 				getData();
 			}
 		});
@@ -77,84 +80,91 @@ public class Fragment_History extends Fragment {
 		data.put("userId", application.getUserId());
 		data.put("currPage", curPage);
 		data.put("pageSize", pageSize);
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
-					@Override
-					public void onFinish(final ResponseData responseData) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									closeProgressDialog();
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1
-											&& responseData.getJsonData()
-													.length() > 0) {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							closeProgressDialog();
+							// TODO 自动生成的方法存根
+							if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+								showListView();
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
-											JSONArray pager = result
-													.getJSONArray("records");
-											int length = pager.length();
-											list = new ArrayList<Purchase_HistoryData>();
-											for (int i = 0; i < length; i++) {
-												Purchase_HistoryData purchase_History = new Purchase_HistoryData();
-												purchase_History = gson
-														.fromJson(
-																pager.getJSONObject(
-																		i)
-																		.toString(),
-																Purchase_HistoryData.class);
-												list.add(purchase_History);
-											}
-											if (isFirst) {
-												adapter = new Purchase_History_ListViewAdapter(
-														getActivity(), list);
-												listView.setAdapter(adapter);
-												isFirst = false;
-											} else {
-												adapter.notifyDataSetChanged();
-											}
-											curPage += 10;
-											pageSize += 10;
-
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									} else {
-										Utity.showToast(getActivity()
-												.getApplicationContext(),
-												responseData.getMsg());
+									JSONArray pager = result.getJSONArray("records");
+									int length = pager.length();
+									list = new ArrayList<Purchase_HistoryData>();
+									for (int i = 0; i < length; i++) {
+										Purchase_HistoryData purchase_History = new Purchase_HistoryData();
+										purchase_History = gson.fromJson(pager.getJSONObject(i).toString(),
+												Purchase_HistoryData.class);
+										list.add(purchase_History);
 									}
-									listView.onRefreshComplete();
+									if (isFirst) {
+										adapter = new Purchase_History_ListViewAdapter(getActivity(), list);
+										listView.setAdapter(adapter);
+										isFirst = false;
+									} else {
+										adapter.notifyDataSetChanged();
+									}
+									curPage += 10;
+									pageSize += 10;
+
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
 								}
+							} else {
+								if (isFresh)
+									Utity.showToast(getActivity().getApplicationContext(), responseData.getMsg());
+								else
+									showEmptyView();
+							}
+							listView.onRefreshComplete();
+						}
 
-							});
-					}
+					});
+			}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						if (getActivity() != null)
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									listView.onRefreshComplete();
-									Utity.showToast(getActivity()
-											.getApplicationContext(),
-											eDaoClientConfig.checkNet);
-								}
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				if (getActivity() != null)
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+							listView.onRefreshComplete();
+							Utity.showToast(getActivity().getApplicationContext(), eDaoClientConfig.checkNet);
+						}
 
-							});
-					}
-				});
+					});
+			}
+		});
+	}
+
+	public void showEmptyView() {
+		listView.setVisibility(View.GONE);
+		if (noDataView == null) {
+			ViewStub noDataViewStub = (ViewStub) getView().findViewById(R.id.purchase_history_viewStub);
+			noDataView = noDataViewStub.inflate();
+		} else {
+			noDataView.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	public void showListView() {
+		listView.setVisibility(View.VISIBLE);
+		if (noDataView != null) {
+			noDataView.setVisibility(View.GONE);
+		}
 	}
 
 	/**
@@ -165,8 +175,8 @@ public class Fragment_History extends Fragment {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -185,8 +195,8 @@ public class Fragment_History extends Fragment {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
