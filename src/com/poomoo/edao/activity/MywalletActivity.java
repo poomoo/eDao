@@ -88,6 +88,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 
 		button_recharge.setOnClickListener(this);
 		button_handing.setOnClickListener(this);
+		button_handing.setClickable(false);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_account_name.setText(Utity.addStarByName(application.getRealName()));
@@ -167,8 +168,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		if (!application.getRealNameAuth().equals("1")) {
 			openActivity(CertificationActivity.class);
-			startActivity(new Intent(this, CertificationActivity.class));
 			finish();
+			return;
 		}
 		switch (v.getId()) {
 		case R.id.mywallet_btn_recharge:

@@ -25,11 +25,9 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 
 	private List<OrderListData> list;
 	private LayoutInflater inflater;
-	private Activity activity;
 
 	public Deal_Detail_ListViewAdapter(Activity activity, List<OrderListData> list) {
 		super();
-		this.activity = activity;
 		this.list = list;
 		this.inflater = LayoutInflater.from(activity);
 	}
@@ -80,7 +78,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
-
+		holder.textView_name.setText(list.get(position).getTradeName());
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		holder.textView_order_remark.setText(list.get(position).getRemark());

@@ -100,7 +100,7 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left|bottom"
                             android:text="意币"
@@ -110,10 +110,10 @@
 
                         <TextView
                             android:id="@+id/sidebar_textView_ecoin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:text="0"
+                            android:text="1111111"
                             android:textColor="@color/white"
                             android:textSize="@dimen/textsize10" >
                         </TextView>
@@ -149,7 +149,7 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left|bottom"
                             android:text="金币"
@@ -159,7 +159,7 @@
 
                         <TextView
                             android:id="@+id/sidebar_textView_gold_coin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
                             android:text="0"
@@ -202,7 +202,7 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left|bottom"
                             android:text="积分"
@@ -212,7 +212,7 @@
 
                         <TextView
                             android:id="@+id/sidebar_textView_point"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
                             android:text="0"

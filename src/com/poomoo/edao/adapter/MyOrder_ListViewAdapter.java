@@ -64,6 +64,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.item_listview_order_list, parent, false);
 			holder = new ViewHolder();
 			holder.textView_order_id = (TextView) convertView.findViewById(R.id.order_list_item_textView_orderid);
+			holder.textView_shop_name = (TextView) convertView.findViewById(R.id.order_list_item_textView_store_name);
 			holder.textView_order_money = (TextView) convertView.findViewById(R.id.order_list_item_textView_money);
 			holder.textView_order_state = (TextView) convertView.findViewById(R.id.order_list_item_textView_state);
 			holder.textView_order_date = (TextView) convertView.findViewById(R.id.order_list_item_textView_date);
@@ -74,6 +75,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
+		holder.textView_shop_name.setText(list.get(position).getShopName());
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
@@ -101,8 +103,8 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		private TextView textView_order_id, textView_order_money, textView_order_state, textView_order_date,
-				textView_order_remark;
+		private TextView textView_order_id, textView_shop_name, textView_order_money, textView_order_state,
+				textView_order_date, textView_order_remark;
 		private Button button_pay;
 	}
 

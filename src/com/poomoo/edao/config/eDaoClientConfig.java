@@ -39,7 +39,7 @@ public class eDaoClientConfig {
 	public static final String key = "leyidaoB1AF"; // B1AF本机MD5值最后两位
 
 	// 关于我们
-	public static String tel = "", web = "", weibo = "", weixin = "";
+	public static String tel = "", web = "", weixin = "";
 
 	public static final String[] store_class = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类", "生活超市", "旅游度假", "美容保健", "广告印刷", "数码电器",
 			"皮具箱包", "酒类服务", "户外摄影", "汽车服务", "教育培训", "农林牧副", "医药服务", "交通运输", "办公家居", "房产建材", "机械五金" };

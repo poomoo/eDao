@@ -27,8 +27,7 @@ import android.widget.TextView;
  * @date 2015年7月31日 上午12:12:56
  */
 public class AboutUsActivity extends BaseActivity {
-	private TextView textView_tel, textView_web, textView_weibo,
-			textView_weixin;
+	private TextView textView_tel, textView_web, textView_weixin;
 
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
@@ -47,20 +46,14 @@ public class AboutUsActivity extends BaseActivity {
 		// TODO 自动生成的方法存根
 		textView_tel = (TextView) findViewById(R.id.aboutus_textView_tel);
 		textView_web = (TextView) findViewById(R.id.aboutus_textView_web);
-		textView_weibo = (TextView) findViewById(R.id.aboutus_textView_weibo);
 		textView_weixin = (TextView) findViewById(R.id.aboutus_textView_weixin);
-		System.out.println("eDaoClientConfig:" + eDaoClientConfig.tel
-				+ eDaoClientConfig.web + eDaoClientConfig.weibo
-				+ eDaoClientConfig.weixin);
-		if (TextUtils.isEmpty(eDaoClientConfig.tel)
-				|| TextUtils.isEmpty(eDaoClientConfig.web)
-				|| TextUtils.isEmpty(eDaoClientConfig.weibo)
+		System.out.println("eDaoClientConfig:" + eDaoClientConfig.tel + eDaoClientConfig.web + eDaoClientConfig.weixin);
+		if (TextUtils.isEmpty(eDaoClientConfig.tel) || TextUtils.isEmpty(eDaoClientConfig.web)
 				|| TextUtils.isEmpty(eDaoClientConfig.weixin))
 			getData();
 		else {
 			textView_tel.setText(eDaoClientConfig.tel);
 			textView_web.setText(eDaoClientConfig.web);
-			textView_weibo.setText(eDaoClientConfig.weibo);
 			textView_weixin.setText(eDaoClientConfig.weixin);
 		}
 	}
@@ -70,68 +63,53 @@ public class AboutUsActivity extends BaseActivity {
 		data.put("bizName", "70000");
 		data.put("method", "70006");
 		showProgressDialog();
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										eDaoClientConfig.tel = result
-												.getString("serverTel");
-										eDaoClientConfig.web = result
-												.getString("webAddress");
-										eDaoClientConfig.weibo = result
-												.getString("wbAddress");
-										eDaoClientConfig.weixin = result
-												.getString("wxAddress");
-										textView_tel
-												.setText(eDaoClientConfig.tel);
-										textView_web
-												.setText(eDaoClientConfig.web);
-										textView_weibo
-												.setText(eDaoClientConfig.weibo);
-										textView_weixin
-												.setText(eDaoClientConfig.weixin);
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								} else {
-									finish();
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
+						if (responseData.getRsCode() == 1) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								eDaoClientConfig.tel = result.getString("serverTel");
+								eDaoClientConfig.web = result.getString("webAddress");
+								eDaoClientConfig.weixin = result.getString("wxAddress");
+								textView_tel.setText(eDaoClientConfig.tel);
+								textView_web.setText(eDaoClientConfig.web);
+								textView_weixin.setText(eDaoClientConfig.weixin);
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-
-						});
+						} else {
+							finish();
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 					}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								finish();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
-					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						finish();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	/**
@@ -142,8 +120,8 @@ public class AboutUsActivity extends BaseActivity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -162,8 +140,8 @@ public class AboutUsActivity extends BaseActivity {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

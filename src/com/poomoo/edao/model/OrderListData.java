@@ -9,7 +9,9 @@ package com.poomoo.edao.model;
  */
 public class OrderListData {
 	private String ordersId = "";
+	private String tradeName="";
 	private String shopId = "";
+	private String shopName="";
 	private String payFee = "";
 	private String status = "";
 	private String ordersDt = "";
@@ -24,12 +26,28 @@ public class OrderListData {
 		this.ordersId = ordersId;
 	}
 
+	public String getTradeName() {
+		return tradeName;
+	}
+
+	public void setTradeName(String tradeName) {
+		this.tradeName = tradeName;
+	}
+
 	public String getShopId() {
 		return shopId;
 	}
 
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 
 	public String getPayFee() {
