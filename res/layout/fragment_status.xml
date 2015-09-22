@@ -24,7 +24,7 @@
             android:checked="true"
             android:gravity="center"
             android:singleLine="true"
-            android:text="已支付"
+            android:text="已完成"
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize14" />
 
@@ -36,7 +36,7 @@
             android:button="@null"
             android:gravity="center"
             android:singleLine="true"
-            android:text="未支付"
+            android:text="未完成"
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize14" />
 

@@ -24,7 +24,7 @@ public class Upload_Pics_PopupWindow extends PopupWindow {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mMenuView = inflater.inflate(R.layout.popup_key_manage, null);
+		mMenuView = inflater.inflate(R.layout.popup_select_pic_res, null);
 		textView_camera = (TextView) mMenuView
 				.findViewById(R.id.popup_select_pic_res_camera);
 		textView_photograph = (TextView) mMenuView

@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="充值"
+                android:text="微信充值"
                 android:textColor="@color/textview_selector"
                 android:textSize="@dimen/textsize14" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="申请加盟"
+                android:text="加盟合作"
                 android:textColor="@color/textview_selector"
                 android:textSize="@dimen/textsize14" />
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="购买商品"
+                android:text="购买支付"
                 android:textColor="@color/textview_selector"
                 android:textSize="@dimen/textsize14" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="提现申请"
+                android:text="意币提现"
                 android:textColor="@color/textview_selector"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>

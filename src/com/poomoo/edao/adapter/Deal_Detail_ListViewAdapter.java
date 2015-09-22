@@ -62,6 +62,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.textView_order_id = (TextView) convertView
 					.findViewById(R.id.trade_details_list_item_textView_orderid);
+			holder.textView_name = (TextView) convertView.findViewById(R.id.trade_details_list_item_textView_name);
 			holder.textView_order_money = (TextView) convertView
 					.findViewById(R.id.trade_details_list_item_textView_money);
 			holder.textView_order_state = (TextView) convertView
@@ -79,6 +80,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
+
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		holder.textView_order_remark.setText(list.get(position).getRemark());
@@ -94,8 +96,8 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		private TextView textView_order_id, textView_order_money, textView_order_state, textView_order_date,
-				textView_order_remark, textView_order_handing_fee;
+		private TextView textView_order_id, textView_name, textView_order_money, textView_order_state,
+				textView_order_date, textView_order_remark, textView_order_handing_fee;
 		private LinearLayout layout_handing_fee;
 	}
 

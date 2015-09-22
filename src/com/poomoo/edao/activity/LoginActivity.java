@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
-	private MessageBox_YESNO box_YESNO;
+	// private MessageBox_YESNO box_YESNO;
 	private ProgressDialog progressDialog = null;
 	private UserInfoData loginResData = null;
 
@@ -145,8 +145,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						public void run() {
 							// TODO 自动生成的方法存根
 							if (responseData.getRsCode() != 1) {
-								box_YESNO = new MessageBox_YESNO(LoginActivity.this);
-								box_YESNO.showDialog(responseData.getMsg(), null);
+								box_YES = new MessageBox_YES(LoginActivity.this);
+								box_YES.showDialog(responseData.getMsg(), null);
 							} else {
 								loginResData = new UserInfoData();
 								loginResData = gson.fromJson(responseData.getJsonData(), UserInfoData.class);
