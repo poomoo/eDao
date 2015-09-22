@@ -146,7 +146,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		System.out.println("调用getData");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "50000");
-		data.put("method", "50005");
+		data.put("method", "50011");
 		data.put("userId", application.getUserId());
 		data.put("currPage", curPage);
 		data.put("pageSize", pageSize);

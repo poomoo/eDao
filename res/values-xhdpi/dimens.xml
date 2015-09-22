@@ -7,6 +7,7 @@
     -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <!-- SP -->
+      <dimen name="textsize8">10sp</dimen>
     <dimen name="textsize10">12sp</dimen>
     <dimen name="textsize12">14sp</dimen>
     <dimen name="textsize14">16sp</dimen>

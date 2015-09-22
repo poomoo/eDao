@@ -143,13 +143,13 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 				}
 			}
 		});
-		System.out.println("进入钱包" + application.getCorvertMaxFee()+":"+application.getHandlingFee());
-		if (TextUtils.isEmpty(application.getHandlingFee())) {
-			showProgressDialog("请稍后");
-			getData();
-		} else {
-			initData();
-		}
+		System.out.println("进入钱包" + application.getCorvertMaxFee() + ":" + application.getHandlingFee());
+		// if (TextUtils.isEmpty(application.getHandlingFee())) {
+		showProgressDialog("请稍后");
+		getData();
+		// } else {
+		// initData();
+		// }
 	}
 
 	private void initData() {

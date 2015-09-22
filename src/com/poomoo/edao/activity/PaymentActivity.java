@@ -67,11 +67,9 @@ import android.widget.TextView;
  */
 public class PaymentActivity extends BaseActivity implements OnClickListener {
 
-	private TextView textView_balance, textView_channel, textView_isEnough;
-	private EditText editText_pay_money, editText_pay_password,
-			editText_remark;
-	private LinearLayout layout_channel, layout_password, layout_ecoin,
-			layout_control;
+	private TextView textView_balance, textView_channel, textView_isEnough, textView_between1, textView_between2;
+	private EditText editText_pay_money, editText_pay_password, editText_remark;
+	private LinearLayout layout_channel, layout_balance, layout_pay_password;
 	private Button button_pay;
 
 	private PopupWindow popupWindow;
@@ -81,9 +79,8 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	private ListView listView;
 
 	private eDaoClientApplication application = null;
-	private String money = "", payType = "1", payPwd = "", remark = "",
-			orderId = "", referrerTel = "", referrerUserId = "",
-			referrerName = "", joinType = "", areaId = "";
+	private String money = "", payType = "1", payPwd = "", remark = "", orderId = "", referrerTel = "",
+			referrerUserId = "", referrerName = "", joinType = "", areaId = "";
 	private static final String[] channel = new String[] { "意币支付", "微信支付" };
 	private boolean needPassword = true, isBalanceEnough = true;
 	private ProgressDialog progressDialog;
@@ -131,13 +128,16 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		textView_balance = (TextView) findViewById(R.id.payment_textView_balance);
 		textView_channel = (TextView) findViewById(R.id.payment_textView_channel);
 		textView_isEnough = (TextView) findViewById(R.id.payment_textView_isEnough);
+		textView_between1 = (TextView) findViewById(R.id.payment_textView_between1);
+		textView_between2 = (TextView) findViewById(R.id.payment_textView_between2);
+
 		editText_pay_money = (EditText) findViewById(R.id.payment_editText_pay_money);
 		editText_pay_password = (EditText) findViewById(R.id.payment_editText_pay_password);
 		editText_remark = (EditText) findViewById(R.id.payment_editText_remark);
 
 		layout_channel = (LinearLayout) findViewById(R.id.payment_layout_channel);
-		layout_ecoin = (LinearLayout) findViewById(R.id.payment_layout_by_ecoin);
-		layout_control = (LinearLayout) findViewById(R.id.payment_layout_control);
+		layout_balance = (LinearLayout) findViewById(R.id.payment_layout_balance);
+		layout_pay_password = (LinearLayout) findViewById(R.id.payment_layout_pay_password);
 
 		button_pay = (Button) findViewById(R.id.payment_btn_pay);
 
@@ -172,14 +172,12 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		editText_pay_money.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO 自动生成的方法存根
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// TODO 自动生成的方法存根
 
 			}
@@ -203,8 +201,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 					double money = Double.parseDouble(s.toString().trim());
 					if (money > (double) application.getTotalEb()) {
 						textView_isEnough.setVisibility(View.VISIBLE);
-						textView_isEnough
-								.setText(eDaoClientConfig.balanceIsNotEnough);
+						textView_isEnough.setText(eDaoClientConfig.balanceIsNotEnough);
 						isBalanceEnough = false;
 					} else {
 						isBalanceEnough = true;
@@ -221,8 +218,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.payment_layout_channel:
-			showWindow(layout_channel, listView, list, textView_channel,
-					adapter);
+			showWindow(layout_channel, listView, list, textView_channel, adapter);
 			break;
 		case R.id.payment_btn_pay:
 			if (checkInput()) {
@@ -252,8 +248,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 		if (!isBalanceEnough) {
-			Utity.showToast(getApplicationContext(),
-					eDaoClientConfig.balanceIsNotEnough);
+			Utity.showToast(getApplicationContext(), eDaoClientConfig.balanceIsNotEnough);
 			return false;
 		}
 		payPwd = editText_pay_password.getText().toString().trim();
@@ -273,8 +268,8 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-17下午4:53:39
+	 * @throws @date
+	 *             2015-8-17下午4:53:39
 	 */
 	private void apply() {
 		progressDialog = null;
@@ -289,44 +284,41 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		data.put("referrerUserId", referrerUserId);
 		data.put("referrerName", referrerName);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							confirm();
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									confirm();
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	private void confirm() {
@@ -339,77 +331,64 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		data.put("payType", payType);
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() != 1) {
-									closeProgressDialog();
-									box_YES = new MessageBox_YES(
-											PaymentActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-									if (payType.equals("1")) {
-										closeProgressDialog();
-										startService(new Intent(
-												PaymentActivity.this,
-												Get_UserInfo_Service.class));
-										finish();
-									} else {
-										try {
-											JSONObject result = new JSONObject(
-													responseData.getJsonData()
-															.toString());
-											orderId = result
-													.getString("ordersId");
-											GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
-											getPrepayId.execute();
-										} catch (JSONException e) {
-											// TODO 自动生成的 catch 块
-											e.printStackTrace();
-										}
-									}
-
-								}
-
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
+						if (responseData.getRsCode() != 1) {
+							closeProgressDialog();
+							box_YES = new MessageBox_YES(PaymentActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							if (payType.equals("1")) {
 								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
+								startService(new Intent(PaymentActivity.this, Get_UserInfo_Service.class));
+								finish();
+							} else {
+								try {
+									JSONObject result = new JSONObject(responseData.getJsonData().toString());
+									orderId = result.getString("ordersId");
+									GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
+									getPrepayId.execute();
+								} catch (JSONException e) {
+									// TODO 自动生成的 catch 块
+									e.printStackTrace();
+								}
 							}
-						});
+
+						}
+
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
-	public void showWindow(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+	public void showWindow(View spinnerlayout, ListView listView, final List<HashMap<String, String>> list,
+			final TextView text, final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -439,19 +418,23 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
 				payType = list.get(arg2).get("id");
 				if (payType.equals("1")) {
 					needPassword = true;
-					layout_ecoin.setVisibility(View.VISIBLE);
-					layout_control.setVisibility(View.GONE);
+					layout_balance.setVisibility(View.VISIBLE);
+					layout_pay_password.setVisibility(View.VISIBLE);
+					textView_between1.setVisibility(View.VISIBLE);
+					textView_between2.setVisibility(View.VISIBLE);
+
 				} else {
 					needPassword = false;
-					layout_ecoin.setVisibility(View.GONE);
-					layout_control.setVisibility(View.VISIBLE);
+					layout_balance.setVisibility(View.GONE);
+					layout_pay_password.setVisibility(View.GONE);
+					textView_between1.setVisibility(View.GONE);
+					textView_between2.setVisibility(View.GONE);
 				}
 				// 弹框消失
 				popupWindow.dismiss();
@@ -469,8 +452,8 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
@@ -489,16 +472,15 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
 			progressDialog.dismiss();
 	}
 
-	private class GetPrepayIdTask extends
-			AsyncTask<Void, Void, Map<String, String>> {
+	private class GetPrepayIdTask extends AsyncTask<Void, Void, Map<String, String>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -507,8 +489,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected void onPostExecute(Map<String, String> result) {
 			resultunifiedorder = result;
-			System.out.println("onPostExecute resultunifiedorder:"
-					+ resultunifiedorder);
+			System.out.println("onPostExecute resultunifiedorder:" + resultunifiedorder);
 			genPayReq();
 			sendPayReq();
 		}
@@ -521,8 +502,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected Map<String, String> doInBackground(Void... params) {
 			System.out.println("doInBackground");
-			String url = String
-					.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
+			String url = String.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
 			String entity = genProductArgs();
 
 			Log.e("orion", entity);
@@ -549,20 +529,16 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 
 			xml.append("</xml>");
 			List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
-			packageParams
-					.add(new BasicNameValuePair("appid", Constants.APP_ID));
+			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
 			packageParams.add(new BasicNameValuePair("body", "充值"));
-			packageParams
-					.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
+			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-			packageParams.add(new BasicNameValuePair("notify_url",
-					eDaoClientConfig.wxReUrl));
+			packageParams.add(new BasicNameValuePair("notify_url", eDaoClientConfig.wxReUrl));
 			packageParams.add(new BasicNameValuePair("out_trade_no", orderId));
-			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity
-					.getLocalHostIp()));
+			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity.getLocalHostIp()));
 			Double fee = Double.parseDouble(money) * 100;
-			packageParams.add(new BasicNameValuePair("total_fee", String
-					.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
+			packageParams
+					.add(new BasicNameValuePair("total_fee", String.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 
 			String sign = genPackageSign(packageParams);
@@ -592,8 +568,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String packageSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String packageSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", packageSign);
 		return packageSign;
 	}
@@ -610,8 +585,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String appSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String appSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", appSign);
 		return appSign;
 	}
@@ -668,8 +642,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 
 	private String genNonceStr() {
 		Random random = new Random();
-		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000))
-				.getBytes());
+		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
 	}
 
 	private long genTimeStamp() {

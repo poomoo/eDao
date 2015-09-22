@@ -260,7 +260,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		if (!application.getRealNameAuth().equals("1")) {
 			System.out.println("进行实名认证");
 			textView_username.setText(eDaoClientConfig.certificate);
-			textView_phonenum.setText("");
+			textView_phonenum.setText(Utity.addStarByNum(3, 7, application.getTel()));
 		} else
 			Utity.setUserAndTel(textView_username, textView_phonenum, application);
 		textView_ecoin.setText("" + application.getTotalEb());

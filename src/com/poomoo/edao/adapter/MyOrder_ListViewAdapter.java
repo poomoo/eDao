@@ -82,7 +82,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_remark.setText(list.get(position).getRemark());
 		// 客户
 		if (application.getType().equals("1")) {
-			if (list.get(position).getStatus().equals("已支付")) {
+			if (list.get(position).getStatus().equals("已完成")) {
 				holder.button_pay.setVisibility(View.VISIBLE);
 				holder.button_pay.setText("去评价");
 				holder.button_pay.setOnClickListener(listener);
@@ -91,7 +91,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		}
 		// 商户
 		else {
-			if (list.get(position).getStatus().equals("未支付")) {
+			if (list.get(position).getStatus().equals("待商户确定")) {
 				holder.button_pay.setVisibility(View.VISIBLE);
 				holder.button_pay.setText("确认支付");
 				holder.button_pay.setOnClickListener(listener);

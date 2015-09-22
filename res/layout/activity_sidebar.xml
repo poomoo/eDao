@@ -80,9 +80,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="@dimen/margin5" >
+                    android:paddingBottom="@dimen/margin5"
+                    android:paddingRight="@dimen/margin2"
+                    android:paddingTop="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -113,9 +115,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:text="1111111"
+                            android:text="11111111"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/textsize10" >
+                            android:textSize="@dimen/textsize8" >
                         </TextView>
                     </LinearLayout>
                 </LinearLayout>
@@ -129,9 +131,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="@dimen/margin5" >
+                    android:paddingBottom="@dimen/margin5"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingTop="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -164,7 +168,7 @@
                             android:gravity="center|left"
                             android:text="0"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/textsize10" >
+                            android:textSize="@dimen/textsize8" >
                         </TextView>
                     </LinearLayout>
                 </LinearLayout>
@@ -184,7 +188,9 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="@dimen/margin5" >
+                    android:paddingBottom="@dimen/margin5"
+                    android:paddingLeft="@dimen/margin2"
+                    android:paddingTop="@dimen/margin5" >
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -217,7 +223,7 @@
                             android:gravity="center|left"
                             android:text="0"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/textsize10" >
+                            android:textSize="@dimen/textsize8" >
                         </TextView>
                     </LinearLayout>
                 </LinearLayout>

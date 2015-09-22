@@ -13,8 +13,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin10"
         android:paddingRight="@dimen/margin10"
@@ -32,286 +31,256 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
-                android:orientation="vertical" >
+                android:layout_height="@dimen/item_height"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="支付方式 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/between_height"
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:id="@+id/payment_layout_channel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="center" >
 
                     <TextView
+                        android:id="@+id/payment_textView_channel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="支付方式 :"
+                        android:layout_weight="3"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/margin10"
+                        android:text="请选择支付方式"
                         android:textSize="@dimen/textsize14" />
 
-                    <TextView
-                        android:layout_width="@dimen/margin5"
-                        android:layout_height="match_parent" />
-
-                    <LinearLayout
-                        android:id="@+id/payment_layout_channel"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:background="@drawable/style_background"
-                        android:gravity="center" >
-
-                        <TextView
-                            android:id="@+id/payment_textView_channel"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="3"
-                            android:gravity="left|center"
-                            android:paddingLeft="@dimen/margin10"
-                            android:text="请选择支付方式"
-                            android:textSize="@dimen/textsize14" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/margin10"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_xiala" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/payment_layout_by_ecoin"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2.3"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="支付密码 :"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="@dimen/margin5"
-                            android:layout_height="match_parent" />
-
-                        <EditText
-                            android:id="@+id/payment_editText_pay_password"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:background="@drawable/style_background"
-                            android:gravity="left|center"
-                            android:inputType="textPassword"
-                            android:paddingLeft="@dimen/margin10"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="钱包余额 :"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="@dimen/margin5"
-                            android:layout_height="match_parent" />
-
-                        <TextView
-                            android:id="@+id/payment_textView_balance"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:gravity="left|center"
-                            android:paddingLeft="@dimen/margin10"
-                            android:text="￥8000.00"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/margin10"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_xiala" />
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin5" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/between_height" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="支付金额 :"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="@dimen/margin5"
-                        android:layout_height="match_parent" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:background="@drawable/style_background" >
-
-                        <EditText
-                            android:id="@+id/payment_editText_pay_money"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2.5"
-                            android:background="@null"
-                            android:gravity="left|center"
-                            android:hint="支付金额"
-                            android:inputType="numberDecimal"
-                            android:paddingLeft="@dimen/margin10"
-                            android:textSize="@dimen/textsize14" />
-
-                        <TextView
-                            android:id="@+id/payment_textView_isEnough"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5"
-                            android:gravity="center"
-                            android:text="余额不足"
-                            android:textColor="@color/red"
-                            android:textSize="@dimen/textsize10"
-                            android:visibility="gone" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/payment_layout_balance"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin5" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="钱包余额 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/between_height"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/payment_textView_balance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="left|center"
+                    android:paddingLeft="@dimen/margin10"
+                    android:text="￥8000.00"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/payment_textView_between1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/between_height" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="支付金额 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/between_height"
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="备　　注 :"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        android:layout_width="@dimen/margin5"
-                        android:layout_height="match_parent" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background" >
 
                     <EditText
-                        android:id="@+id/payment_editText_remark"
+                        android:id="@+id/payment_editText_pay_money"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:background="@drawable/style_background"
+                        android:layout_weight="2.5"
+                        android:background="@null"
                         android:gravity="left|center"
-                        android:inputType="text"
+                        android:hint="支付金额"
+                        android:inputType="numberDecimal"
                         android:paddingLeft="@dimen/margin10"
                         android:textSize="@dimen/textsize14" />
 
                     <TextView
+                        android:id="@+id/payment_textView_isEnough"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:text="余额不足"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/textsize10"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin10" />
-
-                <LinearLayout
-                    android:id="@+id/payment_layout_control"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/payment_textView_between2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/between_height" />
+
+            <LinearLayout
+                android:id="@+id/payment_layout_pay_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="支付密码 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/between_height"
+                    android:layout_height="match_parent" />
+
+                <EditText
+                    android:id="@+id/payment_editText_pay_password"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/margin10"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/between_height" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="备　　注 :"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="@dimen/between_height"
+                    android:layout_height="match_parent" />
+
+                <EditText
+                    android:id="@+id/payment_editText_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/style_background"
+                    android:gravity="left|center"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/margin10"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin10" />
         </LinearLayout>
     </LinearLayout>
 
