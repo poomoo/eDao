@@ -40,7 +40,7 @@ import android.widget.TextView;
 public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_balance, textView_handing_charge,
 			textView_handing_toplimit, textView_bankname, textView_account_name, textView_bankaccount,
-			textView_isEnough, textView_ecoin, textView_credit;
+			textView_isEnough, textView_ecoin, textView_credit, textView_allow;
 	private EditText editText_handing_money;
 	private Button button_recharge, button_handing;
 
@@ -50,6 +50,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
 	private final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+	private double allow_fee = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 		textView_isEnough = (TextView) findViewById(R.id.mywallet_textView_isEnough);
 		textView_ecoin = (TextView) findViewById(R.id.mywallet_textView_ecoin);
 		textView_credit = (TextView) findViewById(R.id.mywallet_textView_credit);
+		textView_allow = (TextView) findViewById(R.id.mywallet_textView_handing_fee_allow);
 
 		editText_handing_money = (EditText) findViewById(R.id.mywallet_editText_handing_money);
 
@@ -115,6 +117,8 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 				System.out.println("s:" + s.toString());
 				if (s.length() == 0) {
 					textView_isEnough.setVisibility(View.GONE);
+					button_handing.setClickable(false);
+					button_handing.setBackgroundResource(R.drawable.style_btn_no_background);
 					return;
 				}
 
@@ -126,14 +130,9 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 					textView_isEnough.setText(eDaoClientConfig.balanceIsNotEnough);
 					button_handing.setClickable(false);
 					button_handing.setBackgroundResource(R.drawable.style_btn_no_background);
-				} else if (money < 500) {
+				} else if (money > allow_fee) {
 					textView_isEnough.setVisibility(View.VISIBLE);
-					textView_isEnough.setText(eDaoClientConfig.less500);
-					button_handing.setClickable(false);
-					button_handing.setBackgroundResource(R.drawable.style_btn_no_background);
-				} else if (money > 5000) {
-					textView_isEnough.setVisibility(View.VISIBLE);
-					textView_isEnough.setText(eDaoClientConfig.more5000);
+					textView_isEnough.setText(eDaoClientConfig.moreBalance);
 					button_handing.setClickable(false);
 					button_handing.setBackgroundResource(R.drawable.style_btn_no_background);
 				} else {
@@ -154,10 +153,14 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 
 	private void initData() {
 		textView_balance.setText("￥" + application.getTotalEb());
-		textView_handing_charge.setText(application.getHandlingFee() + "元/次");
-		textView_handing_toplimit.setText(application.getCovertMinFee() + "-" + application.getCorvertMaxFee() + "元/次");
+		textView_handing_charge.setText(application.getHandlingFee() + "元/笔");
+		textView_handing_toplimit
+				.setText(application.getCovertMinFee() + "-" + application.getCorvertMaxFee() + "元以内/笔");
+		textView_allow.setText("￥" + application.getCanCovertFee());
 		textView_bankname.setText(application.getBankName());
 		textView_bankaccount.setText(Utity.addStarByNum(3, 16, application.getBankCardId()));
+		if (!TextUtils.isEmpty(application.getCanCovertFee()))
+			allow_fee = Double.parseDouble(application.getCanCovertFee());
 	}
 
 	@Override
@@ -271,12 +274,12 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 							application.setHandlingFee(data.getHandlingFee());
 							application.setCovertMinFee(data.getCovertMinFee());
 							application.setCorvertMaxFee(data.getCovertMaxFee());
+							application.setCanCovertFee(data.getCanCovertFee());
 							application.setTotalEb(data.getTotalEb());
 							application.setBankName(data.getBankName());
 							application.setBankCardId(data.getBankCardId());
 							initData();
 						}
-
 					}
 				});
 			}

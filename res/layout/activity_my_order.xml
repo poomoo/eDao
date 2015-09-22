@@ -18,30 +18,30 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/my_order_radioButton_payed"
-            style="@null"
+            android:id="@+id/my_order_radioButton_nopay"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/margin40"
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
             android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
-            android:text="已支付"
+            android:text="待完成"
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize16" />
 
         <RadioButton
-            android:id="@+id/my_order_radioButton_nopay"
+            android:id="@+id/my_order_radioButton_payed"
+            style="@null"
             android:layout_width="0dp"
-            android:layout_height="@dimen/margin40"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
-            android:text="未支付"
+            android:text="已完成"
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize16" />
 
@@ -70,7 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none" />
-    <ViewStub
+
+    <ViewStub
         android:id="@+id/my_order_viewStub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

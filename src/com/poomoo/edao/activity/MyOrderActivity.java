@@ -49,7 +49,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
-	private String status = "2";// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
+	private String status = "1";// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
 	private boolean isFirst = true;// 是否第一次加载
 	private boolean isFresh = false;// 是否刷新标志
 
@@ -92,11 +92,11 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
-		case R.id.my_order_radioButton_payed:
-			status = "2";
-			break;
 		case R.id.my_order_radioButton_nopay:
 			status = "1";
+			break;
+		case R.id.my_order_radioButton_payed:
+			status = "2";
 			break;
 		case R.id.my_order_radioButton_delete:
 			status = "3";

@@ -28,6 +28,7 @@ public class eDaoClientConfig {
 	public static final String balanceIsNotEnough = "余额不足";
 	public static final String less500 = "不能低于500";
 	public static final String more5000 = "不能超过5000";
+	public static final String moreBalance = "可提现金额不足";
 	public static final String timeIllegal = "结束日期不能小于起始日期";
 	public static final String save2code = "二维码已经保存到:";
 

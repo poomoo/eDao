@@ -19,6 +19,7 @@ public class eDaoClientApplication extends LitePalApplication {
 	private String handlingFee = "";// 提现手续费
 	private String covertMinFee = "";// 提现下限
 	private String corvertMaxFee = "";// 提现上限
+	private String canCovertFee = "";// 可提现金额
 
 	// 用户信息
 	private String userId = "";
@@ -87,6 +88,14 @@ public class eDaoClientApplication extends LitePalApplication {
 
 	public void setCorvertMaxFee(String corvertMaxFee) {
 		this.corvertMaxFee = corvertMaxFee;
+	}
+
+	public String getCanCovertFee() {
+		return canCovertFee;
+	}
+
+	public void setCanCovertFee(String canCovertFee) {
+		this.canCovertFee = canCovertFee;
 	}
 
 	public String getUserId() {

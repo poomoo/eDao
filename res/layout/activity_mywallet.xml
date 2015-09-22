@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin10"
         android:paddingRight="@dimen/margin10" >
@@ -30,8 +30,8 @@
             android:background="#ffffff"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/margin10"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/margin15"
+            android:paddingRight="@dimen/margin15"
             android:paddingTop="@dimen/margin10" >
 
             <TextView
@@ -66,12 +66,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin10"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/margin15"
+            android:paddingRight="@dimen/margin15"
             android:paddingTop="5dp" >
 
             <TextView
@@ -103,8 +103,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="@dimen/item_height"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -161,10 +160,48 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="@dimen/margin10"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingRight="2dp"
+                        android:text="可提金额:"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="@dimen/margin5"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/mywallet_textView_handing_fee_allow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center"
+                        android:text="￥200"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/textsize12" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -251,8 +288,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -285,8 +321,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -319,8 +354,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -353,7 +387,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp" >
+        android:padding="@dimen/margin15" >
 
         <Button
             android:id="@+id/mywallet_btn_recharge"

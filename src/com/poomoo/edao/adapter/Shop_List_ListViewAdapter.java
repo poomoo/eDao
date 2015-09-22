@@ -58,6 +58,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 			holder.textView_shopname = (TextView) convertView.findViewById(R.id.shop_list_item_textView_name);
 			holder.textView_owner = (TextView) convertView.findViewById(R.id.shop_list_item_textView_owner);
 			holder.textView_tel = (TextView) convertView.findViewById(R.id.shop_list_item_textView_tel);
+			holder.textView_address = (TextView) convertView.findViewById(R.id.shop_list_item_textView_address);
 			holder.textView_distance = (TextView) convertView.findViewById(R.id.shop_list_item_textView_distance);
 			holder.bar = (RatingBar) convertView.findViewById(R.id.shop_list_item_ratingBar);
 			convertView.setTag(holder);
@@ -78,6 +79,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		holder.textView_shopname.setText(list.get(position).getShopName());
 		holder.textView_owner.setText(list.get(position).getRealName());
 		holder.textView_tel.setText(list.get(position).getTel());
+		holder.textView_address.setText(list.get(position).getAddress());
 		holder.textView_distance.setText("距离:　　" + list.get(position).getDistance());
 		holder.bar.setRating(list.get(position).getAvgScore());
 		return convertView;
@@ -85,7 +87,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 
 	private class ViewHolder {
 		private ImageView imageView;
-		private TextView textView_shopname, textView_owner, textView_tel, textView_distance;
+		private TextView textView_shopname, textView_owner, textView_tel, textView_address, textView_distance;
 		private RatingBar bar;
 	}
 

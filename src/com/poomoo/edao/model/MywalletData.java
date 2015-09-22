@@ -11,9 +11,11 @@ public class MywalletData {
 	private String handlingFee = "";
 	private String covertMinFee = "";
 	private String covertMaxFee = "";
+	private String canCovertFee="";
 	private int totalEb = 0;
 	private String bankName = "";
 	private String bankCardId = "";
+
 
 	public String getHandlingFee() {
 		return this.handlingFee;
@@ -37,6 +39,14 @@ public class MywalletData {
 
 	public void setCovertMaxFee(String corvertMaxFee) {
 		this.covertMaxFee = corvertMaxFee;
+	}
+
+	public String getCanCovertFee() {
+		return canCovertFee;
+	}
+
+	public void setCanCovertFee(String canCovertFee) {
+		this.canCovertFee = canCovertFee;
 	}
 
 	public int getTotalEb() {
