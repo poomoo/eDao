@@ -14,13 +14,13 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
-import com.poomoo.edao.widget.MessageBox_YESNO;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -117,10 +117,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Utity.showToast(getApplicationContext(), "手机号长度不正确,请重新输入!");
 				return;
 			}
-			Bundle pBundle = new Bundle();
-			pBundle.putString("type", "3");
-			pBundle.putString("tel", phoneNum);
-			openActivity(PassWordManageActivity.class, pBundle);
+			checkTel();
 			break;
 		}
 	}
@@ -133,7 +130,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			data.put("tel", phoneNum);
 			data.put("password", passWord);
 
-			showProgressDialog();
+			showProgressDialog("登录中...");
 			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 				@Override
 				public void onFinish(final ResponseData responseData) {
@@ -204,6 +201,63 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	/**
 	 * 
 	 * 
+	 * @Title: checkTel
+	 * @Description: TODO 校验手机是否注册
+	 * @author 李苜菲
+	 * @return
+	 * @return void
+	 * @throws @date
+	 *             2015年9月23日上午11:45:02
+	 */
+	private void checkTel() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10002");
+		data.put("tel", phoneNum);
+		showProgressDialog("请稍后...");
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						if (responseData.getRsCode() != 1) {
+							Bundle pBundle = new Bundle();
+							pBundle.putString("type", "3");
+							pBundle.putString("tel", phoneNum);
+							openActivity(PassWordManageActivity.class, pBundle);
+						} else {
+							Utity.showToast(getApplicationContext(), phoneNum + "未注册");
+						}
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), "手机号验证失败");
+					}
+				});
+			}
+		});
+
+	}
+
+	/**
+	 * 
+	 * 
 	 * @Title: checkInput
 	 * @Description: TODO 检查输入信息
 	 * @author 李苜菲
@@ -243,10 +297,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * @throws @date
 	 *             2015-8-12下午1:23:53
 	 */
-	private void showProgressDialog() {
+	private void showProgressDialog(String msg) {
 		if (progressDialog == null) {
 			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("登录中...");
+			progressDialog.setMessage(msg);
 			progressDialog.setCanceledOnTouchOutside(false);
 			progressDialog.setCancelable(false);
 		}
