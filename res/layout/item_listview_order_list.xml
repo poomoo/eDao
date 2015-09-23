@@ -59,6 +59,7 @@
         android:paddingTop="@dimen/margin5" >
 
         <TextView
+            android:id="@+id/order_list_item_textView_store_name_lable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="商户名称:　"
@@ -115,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="交易状态:　"
+                android:text="支付类型:　"
                 android:textSize="@dimen/textsize12" />
 
             <TextView

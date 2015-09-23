@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
 import android.os.Message;
+import android.text.TextUtils;
 
 public class Get_UserInfo_Service extends Service {
 	private Gson gson = new Gson();
@@ -87,9 +88,10 @@ public class Get_UserInfo_Service extends Service {
 				// TODO 自动生成的方法存根
 				count--;
 				if (count > 0) {
-					System.out.println("getUserInfoData onError:" + e.getMessage());
-					if (!e.getMessage().contains("No address associated with hostname")
-							&& !e.getMessage().contains("ECONNREFUSED "))
+					String msg = e.getMessage();
+					System.out.println("getUserInfoData onError:" + msg);
+					if (!msg.contains("No address associated with hostname") && !msg.contains("ECONNREFUSED ")
+							&& !TextUtils.isEmpty(application.getUserId()) && !msg.contains("failed to connect"))
 						getUserInfoData();
 				} else
 					stopSelf();

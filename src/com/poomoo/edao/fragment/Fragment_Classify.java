@@ -97,35 +97,35 @@ public class Fragment_Classify extends Fragment implements OnClickListener {
 				fragment_Recharge = new Fragment_Recharge();
 			switchFragment(fragment_Recharge);
 			curFragment = fragment_Recharge;
-			DealDetailActivity.instance.button_classify.setText("充值");
+			DealDetailActivity.instance.button_classify.setText("微信充值");
 			break;
 		case R.id.fragment_classify_textView_buy_keys:
 			if (fragment_Buy_Key == null)
 				fragment_Buy_Key = new Fragment_Buy_Key();
 			switchFragment(fragment_Buy_Key);
 			curFragment = fragment_Buy_Key;
-			DealDetailActivity.instance.button_classify.setText("购买秘钥");
+			DealDetailActivity.instance.button_classify.setText("购买密钥");
 			break;
 		case R.id.fragment_classify_textView_apply:
 			if (fragment_Apply == null)
 				fragment_Apply = new Fragment_Apply();
 			switchFragment(fragment_Apply);
 			curFragment = fragment_Apply;
-			DealDetailActivity.instance.button_classify.setText("加盟申请");
+			DealDetailActivity.instance.button_classify.setText("合作加盟");
 			break;
 		case R.id.fragment_classify_textView_buy_goods:
 			if (fragment_Buy_Goods == null)
 				fragment_Buy_Goods = new Fragment_Buy_Goods();
 			switchFragment(fragment_Buy_Goods);
 			curFragment = fragment_Buy_Goods;
-			DealDetailActivity.instance.button_classify.setText("购买商品");
+			DealDetailActivity.instance.button_classify.setText("购买支付");
 			break;
 		case R.id.fragment_classify_textView_handing:
 			if (fragment_Handing == null)
 				fragment_Handing = new Fragment_Handing();
 			switchFragment(fragment_Handing);
 			curFragment = fragment_Handing;
-			DealDetailActivity.instance.button_classify.setText("提现申请");
+			DealDetailActivity.instance.button_classify.setText("意币提现");
 			break;
 		}
 	}

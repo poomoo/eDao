@@ -16,6 +16,7 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.OrderListData;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.UserRebateData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -94,12 +95,15 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.my_order_radioButton_nopay:
 			status = "1";
+			MyOrder_ListViewAdapter.type = "1";
 			break;
 		case R.id.my_order_radioButton_payed:
 			status = "2";
+			MyOrder_ListViewAdapter.type = "2";
 			break;
 		case R.id.my_order_radioButton_delete:
 			status = "3";
+			MyOrder_ListViewAdapter.type = "3";
 			break;
 		}
 		isFirst = true;

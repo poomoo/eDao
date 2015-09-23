@@ -243,15 +243,18 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "50000");
-		data.put("method", "50002");
 		data.put("fromUserId", application.getUserId());
 		data.put("toUserId", userId);
 		data.put("payFee", money);
-		data.put("ordersType", "4");
 		data.put("payType", payType);
 		data.put("payPwd", payPwd);
 		data.put("remark", remark);
-		data.put("transferType", transferType);
+		// transferType:转账类型，1：意币转账，2：购买支付
+		if (transferType.equals("1"))
+			data.put("method", "50002");
+		else
+			data.put("method", "50012");
+
 		showProgressDialog("提交中...");
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 

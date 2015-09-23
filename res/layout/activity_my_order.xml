@@ -27,7 +27,7 @@
             android:drawableBottom="@drawable/style_trade_detail_bottom_line"
             android:gravity="center"
             android:singleLine="true"
-            android:text="待完成"
+            android:text="待处理"
             android:textColor="@drawable/style_navigation_text_background"
             android:textSize="@dimen/textsize16" />
 

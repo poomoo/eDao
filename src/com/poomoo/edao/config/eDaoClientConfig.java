@@ -11,10 +11,10 @@ public class eDaoClientConfig {
 	// IP
 	public static final String BaseLocalUrl = "http://192.168.0.140:8080/yidao/app/";// 本地
 	public static final String BaseRemoteUrl = "http://www.leyidao.com/yidao/app/";// 远程
-	public static final String url = BaseRemoteUrl + "call.htm";
-	public static final String wxReUrl = BaseRemoteUrl + "orders/wxPayCallBack.json";
-	public static final String imageurl = BaseRemoteUrl + "user/uploadUserImage.json";
-	public static final String uploadStoreurl = BaseRemoteUrl + "shop/add.json";
+	public static final String url = BaseLocalUrl + "call.htm";
+	public static final String wxReUrl = BaseLocalUrl + "orders/wxPayCallBack.json";
+	public static final String imageurl = BaseLocalUrl + "user/uploadUserImage.json";
+	public static final String uploadStoreurl = BaseLocalUrl + "shop/add.json";
 
 	// 时间
 	public static final int timeout = 1 * 30 * 1000;// 网络通讯超时

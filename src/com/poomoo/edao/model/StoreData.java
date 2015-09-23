@@ -113,4 +113,11 @@ public class StoreData implements Serializable {
 		this.distance = distance;
 	}
 
+	@Override
+	public String toString() {
+		return "StoreData [shopId=" + shopId + ", shopName=" + shopName + ", realName=" + realName + ", longitude="
+				+ longitude + ", latitude=" + latitude + ", address=" + address + ", pictures=" + pictures + ", typeId="
+				+ typeId + ", avgScore=" + avgScore + ", tel=" + tel + ", distance=" + distance + "]";
+	}
+
 }

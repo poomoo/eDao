@@ -28,6 +28,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private MyOrderActivity myOrderActivity;
 	private eDaoClientApplication application = null;
+	public static String type = "1";// 交易类型 1-待处理 2-已完成
 
 	public MyOrder_ListViewAdapter(MyOrderActivity activity, List<OrderListData> list) {
 		super();
@@ -63,6 +64,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_listview_order_list, parent, false);
 			holder = new ViewHolder();
+			holder.textView_lable = (TextView) convertView.findViewById(R.id.order_list_item_textView_store_name_lable);
 			holder.textView_order_id = (TextView) convertView.findViewById(R.id.order_list_item_textView_orderid);
 			holder.textView_shop_name = (TextView) convertView.findViewById(R.id.order_list_item_textView_store_name);
 			holder.textView_order_money = (TextView) convertView.findViewById(R.id.order_list_item_textView_money);
@@ -80,18 +82,22 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
 		holder.textView_order_remark.setText(list.get(position).getRemark());
+		// 已完成
+		if (type.equals("2")) {
+			holder.button_pay.setVisibility(View.VISIBLE);
+			holder.button_pay.setText("去评价");
+			holder.button_pay.setOnClickListener(listener);
+			holder.button_pay.setTag("evaluate");
+		}
 		// 客户
 		if (application.getType().equals("1")) {
-			if (list.get(position).getStatus().equals("已完成")) {
-				holder.button_pay.setVisibility(View.VISIBLE);
-				holder.button_pay.setText("去评价");
-				holder.button_pay.setOnClickListener(listener);
-				holder.button_pay.setTag("evaluate");
-			}
+			holder.textView_lable.setText("商户名称:　");
 		}
 		// 商户
 		else {
-			if (list.get(position).getStatus().equals("待商户确定")) {
+			holder.textView_lable.setText("客户名称:　");
+			// 待处理
+			if (type.equals("1")) {
 				holder.button_pay.setVisibility(View.VISIBLE);
 				holder.button_pay.setText("确认支付");
 				holder.button_pay.setOnClickListener(listener);
@@ -103,8 +109,8 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		private TextView textView_order_id, textView_shop_name, textView_order_money, textView_order_state,
-				textView_order_date, textView_order_remark;
+		private TextView textView_lable, textView_order_id, textView_shop_name, textView_order_money,
+				textView_order_state, textView_order_date, textView_order_remark;
 		private Button button_pay;
 	}
 

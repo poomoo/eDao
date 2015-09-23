@@ -64,14 +64,14 @@ public class Fragment_Status extends Fragment implements OnClickListener {
 				fragment_Payed = new Fragment_Payed();
 			switchFragment(fragment_Payed);
 			curFragment = fragment_Payed;
-			DealDetailActivity.instance.button_status.setText("已支付");
+			DealDetailActivity.instance.button_status.setText("已完成");
 			break;
 		case R.id.fragment_status_radioButton_nopay:
 			if (fragment_UnPayed == null)
 				fragment_UnPayed = new Fragment_UnPayed();
 			switchFragment(fragment_UnPayed);
 			curFragment = fragment_UnPayed;
-			DealDetailActivity.instance.button_status.setText("未支付");
+			DealDetailActivity.instance.button_status.setText("未完成");
 			break;
 		case R.id.fragment_status_radioButton_delete:
 			if (fragment_Deleted == null)

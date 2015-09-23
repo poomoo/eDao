@@ -97,7 +97,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 
 			list = new ArrayList<StoreData>();
 		}
-		
+
 		showProgressDialog();
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		mLocationClient.registerLocationListener(myListener);
@@ -204,7 +204,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 							else
 								Utity.showToast(getApplicationContext(), responseData.getMsg());
 						}
-
 						listView.onRefreshComplete();
 					}
 				});
@@ -231,6 +230,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Bundle pBundle = new Bundle();
 		pBundle.putSerializable("data", list.get(arg2));
+		System.out.println("list.get(arg2):" + list.get(arg2).toString());
 		openActivity(StoreInformationActivity.class, pBundle);
 	}
 

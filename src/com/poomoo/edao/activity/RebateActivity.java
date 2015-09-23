@@ -148,7 +148,7 @@ public class RebateActivity extends BaseActivity {
 	public void showEmptyView() {
 		listView.setVisibility(View.GONE);
 		if (noDataView == null) {
-			ViewStub noDataViewStub = (ViewStub)findViewById(R.id.rebate_viewStub);
+			ViewStub noDataViewStub = (ViewStub) findViewById(R.id.rebate_viewStub);
 			noDataView = noDataViewStub.inflate();
 		} else {
 			noDataView.setVisibility(View.VISIBLE);

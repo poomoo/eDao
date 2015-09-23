@@ -15,7 +15,6 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.FlexibleRatingBar;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;

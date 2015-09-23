@@ -2,122 +2,128 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
     android:padding="@dimen/margin5" >
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center" >
-
-        <ImageView
-            android:id="@+id/shop_list_item_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/shop_list_item_textView_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:padding="@dimen/margin5" >
+        android:text="贵阳世纪城店铺"
+        android:textSize="@dimen/textsize18" />
 
-        <TextView
-            android:id="@+id/shop_list_item_textView_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="贵阳世纪城店铺"
-            android:textSize="@dimen/textsize18" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
 
-            <TextView
+            <ImageView
+                android:id="@+id/shop_list_item_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="负责人:"
-                android:textSize="@dimen/textsize14" />
-
-            <TextView
-                android:id="@+id/shop_list_item_textView_owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:textSize="@dimen/textsize14" />
+                android:src="@drawable/ic_launcher" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:padding="@dimen/margin5" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="电话:"
-                android:textSize="@dimen/textsize14" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/shop_list_item_textView_tel"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="负责人:"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:id="@+id/shop_list_item_textView_owner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="@dimen/textsize14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1888888888"
-                android:textSize="@dimen/textsize14" />
-        </LinearLayout>
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="电话:"
+                    android:textSize="@dimen/textsize14" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/shop_list_item_textView_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1888888888"
+                    android:textSize="@dimen/textsize14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="地址:"
-                android:textSize="@dimen/textsize14" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/shop_list_item_textView_address"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址:"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:id="@+id/shop_list_item_textView_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="世纪城龙禧苑"
+                    android:textSize="@dimen/textsize14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="世纪城龙禧苑"
-                android:textSize="@dimen/textsize14" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <RatingBar
-                android:id="@+id/shop_list_item_ratingBar"
-                style="@style/myRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="5"
-                android:stepSize="0.1" />
-
-            <TextView
-                android:id="@+id/shop_list_item_textView_distance"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="距离:　　100m"
-                android:textColor="@color/gray"
-                android:textSize="10sp" />
+                android:orientation="horizontal" >
+
+                <RatingBar
+                    android:id="@+id/shop_list_item_ratingBar"
+                    style="@style/myRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:id="@+id/shop_list_item_textView_distance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="距离:　　100m"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
