@@ -25,6 +25,7 @@ public class Get_UserInfo_Service extends Service {
 	private eDaoClientApplication application;
 	private SharedPreferences userInfo = null;
 	private Editor editor;
+	private int count = 10;
 
 	public void onCreate() {
 		super.onCreate();
@@ -84,10 +85,15 @@ public class Get_UserInfo_Service extends Service {
 			@Override
 			public void onError(Exception e) {
 				// TODO 自动生成的方法存根
-				System.out.println("getUserInfoData onError:" + e.getMessage());
-				if (!e.getMessage().contains("No address associated with hostname")
-						&& !e.getMessage().contains("ECONNREFUSED "))
-					getUserInfoData();
+				count--;
+				if (count > 0) {
+					System.out.println("getUserInfoData onError:" + e.getMessage());
+					if (!e.getMessage().contains("No address associated with hostname")
+							&& !e.getMessage().contains("ECONNREFUSED "))
+						getUserInfoData();
+				} else
+					stopSelf();
+
 			}
 		});
 	}
