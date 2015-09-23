@@ -65,10 +65,8 @@ import android.widget.TextView;
  * @author 李苜菲
  * @date 2015年8月31日 下午10:47:53
  */
-public class StoreManageActivity extends BaseActivity implements
-		OnClickListener {
-	private LinearLayout layout_logo, layout_logo_center, layout_zone,
-			layout_store_class;
+public class StoreManageActivity extends BaseActivity implements OnClickListener {
+	private LinearLayout layout_logo, layout_logo_center, layout_zone, layout_store_class;
 	private TextView textView_zone, textView_store_class;
 	private EditText editText_store_name, editText_address;
 	private Button button_confirm;
@@ -81,17 +79,17 @@ public class StoreManageActivity extends BaseActivity implements
 	private List<HashMap<String, String>> list;
 	private ListView listView;
 
-	private String curProvince = "", curCity = "", curArea = "", path = "",
-			store_class_id = "", store_name = "", address = "";
+	private String curProvince = "", curCity = "", curArea = "", path = "", store_class_id = "", store_name = "",
+			address = "";
 	private eDaoClientApplication application = null;
 	private static final String IMAGE_UNSPECIFIED = "image/*";
 	private static final int NONE = 0;
 	private static final int PHOTORESOULT = 1;// 结果
 	private File file = null;
 	private Bitmap bitmap = null;
-	private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
-			"生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
-			"汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
+	// private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
+	// "生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
+	// "汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
 	private ProgressDialog progressDialog = null;
 	private ArrayList<ProvinceInfo> provinceList = new ArrayList<ProvinceInfo>();
 	private ArrayList<CityInfo> cityList = new ArrayList<CityInfo>();
@@ -132,13 +130,31 @@ public class StoreManageActivity extends BaseActivity implements
 		curCity = application.getCurCity();
 		curArea = application.getCurArea();
 		textView_zone.setText(curProvince + "-" + curCity + "-" + curArea);
+		CityPicker.province_name = curProvince;
+		CityPicker.city_name = curCity;
+		CityPicker.area_name = curArea;
+		// 设置省份编码
+		provinceList = Utity.getProvinceList();
+		int position = 0;
+		position = Utity.getProvincePosition(provinceList, curProvince);
+		CityPicker.province_id = provinceList.get(position).getProvince_id();
+		// 设置城市编码
+		cityList = Utity.getCityList(CityPicker.province_id);
+		position = 0;
+		position = Utity.getCityPosition(cityList, curCity);
+		CityPicker.city_id = cityList.get(position).getCity_id();
+		// 设置区域编码
+		areaList = Utity.getAreaList(CityPicker.city_id);
+		position = 0;
+		position = Utity.getAreaPosition(areaList, curArea);
+		CityPicker.area_id = areaList.get(position).getArea_id();
 
 		list = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> data = null;
-		int length = list_name.length;
+		int length = eDaoClientConfig.store_class.length;
 		for (int i = 0; i < length; i++) {
 			data = new HashMap<String, String>();
-			data.put("name", list_name[i]);
+			data.put("name", eDaoClientConfig.store_class[i]);
 			data.put("id", i + 1 + "");
 			list.add(data);
 		}
@@ -151,14 +167,12 @@ public class StoreManageActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.store_manage_layout_logo_center:
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-			intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					IMAGE_UNSPECIFIED);
+			intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
 			intent.putExtra("return-data", true);
 			startActivityForResult(intent, PHOTORESOULT);
 			break;
 		case R.id.store_manage_layout_store_class:
-			showWindow(layout_store_class, listView, list,
-					textView_store_class, adapter);
+			showWindow(layout_store_class, listView, list, textView_store_class, adapter);
 			break;
 		case R.id.store_manage_layout_zone:
 			select_city();
@@ -211,31 +225,10 @@ public class StoreManageActivity extends BaseActivity implements
 	}
 
 	private void select_city() {
-		CityPicker.province_name = curProvince;
-		CityPicker.city_name = curCity;
-		CityPicker.area_name = curArea;
-		// 设置省份编码
-		provinceList = Utity.getProvinceList();
-		int position = 0;
-		position = Utity.getProvincePosition(provinceList, curProvince);
-		CityPicker.province_id = provinceList.get(position).getProvince_id();
-		// 设置城市编码
-		cityList = Utity.getCityList(CityPicker.province_id);
-		position = 0;
-		position = Utity.getCityPosition(cityList, curCity);
-		CityPicker.city_id = cityList.get(position).getCity_id();
-		// 设置区域编码
-		areaList = Utity.getAreaList(CityPicker.city_id);
-		position = 0;
-		position = Utity.getAreaPosition(areaList, curArea);
-		CityPicker.area_id = areaList.get(position).getArea_id();
-
 		// 实例化SelectPicPopupWindow
-		select_City_PopupWindow = new Select_City_PopupWindow(
-				StoreManageActivity.this, itemsOnClick);
+		select_City_PopupWindow = new Select_City_PopupWindow(StoreManageActivity.this, itemsOnClick);
 		// 显示窗口
-		select_City_PopupWindow.showAtLocation(StoreManageActivity.this
-				.findViewById(R.id.activity_store_manage_layout),
+		select_City_PopupWindow.showAtLocation(StoreManageActivity.this.findViewById(R.id.activity_store_manage_layout),
 				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
 	}
 
@@ -247,20 +240,14 @@ public class StoreManageActivity extends BaseActivity implements
 			if (view.getId() == R.id.popup_select_city_btn_confirm) {
 				select_City_PopupWindow.dismiss();
 				textView_zone.setText(CityPicker.getZone_string());
-				System.out.println("province_id:" + CityPicker.getProvince_id()
-						+ "city_id:" + CityPicker.getCity_id() + "area_id:"
-						+ CityPicker.getArea_id());
 			}
 		}
 	};
 
-	public void showWindow(View spinnerlayout, ListView listView,
-			final List<HashMap<String, String>> list, final TextView text,
-			final ChannelSpinnerAdapter adapter) {
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+	public void showWindow(View spinnerlayout, ListView listView, final List<HashMap<String, String>> list,
+			final TextView text, final ChannelSpinnerAdapter adapter) {
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -290,8 +277,7 @@ public class StoreManageActivity extends BaseActivity implements
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				store_class_id = list.get(arg2).get("id");
 				textView_store_class.setText(list.get(arg2).get("name"));
@@ -342,9 +328,8 @@ public class StoreManageActivity extends BaseActivity implements
 			if (mImageCaptureUri != null) {
 				try {
 					String imagePath;
-					Cursor cursor = getContentResolver().query(
-							mImageCaptureUri, new String[] { Media.DATA },
-							null, null, null);
+					Cursor cursor = getContentResolver().query(mImageCaptureUri, new String[] { Media.DATA }, null,
+							null, null);
 					cursor.moveToFirst();
 					int columnIndex = cursor.getColumnIndex(Media.DATA);
 					imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
@@ -353,8 +338,7 @@ public class StoreManageActivity extends BaseActivity implements
 					Drawable drawable = new BitmapDrawable(bitmap);
 					layout_logo_center.setVisibility(View.GONE);
 					layout_logo.setBackground(drawable);
-					path = Environment.getExternalStorageDirectory() + "/"
-							+ "edaoStore.jpg";
+					path = Environment.getExternalStorageDirectory() + "/" + "edaoStore.jpg";
 					file = saveBitmap(bitmap, path);
 
 				} catch (Exception e) {
@@ -365,39 +349,30 @@ public class StoreManageActivity extends BaseActivity implements
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private void upload() {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(eDaoClientConfig.uploadStoreurl); // 根据Post参数,实例化一个Post对象
-		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
-				eDaoClientConfig.timeout);
-		client.getParams().setParameter(
-				CoreConnectionPNames.CONNECTION_TIMEOUT,
-				eDaoClientConfig.timeout);
+		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, eDaoClientConfig.timeout);
+		client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, eDaoClientConfig.timeout);
 		Message message = new Message();
-
+		System.out.println("province_id:" + CityPicker.getProvince_id() + "city_id:" + CityPicker.getCity_id()
+				+ "area_id:" + CityPicker.getArea_id());
 		try {
 			MultipartEntity entity = new MultipartEntity(); // 实例化请求实体,请求正文
 			entity.addPart("bizName", new StringBody("30000"));
 			entity.addPart("method", new StringBody("30001"));
 			entity.addPart("userId", new StringBody(application.getUserId()));
-			entity.addPart("shopName",
-					new StringBody(store_name, Charset.forName("utf-8")));
+			entity.addPart("shopName", new StringBody(store_name, Charset.forName("utf-8")));
 			entity.addPart("categoryId", new StringBody(store_class_id));
-			entity.addPart("provinceId",
-					new StringBody(CityPicker.getProvince_id()));
+			entity.addPart("provinceId", new StringBody(CityPicker.getProvince_id()));
 			entity.addPart("cityId", new StringBody(CityPicker.getCity_id()));
 			entity.addPart("areaId", new StringBody(CityPicker.getArea_id()));
-			entity.addPart("address",
-					new StringBody(address, Charset.forName("utf-8")));
-			entity.addPart(
-					"longitude",
-					new StringBody(Double.toString((application
-							.getCurlongitude())), Charset.forName("utf-8")));
-			entity.addPart(
-					"latitude",
-					new StringBody(
-							Double.toString(application.getCurlatitude()),
-							Charset.forName("utf-8")));
+			entity.addPart("address", new StringBody(address, Charset.forName("utf-8")));
+			entity.addPart("longitude",
+					new StringBody(Double.toString((application.getCurlongitude())), Charset.forName("utf-8")));
+			entity.addPart("latitude",
+					new StringBody(Double.toString(application.getCurlatitude()), Charset.forName("utf-8")));
 			entity.addPart("file", new FileBody(file));
 			System.out.println("entity:" + entity.toString());
 			post.setEntity(entity); // 将请求实体保存到Post的实体参数中
@@ -445,8 +420,8 @@ public class StoreManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -465,8 +440,8 @@ public class StoreManageActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)

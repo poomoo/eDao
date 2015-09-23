@@ -72,7 +72,7 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 			holder.textView_order_handing_fee = (TextView) convertView
 					.findViewById(R.id.trade_details_list_item_textView_handing_fee);
 			holder.layout_handing_fee = (LinearLayout) convertView
-					.findViewById(R.id.order_list_item_layout_handing_fee);
+					.findViewById(R.id.trade_details_list_item_layout_handing_fee);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

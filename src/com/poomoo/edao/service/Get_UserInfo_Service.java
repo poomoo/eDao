@@ -85,7 +85,8 @@ public class Get_UserInfo_Service extends Service {
 			public void onError(Exception e) {
 				// TODO 自动生成的方法存根
 				System.out.println("getUserInfoData onError:" + e.getMessage());
-				if (!e.getMessage().contains("No address associated with hostname"))
+				if (!e.getMessage().contains("No address associated with hostname")
+						&& !e.getMessage().contains("ECONNREFUSED "))
 					getUserInfoData();
 			}
 		});

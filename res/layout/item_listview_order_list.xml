@@ -126,29 +126,6 @@
                 android:textColor="@color/orange"
                 android:textSize="@dimen/textsize12" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/order_list_item_layout_handing_fee"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="交易费用:　"
-                android:textSize="@dimen/textsize12" />
-
-            <TextView
-                android:id="@+id/order_list_item_textView_handing_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥10"
-                android:textColor="@color/red"
-                android:textSize="@dimen/textsize12" />
-        </LinearLayout>
     </LinearLayout>
 
     <TextView

@@ -49,14 +49,12 @@ import android.widget.Toast;
 
 public class UploadPicsActivity extends BaseActivity implements OnClickListener {
 	private Button button_upload;
-	private FrameLayout frameLayout_identitycard_front,
-			frameLayout_identitycard_back, frameLayout_identitycard_inhand,
+	private FrameLayout frameLayout_identitycard_front, frameLayout_identitycard_back, frameLayout_identitycard_inhand,
 			frameLayout_business_license;
-	private ImageView imageView_identitycard_front,
-			imageView_identitycard_back, imageView_identitycard_inhand,
+	private ImageView imageView_identitycard_front, imageView_identitycard_back, imageView_identitycard_inhand,
 			imageView_business_license;
-	private TextView textView_identitycard_front, textView_identitycard_back,
-			textView_identitycard_inhand, textView_business_license;
+	private TextView textView_identitycard_front, textView_identitycard_back, textView_identitycard_inhand,
+			textView_business_license;
 
 	private Upload_Pics_PopupWindow upload_Pics_PopupWindow;
 
@@ -77,8 +75,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private eDaoClientApplication applicaiton = null;
 	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
-	private final static String image_capture_path = Environment
-			.getExternalStorageDirectory() + "/" + "edao.temp";
+	private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "edao.temp";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,34 +115,29 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 
 		userId = applicaiton.getUserId();
 
-		sharedPreferences_certificaitonInfo = getSharedPreferences(
-				"certificaitonInfo", Context.MODE_PRIVATE);
+		sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo", Context.MODE_PRIVATE);
 		path1 = sharedPreferences_certificaitonInfo.getString("imagepath1", "");
 		path2 = sharedPreferences_certificaitonInfo.getString("imagepath2", "");
 		path3 = sharedPreferences_certificaitonInfo.getString("imagepath3", "");
 		path4 = sharedPreferences_certificaitonInfo.getString("imagepath4", "");
 
 		if (!TextUtils.isEmpty(path1)) {
-			imageView_identitycard_front.setImageBitmap(Utity
-					.revitionImageSize(path1));
+			imageView_identitycard_front.setImageBitmap(Utity.revitionImageSize(path1));
 			textView_identitycard_front.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path2)) {
-			imageView_identitycard_back.setImageBitmap(Utity
-					.revitionImageSize(path2));
+			imageView_identitycard_back.setImageBitmap(Utity.revitionImageSize(path2));
 			textView_identitycard_back.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path3)) {
-			imageView_identitycard_inhand.setImageBitmap(Utity
-					.revitionImageSize(path3));
+			imageView_identitycard_inhand.setImageBitmap(Utity.revitionImageSize(path3));
 			textView_identitycard_inhand.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path4)) {
-			imageView_business_license.setImageBitmap(Utity
-					.revitionImageSize(path4));
+			imageView_business_license.setImageBitmap(Utity.revitionImageSize(path4));
 			textView_business_license.setText("");
 		}
 
@@ -219,12 +211,10 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 
 	private void select_pics() {
 		// 实例化SelectPicPopupWindow
-		upload_Pics_PopupWindow = new Upload_Pics_PopupWindow(
-				UploadPicsActivity.this, itemsOnClick);
+		upload_Pics_PopupWindow = new Upload_Pics_PopupWindow(UploadPicsActivity.this, itemsOnClick);
 		// 显示窗口
-		upload_Pics_PopupWindow.showAtLocation(UploadPicsActivity.this
-				.findViewById(R.id.activity_uploadpics_layout), Gravity.CENTER,
-				0, 0); // 设置layout在PopupWindow中显示的位置
+		upload_Pics_PopupWindow.showAtLocation(UploadPicsActivity.this.findViewById(R.id.activity_uploadpics_layout),
+				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
 	}
 
 	// 为弹出窗口实现监听类
@@ -235,18 +225,14 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			upload_Pics_PopupWindow.dismiss();
 			switch (view.getId()) {
 			case R.id.popup_select_pic_res_camera:
-				Intent intent1 = new Intent(
-						"android.media.action.IMAGE_CAPTURE");
-				intent1.putExtra(MediaStore.EXTRA_OUTPUT,
-						Uri.fromFile(new File(image_capture_path)));
+				Intent intent1 = new Intent("android.media.action.IMAGE_CAPTURE");
+				intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(image_capture_path)));
 				startActivityForResult(intent1, PHOTOHRAPH);
 				break;
 
 			case R.id.popup_select_pic_res_photograph:
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-				intent.setDataAndType(
-						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-						IMAGE_UNSPECIFIED);
+				intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
 				intent.putExtra("return-data", true);
 				startActivityForResult(intent, PHOTORESOULT);
 				break;
@@ -296,9 +282,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			if (mImageCaptureUri != null) {
 				try {
 					String imagePath;
-					Cursor cursor = getContentResolver().query(
-							mImageCaptureUri, new String[] { Media.DATA },
-							null, null, null);
+					Cursor cursor = getContentResolver().query(mImageCaptureUri, new String[] { Media.DATA }, null,
+							null, null);
 					cursor.moveToFirst();
 					int columnIndex = cursor.getColumnIndex(Media.DATA);
 					imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
@@ -322,8 +307,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_identitycard_front.setImageBitmap(bitmap);
-			path1 = Environment.getExternalStorageDirectory() + "/"
-					+ "edao1.jpg";
+			path1 = Environment.getExternalStorageDirectory() + "/" + "edao1.jpg";
 			file1 = saveBitmap(bitmap, path1);
 			break;
 		case 2:
@@ -331,8 +315,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_identitycard_back.setImageBitmap(bitmap);
-			path2 = Environment.getExternalStorageDirectory() + "/"
-					+ "edao2.jpg";
+			path2 = Environment.getExternalStorageDirectory() + "/" + "edao2.jpg";
 			file2 = saveBitmap(bitmap, path2);
 			break;
 		case 3:
@@ -341,8 +324,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			bitmap = Utity.revitionImageSize(path);
 			System.out.println("bitmap:" + bitmap);
 			imageView_identitycard_inhand.setImageBitmap(bitmap);
-			path3 = Environment.getExternalStorageDirectory() + "/"
-					+ "edao3.jpg";
+			path3 = Environment.getExternalStorageDirectory() + "/" + "edao3.jpg";
 			file3 = saveBitmap(bitmap, path3);
 			break;
 		case 4:
@@ -350,8 +332,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			// photo = Utity.getBitMap(path);
 			bitmap = Utity.revitionImageSize(path);
 			imageView_business_license.setImageBitmap(bitmap);
-			path4 = Environment.getExternalStorageDirectory() + "/"
-					+ "edao4.jpg";
+			path4 = Environment.getExternalStorageDirectory() + "/" + "edao4.jpg";
 			file4 = saveBitmap(bitmap, path4);
 			break;
 		}
@@ -360,11 +341,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private void upload(File file) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(eDaoClientConfig.imageurl); // 根据Post参数,实例化一个Post对象
-		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
-				eDaoClientConfig.timeout);
-		client.getParams().setParameter(
-				CoreConnectionPNames.CONNECTION_TIMEOUT,
-				eDaoClientConfig.timeout);
+		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, eDaoClientConfig.timeout);
+		client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, eDaoClientConfig.timeout);
 
 		MultipartEntity entity = new MultipartEntity(); // 实例化请求实体,请求正文
 		// List<File> list = new ArrayList<File>();
@@ -378,17 +356,14 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		// ContentBody body = new FileBody(list.get(i));
 		// entity.addPart("file", body); // 表单字段名
 		// }
-		System.out.println("进入upload：" + "uploadCount" + ":" + uploadCount
-				+ "filelist.size" + ":" + filelist.size());
+		System.out.println("进入upload：" + "uploadCount" + ":" + uploadCount + "filelist.size" + ":" + filelist.size());
 		entity.addPart("file", new FileBody(file));
 
 		post.setEntity(entity); // 将请求实体保存到Post的实体参数中
 		Message message = new Message();
 		try {
-			entity.addPart("imageType", new StringBody(String.valueOf(uploadCount + 1),
-					Charset.forName("utf-8")));
-			entity.addPart("userId",
-					new StringBody(userId, Charset.forName("utf-8")));
+			entity.addPart("imageType", new StringBody(String.valueOf(uploadCount + 1), Charset.forName("utf-8")));
+			entity.addPart("userId", new StringBody(userId, Charset.forName("utf-8")));
 			HttpResponse response;
 			response = client.execute(post);
 			// 执行Post方法
@@ -430,15 +405,13 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 					editor.putString("imagepath3", path3);
 					editor.putString("imagepath4", path4);
 					editor.commit();
-					Toast.makeText(getApplicationContext(), "上传成功",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_LONG).show();
 					finish();
 				}
 
 			} else {
 				closeProgressDialog();
-				Toast.makeText(getApplicationContext(), "上传失败",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_LONG).show();
 			}
 			super.handleMessage(msg);
 		}
@@ -452,8 +425,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
+	 * @throws @date
+	 *             2015-8-12下午1:23:53
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -472,8 +445,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
+	 * @throws @date
+	 *             2015-8-12下午1:24:43
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null)
