@@ -97,9 +97,9 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		// 商户
 		else {
 			if (list.get(position).getCanAppraise().equals("true"))
-				holder.textView_lable.setText("客户姓名:　");
-			else
 				holder.textView_lable.setText("商户名称:　");
+			else
+				holder.textView_lable.setText("客户姓名:　");
 			// 待处理
 			if (type.equals("1")) {
 				holder.button_pay.setVisibility(View.VISIBLE);
