@@ -9,14 +9,15 @@ package com.poomoo.edao.model;
  */
 public class OrderListData {
 	private String ordersId = "";
-	private String tradeName="";
+	private String tradeName = "";
 	private String shopId = "";
-	private String shopName="";
+	private String shopName = "";
 	private String payFee = "";
 	private String status = "";
 	private String ordersDt = "";
 	private String remark = "";
 	private String handlingFee = "";
+	private String canAppraise = "";
 
 	public String getOrdersId() {
 		return this.ordersId;
@@ -88,6 +89,14 @@ public class OrderListData {
 
 	public void setHandlingFee(String handlingFee) {
 		this.handlingFee = handlingFee;
+	}
+
+	public String getCanAppraise() {
+		return canAppraise;
+	}
+
+	public void setCanAppraise(String canAppraise) {
+		this.canAppraise = canAppraise;
 	}
 
 }

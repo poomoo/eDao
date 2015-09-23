@@ -27,10 +27,9 @@
         android:layout_height="130dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/margin10"
         android:paddingLeft="@dimen/margin10"
-        android:paddingTop="@dimen/margin10"
-        android:paddingRight="@dimen/margin5" >
+        android:paddingRight="@dimen/margin5"
+        android:paddingTop="@dimen/margin10" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,8 +46,8 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
@@ -68,7 +67,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
                         <RatingBar
@@ -80,14 +79,6 @@
                             android:numStars="5"
                             android:rating="5"
                             android:stepSize="0.1" />
-
-                        <TextView
-                            android:id="@+id/store_information_textView_distance"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="距离:100m"
-                            android:textSize="@dimen/textsize10" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -130,31 +121,6 @@
                             android:textSize="@dimen/textsize14" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/store_information_textView_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="更多评价"
-                        android:textColor="@color/textview_selector"
-                        android:textSize="@dimen/textsize12" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_position2" />
-                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -178,6 +144,64 @@
                     android:text="世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑"
                     android:textSize="@dimen/textsize14" />
             </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_position2" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/store_information_textView_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="距离:100m"
+                android:textSize="@dimen/textsize10" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/store_information_textView_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="更多评价"
+                android:textColor="@color/textview_selector"
+                android:textSize="@dimen/textsize12" />
         </LinearLayout>
     </LinearLayout>
 
