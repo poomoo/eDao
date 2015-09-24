@@ -88,7 +88,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		// 待处理
 		if (type.equals("1")) {
 			// 客户角色
-			if (list.get(position).getCanAppraise().equals("true")) {
+			if (list.get(position).getMyPay().equals("true")) {
 				holder.textView_lable.setText("商户名称:　");
 			}
 			// 商户角色
@@ -104,7 +104,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		// 已完成
 		if (type.equals("2")) {
 			// 客户角色
-			if (list.get(position).getCanAppraise().equals("true")) {
+			if (list.get(position).getMyPay().equals("true")) {
 				holder.textView_lable.setText("商户名称:　");
 
 				holder.button_pay.setVisibility(View.VISIBLE);

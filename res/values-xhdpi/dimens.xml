@@ -3,11 +3,11 @@
     <!--
          Example customization of dimensions originally defined in res/values/dimens.xml
          (such as screen margins) for screens with more than 820dp of available width. This
-         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <!-- SP -->
-      <dimen name="textsize8">10sp</dimen>
+    <dimen name="textsize8">10sp</dimen>
     <dimen name="textsize10">12sp</dimen>
     <dimen name="textsize12">14sp</dimen>
     <dimen name="textsize14">16sp</dimen>
@@ -25,6 +25,7 @@
     <dimen name="margin40">45dp</dimen>
     <dimen name="margin50">55dp</dimen>
     <dimen name="margin70">75dp</dimen>
+    <dimen name="margin90">95dp</dimen>
     <dimen name="logo_height">153dp</dimen>
     <dimen name="item_height">43dp</dimen>
     <dimen name="between_height">10dp</dimen>

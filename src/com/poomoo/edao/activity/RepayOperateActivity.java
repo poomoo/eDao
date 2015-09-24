@@ -12,21 +12,21 @@ import android.widget.TextView;
 
 /**
  * 
- * @ClassName KeyAndOperateActivity
- * @Description TODO 经营管理
+ * @ClassName RepayOperateActivity
+ * @Description TODO 报酬管理F
  * @author 李苜菲
- * @date 2015年8月31日 下午9:30:40
+ * @date 2015年9月24日 下午5:10:36
  */
-public class KeyAndOperateActivity extends BaseActivity implements OnClickListener {
-	private TextView textView_username, textView_phonenum;
-	private LinearLayout layout_key, layout_operate, layout_repay;
+public class RepayOperateActivity extends BaseActivity implements OnClickListener {
+	private TextView textView_username, textView_phonenum, textView_year, textView_month, textView_day,
+			textView_year_money, textView_month_money, textView_day_money;
 	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_key_and_operate);
+		setContentView(R.layout.activity_repay_manage);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
@@ -38,13 +38,16 @@ public class KeyAndOperateActivity extends BaseActivity implements OnClickListen
 		textView_username = (TextView) findViewById(R.id.layout_userinfo_textView_username);
 		textView_phonenum = (TextView) findViewById(R.id.layout_userinfo_textView_tel);
 
-		layout_key = (LinearLayout) findViewById(R.id.key_and_operate_layout_key_manage);
-		layout_operate = (LinearLayout) findViewById(R.id.key_and_operate_layout_operate_manage);
-		layout_repay = (LinearLayout) findViewById(R.id.key_and_operate_layout_repay_manage);
+		textView_year = (TextView) findViewById(R.id.repay_textView_year);
+		textView_month = (TextView) findViewById(R.id.repay_textView_month);
+		textView_day = (TextView) findViewById(R.id.repay_textView_day);
+		textView_year_money = (TextView) findViewById(R.id.repay_textView_year_money);
+		textView_month_money = (TextView) findViewById(R.id.repay_textView_month_money);
+		textView_day_money = (TextView) findViewById(R.id.repay_textView_day_money);
 
-		layout_key.setOnClickListener(this);
-		layout_operate.setOnClickListener(this);
-		layout_repay.setOnClickListener(this);
+		textView_year.setOnClickListener(this);
+		textView_month.setOnClickListener(this);
+		textView_day.setOnClickListener(this);
 
 		Utity.setUserAndTel(textView_username, textView_phonenum, application);
 	}

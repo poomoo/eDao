@@ -17,7 +17,7 @@ public class OrderListData {
 	private String ordersDt = "";
 	private String remark = "";
 	private String handlingFee = "";
-	private String canAppraise = "";
+	private String myPay = "";
 
 	public String getOrdersId() {
 		return this.ordersId;
@@ -91,12 +91,12 @@ public class OrderListData {
 		this.handlingFee = handlingFee;
 	}
 
-	public String getCanAppraise() {
-		return canAppraise;
+	public String getMyPay() {
+		return myPay;
 	}
 
-	public void setCanAppraise(String canAppraise) {
-		this.canAppraise = canAppraise;
+	public void setMyPay(String myPay) {
+		this.myPay = myPay;
 	}
 
 }
