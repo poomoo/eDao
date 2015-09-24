@@ -96,7 +96,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 				holder.textView_lable.setText("客户姓名:　");
 
 				holder.button_pay.setVisibility(View.VISIBLE);
-				holder.button_pay.setText("确认支付");
+				holder.button_pay.setText("确认收款");
 				holder.button_pay.setOnClickListener(listener);
 				holder.button_pay.setTag("confirm");
 			}
