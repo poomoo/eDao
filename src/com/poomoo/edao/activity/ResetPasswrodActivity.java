@@ -27,8 +27,7 @@ import android.widget.EditText;
  * @author 李苜菲
  * @date 2015-8-19 上午10:25:36
  */
-public class ResetPasswrodActivity extends BaseActivity implements
-		OnClickListener {
+public class ResetPasswrodActivity extends BaseActivity implements OnClickListener {
 	private EditText editText_password1, editText_password2;
 	private Button button_confirm;
 
@@ -44,7 +43,7 @@ public class ResetPasswrodActivity extends BaseActivity implements
 		setContentView(R.layout.activity_reset_password);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton=(eDaoClientApplication)getApplication();
+		applicaiton = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -77,8 +76,8 @@ public class ResetPasswrodActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-19上午10:27:53
+	 * @throws @date
+	 *             2015-8-19上午10:27:53
 	 */
 	private void confirm() {
 		// TODO 自动生成的方法存根
@@ -88,43 +87,40 @@ public class ResetPasswrodActivity extends BaseActivity implements
 			data.put("method", "10006");
 			data.put("userId", applicaiton.getUserId());
 			data.put("password", passWord1);
-			showProgressDialog();
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
+			showProgressDialog("密码重置中...");
+			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+				@Override
+				public void onFinish(final ResponseData responseData) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
 
 						@Override
-						public void onFinish(final ResponseData responseData) {
+						public void run() {
 							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									if (responseData.getRsCode() != 1) {
-										Utity.showToast(
-												getApplicationContext(),
-												responseData.getMsg());
-									} else {
-										finish();
-									}
-								}
-							});
-						}
-
-						@Override
-						public void onError(Exception e) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-								}
-							});
+							closeProgressDialog();
+							if (responseData.getRsCode() != 1) {
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+							} else {
+								finish();
+							}
 						}
 					});
+				}
+
+				@Override
+				public void onError(Exception e) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+						}
+					});
+				}
+			});
 		}
 	}
 
@@ -136,8 +132,8 @@ public class ResetPasswrodActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return boolean
-	 * @throws
-	 * @date 2015-8-13下午3:41:51
+	 * @throws @date
+	 *             2015-8-13下午3:41:51
 	 */
 	private boolean checkInput() {
 		passWord1 = editText_password1.getText().toString().trim();
@@ -165,42 +161,6 @@ public class ResetPasswrodActivity extends BaseActivity implements
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("注册中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
 	}
 
 }

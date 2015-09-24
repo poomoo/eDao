@@ -166,7 +166,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		case R.id.uploadpics_btn_upload:
 
 			if (checkInput()) {
-				showProgressDialog();
+				showProgressDialog("上传中...");
 				// test();
 				new Thread(new Runnable() {
 					@Override
@@ -416,41 +416,5 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			super.handleMessage(msg);
 		}
 	};
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("上传中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 
 }

@@ -27,8 +27,7 @@ import android.widget.TextView;
  * @date 2015-8-11 下午5:36:39
  */
 public class LoveFundActivity extends BaseActivity {
-	private TextView textView_username, textView_phonenum, textView_myown,
-			textView_total;
+	private TextView textView_username, textView_phonenum, textView_myown, textView_total;
 
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
@@ -64,94 +63,51 @@ public class LoveFundActivity extends BaseActivity {
 		data.put("method", "10016");
 		data.put("userId", application.getUserId());
 		showProgressDialog("查询中...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									finish();
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								} else {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData());
-										my_fund = result
-												.getString("myLoveFund");
-										total_fund = result
-												.getString("totalLoveFund");
-										textView_myown.setText("￥" + my_fund);
-										textView_total
-												.setText("￥" + total_fund);
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								}
-
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							finish();
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						} else {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData());
+								my_fund = result.getString("myLoveFund");
+								total_fund = result.getString("totalLoveFund");
+								textView_myown.setText("￥" + my_fund);
+								textView_total.setText("￥" + total_fund);
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-						});
-					}
+						}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								finish();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
-	}
+			}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog(String msg) {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage(msg);
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						finish();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 }

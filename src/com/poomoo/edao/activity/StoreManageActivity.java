@@ -186,7 +186,7 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 	private void confrim() {
 		// TODO 自动生成的方法存根
 		if (checkInput()) {
-			showProgressDialog();
+			showProgressDialog("上传中...");
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -412,39 +412,4 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		}
 	};
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("上传中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 }

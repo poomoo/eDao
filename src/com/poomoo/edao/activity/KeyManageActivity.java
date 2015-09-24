@@ -90,7 +90,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		adapter_apply = new KeyManage_Apply_ListViewAdapter(KeyManageActivity.this, list_apply);
 		adapter_used = new KeyManage_Used_ListViewAdapter(KeyManageActivity.this, list_used);
 		listView.setAdapter(adapter_apply);
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		getApplyData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
@@ -113,7 +113,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			textView_content.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
 			if (apply_isFirst) {
-				showProgressDialog();
+				showProgressDialog("请稍后...");
 				getApplyData();
 			}
 			listView.setAdapter(adapter_apply);
@@ -127,7 +127,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 			textView_content.setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
 			if (used_isFirst) {
-				showProgressDialog();
+				showProgressDialog("请稍后...");
 				getUsedData();
 			}
 			listView.setAdapter(adapter_used);
@@ -381,7 +381,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 					public void run() {
 						// TODO 自动生成的方法存根
 						if (responseData.getRsCode() == 1) {
-							showProgressDialog();
+							showProgressDialog("请稍后...");
 							apply_curPage = 1;
 							apply_pageSize = 10;
 							list_apply.clear();
@@ -410,39 +410,4 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("请稍后...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 }

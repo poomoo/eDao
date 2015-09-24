@@ -31,8 +31,7 @@ import android.widget.EditText;
  * @author 李苜菲
  * @date 2015-8-14 下午2:22:02
  */
-public class CertificationActivity extends BaseActivity implements
-		OnClickListener {
+public class CertificationActivity extends BaseActivity implements OnClickListener {
 	private EditText editText_realName, editText_idNum;
 	private Button button_next;
 
@@ -63,14 +62,10 @@ public class CertificationActivity extends BaseActivity implements
 
 		button_next = (Button) findViewById(R.id.registration_btn_confirm);
 
-		sharedPreferences_certificaitonInfo = getSharedPreferences(
-				"certificaitonInfo", Context.MODE_PRIVATE);
-		if (sharedPreferences_certificaitonInfo.getBoolean("uploadStatus",
-				false)) {
-			editText_realName.setText(sharedPreferences_certificaitonInfo
-					.getString("realName", ""));
-			editText_idNum.setText(sharedPreferences_certificaitonInfo
-					.getString("idCardNum", ""));
+		sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo", Context.MODE_PRIVATE);
+		if (sharedPreferences_certificaitonInfo.getBoolean("uploadStatus", false)) {
+			editText_realName.setText(sharedPreferences_certificaitonInfo.getString("realName", ""));
+			editText_idNum.setText(sharedPreferences_certificaitonInfo.getString("idCardNum", ""));
 			isUpload = true;
 		}
 
@@ -102,60 +97,54 @@ public class CertificationActivity extends BaseActivity implements
 		data.put("realName", realName);
 		data.put("idCardNum", idNum);
 
-		showProgressDialog();
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		showProgressDialog("认证中...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									box_YES = new MessageBox_YES(
-											CertificationActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									sharedPreferences_certificaitonInfo = getSharedPreferences(
-											"certificaitonInfo",
-											Context.MODE_PRIVATE);
-									editor = sharedPreferences_certificaitonInfo
-											.edit();
-									editor.putString("realName", realName);
-									editor.putString("idCardNum", idNum);
-									// editor.putString("bankProvince",
-									// province);
-									// editor.putString("bankCity", city);
-									// editor.putString("bankName", bank);
-									// editor.putString("bankCardId", account1);
-									editor.putBoolean("uploadStatus", true);
-									editor.commit();
-									openActivity(UploadPicsActivity.class);
-									CertificationActivity.this.finish();
-								}
-							}
-						});
-
-					}
-
-					@Override
-					public void onError(final Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								closeProgressDialog();
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							box_YES = new MessageBox_YES(CertificationActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo",
+									Context.MODE_PRIVATE);
+							editor = sharedPreferences_certificaitonInfo.edit();
+							editor.putString("realName", realName);
+							editor.putString("idCardNum", idNum);
+							// editor.putString("bankProvince",
+							// province);
+							// editor.putString("bankCity", city);
+							// editor.putString("bankName", bank);
+							// editor.putString("bankCardId", account1);
+							editor.putBoolean("uploadStatus", true);
+							editor.commit();
+							openActivity(UploadPicsActivity.class);
+							CertificationActivity.this.finish();
+						}
 					}
 				});
+
+			}
+
+			@Override
+			public void onError(final Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						closeProgressDialog();
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	private boolean checkInput() {
@@ -176,42 +165,6 @@ public class CertificationActivity extends BaseActivity implements
 		}
 
 		return true;
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("认证中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
 	}
 
 }

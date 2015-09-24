@@ -123,93 +123,51 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		data.put("payFee", money);
 
 		showProgressDialog("提交中...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() != 1) {
-									closeProgressDialog();
-									box_YES = new MessageBox_YES(
-											RechargeActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										orderId = result.getString("ordersId");
-										GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
-										getPrepayId.execute();
-									} catch (JSONException e) {
-										// TODO 自动生成的 catch 块
-										e.printStackTrace();
-									}
-								}
-
+						if (responseData.getRsCode() != 1) {
+							closeProgressDialog();
+							box_YES = new MessageBox_YES(RechargeActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								orderId = result.getString("ordersId");
+								GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
+								getPrepayId.execute();
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
 							}
-						});
-					}
+						}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+					}
+				});
+			}
+		});
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog(String msg) {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage(msg);
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
-
-	private class GetPrepayIdTask extends
-			AsyncTask<Void, Void, Map<String, String>> {
+	private class GetPrepayIdTask extends AsyncTask<Void, Void, Map<String, String>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -218,8 +176,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected void onPostExecute(Map<String, String> result) {
 			resultunifiedorder = result;
-			System.out.println("onPostExecute resultunifiedorder:"
-					+ resultunifiedorder);
+			System.out.println("onPostExecute resultunifiedorder:" + resultunifiedorder);
 			genPayReq();
 			sendPayReq();
 		}
@@ -232,8 +189,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected Map<String, String> doInBackground(Void... params) {
 			System.out.println("doInBackground");
-			String url = String
-					.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
+			String url = String.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
 			String entity = genProductArgs();
 
 			Log.e("orion", entity);
@@ -260,20 +216,16 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 
 			xml.append("</xml>");
 			List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
-			packageParams
-					.add(new BasicNameValuePair("appid", Constants.APP_ID));
+			packageParams.add(new BasicNameValuePair("appid", Constants.APP_ID));
 			packageParams.add(new BasicNameValuePair("body", "充值"));
-			packageParams
-					.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
+			packageParams.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-			packageParams.add(new BasicNameValuePair("notify_url",
-					eDaoClientConfig.wxReUrl));
+			packageParams.add(new BasicNameValuePair("notify_url", eDaoClientConfig.wxReUrl));
 			packageParams.add(new BasicNameValuePair("out_trade_no", orderId));
-			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity
-					.getLocalHostIp()));
+			packageParams.add(new BasicNameValuePair("spbill_create_ip", Utity.getLocalHostIp()));
 			Double fee = Double.parseDouble(money) * 100;
-			packageParams.add(new BasicNameValuePair("total_fee", String
-					.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
+			packageParams
+					.add(new BasicNameValuePair("total_fee", String.valueOf(Utity.subZeroAndDot(String.valueOf(fee)))));
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 
 			String sign = genPackageSign(packageParams);
@@ -303,8 +255,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String packageSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String packageSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", packageSign);
 		return packageSign;
 	}
@@ -321,8 +272,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 		sb.append("key=");
 		sb.append(Constants.API_KEY);
 
-		String appSign = MD5.getMessageDigest(sb.toString().getBytes())
-				.toUpperCase();
+		String appSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 		Log.e("orion", appSign);
 		return appSign;
 	}
@@ -379,8 +329,7 @@ public class RechargeActivity extends BaseActivity implements OnClickListener {
 
 	private String genNonceStr() {
 		Random random = new Random();
-		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000))
-				.getBytes());
+		return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
 	}
 
 	private long genTimeStamp() {

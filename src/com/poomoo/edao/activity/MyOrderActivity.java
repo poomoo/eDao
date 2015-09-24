@@ -16,19 +16,18 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.OrderListData;
 import com.poomoo.edao.model.ResponseData;
-import com.poomoo.edao.model.UserRebateData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.RadioButton;
 
 /**
@@ -48,7 +47,6 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private MyOrder_ListViewAdapter adapter;
 	private List<OrderListData> list;
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
 	private String status = "1";// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
 	private boolean isFirst = true;// 是否第一次加载
@@ -121,10 +119,12 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 
 	public class MyListener implements OnClickListener {
 		private int position = 0;
+		private Button currentBtn;
 
-		public MyListener(int position) {
+		public MyListener(int position, Button currentBtn) {
 			super();
 			this.position = position;
+			this.currentBtn = currentBtn;
 		}
 
 		@Override
@@ -132,6 +132,8 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 			// TODO Auto-generated method stub
 			if (v.getTag().equals("evaluate")) {
 				System.out.println("shopId:" + list.get(position).getShopId());
+				MyOrder_ListViewAdapter.currentBtn = this.currentBtn;
+
 				Bundle pBundle = new Bundle();
 				pBundle.putString("shopId", list.get(position).getShopId());
 				pBundle.putString("ordersId", list.get(position).getOrdersId());
@@ -146,7 +148,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private void getData(String status) {
 		// TODO 自动生成的方法存根
 		if (isFirst)
-			showProgressDialog();
+			showProgressDialog("请稍后...");
 		System.out.println("调用getData");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "50000");
@@ -212,6 +214,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void run() {
 						// TODO 自动生成的方法存根
+						System.out.println("onError");
 						closeProgressDialog();
 						listView.onRefreshComplete();
 						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
@@ -224,7 +227,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	public void confirm(int position) {
 		// TODO 自动生成的方法存根
 		System.out.println("调用confirm");
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "50000");
 		data.put("method", "50004");
@@ -297,42 +300,17 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1 && resultCode == 1) {
 			System.out.println("评价成功！");
+			MyOrder_ListViewAdapter.currentBtn.setText("已评价");
+			MyOrder_ListViewAdapter.currentBtn.setClickable(false);
+			MyOrder_ListViewAdapter.currentBtn.setBackgroundResource(R.drawable.style_btn_no_background);
 		}
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("请稍后...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		System.out.println("MyOrder销毁");
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 }

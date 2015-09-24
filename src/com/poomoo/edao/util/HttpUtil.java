@@ -12,6 +12,8 @@ import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 
 public class HttpUtil {
+	public static Thread thread = null;
+
 	/**
 	 * 
 	 * 
@@ -20,12 +22,11 @@ public class HttpUtil {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-7-24下午3:07:36
+	 * @throws @date
+	 *             2015-7-24下午3:07:36
 	 */
-	public static void SendPostRequest(final String json, final String address,
-			final HttpCallbackListener listener) {
-		new Thread(new Runnable() {
+	public static void SendPostRequest(final String json, final String address, final HttpCallbackListener listener) {
+		thread = new Thread(new Runnable() {
 			public void run() {
 				HttpURLConnection connection = null;
 				try {
@@ -41,13 +42,11 @@ public class HttpUtil {
 					// Post 请求不能使用缓存
 					connection.setUseCaches(false);
 					connection.setInstanceFollowRedirects(true);
-					connection.setRequestProperty("Content-Type",
-							"application/json");
+					connection.setRequestProperty("Content-Type", "application/json");
 					connection.connect();
 
 					if (json != null && json.trim().length() > 0) {
-						DataOutputStream out = new DataOutputStream(
-								connection.getOutputStream());
+						DataOutputStream out = new DataOutputStream(connection.getOutputStream());
 						byte[] content = json.toString().getBytes("utf-8");
 						out.write(content, 0, content.length);
 						out.flush();
@@ -55,8 +54,7 @@ public class HttpUtil {
 					}
 
 					InputStream inputStream = connection.getInputStream();
-					BufferedReader bufferedReader = new BufferedReader(
-							new InputStreamReader(inputStream));
+					BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
 					StringBuilder response = new StringBuilder();
 					String line = "";
@@ -67,10 +65,10 @@ public class HttpUtil {
 
 					if (listener != null) {
 						Gson gson = new Gson();
-						listener.onFinish(gson.fromJson(response.toString(),
-								ResponseData.class));
+						listener.onFinish(gson.fromJson(response.toString(), ResponseData.class));
 					}
 				} catch (Exception e) {
+					System.out.println("SendPostRequest异常:" + e.getMessage());
 					if (listener != null) {
 						listener.onError(e);
 					}
@@ -79,7 +77,9 @@ public class HttpUtil {
 						connection.disconnect();
 				}
 			}
-		}).start();
+		});
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	/**
@@ -90,11 +90,10 @@ public class HttpUtil {
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-7-24下午3:07:47
+	 * @throws @date
+	 *             2015-7-24下午3:07:47
 	 */
-	public static void SendGetRequest(final String json, final String address,
-			final HttpCallbackListener listener) {
+	public static void SendGetRequest(final String json, final String address, final HttpCallbackListener listener) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -105,13 +104,11 @@ public class HttpUtil {
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(eDaoClientConfig.timeout);
 					connection.setReadTimeout(eDaoClientConfig.timeout);
-					connection.setRequestProperty("Content-Type",
-							"application/json");
+					connection.setRequestProperty("Content-Type", "application/json");
 					connection.connect();
 					System.out.println("json:" + json);
 					if (json != null && json.trim().length() > 0) {
-						DataOutputStream out = new DataOutputStream(
-								connection.getOutputStream());
+						DataOutputStream out = new DataOutputStream(connection.getOutputStream());
 						byte[] content = json.toString().getBytes("utf-8");
 						out.write(content, 0, content.length);
 						out.flush();
@@ -119,8 +116,7 @@ public class HttpUtil {
 					}
 
 					InputStream in = connection.getInputStream();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(in));
+					BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 					StringBuilder response = new StringBuilder();
 					String line;
 					while ((line = reader.readLine()) != null) {
@@ -128,8 +124,7 @@ public class HttpUtil {
 					}
 					if (listener != null) {
 						Gson gson = new Gson();
-						listener.onFinish(gson.fromJson(response.toString(),
-								ResponseData.class));
+						listener.onFinish(gson.fromJson(response.toString(), ResponseData.class));
 					}
 				} catch (Exception e) {
 					if (listener != null) {

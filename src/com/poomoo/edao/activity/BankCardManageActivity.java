@@ -45,8 +45,7 @@ import android.widget.TextView;
  * @author 李苜菲
  * @date 2015-9-5 上午10:57:43
  */
-public class BankCardManageActivity extends BaseActivity implements
-		OnClickListener {
+public class BankCardManageActivity extends BaseActivity implements OnClickListener {
 	private EditText editText_accountnum, editText_accountnumagain;
 	private Button button_next;
 	private PopupWindow popupWindow;
@@ -63,10 +62,8 @@ public class BankCardManageActivity extends BaseActivity implements
 	private ListView listView;
 
 	private eDaoClientApplication application = null;
-	private final String[] strbank = new String[] { "中国建设银行", "中国工商银行",
-			"中国农业银行", "中国银行", "招商银行" };
-	private String province = "", province_id = "", city = "", city_id = "",
-			bank = "", account1 = "", account2 = "";
+	private final String[] strbank = new String[] { "中国建设银行", "中国工商银行", "中国农业银行", "中国银行", "招商银行" };
+	private String province = "", province_id = "", city = "", city_id = "", bank = "", account1 = "", account2 = "";
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
@@ -105,15 +102,12 @@ public class BankCardManageActivity extends BaseActivity implements
 		province = application.getCurProvince();
 		textView_province.setText(province);
 		list_province = Utity.getProvinceList();
-		province_id = list_province.get(
-				Utity.getProvincePosition(list_province, province))
-				.getProvince_id();
+		province_id = list_province.get(Utity.getProvincePosition(list_province, province)).getProvince_id();
 
 		city = application.getCurCity();
 		textView_city.setText(city);
 		list_city = Utity.getCityList(province_id);
-		city_id = list_city.get(Utity.getCityPosition(list_city, city))
-				.getCity_id();
+		city_id = list_city.get(Utity.getCityPosition(list_city, city)).getCity_id();
 
 		adapter_province = new ProvinceSpinnerAdapter(this, list_province);
 		adapter_city = new CitySpinnerAdapter(this, list_city);
@@ -134,16 +128,13 @@ public class BankCardManageActivity extends BaseActivity implements
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.bank_card_manage_layout_province:
-			showWindow_province(layout_province, listView, list_province,
-					textView_province, adapter_province);
+			showWindow_province(layout_province, listView, list_province, textView_province, adapter_province);
 			break;
 		case R.id.bank_card_manage_layout_city:
-			showWindow_city(layout_city, listView, list_city, textView_city,
-					adapter_city);
+			showWindow_city(layout_city, listView, list_city, textView_city, adapter_city);
 			break;
 		case R.id.bank_card_manage_layout_bank:
-			showWindow_bank(layout_bank, listView, list_bank, textView_bank,
-					adapter_bank);
+			showWindow_bank(layout_bank, listView, list_bank, textView_bank, adapter_bank);
 			break;
 		case R.id.bank_card_manage_btn_confirm:
 			if (checkInput())
@@ -163,47 +154,42 @@ public class BankCardManageActivity extends BaseActivity implements
 		data.put("bankName", bank);
 		data.put("bankCardId", Utity.trimAll(account1));
 
-		showProgressDialog();
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		showProgressDialog("认证中...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() != 1) {
-									box_YES = new MessageBox_YES(
-											BankCardManageActivity.this);
-									box_YES.showDialog(responseData.getMsg(),
-											null);
-								} else {
-									Utity.showToast(getApplication(),
-											responseData.getMsg());
-									finish();
-								}
-							}
-						});
-
-					}
-
-					@Override
-					public void onError(final Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								closeProgressDialog();
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-
-						});
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							box_YES = new MessageBox_YES(BankCardManageActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							Utity.showToast(getApplication(), responseData.getMsg());
+							finish();
+						}
 					}
 				});
+
+			}
+
+			@Override
+			public void onError(final Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						closeProgressDialog();
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	private boolean checkInput() {
@@ -245,14 +231,11 @@ public class BankCardManageActivity extends BaseActivity implements
 		return true;
 	}
 
-	public void showWindow_province(final LinearLayout spinnerlayout,
-			ListView listView, final ArrayList<ProvinceInfo> list,
-			final TextView text, ProvinceSpinnerAdapter adapter) {
+	public void showWindow_province(final LinearLayout spinnerlayout, ListView listView,
+			final ArrayList<ProvinceInfo> list, final TextView text, ProvinceSpinnerAdapter adapter) {
 
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -280,15 +263,13 @@ public class BankCardManageActivity extends BaseActivity implements
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).getProvince_name());// 设置所选的item作为下拉框的标题
 				province_id = list.get(arg2).getProvince_id();
 				list_city = Utity.getCityList(province_id);
 				textView_city.setText(list_city.get(0).getCity_name());
-				adapter_city = new CitySpinnerAdapter(
-						BankCardManageActivity.this, list_city);
+				adapter_city = new CitySpinnerAdapter(BankCardManageActivity.this, list_city);
 				// 弹框消失
 				popupWindow.dismiss();
 				popupWindow = null;
@@ -297,14 +278,11 @@ public class BankCardManageActivity extends BaseActivity implements
 
 	}
 
-	public void showWindow_city(final LinearLayout spinnerlayout,
-			ListView listView, final ArrayList<CityInfo> list,
+	public void showWindow_city(final LinearLayout spinnerlayout, ListView listView, final ArrayList<CityInfo> list,
 			final TextView text, CitySpinnerAdapter adapter) {
 
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -332,8 +310,7 @@ public class BankCardManageActivity extends BaseActivity implements
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).getCity_name());// 设置所选的item作为下拉框的标题
 				city_id = list.get(arg2).getCity_id();
@@ -345,14 +322,11 @@ public class BankCardManageActivity extends BaseActivity implements
 
 	}
 
-	public void showWindow_bank(final LinearLayout spinnerlayout,
-			ListView listView, final List<HashMap<String, String>> list,
-			final TextView text, ChannelSpinnerAdapter adapter) {
+	public void showWindow_bank(final LinearLayout spinnerlayout, ListView listView,
+			final List<HashMap<String, String>> list, final TextView text, ChannelSpinnerAdapter adapter) {
 
-		layout = (LinearLayout) LayoutInflater.from(this).inflate(
-				R.layout.myspinner_dropdown, null);
-		listView = (ListView) layout
-				.findViewById(R.id.myspinner_dropdown_listView);
+		layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.myspinner_dropdown, null);
+		listView = (ListView) layout.findViewById(R.id.myspinner_dropdown_listView);
 		listView.setAdapter(adapter);
 		popupWindow = new PopupWindow(spinnerlayout);
 		// 设置弹框的宽度为布局文件的宽
@@ -380,8 +354,7 @@ public class BankCardManageActivity extends BaseActivity implements
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				text.setText(list.get(arg2).get("name"));// 设置所选的item作为下拉框的标题
 				// 弹框消失
@@ -390,42 +363,6 @@ public class BankCardManageActivity extends BaseActivity implements
 			}
 		});
 
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("认证中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
 	}
 
 }

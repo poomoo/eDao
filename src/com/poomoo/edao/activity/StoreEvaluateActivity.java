@@ -118,7 +118,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 			}
 		});
 
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		getData();
 
 	}
@@ -186,7 +186,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 
 	private void confirm() {
 		// TODO 自动生成的方法存根
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
 		data.put("method", "30005");
@@ -235,42 +235,6 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		textView_distance.setText("");
 		textView_remark.setText("");
 		ImageLoader.getInstance().displayImage(data.getPictures(), imageView_pic);
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("请稍后...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
 	}
 
 }

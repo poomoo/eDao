@@ -66,10 +66,10 @@ public class EvaluationListActivity extends BaseActivity {
 		textView_score.setText(String.valueOf(score));
 		ratingBar.setRating(score);
 
-		list=new ArrayList<StoreEvaluationData>();
+		list = new ArrayList<StoreEvaluationData>();
 		adapter = new Store_Evaluation_ListViewAdapter(this, list);
 		listView.setAdapter(adapter);
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		getData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
@@ -142,39 +142,4 @@ public class EvaluationListActivity extends BaseActivity {
 		});
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("请稍后...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 }

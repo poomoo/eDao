@@ -50,6 +50,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	public static Handler handler = null;
 
 	private NetWorkConnectionChangeReceiver myReceiver = null;
+	private long exitTime = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -236,18 +237,6 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 	}
 
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO 自动生成的方法存根
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (sideBar.isOpen())
-				sideBar.closeMenu();
-			else
-				finish();
-		}
-		return true;
-	}
-
-	@Override
 	protected void onRestart() {
 		// TODO 自动生成的方法存根
 		super.onRestart();
@@ -279,5 +268,27 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		this.unregisterReceiver(myReceiver);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO 自动生成的方法存根
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (sideBar.isOpen())
+				sideBar.closeMenu();
+			else
+				exitApp();
+		}
+		return true;
+	}
+
+	private void exitApp() {
+		// 判断2次点击事件时间
+		if ((System.currentTimeMillis() - exitTime) > 2000) {
+			Utity.showToast(getApplicationContext(), "再按一次退出程序");
+			exitTime = System.currentTimeMillis();
+		} else {
+			finish();
+		}
 	}
 }

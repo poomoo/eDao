@@ -29,6 +29,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 	private MyOrderActivity myOrderActivity;
 	private eDaoClientApplication application = null;
 	public static String type = "1";// 交易类型 1-待处理 2-已完成
+	public static Button currentBtn;
 
 	public MyOrder_ListViewAdapter(MyOrderActivity activity, List<OrderListData> list) {
 		super();
@@ -60,7 +61,6 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
 		ViewHolder holder = null;
-		MyListener listener = myOrderActivity.new MyListener(position);
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_listview_order_list, parent, false);
 			holder = new ViewHolder();
@@ -76,36 +76,45 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		MyListener listener = myOrderActivity.new MyListener(position, holder.button_pay);
+
 		holder.textView_order_id.setText(list.get(position).getOrdersId());
 		holder.textView_shop_name.setText(list.get(position).getShopName());
 		holder.textView_order_money.setText(list.get(position).getPayFee());
 		holder.textView_order_state.setText(list.get(position).getStatus());
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
 		holder.textView_order_remark.setText(list.get(position).getRemark());
-		// 已完成
-		if (type.equals("2") && list.get(position).getCanAppraise().equals("true")) {
-			holder.button_pay.setVisibility(View.VISIBLE);
-			holder.button_pay.setText("去评价");
-			holder.button_pay.setOnClickListener(listener);
-			holder.button_pay.setTag("evaluate");
-		}
-		System.out.println("getview type:" + application.getType());
-		// 客户
-		if (application.getType().equals("1")) {
-			holder.textView_lable.setText("商户名称:　");
-		}
-		// 商户
-		else {
-			if (list.get(position).getCanAppraise().equals("true"))
+
+		// 待处理
+		if (type.equals("1")) {
+			// 客户角色
+			if (list.get(position).getCanAppraise().equals("true")) {
 				holder.textView_lable.setText("商户名称:　");
-			else
+			}
+			// 商户角色
+			else {
 				holder.textView_lable.setText("客户姓名:　");
-			// 待处理
-			if (type.equals("1")) {
+
 				holder.button_pay.setVisibility(View.VISIBLE);
 				holder.button_pay.setText("确认支付");
 				holder.button_pay.setOnClickListener(listener);
 				holder.button_pay.setTag("confirm");
+			}
+		}
+		// 已完成
+		if (type.equals("2")) {
+			// 客户角色
+			if (list.get(position).getCanAppraise().equals("true")) {
+				holder.textView_lable.setText("商户名称:　");
+
+				holder.button_pay.setVisibility(View.VISIBLE);
+				holder.button_pay.setText("去评价");
+				holder.button_pay.setOnClickListener(listener);
+				holder.button_pay.setTag("evaluate");
+			}
+			// 商户角色
+			else {
+				holder.textView_lable.setText("客户姓名:　");
 			}
 		}
 

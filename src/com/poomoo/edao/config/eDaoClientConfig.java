@@ -17,7 +17,7 @@ public class eDaoClientConfig {
 	public static final String uploadStoreurl = BaseLocalUrl + "shop/add.json";
 
 	// 时间
-	public static final int timeout = 1 * 30 * 1000;// 网络通讯超时
+	public static final int timeout = 1 * 5 * 1000;// 网络通讯超时
 	public static final int advTime = 1 * 5 * 1000;// 广告轮播时间
 
 	/* 提示信息 */

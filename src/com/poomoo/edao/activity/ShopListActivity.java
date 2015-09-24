@@ -98,7 +98,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 			list = new ArrayList<StoreData>();
 		}
 
-		showProgressDialog();
+		showProgressDialog("请稍后...");
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		mLocationClient.registerLocationListener(myListener);
 		initLocation();
@@ -277,42 +277,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 			isFresh = false;
 			getData();
 		}
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("请稍后...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws @date
-	 *             2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
 	}
 
 	@Override

@@ -41,10 +41,8 @@ import android.widget.TextView;
  * @author 李苜菲
  * @date 2015-7-31 上午10:09:29
  */
-public class RegistrationActivity extends BaseActivity implements
-		OnClickListener, OnFocusChangeListener {
-	private EditText editText_phone, editText_identity_code,
-			editText_password1, editText_password2;
+public class RegistrationActivity extends BaseActivity implements OnClickListener, OnFocusChangeListener {
+	private EditText editText_phone, editText_identity_code, editText_password1, editText_password2;
 	private TextView textView_isUsed;
 	private Button button_identity_code, button_regist;
 
@@ -107,13 +105,12 @@ public class RegistrationActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-13下午3:19:34
+	 * @throws @date
+	 *             2015-8-13下午3:19:34
 	 */
 	private void sendSms() {
 		// TODO 自动生成的方法存根
-		TimeCountUtil timeCountUtil = new TimeCountUtil(
-				RegistrationActivity.this, 60000, 1000, button_identity_code);
+		TimeCountUtil timeCountUtil = new TimeCountUtil(RegistrationActivity.this, 60000, 1000, button_identity_code);
 		timeCountUtil.start();
 
 		Map<String, String> data = new HashMap<String, String>();
@@ -121,40 +118,36 @@ public class RegistrationActivity extends BaseActivity implements
 		data.put("method", "10003");
 		data.put("tel", tel);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								if (responseData.getRsCode() == 1)
-									Utity.showToast(getApplicationContext(),
-											"验证码发送成功");
-								else
-									Utity.showToast(getApplicationContext(),
-											"验证码发送失败");
-							}
-						});
-					}
-
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								Utity.showToast(getApplicationContext(),
-										"请检查网络");
-							}
-						});
+						if (responseData.getRsCode() == 1)
+							Utity.showToast(getApplicationContext(), "验证码发送成功");
+						else
+							Utity.showToast(getApplicationContext(), "验证码发送失败");
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), "请检查网络");
+					}
+				});
+			}
+		});
 	}
 
 	/**
@@ -165,8 +158,8 @@ public class RegistrationActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-13下午2:35:53
+	 * @throws @date
+	 *             2015-8-13下午2:35:53
 	 */
 	private void receiveSms() {
 		filter = new IntentFilter();
@@ -209,8 +202,8 @@ public class RegistrationActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-13下午3:20:02
+	 * @throws @date
+	 *             2015-8-13下午3:20:02
 	 */
 	private void regist() {
 		// TODO 自动生成的方法存根
@@ -221,52 +214,44 @@ public class RegistrationActivity extends BaseActivity implements
 			data.put("tel", tel);
 			data.put("code", identyNum);
 			data.put("password", passWord1);
-			TelephonyManager tm = (TelephonyManager) this
-					.getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
 			data.put("channelId", tm.getDeviceId());// 设备IMEI
-			showProgressDialog();
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
+			showProgressDialog("注册中...");
+			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+				@Override
+				public void onFinish(final ResponseData responseData) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
 
 						@Override
-						public void onFinish(final ResponseData responseData) {
+						public void run() {
 							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-									if (responseData.getRsCode() != 1) {
-										Utity.showToast(
-												getApplicationContext(),
-												responseData.getMsg());
-									} else {
-										Utity.showToast(
-												getApplicationContext(),
-												responseData.getMsg());
-										startActivity(new Intent(
-												RegistrationActivity.this,
-												LoginActivity.class));
-										finish();
-									}
-								}
-							});
-						}
-
-						@Override
-						public void onError(Exception e) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									closeProgressDialog();
-								}
-							});
+							closeProgressDialog();
+							if (responseData.getRsCode() != 1) {
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+							} else {
+								Utity.showToast(getApplicationContext(), responseData.getMsg());
+								startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+								finish();
+							}
 						}
 					});
+				}
+
+				@Override
+				public void onError(Exception e) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							closeProgressDialog();
+						}
+					});
+				}
+			});
 		}
 	}
 
@@ -278,8 +263,8 @@ public class RegistrationActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return boolean
-	 * @throws
-	 * @date 2015-8-13下午3:41:51
+	 * @throws @date
+	 *             2015-8-13下午3:41:51
 	 */
 	private boolean checkInput() {
 		tel = editText_phone.getText().toString().trim();
@@ -349,44 +334,40 @@ public class RegistrationActivity extends BaseActivity implements
 			data.put("method", "10002");
 			data.put("tel", tel);
 
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-					new HttpCallbackListener() {
+			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
+				@Override
+				public void onFinish(final ResponseData responseData) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
 						@Override
-						public void onFinish(final ResponseData responseData) {
+						public void run() {
 							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									if (responseData.getRsCode() == 1) {
-										button_identity_code
-												.setBackgroundResource(R.drawable.style_identy_button_yes_frame);
-										button_identity_code.setTextColor(Color
-												.parseColor("#0079ff"));
-										button_identity_code.setClickable(true);
-										textView_isUsed.setText("可以使用");
-									} else {
-										textView_isUsed.setText("*已注册");
-									}
-								}
-							});
-						}
-
-						@Override
-						public void onError(Exception e) {
-							// TODO 自动生成的方法存根
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO 自动生成的方法存根
-									Utity.showToast(getApplicationContext(),
-											"手机号验证失败");
-								}
-							});
+							if (responseData.getRsCode() == 1) {
+								button_identity_code.setBackgroundResource(R.drawable.style_identy_button_yes_frame);
+								button_identity_code.setTextColor(Color.parseColor("#0079ff"));
+								button_identity_code.setClickable(true);
+								textView_isUsed.setText("可以使用");
+							} else {
+								textView_isUsed.setText("*已注册");
+							}
 						}
 					});
+				}
+
+				@Override
+				public void onError(Exception e) {
+					// TODO 自动生成的方法存根
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							Utity.showToast(getApplicationContext(), "手机号验证失败");
+						}
+					});
+				}
+			});
 
 		}
 	}
@@ -405,8 +386,8 @@ public class RegistrationActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws
-	 * @date 2015-8-13下午2:32:45
+	 * @throws @date
+	 *             2015-8-13下午2:32:45
 	 */
 
 	private String patternCode(String patternContent) {
@@ -424,55 +405,18 @@ public class RegistrationActivity extends BaseActivity implements
 	/**
 	 * 
 	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("注册中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
-
-	/**
-	 * 
-	 * 
 	 * @Title: getSMSBody
 	 * @Description: TODO 获取短信内容
 	 * @author 李苜菲
 	 * @return
 	 * @return String
-	 * @throws
-	 * @date 2015-8-13下午5:18:39
+	 * @throws @date
+	 *             2015-8-13下午5:18:39
 	 */
 	public String getSMSBody() {
 		Uri uri = Uri.parse("content://sms");
 		ContentResolver cr = RegistrationActivity.this.getContentResolver();
-		Cursor cursor = cr.query(uri, null, "address=? and type =1 and read=0",
-				new String[] { address }, null);
+		Cursor cursor = cr.query(uri, null, "address=? and type =1 and read=0", new String[] { address }, null);
 		String smsbody = cursor.getString(cursor.getColumnIndex("body"));
 		return smsbody;
 	}

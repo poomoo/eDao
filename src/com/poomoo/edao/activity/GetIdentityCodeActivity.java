@@ -251,7 +251,7 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 			data.put("method", "10004");
 			data.put("tel", tel);
 			data.put("code", identyNum);
-			showProgressDialog();
+			showProgressDialog("注册中...");
 			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
 					new HttpCallbackListener() {
 
@@ -357,41 +357,6 @@ public class GetIdentityCodeActivity extends BaseActivity implements
 		return null;
 	}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog() {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("注册中...");
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
 
 	/**
 	 * 

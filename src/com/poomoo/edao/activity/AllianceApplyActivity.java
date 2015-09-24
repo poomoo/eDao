@@ -36,19 +36,16 @@ import android.widget.TextView;
  * @author 李苜菲
  * @date 2015年7月30日 下午11:23:58
  */
-public class AllianceApplyActivity extends BaseActivity implements
-		OnClickListener {
-	private TextView textView_username, textView_phonenum, textView_zone,
-			textView_money, textView_merchant_name;
+public class AllianceApplyActivity extends BaseActivity implements OnClickListener {
+	private TextView textView_username, textView_phonenum, textView_zone, textView_money, textView_merchant_name;
 	private EditText editText_merchant_num;
 	private LinearLayout layout_zone;
 	private Button button_confirm;
 
 	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
-	private String zone = "", merchant_num = "", merchant_name = "",
-			referrerUserId = "", referrerName = "", curProvince = "",
-			curCity = "", curArea = "", money = "";
+	private String zone = "", merchant_num = "", merchant_name = "", referrerUserId = "", referrerName = "",
+			curProvince = "", curCity = "", curArea = "", money = "";
 	private Select_City_PopupWindow select_City_PopupWindow;
 	private eDaoClientApplication application = null;
 
@@ -126,12 +123,10 @@ public class AllianceApplyActivity extends BaseActivity implements
 		CityPicker.city_name = curCity;
 		CityPicker.area_name = curArea;
 		// 实例化SelectPicPopupWindow
-		select_City_PopupWindow = new Select_City_PopupWindow(
-				AllianceApplyActivity.this, itemsOnClick);
+		select_City_PopupWindow = new Select_City_PopupWindow(AllianceApplyActivity.this, itemsOnClick);
 		// 显示窗口
-		select_City_PopupWindow.showAtLocation(AllianceApplyActivity.this
-				.findViewById(R.id.activity_alliance_layout), Gravity.CENTER,
-				0, 0); // 设置layout在PopupWindow中显示的位置
+		select_City_PopupWindow.showAtLocation(AllianceApplyActivity.this.findViewById(R.id.activity_alliance_layout),
+				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
 	}
 
 	// 为弹出窗口实现监听类
@@ -156,8 +151,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-17下午4:54:42
+	 * @throws @date
+	 *             2015-8-17下午4:54:42
 	 */
 	private void getMoney() {
 		// TODO 自动生成的方法存根
@@ -168,51 +163,46 @@ public class AllianceApplyActivity extends BaseActivity implements
 		data.put("method", "20001");
 		data.put("joinType", "1");
 		data.put("areaId", CityPicker.getArea_id());
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										money = result.getString("price");
-										textView_money.setText(money);
-									} catch (JSONException e) {
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								money = result.getString("price");
+								textView_money.setText(money);
+							} catch (JSONException e) {
 							}
-						});
-					}
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 	/**
@@ -223,8 +213,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return boolean
-	 * @throws
-	 * @date 2015-8-17下午4:52:44
+	 * @throws @date
+	 *             2015-8-17下午4:52:44
 	 */
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
@@ -263,8 +253,8 @@ public class AllianceApplyActivity extends BaseActivity implements
 	 * @author 李苜菲
 	 * @return
 	 * @return void
-	 * @throws
-	 * @date 2015-8-17下午4:52:19
+	 * @throws @date
+	 *             2015-8-17下午4:52:19
 	 */
 	private void getMerchantName() {
 		merchant_num = editText_merchant_num.getText().toString().trim();
@@ -273,97 +263,53 @@ public class AllianceApplyActivity extends BaseActivity implements
 			return;
 		}
 		progressDialog = null;
-		showProgressDialog("查询服务商户名");
+		showProgressDialog("查询服务商户名...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20002");
 		data.put("referrerTel", merchant_num);
 
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url,
-				new HttpCallbackListener() {
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onFinish(final ResponseData responseData) {
+					public void run() {
 						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								if (responseData.getRsCode() == 1) {
-									try {
-										JSONObject result = new JSONObject(
-												responseData.getJsonData()
-														.toString());
-										referrerUserId = result
-												.getString("referrerUserId");
-										referrerName = result
-												.getString("referrerName");
-										textView_merchant_name
-												.setText(referrerName);
-									} catch (JSONException e) {
-									}
-								} else {
-									Utity.showToast(getApplicationContext(),
-											responseData.getMsg());
-								}
-
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								referrerUserId = result.getString("referrerUserId");
+								referrerName = result.getString("referrerName");
+								textView_merchant_name.setText(referrerName);
+							} catch (JSONException e) {
 							}
-						});
-					}
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
 
-					@Override
-					public void onError(Exception e) {
-						// TODO 自动生成的方法存根
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO 自动生成的方法存根
-								closeProgressDialog();
-								Utity.showToast(getApplicationContext(),
-										eDaoClientConfig.checkNet);
-							}
-						});
 					}
 				});
-	}
+			}
 
-	/**
-	 * 
-	 * 
-	 * @Title: showProgressDialog
-	 * @Description: TODO 显示进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:23:53
-	 */
-	private void showProgressDialog(String msg) {
-		if (progressDialog == null) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage(msg);
-			progressDialog.setCanceledOnTouchOutside(false);
-		}
-		progressDialog.show();
-	}
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
 
-	/**
-	 * 
-	 * 
-	 * @Title: closeProgressDialog
-	 * @Description: TODO 关闭进度对话框
-	 * @author 李苜菲
-	 * @return
-	 * @return void
-	 * @throws
-	 * @date 2015-8-12下午1:24:43
-	 */
-	private void closeProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+				});
+			}
+		});
 	}
 
 }
