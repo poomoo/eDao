@@ -90,8 +90,9 @@ public class Get_UserInfo_Service extends Service {
 				if (count > 0) {
 					String msg = e.getMessage();
 					System.out.println("getUserInfoData onError:" + msg);
-					if (!msg.contains("No address associated with hostname") && !msg.contains("ECONNREFUSED ")
-							&& !TextUtils.isEmpty(application.getUserId()) && !msg.contains("failed to connect"))
+					if (!TextUtils.isEmpty(msg) && !msg.contains("No address associated with hostname")
+							&& !msg.contains("ECONNREFUSED ") && !TextUtils.isEmpty(application.getUserId())
+							&& !msg.contains("failed to connect"))
 						getUserInfoData();
 				} else
 					stopSelf();
