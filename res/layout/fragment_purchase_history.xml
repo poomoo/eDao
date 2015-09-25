@@ -18,8 +18,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="商户"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textColor="@color/green"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:layout_width="0dp"
@@ -27,8 +27,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="金额"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textColor="@color/green"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:layout_width="0dp"
@@ -36,8 +36,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="时间"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textColor="@color/green"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
             android:layout_width="0dp"
@@ -45,8 +45,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="状态"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/textsize16" />
+            android:textColor="@color/green"
+            android:textSize="@dimen/textsize14" />
     </LinearLayout>
 
     <TextView

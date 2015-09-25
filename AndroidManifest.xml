@@ -84,6 +84,7 @@
         <activity android:name=".activity.PubActivity" />
         <activity android:name=".activity.PurchaseAndGetDetailActivity" />
         <activity android:name=".activity.RebateActivity" />
+        <activity android:name=".activity.RepayOperateActivity" />
         <activity android:name=".activity.RechargeActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ResetPasswrodActivity" />

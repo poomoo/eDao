@@ -162,6 +162,9 @@ public class ReturnNavigation extends Fragment {
 		case "OperateManageActivity":
 			textView_title.setText("经营管理");
 			break;
+		case "RepayManageActivity":
+			textView_title.setText("报酬管理");
+			break;
 		case "StoreManageActivity":
 			textView_title.setText("店铺管理");
 			break;
