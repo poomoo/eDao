@@ -99,7 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="XXX"
-                            android:textColor="@color/blue"
+                            android:textColor="#1995EB"
                             android:textSize="@dimen/textsize14" />
                     </LinearLayout>
 
