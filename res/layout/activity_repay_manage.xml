@@ -17,14 +17,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/margin15" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/repay_textView_year"
@@ -38,16 +46,15 @@
                 android:textSize="@dimen/textsize16" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="@dimen/margin20"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/repay_textView_year_money"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="￥201576700"
+                android:text="￥0"
                 android:textColor="#10a553"
                 android:textSize="@dimen/textsize16" />
 
@@ -67,6 +74,11 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
                 android:id="@+id/repay_textView_month"
                 android:layout_width="@dimen/margin90"
                 android:layout_height="wrap_content"
@@ -78,16 +90,15 @@
                 android:textSize="@dimen/textsize16" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="@dimen/margin20"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/repay_textView_month_money"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="￥20540.00"
+                android:text="￥0"
                 android:textColor="#00a3fe"
                 android:textSize="@dimen/textsize16" />
 
@@ -107,6 +118,11 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
                 android:id="@+id/repay_textView_day"
                 android:layout_width="@dimen/margin90"
                 android:layout_height="wrap_content"
@@ -118,16 +134,15 @@
                 android:textSize="@dimen/textsize16" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="@dimen/margin20"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/repay_textView_day_money"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="￥7050.00"
+                android:text="￥0"
                 android:textColor="#ff8700"
                 android:textSize="@dimen/textsize16" />
 
@@ -137,5 +152,10 @@
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
