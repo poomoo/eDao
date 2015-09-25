@@ -66,7 +66,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin20" />
+            android:layout_height="@dimen/margin40" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,7 +110,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin20" />
+            android:layout_height="@dimen/margin40" />
 
         <LinearLayout
             android:layout_width="match_parent"
