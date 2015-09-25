@@ -20,6 +20,7 @@
         android:paddingRight="@dimen/margin10"
         android:paddingTop="@dimen/margin10"
         android:text="贵阳特产水果"
+        android:textColor="@color/green"
         android:textSize="@dimen/textsize20" />
 
     <LinearLayout
@@ -98,6 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="XXX"
+                            android:textColor="@color/blue"
                             android:textSize="@dimen/textsize14" />
                     </LinearLayout>
 

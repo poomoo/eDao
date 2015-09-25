@@ -1,13 +1,10 @@
 package com.poomoo.edao.activity;
 
-import java.util.ArrayList;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
 import com.poomoo.edao.model.StoreData;
-import com.poomoo.edao.model.StoreEvaluationData;
 
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
