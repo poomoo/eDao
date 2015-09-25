@@ -62,7 +62,7 @@ public class KeyAndOperateActivity extends BaseActivity implements OnClickListen
 			finish();
 			break;
 		case R.id.key_and_operate_layout_repay_manage:
-			openActivity(RepayOperateActivity.class);
+			openActivity(RepayManageActivity.class);
 			finish();
 			break;
 		}

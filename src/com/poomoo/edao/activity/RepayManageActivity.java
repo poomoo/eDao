@@ -17,7 +17,7 @@ import android.widget.TextView;
  * @author 李苜菲
  * @date 2015年9月24日 下午5:10:36
  */
-public class RepayOperateActivity extends BaseActivity implements OnClickListener {
+public class RepayManageActivity extends BaseActivity implements OnClickListener {
 	private TextView textView_username, textView_phonenum, textView_year, textView_month, textView_day,
 			textView_year_money, textView_month_money, textView_day_money;
 	private eDaoClientApplication application = null;
