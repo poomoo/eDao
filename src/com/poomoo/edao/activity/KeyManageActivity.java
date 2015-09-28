@@ -182,8 +182,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 									apply_isFirst = false;
 								}
 								adapter_apply.notifyDataSetChanged();
-								apply_curPage += 10;
-								apply_pageSize += 10;
+								apply_curPage += 1;
 
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
@@ -251,9 +250,8 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 									used_isFirst = false;
 								}
 								adapter_used.notifyDataSetChanged();
-								used_curPage += 10;
-								used_pageSize += 10;
-
+								used_curPage += 1;
+						
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();

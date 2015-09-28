@@ -117,9 +117,7 @@ public class Fragment_Payed extends Fragment {
 									}
 									adapter.notifyDataSetChanged();
 
-									curPage += 10;
-									pageSize += 10;
-
+									curPage += 1;
 								} catch (JSONException e) {
 									// TODO 自动生成的 catch 块
 									e.printStackTrace();

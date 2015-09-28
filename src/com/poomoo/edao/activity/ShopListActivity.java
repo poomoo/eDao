@@ -191,8 +191,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 									list.add(shopList);
 								}
 								adapter.notifyDataSetChanged();
-								curPage += 10;
-								pageSize += 10;
+								curPage += 1;
 
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
