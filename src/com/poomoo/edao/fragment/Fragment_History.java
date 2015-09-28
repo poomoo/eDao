@@ -29,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.TextView;
 
 public class Fragment_History extends Fragment {
 	private View noDataView;

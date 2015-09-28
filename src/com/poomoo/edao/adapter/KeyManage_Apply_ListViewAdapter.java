@@ -6,7 +6,6 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.activity.KeyManageActivity;
 import com.poomoo.edao.activity.KeyManageActivity.MyListener;
 import com.poomoo.edao.model.KeyManageData;
-import com.poomoo.edao.util.Utity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
