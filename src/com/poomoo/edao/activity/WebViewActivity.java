@@ -39,11 +39,11 @@ public class WebViewActivity extends BaseActivity {
 		webView = (WebView) findViewById(R.id.webView);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		// webView.loadUrl("file:///android_asset/123.html");
+		// webView.loadUrl("file:///android_asset/test.html");
 		// webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		// try {
-		// webView.loadData(
-		// new String(InputStreamToByte(getAssets().open("123.html"))),
+		// webView.loadData(new
+		// String(InputStreamToByte(getAssets().open("test.html"))),
 		// "text/html", "UTF-8");
 		// } catch (IOException e) {
 		// // TODO 自动生成的 catch 块
@@ -81,7 +81,11 @@ public class WebViewActivity extends BaseActivity {
 							try {
 								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 								content = result.getString("content");
-								webView.loadData(content, "text/html", "UTF-8");
+								System.out.println("content:" + content);
+								webView.getSettings().setDefaultTextEncodingName("UTF-8");
+								// webView.loadData(content, "text/html",
+								// "UTF-8");
+								webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
