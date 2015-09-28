@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.edao.R;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
@@ -46,6 +47,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 	private Gson gson = new Gson();
 	private ProgressDialog progressDialog = null;
 	private int num = 100;
+	private eDaoClientApplication application = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		shopId = getIntent().getStringExtra("shopId");
 		ordersId = getIntent().getStringExtra("ordersId");
+		application = (eDaoClientApplication) getApplication();
 		init();
 	}
 
@@ -149,6 +152,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		data.put("bizName", "30000");
 		data.put("method", "30004");
 		data.put("shopId", shopId);
+		data.put("userId", application);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
 			@Override
