@@ -25,7 +25,7 @@ import android.widget.TextView;
 /**
  * 
  * @ClassName RepayOperateActivity
- * @Description TODO 报酬管理F
+ * @Description TODO 报酬管理
  * @author 李苜菲
  * @date 2015年9月24日 下午5:10:36
  */
@@ -84,7 +84,8 @@ public class RepayManageActivity extends BaseActivity implements OnClickListener
 	private void pickDate() {
 		final DatePickerDialog mDialog = new DatePickerDialog(this, null, cal.get(Calendar.YEAR),
 				cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-
+		DatePicker dp = mDialog.getDatePicker();
+		dp.setMaxDate(cal.getTime().getTime());
 		// 手动设置按钮
 		mDialog.setButton(DialogInterface.BUTTON_POSITIVE, "完成", new DialogInterface.OnClickListener() {
 			@Override
