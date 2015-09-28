@@ -74,6 +74,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 		button_payed.setOnClickListener(this);
 		button_delete.setOnClickListener(this);
 
+		MyOrder_ListViewAdapter.type = "1";
 		list = new ArrayList<OrderListData>();
 		adapter = new MyOrder_ListViewAdapter(this, list);
 		listView.setAdapter(adapter);
