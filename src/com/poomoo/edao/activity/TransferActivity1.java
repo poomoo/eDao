@@ -56,7 +56,6 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	private final static int TWODIMENCODE = 2;
 
 	private String name = "", phoneNum = "", userId = "", userName = "", joinType = "";
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 
 	@Override
@@ -178,7 +177,6 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 	}
 
 	private void getMerchantName() {
-		progressDialog = null;
 		showProgressDialog("请稍后...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
@@ -207,6 +205,8 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 									button_buy.setBackgroundResource(R.drawable.style_btn_no_background);
 									button_buy.setClickable(false);
 								} else {
+									button_transfer.setBackgroundResource(R.drawable.style_btn_yes_background_blue);
+
 									button_buy.setTextColor(color.white);
 									button_buy.setBackgroundResource(R.drawable.style_btn_yes_background);
 									button_buy.setClickable(true);
