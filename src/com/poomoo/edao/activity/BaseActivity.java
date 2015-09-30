@@ -203,7 +203,10 @@ public class BaseActivity extends Activity {
 	 *             2015-8-12下午1:24:43
 	 */
 	protected void closeProgressDialog() {
-		if (progressDialog != null)
+		if (progressDialog != null) {
 			progressDialog.dismiss();
+			progressDialog = null;
+		}
+
 	}
 }

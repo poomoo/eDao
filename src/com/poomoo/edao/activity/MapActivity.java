@@ -79,7 +79,7 @@ public class MapActivity extends BaseActivity
 
 	private ImageView imageView_center_dot, imageView_mylocation;
 	// 图层最大级别
-	private final float maxRoom = 18;
+	private final float maxRoom = 14;
 	// 当前图层中心点经纬度
 	private LatLng curCenterLatLng = null;
 	private OverlayManager overlayManager;
@@ -91,7 +91,6 @@ public class MapActivity extends BaseActivity
 	private double mCurrentLongitude;
 	private String curCity = "定位中...";
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 	private List<StoreData> list;
 
 	@Override
@@ -116,6 +115,7 @@ public class MapActivity extends BaseActivity
 		mBaiduMap = mMapView.getMap();
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(maxRoom);
 		mBaiduMap.setMapStatus(msu);
+		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
 	}
@@ -152,52 +152,6 @@ public class MapActivity extends BaseActivity
 			bundle.putSerializable("info", info);
 			marker.setExtraInfo(bundle);
 		}
-		// overlayManager = new OverlayManager(mBaiduMap) {
-		//
-		// @Override
-		// public boolean onMarkerClick(Marker marker) {
-		// // TODO Auto-generated method stub
-		// // 将marker所在的经纬度的信息转化成屏幕上的坐标
-		// final LatLng ll = marker.getPosition();
-		// if (mBaiduMap.getMapStatus().zoom != maxRoom) {
-		// showCurrtenStroeOnMap(ll);
-		// } else {
-		// showCurrtenStroeOnMap(ll);
-		// // 获得marker中的数据
-		// StoreData info = (StoreData) marker.getExtraInfo().get(
-		// "info");
-		// View linlayout = MapActivity.this.getLayoutInflater()
-		// .inflate(R.layout.popup_map_inform, null);
-		// // linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
-		// Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-		// p.y -= 47;
-		// LatLng llInfo = mBaiduMap.getProjection()
-		// .fromScreenLocation(p);
-		// // 为弹出的InfoWindow添加点击事件
-		// mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
-		// info), llInfo, 1);
-		// // 显示InfoWindow
-		// mBaiduMap.showInfoWindow(mInfoWindow);
-		// }
-		//
-		// return true;
-		// }
-		//
-		// @Override
-		// public List<OverlayOptions> getOverlayOptions() {
-		//
-		// return list;
-		// }
-		//
-		// @Override
-		// public boolean onPolylineClick(Polyline arg0) {
-		// // TODO 自动生成的方法存根
-		// return false;
-		// }
-		// };
-		// overlayManager.addToMap();
-		// overlayManager.zoomToSpan();
-		// 将地图移到当前定位位置
 		LatLng myLL = new LatLng(mCurrentLantitude, mCurrentLongitude);
 		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
 		mBaiduMap.setMapStatus(u);
@@ -314,18 +268,16 @@ public class MapActivity extends BaseActivity
 			mCurrentLongitude = location.getLongitude();
 			curCity = location.getCity();
 			textView_curCity.setText(curCity);
-
 			MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
 					// 此处设置开发者获取到的方向信息，顺时针0-360
 					.direction(100).latitude(mCurrentLantitude).longitude(mCurrentLongitude).build();
 			// 设置定位数据
 			mBaiduMap.setMyLocationData(locData);
-			mBaiduMap.setMyLocationEnabled(true);
 			// 设置自定义图标
-			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
-			MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
-					false, mCurrentMarker);
-			mBaiduMap.setMyLocationConfigeration(config);
+//			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
+//			MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
+//					false, mCurrentMarker);
+//			mBaiduMap.setMyLocationConfigeration(config);
 			if (isFirstLoc) {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
