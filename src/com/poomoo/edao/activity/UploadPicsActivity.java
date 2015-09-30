@@ -123,21 +123,25 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 
 		if (!TextUtils.isEmpty(path1)) {
 			imageView_identitycard_front.setImageBitmap(Utity.revitionImageSize(path1));
+			file1 = saveBitmap(Utity.revitionImageSize(path1), path1);
 			textView_identitycard_front.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path2)) {
 			imageView_identitycard_back.setImageBitmap(Utity.revitionImageSize(path2));
+			file2 = saveBitmap(Utity.revitionImageSize(path1), path2);
 			textView_identitycard_back.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path3)) {
 			imageView_identitycard_inhand.setImageBitmap(Utity.revitionImageSize(path3));
+			file3 = saveBitmap(Utity.revitionImageSize(path1), path3);
 			textView_identitycard_inhand.setText("");
 		}
 
 		if (!TextUtils.isEmpty(path4)) {
 			imageView_business_license.setImageBitmap(Utity.revitionImageSize(path4));
+			file4 = saveBitmap(Utity.revitionImageSize(path1), path4);
 			textView_business_license.setText("");
 		}
 
