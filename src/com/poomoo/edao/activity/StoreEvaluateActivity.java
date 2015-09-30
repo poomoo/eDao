@@ -18,6 +18,7 @@ import com.poomoo.edao.widget.FlexibleRatingBar;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -136,6 +137,10 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 	private boolean checkInput() {
 		// TODO Auto-generated method stub
 		content = editText_content.getText().toString().trim();
+		if(TextUtils.isEmpty(content)){
+			Utity.showToast(getApplicationContext(), "请输入评价内容");
+			return false;
+		}
 
 		service = flexibleRatingBar_service.getRating();
 		if (service == 0) {
@@ -152,7 +157,6 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		data.put("bizName", "30000");
 		data.put("method", "30004");
 		data.put("shopId", shopId);
-		data.put("userId", application);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
 			@Override
@@ -198,6 +202,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		data.put("score", service);
 		data.put("content", content);
 		data.put("ordersId", ordersId);
+		data.put("userId", application.getUserId());
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
 			@Override

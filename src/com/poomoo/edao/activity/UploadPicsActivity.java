@@ -185,21 +185,23 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
 		if (file1 == null) {
-			Utity.showToast(getApplicationContext(), "请选择身份证正面照");
+			Utity.showToast(getApplicationContext(), "请选择手持身份证正面照");
 			return false;
 		}
 		if (file2 == null) {
-			Utity.showToast(getApplicationContext(), "请选择身份证背面照");
+			Utity.showToast(getApplicationContext(), "请选择手持身份证反面照");
 			return false;
 		}
-		if (file3 == null) {
-			Utity.showToast(getApplicationContext(), "请选择手持证件照");
-			return false;
-		}
+		// if (file3 == null) {
+		// Utity.showToast(getApplicationContext(), "请选择手持证件照");
+		// return false;
+		// }
 		filelist = new ArrayList<File>();
 		filelist.add(file1);
 		filelist.add(file2);
-		filelist.add(file3);
+		if (file3 != null) {
+			filelist.add(file3);
+		}
 		if (file4 != null) {
 			// Utity.showToast(getApplicationContext(), "请选择营业执照");
 			// return false;
