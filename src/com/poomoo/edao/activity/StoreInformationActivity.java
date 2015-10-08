@@ -69,7 +69,7 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 				.cacheInMemory(true) // 内存缓存
 				.cacheOnDisk(true) // sdcard缓存
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
-				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
+				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
 				.build();
 		ImageLoader.getInstance().displayImage(listData.getPictures(), imageView, options);
 

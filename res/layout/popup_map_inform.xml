@@ -1,151 +1,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/popup_map_inform_layout"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_map_popup_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin2"
+        android:paddingLeft="@dimen/margin5"
+        android:paddingRight="@dimen/margin5" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
-
-            <TextView
-                android:id="@+id/popup_map_inform_textView_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:text="贵阳特产水果"
-                android:textSize="@dimen/textsize14" />
-        </LinearLayout>
+        <com.poomoo.edao.widget.RoundImageView
+            android:id="@+id/popup_map_inform_imageView_pic"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_head" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp" >
-
-            <TextView
-                android:layout_width="5dp"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:id="@+id/popup_map_inform_imageView_pic"
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_weight="1.1"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_store_pic" />
-
-            <TextView
-                android:layout_width="5dp"
-                android:layout_height="match_parent" />
+            android:orientation="horizontal" >
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/popup_map_inform_textView_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="贵阳特产水果贵阳特产水果贵阳特产水果"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/textsize10" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
-
-                    <RatingBar
-                        android:id="@+id/popup_map_inform_ratingbar"
-                        style="@style/myRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:rating="4.5"
-                        android:stepSize="0.1" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="店铺综合评分:"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textsize12" />
-
-                        <TextView
-                            android:layout_width="5dp"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/popup_map_inform_textView_score"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="5.0"
-                            android:textColor="@color/red"
-                            android:textSize="@dimen/textsize12" />
-                    </LinearLayout>
+                    android:orientation="horizontal" >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp" />
-
-                    <LinearLayout
+                        android:id="@+id/popup_map_inform_textView_owner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="距离:"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textsize10" />
-
-                        <TextView
-                            android:layout_width="5dp"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/popup_map_inform_textView_distance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="345m"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textsize10" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/popup_map_inform_textView_inform"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="起送100元"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textsize10" />
-                    </LinearLayout>
+                        android:text="XXX"
+                        android:textColor="#1995EB"
+                        android:textSize="@dimen/textsize8" />
                 </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/popup_map_inform_ratingbar"
+                    style="@style/myRatingBarSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.1" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

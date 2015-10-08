@@ -94,7 +94,8 @@ public class Fragment_Home extends Fragment implements OnClickListener, OnItemCl
 	private eDaoClientApplication application = null;
 	private Gson gson = new Gson();
 	private ArrayList<String> imageUrlsList = null;
-	private static final int[] pics = { R.drawable.a01, R.drawable.a02, R.drawable.a03, R.drawable.a04 };
+	// private static final int[] pics = { R.drawable.a01, R.drawable.a02,
+	// R.drawable.a03, R.drawable.a04 };
 	private int advCount = 0;// 广告数量
 	public static Handler handler = null;
 	private NavigationActivity mActivity = null;

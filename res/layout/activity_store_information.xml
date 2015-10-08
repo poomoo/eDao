@@ -42,6 +42,7 @@
                 android:id="@+id/store_information_imageView_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_love_fund" />
         </LinearLayout>
 
@@ -50,7 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin5"
+            android:paddingRight="@dimen/margin5" >
 
             <LinearLayout
                 android:layout_width="match_parent"

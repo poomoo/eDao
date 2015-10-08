@@ -29,7 +29,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
@@ -46,7 +45,6 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap.Config;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -144,9 +142,12 @@ public class MapActivity extends BaseActivity
 		for (StoreData info : infos) {
 			// 位置
 			latLng = new LatLng(info.getLatitude(), info.getLongitude());
-			// 图标
-			overlayOptions = new MarkerOptions().position(latLng).icon(bd).zIndex(i++);
+			// 构建Marker图标
+			View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
+			BitmapDescriptor bitmap = BitmapDescriptorFactory.fromView(getInfoWindowView(linlayout, info));
+			overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(i++);
 			list.add(overlayOptions);
+			System.out.println("list.add");
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("info", info);
@@ -170,15 +171,23 @@ public class MapActivity extends BaseActivity
 					showCurrtenStroeOnMap(ll);
 					// 获得marker中的数据
 					StoreData info = (StoreData) marker.getExtraInfo().get("info");
-					View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
+					// View linlayout =
+					// MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform,
+					// null);
+					// //
 					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
-					Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-					p.y -= 60;
-					LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
-					// 为弹出的InfoWindow添加点击事件
-					mInfoWindow = new InfoWindow(getInfoWindowView(linlayout, info), llInfo, 1);
-					// 显示InfoWindow
-					mBaiduMap.showInfoWindow(mInfoWindow);
+					// Point p = mBaiduMap.getProjection().toScreenLocation(ll);
+					// p.y -= 60;
+					// LatLng llInfo =
+					// mBaiduMap.getProjection().fromScreenLocation(p);
+					// // 为弹出的InfoWindow添加点击事件
+					// mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
+					// info), llInfo, 1);
+					// // 显示InfoWindow
+					// mBaiduMap.showInfoWindow(mInfoWindow);
+					Bundle pBundle = new Bundle();
+					pBundle.putSerializable("data", info);
+					openActivity(StoreInformationActivity.class, pBundle);
 				}
 
 				return true;
@@ -193,9 +202,13 @@ public class MapActivity extends BaseActivity
 			viewHolder.storeImg = (ImageView) mMarkerLy.findViewById(R.id.popup_map_inform_imageView_pic);
 			viewHolder.storeRatingBar = (RatingBar) mMarkerLy.findViewById(R.id.popup_map_inform_ratingbar);
 			viewHolder.storeName = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_name);
-			viewHolder.storeScore = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_score);
-			viewHolder.storeDistance = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_distance);
-			viewHolder.storeInfo = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_inform);
+			viewHolder.storeOwner = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_owner);
+			// viewHolder.storeScore = (TextView)
+			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_score);
+			// viewHolder.storeDistance = (TextView)
+			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_distance);
+			// viewHolder.storeInfo = (TextView)
+			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_inform);
 
 			mMarkerLy.setTag(viewHolder);
 		}
@@ -207,15 +220,18 @@ public class MapActivity extends BaseActivity
 				.cacheInMemory(true) // 内存缓存
 				.cacheOnDisk(true) // sdcard缓存
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
-				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
+				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
 				.build();
+		System.out.println("加载图片:" + store.getPictures());
 		ImageLoader.getInstance().displayImage(store.getPictures(), viewHolder.storeImg, options);
+		System.out.println("加载图片完成");
 
 		viewHolder.storeRatingBar.setRating(store.getAvgScore());
 		viewHolder.storeName.setText(store.getShopName());
-		viewHolder.storeScore.setText(store.getAvgScore() + "");
-		viewHolder.storeDistance.setText(store.getDistance());
-		viewHolder.storeInfo.setText(store.getAddress());
+		viewHolder.storeOwner.setText(store.getRealName());
+		// viewHolder.storeScore.setText(store.getAvgScore() + "");
+		// viewHolder.storeDistance.setText(store.getDistance());
+		// viewHolder.storeInfo.setText(store.getAddress());
 		mMarkerLy.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -236,7 +252,7 @@ public class MapActivity extends BaseActivity
 	 */
 	private class ViewHolder {
 		ImageView storeImg;
-		TextView storeName, storeScore, storeDistance, storeInfo;
+		TextView storeName, storeOwner;
 		RatingBar storeRatingBar;
 	}
 
@@ -274,10 +290,12 @@ public class MapActivity extends BaseActivity
 			// 设置定位数据
 			mBaiduMap.setMyLocationData(locData);
 			// 设置自定义图标
-//			BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
-//			MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
-//					false, mCurrentMarker);
-//			mBaiduMap.setMyLocationConfigeration(config);
+			// BitmapDescriptor mCurrentMarker =
+			// BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
+			// MyLocationConfiguration config = new
+			// MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
+			// false, mCurrentMarker);
+			// mBaiduMap.setMyLocationConfigeration(config);
 			if (isFirstLoc) {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
@@ -297,7 +315,7 @@ public class MapActivity extends BaseActivity
 	 */
 	private void showCurrtenStroeOnMap(LatLng cenpt) {
 		// 定义地图状态
-		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18).build();
+		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(maxRoom).build();
 		// 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
 
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
