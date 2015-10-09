@@ -18,6 +18,7 @@ public class OrderListData {
 	private String remark = "";
 	private String handlingFee = "";
 	private String myPay = "";
+	private String isAppraise = "";
 
 	public String getOrdersId() {
 		return this.ordersId;
@@ -97,6 +98,14 @@ public class OrderListData {
 
 	public void setMyPay(String myPay) {
 		this.myPay = myPay;
+	}
+
+	public String getIsAppraise() {
+		return isAppraise;
+	}
+
+	public void setIsAppraise(String isAppraise) {
+		this.isAppraise = isAppraise;
 	}
 
 }

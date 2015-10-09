@@ -85,8 +85,9 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		case R.id.store_information_textView_more:
 			Bundle pBundle = new Bundle();
 			// pBundle.putSerializable("list", (Serializable) list);
-			System.out.println("listData.getAvgScore():"+listData.getAvgScore());
+			System.out.println("listData.getAvgScore():" + listData.getAvgScore());
 			pBundle.putFloat("score", listData.getAvgScore());
+			pBundle.putString("shopId", listData.getShopId());
 			openActivity(EvaluationListActivity.class, pBundle);
 			break;
 		}

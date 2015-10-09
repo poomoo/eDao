@@ -27,6 +27,7 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
@@ -37,6 +38,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
@@ -45,9 +47,15 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Point;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -111,6 +119,7 @@ public class MapActivity extends BaseActivity
 		imageView_mylocation.setOnClickListener(this);
 
 		mBaiduMap = mMapView.getMap();
+
 		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(maxRoom);
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setMyLocationEnabled(true);
@@ -145,10 +154,13 @@ public class MapActivity extends BaseActivity
 			// 构建Marker图标
 			View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
 			BitmapDescriptor bitmap = BitmapDescriptorFactory.fromView(getInfoWindowView(linlayout, info));
+			// BitmapDescriptor bitmap =
+			// BitmapDescriptorFactory.fromView(linlayout);
 			overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(i++);
 			list.add(overlayOptions);
 			System.out.println("list.add");
 			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+			// marker.setIcon(bitmap);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("info", info);
 			marker.setExtraInfo(bundle);
@@ -157,6 +169,93 @@ public class MapActivity extends BaseActivity
 		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
 		mBaiduMap.setMapStatus(u);
 	}
+
+	// // 获取坐标点
+	// public void addInfosOverlay(List<StoreData> infos) {
+	// mBaiduMap.clear();
+	// LatLng latLng = null;
+	// OverlayOptions overlayOptions = null;
+	// Marker marker = null;
+	// int i = 0;
+	// final List<OverlayOptions> list = new ArrayList<OverlayOptions>();
+	//
+	// for (StoreData info : infos) {
+	// // 用给定的经纬度构造GeoPoint，单位是微度 (度 * 1E6)
+	// GeoPoint p = new GeoPoint((int) (info.getLatitude() * 1E6), (int)
+	// (info.getLongitude() * 1E6));
+	// // 准备overlay图像数据，根据实情情况修复
+	// Drawable mark = drawBitmap(info);
+	// mark.setBounds(0, 0, mark.getIntrinsicWidth(),
+	// mark.getIntrinsicHeight());
+	// OverlayItem item = new OverlayItem(p, null, null);
+	// item.setMarker(mark);
+	//
+	// // 创建ItemizedOverlay
+	// CustomOverlay itemOverlay = new CustomOverlay(mark, mMapView,
+	// MapActivity.this);
+	// // mMapView.getOverlay().add(itemOverlay);
+	// itemOverlay.addItem(item);
+	//
+	// Bundle bundle = new Bundle();
+	// bundle.putSerializable("info", info);
+	// marker.setExtraInfo(bundle);
+	// }
+	// LatLng myLL = new LatLng(mCurrentLantitude, mCurrentLongitude);
+	// MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
+	// mBaiduMap.setMapStatus(u);
+	//
+	//
+	// // 将IteminizedOverlay添加到MapView中
+	// // mMapView.getOverlays().clear();
+	//
+	//
+	// // 现在所有准备工作已准备好，使用以下方法管理overlay.
+	// // 添加overlay, 当批量添加Overlay时使用addItem(List<OverlayItem>)效率更高
+	// // itemOverlay.addItem(item1);
+	// // itemOverlay.addItem(item2);
+	// // itemOverlay.addItem(item3);
+	// // mMapView.refresh();
+	// }
+
+	// public Drawable drawBitmap(StoreData data) {
+	// Bitmap bmp = Bitmap.createBitmap(166, 126, Bitmap.Config.ARGB_8888);
+	// Canvas canvas = new Canvas(bmp);
+	// LayoutInflater inflater = (LayoutInflater)
+	// getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	// View layout = inflater.inflate(R.layout.popup_map_inform, null);
+	// TextView storeName = (TextView)
+	// layout.findViewById(R.id.popup_map_inform_textView_name);
+	// TextView storeOwner = (TextView)
+	// layout.findViewById(R.id.popup_map_inform_textView_owner);
+	// ImageView storeImg = (ImageView)
+	// layout.findViewById(R.id.popup_map_inform_imageView_pic);
+	// // 使用ImageLoader加载网络图片
+	// DisplayImageOptions options = new DisplayImageOptions.Builder()//
+	// .showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
+	// .showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
+	// .cacheInMemory(true) // 内存缓存
+	// .cacheOnDisk(true) // sdcard缓存
+	// .bitmapConfig(Config.RGB_565)// 设置最低配置
+	// .imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
+	// .build();
+	//
+	// storeName.setText(data.getShopName());
+	// storeOwner.setText(data.getRealName());
+	// ImageLoader.getInstance().displayImage(data.getPictures(), storeImg,
+	// options);
+	//
+	// layout.setDrawingCacheEnabled(true);
+	// layout.measure(View.MeasureSpec.makeMeasureSpec(canvas.getWidth(),
+	// View.MeasureSpec.EXACTLY),
+	// View.MeasureSpec.makeMeasureSpec(canvas.getHeight(),
+	// View.MeasureSpec.EXACTLY));
+	// layout.layout(0, 0, layout.getMeasuredWidth(),
+	// layout.getMeasuredHeight());
+	// Paint paint = new Paint();
+	// canvas.drawBitmap(layout.getDrawingCache(), 0, 0, paint);
+	// Drawable drawable = new BitmapDrawable(getResources(), bmp);
+	// return drawable;
+	// }
 
 	private void initMarkerClickEvent() {
 		// 对Marker的点击
@@ -195,7 +294,7 @@ public class MapActivity extends BaseActivity
 		});
 	}
 
-	private View getInfoWindowView(View mMarkerLy, final StoreData store) {
+	private View getInfoWindowView(final View mMarkerLy, final StoreData store) {
 		ViewHolder viewHolder = null;
 		if (mMarkerLy.getTag() == null) {
 			viewHolder = new ViewHolder();
@@ -223,7 +322,20 @@ public class MapActivity extends BaseActivity
 				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
 				.build();
 		System.out.println("加载图片:" + store.getPictures());
-		ImageLoader.getInstance().displayImage(store.getPictures(), viewHolder.storeImg, options);
+		// ImageLoader imageLoader = ImageLoader.getInstance();
+		// imageLoader.loadImage(store.getPictures(), new
+		// SimpleImageLoadingListener() {
+		// @Override
+		// public void onLoadingComplete(String imageUri, View view, Bitmap
+		// loadedImage) {
+		// // 图片处理
+		// System.out.println("加载图片成功" + loadedImage);
+		// }
+		// });
+		viewHolder.storeImg.setImageBitmap(ImageLoader.getInstance().loadImageSync(store.getPictures()));
+		// ImageLoader.getInstance().loadImageSync(store.getPictures());
+		// ImageLoader.getInstance().displayImage(store.getPictures(),
+		// viewHolder.storeImg, options);
 		System.out.println("加载图片完成");
 
 		viewHolder.storeRatingBar.setRating(store.getAvgScore());

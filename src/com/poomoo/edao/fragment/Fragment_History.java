@@ -61,6 +61,7 @@ public class Fragment_History extends Fragment {
 		listView = (MyListView) getView().findViewById(R.id.purchase_history_listView);
 		application = (eDaoClientApplication) getActivity().getApplication();
 		showProgressDialog();
+		list = new ArrayList<Purchase_HistoryData>();
 		getData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
@@ -97,7 +98,6 @@ public class Fragment_History extends Fragment {
 
 									JSONArray pager = result.getJSONArray("records");
 									int length = pager.length();
-									list = new ArrayList<Purchase_HistoryData>();
 									for (int i = 0; i < length; i++) {
 										Purchase_HistoryData purchase_History = new Purchase_HistoryData();
 										purchase_History = gson.fromJson(pager.getJSONObject(i).toString(),

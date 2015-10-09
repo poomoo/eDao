@@ -40,9 +40,9 @@ public class EvaluationListActivity extends BaseActivity {
 	private List<StoreEvaluationData> list;
 	private Store_Evaluation_ListViewAdapter adapter;
 	private int curPage = 1, pageSize = 10;
-	private ProgressDialog progressDialog = null;
 	private Gson gson = new Gson();
 	private float score = 0;
+	private String shopId = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class EvaluationListActivity extends BaseActivity {
 		// list = (ArrayList<StoreEvaluationData>) getIntent()
 		// .getSerializableExtra("list");
 		score = getIntent().getFloatExtra("score", 0);
+		shopId=getIntent().getStringExtra("shopId");
 		init();
 	}
 
@@ -83,7 +84,8 @@ public class EvaluationListActivity extends BaseActivity {
 		System.out.println("调用getData");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
-		data.put("method", "30003");
+		data.put("method", "30006");
+		data.put("shopId", shopId);
 		data.put("currPage", curPage);
 		data.put("pageSize", pageSize);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {

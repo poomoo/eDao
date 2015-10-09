@@ -65,12 +65,14 @@ public class Get_UserInfo_Service extends Service {
 					application.setJoinType(infoData.getJoinType());
 					application.setJoinStatus(infoData.getJoinStatus());
 					application.setQuickmarkPic(infoData.getQuickmarkPic());
+					application.setShopIsExists(infoData.getShopIsExists());
 					editor.putString("realName", application.getRealName());
 					editor.putString("realNameAuth", application.getRealNameAuth());
 					editor.putString("type", application.getType());
 					editor.putString("payPwdValue", application.getPayPwdValue());
 					editor.putString("joinType", application.getJoinType());
 					editor.putString("joinStatus", application.getJoinStatus());
+					editor.putString("shopId", application.getShopIsExists());
 					editor.commit();
 
 					Message msg = new Message();

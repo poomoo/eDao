@@ -152,6 +152,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								editor.putString("type", loginResData.getType());
 								editor.putString("realNameAuth", loginResData.getRealNameAuth());
 								editor.putString("payPwdValue", loginResData.getPayPwdValue());
+								editor.putString("shopIsExists", loginResData.getShopIsExists());
 								try {
 									passWord = Utity.encrypt(eDaoClientConfig.key, passWord);
 								} catch (Exception e) {
@@ -169,6 +170,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								application.setRealNameAuth(loginResData.getRealNameAuth());
 								application.setPayPwdValue(loginResData.getPayPwdValue());
 								application.setQuickmarkPic(loginResData.getQuickmarkPic());
+								application.setShopIsExists(loginResData.getShopIsExists());
 								startService(new Intent(LoginActivity.this, Get_UserInfo_Service.class));
 								LoginActivity.this
 										.startActivity(new Intent(LoginActivity.this, NavigationActivity.class));

@@ -61,6 +61,7 @@ public class Fragment_Detail extends Fragment {
 		listView = (MyListView) getView().findViewById(R.id.get_detail_listView);
 		application = (eDaoClientApplication) getActivity().getApplication();
 		showProgressDialog();
+		list = new ArrayList<DetailData>();
 		getData();
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
@@ -96,7 +97,6 @@ public class Fragment_Detail extends Fragment {
 									JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
 									JSONArray pager = result.getJSONArray("records");
-									list = new ArrayList<DetailData>();
 									int length = pager.length();
 									for (int i = 0; i < length; i++) {
 										DetailData Detail = new DetailData();
