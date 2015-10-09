@@ -55,6 +55,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -322,16 +324,14 @@ public class MapActivity extends BaseActivity
 				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
 				.build();
 		System.out.println("加载图片:" + store.getPictures());
-		// ImageLoader imageLoader = ImageLoader.getInstance();
-		// imageLoader.loadImage(store.getPictures(), new
-		// SimpleImageLoadingListener() {
-		// @Override
-		// public void onLoadingComplete(String imageUri, View view, Bitmap
-		// loadedImage) {
-		// // 图片处理
-		// System.out.println("加载图片成功" + loadedImage);
-		// }
-		// });
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		imageLoader.loadImage(store.getPictures(), new SimpleImageLoadingListener() {
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				// 图片处理
+				System.out.println("加载图片成功" + loadedImage);
+			}
+		});
 		viewHolder.storeImg.setImageBitmap(ImageLoader.getInstance().loadImageSync(store.getPictures()));
 		// ImageLoader.getInstance().loadImageSync(store.getPictures());
 		// ImageLoader.getInstance().displayImage(store.getPictures(),

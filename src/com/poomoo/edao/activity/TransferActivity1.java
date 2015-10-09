@@ -201,13 +201,11 @@ public class TransferActivity1 extends BaseActivity implements OnClickListener {
 								userName = result.getString("userName");
 								joinType = result.getString("joinType");
 								if (!joinType.equals("3")) {
-									button_buy.setTextColor(color.white);
 									button_buy.setBackgroundResource(R.drawable.style_btn_no_background);
 									button_buy.setClickable(false);
 								} else {
 									button_transfer.setBackgroundResource(R.drawable.style_btn_yes_background_blue);
 
-									button_buy.setTextColor(color.white);
 									button_buy.setBackgroundResource(R.drawable.style_btn_yes_background);
 									button_buy.setClickable(true);
 								}
