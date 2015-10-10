@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -137,9 +138,10 @@ public class Fragment_Personal_Center extends Fragment implements OnClickListene
 			if (application.getType().equals("2")) {
 				if (application.getJoinType().equals("3")) {
 					if (application.getJoinStatus().equals("1")) {
-						if (application.getShopIsExists().equals("false"))
+						if (application.getShopIsExists().equals("false")
+								|| TextUtils.isEmpty(application.getShopIsExists()))
 							startActivity(new Intent(getActivity(), StoreManageActivity.class));
-						else
+						else if (application.getShopIsExists().equals("true"))
 							Utity.showToast(getActivity().getApplicationContext(), "已经添加过店铺!");
 					} else {
 						Utity.showToast(getActivity().getApplication(), "审核未通过或未审核");

@@ -63,11 +63,12 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 		button_next = (Button) findViewById(R.id.registration_btn_confirm);
 
 		sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo", Context.MODE_PRIVATE);
-		if (sharedPreferences_certificaitonInfo.getBoolean("uploadStatus", false)) {
-			editText_realName.setText(sharedPreferences_certificaitonInfo.getString("realName", ""));
-			editText_idNum.setText(sharedPreferences_certificaitonInfo.getString("idCardNum", ""));
-			isUpload = true;
-		}
+		// if (sharedPreferences_certificaitonInfo.getBoolean("uploadStatus",
+		// false)) {
+		editText_realName.setText(sharedPreferences_certificaitonInfo.getString("realName", ""));
+		editText_idNum.setText(sharedPreferences_certificaitonInfo.getString("idCardNum", ""));
+		// isUpload = true;
+		// }
 
 		button_next.setOnClickListener(this);
 	}
@@ -78,12 +79,12 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 		switch (v.getId()) {
 
 		case R.id.registration_btn_confirm:
-			if (isUpload) {
-				openActivity(UploadPicsActivity.class);
-				finish();
-			} else if (checkInput()) {
-				certificate();
-			}
+			// if (isUpload) {
+			// openActivity(UploadPicsActivity.class);
+			// finish();
+			// } else if (checkInput()) {
+			certificate();
+			// }
 			break;
 		}
 	}
@@ -121,7 +122,7 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 							// editor.putString("bankCity", city);
 							// editor.putString("bankName", bank);
 							// editor.putString("bankCardId", account1);
-							editor.putBoolean("uploadStatus", true);
+							// editor.putBoolean("uploadStatus", true);
 							editor.commit();
 							openActivity(UploadPicsActivity.class);
 							CertificationActivity.this.finish();

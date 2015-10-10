@@ -181,7 +181,6 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 								if (apply_isFirst) {
 									apply_isFirst = false;
 								}
-								adapter_apply.notifyDataSetChanged();
 								apply_curPage += 1;
 
 							} catch (JSONException e) {
@@ -189,8 +188,10 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 								e.printStackTrace();
 							}
 						} else {
+
 							Utity.showToast(getApplicationContext(), responseData.getMsg());
 						}
+						adapter_apply.notifyDataSetChanged();
 						listView.onRefreshComplete();
 					}
 

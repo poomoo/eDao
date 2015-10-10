@@ -62,7 +62,7 @@
                         android:background="@drawable/style_love_fund_background"
                         android:gravity="center"
                         android:padding="@dimen/margin2"
-                        android:text="￥200.00"
+                        android:text="￥0"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />
 
@@ -103,7 +103,7 @@
                         android:background="@drawable/style_love_fund_background"
                         android:gravity="center"
                         android:padding="@dimen/margin2"
-                        android:text="￥23300.00"
+                        android:text="￥0"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize12" />
 

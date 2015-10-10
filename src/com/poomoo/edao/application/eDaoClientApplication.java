@@ -36,7 +36,7 @@ public class eDaoClientApplication extends LitePalApplication {
 	private String payPwdValue = "";// 是否设置过支付密码
 	private String joinType = "";// 加盟类型 1-加盟商 2-经销商 3-合作商
 	private String joinStatus = "";// 加盟审核 0,"默认值，未审核" 1,"审核通过" 2,"审核未通过"
-	private String shopIsExists="";//true-店铺已经添加
+	private String shopIsExists = "";// true-店铺已经添加
 	private int totalEb = 0;// 总的意币
 	private int totalGold = 0;// 总金币
 	private int totalIntegral = 0;// 总的积分

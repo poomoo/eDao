@@ -88,8 +88,8 @@
         <activity android:name=".activity.RechargeActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ResetPasswrodActivity" />
-        <activity android:name=".activity.ShareActivity" />
         <activity android:name=".activity.StoreEvaluateActivity" />
+        <activity android:name=".activity.ShareActivity" />
         <activity android:name=".activity.StoreInformationActivity" />
         <activity android:name=".activity.StoreManageActivity" />
         <activity android:name=".activity.SideBarActivity" />

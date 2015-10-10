@@ -36,7 +36,7 @@ import android.widget.TextView;
  * @date 2015-8-3 下午4:02:36
  */
 public class StoreEvaluateActivity extends BaseActivity implements OnClickListener {
-	private TextView textView_store_name, textView_total_score, textView_distance, textView_remark, textView_canNum;
+	private TextView textView_store_name, textView_total_score, textView_canNum;
 	private ImageView imageView_pic;
 	private EditText editText_content;
 	private RatingBar ratingBar_total_score;
@@ -67,8 +67,6 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		// TODO 自动生成的方法存根
 		textView_store_name = (TextView) findViewById(R.id.store_evaluate_textView_store_name);
 		textView_total_score = (TextView) findViewById(R.id.store_evaluate_textView_total_score);
-		textView_distance = (TextView) findViewById(R.id.store_evaluate_textView_distance);
-		textView_remark = (TextView) findViewById(R.id.store_evaluate_textView_remark);
 		textView_canNum = (TextView) findViewById(R.id.store_evaluate_textView_canNum);
 
 		editText_content = (EditText) findViewById(R.id.store_evaluate_editText_content);
@@ -137,7 +135,7 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 	private boolean checkInput() {
 		// TODO Auto-generated method stub
 		content = editText_content.getText().toString().trim();
-		if(TextUtils.isEmpty(content)){
+		if (TextUtils.isEmpty(content)) {
 			Utity.showToast(getApplicationContext(), "请输入评价内容");
 			return false;
 		}
@@ -241,8 +239,6 @@ public class StoreEvaluateActivity extends BaseActivity implements OnClickListen
 		textView_store_name.setText(data.getShopName());
 		textView_total_score.setText(String.valueOf(data.getAvgScore()));
 		ratingBar_total_score.setRating(data.getAvgScore());
-		textView_distance.setText("");
-		textView_remark.setText("");
 		ImageLoader.getInstance().displayImage(data.getPictures(), imageView_pic);
 	}
 
