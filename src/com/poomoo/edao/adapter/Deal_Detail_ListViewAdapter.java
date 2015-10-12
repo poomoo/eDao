@@ -86,7 +86,8 @@ public class Deal_Detail_ListViewAdapter extends BaseAdapter {
 		if (!TextUtils.isEmpty(list.get(position).getHandlingFee())) {
 			holder.layout_handing_fee.setVisibility(View.VISIBLE);
 			holder.textView_order_handing_fee.setText(list.get(position).getHandlingFee());
-		}
+		} else
+			holder.layout_handing_fee.setVisibility(View.INVISIBLE);
 
 		holder.textView_order_date.setText(list.get(position).getOrdersDt());
 
