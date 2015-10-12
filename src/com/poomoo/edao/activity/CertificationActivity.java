@@ -83,7 +83,8 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 			// openActivity(UploadPicsActivity.class);
 			// finish();
 			// } else if (checkInput()) {
-			certificate();
+			if (checkInput())
+				certificate();
 			// }
 			break;
 		}

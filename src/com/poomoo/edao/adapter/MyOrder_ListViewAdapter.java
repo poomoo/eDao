@@ -90,15 +90,17 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 			// 客户角色
 			if (list.get(position).getMyPay().equals("true")) {
 				holder.textView_lable.setText("商户名称:　");
+				holder.button_pay.setVisibility(View.INVISIBLE);
+				System.out.println("商户名称:" + list.get(position).getShopName() + "position:" + position);
 			}
 			// 商户角色
 			else {
 				holder.textView_lable.setText("客户姓名:　");
-
 				holder.button_pay.setVisibility(View.VISIBLE);
 				holder.button_pay.setText("确认收款");
 				holder.button_pay.setOnClickListener(listener);
 				holder.button_pay.setTag("confirm");
+				System.out.println("客户名称:" + list.get(position).getShopName()+ "position:" + position);
 			}
 		}
 		// 已完成
@@ -110,6 +112,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 					holder.button_pay.setVisibility(View.VISIBLE);
 					holder.button_pay.setText("去评价");
 				} else {
+					holder.button_pay.setVisibility(View.VISIBLE);
 					holder.button_pay.setText("已评价");
 					holder.button_pay.setClickable(false);
 					holder.button_pay.setBackgroundResource(R.drawable.style_btn_no_background);
@@ -123,6 +126,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 				holder.textView_lable.setText("客户姓名:　");
 			}
 		}
+		System.out.println("getview完成"+ "position:" + position);
 
 		return convertView;
 	}
