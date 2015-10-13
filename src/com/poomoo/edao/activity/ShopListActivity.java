@@ -164,7 +164,7 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 		data.put("pageSize", pageSize);
 		data.put("categoryId", categoryId);
 		data.put("goodsName", "");
-		data.put("centerLon ", curLon);
+		data.put("centerLon", curLon);
 		data.put("centerLat", curLat);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
