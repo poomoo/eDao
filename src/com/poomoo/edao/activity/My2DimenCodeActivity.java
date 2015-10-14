@@ -79,6 +79,13 @@ public class My2DimenCodeActivity extends BaseActivity implements OnClickListene
 				closeProgressDialog();
 			}
 
+			@Override
+			public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+				// TODO Auto-generated method stub
+				super.onLoadingFailed(imageUri, view, failReason);
+				finish();
+			}
+
 		});
 
 	}
