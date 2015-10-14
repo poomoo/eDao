@@ -13,7 +13,6 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MessageBox_YES;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -38,10 +37,8 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
 	private String realName = "", idNum = "";
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
-	private boolean isUpload = false;
 	private eDaoClientApplication application = null;
 
 	@Override

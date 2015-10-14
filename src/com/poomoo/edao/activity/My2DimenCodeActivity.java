@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -59,15 +62,25 @@ public class My2DimenCodeActivity extends BaseActivity implements OnClickListene
 
 		// 使用ImageLoader加载网络图片
 		DisplayImageOptions options = new DisplayImageOptions.Builder()//
-				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
 				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
 				.cacheInMemory(false) // 内存缓存
 				.cacheOnDisk(true) // sdcard缓存
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
 				.build();
-		bitmap = ImageLoader.getInstance().loadImageSync(application.getQuickmarkPic(), options);
-		System.out.println("url:" + application.getQuickmarkPic() + "bitmap:" + bitmap);
-		imageView_2code.setImageBitmap(bitmap);
+		showProgressDialog("请稍后...");
+		ImageLoader.getInstance().loadImage(application.getQuickmarkPic(), new SimpleImageLoadingListener() {
+
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				// TODO Auto-generated method stub
+				super.onLoadingComplete(imageUri, view, loadedImage);
+				bitmap = loadedImage;
+				imageView_2code.setImageBitmap(bitmap);
+				closeProgressDialog();
+			}
+
+		});
+
 	}
 
 	@Override

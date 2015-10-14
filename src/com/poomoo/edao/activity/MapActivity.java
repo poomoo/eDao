@@ -163,7 +163,7 @@ public class MapActivity extends BaseActivity
 									null);
 							BitmapDescriptor bitmap = BitmapDescriptorFactory
 									.fromView(getInfoWindowView(linlayout, info, loadedImage));
-							overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(i++);
+							overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(14);
 							list.add(overlayOptions);
 							System.out.println("list.add" + i);
 							marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));

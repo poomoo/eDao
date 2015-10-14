@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.poomoo.edao.R;
+import com.poomoo.edao.crashhandler.CrashHandler;
 
 public class eDaoClientApplication extends LitePalApplication {
 	// 定位
@@ -275,6 +276,10 @@ public class eDaoClientApplication extends LitePalApplication {
 				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100)// 缓存一百张图片
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
+	 
+		 CrashHandler crashHandler = CrashHandler.getInstance();    
+		 // 注册crashHandler    
+		 crashHandler.init(getApplicationContext());
 	}
 
 }

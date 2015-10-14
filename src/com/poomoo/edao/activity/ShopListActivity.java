@@ -61,7 +61,6 @@ public class ShopListActivity extends BaseActivity implements OnItemClickListene
 
 	private double curLon = 0.0, curLat = 0.0;
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
 	private String categoryId = ""; // 1金银首饰 2酒店娱乐 3餐饮美食4服装鞋类5生活超市6旅游度假7美容保健
 									// 8宣传广告
