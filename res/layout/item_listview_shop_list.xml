@@ -88,14 +88,14 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="地址:"
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
                     android:id="@+id/shop_list_item_textView_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="世纪城龙禧苑"
                     android:textSize="@dimen/textsize14" />
             </LinearLayout>

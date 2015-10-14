@@ -206,7 +206,7 @@ public class MapActivity extends BaseActivity
 				if (mBaiduMap.getMapStatus().zoom != 18) {
 					showCurrtenStroeOnMap(ll, 18);
 				} else {
-					showCurrtenStroeOnMap(ll, maxRoom);
+					// showCurrtenStroeOnMap(ll, maxRoom);
 					// 获得marker中的数据
 					StoreData info = (StoreData) marker.getExtraInfo().get("info");
 					// View linlayout =

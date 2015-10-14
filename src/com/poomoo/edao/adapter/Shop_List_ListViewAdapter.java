@@ -80,7 +80,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		holder.textView_owner.setText(list.get(position).getRealName());
 		holder.textView_tel.setText(list.get(position).getTel());
 		holder.textView_address.setText(list.get(position).getAddress());
-		holder.textView_distance.setText("距离:　　" + list.get(position).getDistance());
+		holder.textView_distance.setText("距离:" + list.get(position).getDistance());
 		holder.bar.setRating(list.get(position).getAvgScore());
 		return convertView;
 	}
