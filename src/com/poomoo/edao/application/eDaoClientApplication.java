@@ -1,5 +1,8 @@
 package com.poomoo.edao.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.litepal.LitePalApplication;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -9,6 +12,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.poomoo.edao.R;
 import com.poomoo.edao.crashhandler.CrashHandler;
+
+import android.app.Activity;
 
 public class eDaoClientApplication extends LitePalApplication {
 	// 定位
@@ -43,6 +48,9 @@ public class eDaoClientApplication extends LitePalApplication {
 	private int totalIntegral = 0;// 总的积分
 	private double curlongitude = 0;
 	private double curlatitude = 0;
+	
+	private List<Activity> activity;
+	private static eDaoClientApplication instance;
 
 	public String getCurProvince() {
 		return this.curProvince;
@@ -259,7 +267,35 @@ public class eDaoClientApplication extends LitePalApplication {
 	public void setCurlatitude(double curlatitude) {
 		this.curlatitude = curlatitude;
 	}
-
+	
+	public static eDaoClientApplication getInstance() {
+		if (instance == null) {
+			instance = new eDaoClientApplication();
+		}
+		return instance;
+	}
+	
+	/**
+	 * 得到activity栈
+	 * 
+	 * @return
+	 */
+	public List<Activity> getActivity() {
+		if (activity == null) {
+			activity = new ArrayList<Activity>();
+		}
+		return activity;
+	}
+	/**
+	 * 清除所有Activity
+	 */
+	public void clearActivityArrayList() {
+		for (Activity activity : eDaoClientApplication.getInstance().getActivity()) {
+			activity.finish();
+		}
+		eDaoClientApplication.getInstance().getActivity().clear();
+	}
+	
 	@Override
 	public void onCreate() {
 		// TODO 自动生成的方法存根

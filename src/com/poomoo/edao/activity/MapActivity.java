@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,12 +29,12 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.overlayutil.OverlayManager;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -41,6 +43,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.map.Cluster;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -76,6 +79,7 @@ public class MapActivity extends BaseActivity
 	public BDLocationListener myListener = new MyLocationListener();;
 
 	boolean isFirstLoc = true;// 是否首次定位
+	boolean isFirstChange = true;// 是否首次改变地图状态
 
 	private ImageView imageView_center_dot, imageView_mylocation;
 	// 图层最大级别
@@ -89,15 +93,29 @@ public class MapActivity extends BaseActivity
 	 */
 	private double mCurrentLantitude;
 	private double mCurrentLongitude;
+
 	private String curCity = "定位中...";
 	private Gson gson = new Gson();
 	private List<StoreData> list;
-
 	private ImageView head_pic;
 	private int i = 0;
 	private LatLng latLng = null;
 	private OverlayOptions overlayOptions = null;
 	private Marker marker = null;
+	private ArrayList<Marker> markers;
+
+	private long betweenTime = 0;// 两次操作地图的间隔时间
+	private Timer timerSyncNef = null;// 定时
+	private TimerTask syncNef = null;// 定时任务
+
+	private LatLng northEast = null, southWest = null;// 当前地图的东北角、西南角
+
+	private Cluster mCluster;
+	private Integer mGridSize = 60;
+	private Boolean isAverageCenter = false;
+	private double mDistance = 100;
+
+	public static MapActivity instance = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,14 +123,12 @@ public class MapActivity extends BaseActivity
 		setContentView(R.layout.activity_map);
 
 		setImmerseLayout(findViewById(R.id.map_layout));
+		instance = this;
 
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		initLocation();
 		mLocationClient.start();
 
-		init();
-
-		// bd = BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		imageView_center_dot = (ImageView) findViewById(R.id.map_imageView_center_dot);
 		imageView_mylocation = (ImageView) findViewById(R.id.map_imageView_mylocaiton);
@@ -125,6 +141,8 @@ public class MapActivity extends BaseActivity
 		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
+
+		init();
 	}
 
 	private void init() {
@@ -136,6 +154,8 @@ public class MapActivity extends BaseActivity
 		layout_store.setOnClickListener(this);
 
 		list = new ArrayList<StoreData>();
+
+		mCluster = new Cluster(this, mBaiduMap, mGridSize, isAverageCenter, mGridSize, mDistance);
 	}
 
 	/**
@@ -143,53 +163,54 @@ public class MapActivity extends BaseActivity
 	 */
 	public void addInfosOverlay(final List<StoreData> infos) {
 		mBaiduMap.clear();
-		final List<OverlayOptions> list = new ArrayList<OverlayOptions>();
+		markers = new ArrayList<Marker>();
+		// final List<OverlayOptions> overlayOptionsList = new
+		// ArrayList<OverlayOptions>();
 		for (StoreData info : infos) {
+			// ImageLoader imageLoader = ImageLoader.getInstance();
+			// imageLoader.loadImage(info.getPictures(), new
+			// SimpleImageLoadingListener() {
+			// @Override
+			// public void onLoadingComplete(String imageUri, View view, Bitmap
+			// loadedImage) {
+			// // 图片处理
+			// // head_pic.setImageBitmap(loadedImage);
+			// System.out.println("加载图片成功:" + imageUri);
+			// i++;
+			// for (StoreData info : infos) {
+			// if (info.getPictures().equals(imageUri)) {
+			// // 位置
 			// latLng = new LatLng(info.getLatitude(), info.getLongitude());
-			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.loadImage(info.getPictures(), new SimpleImageLoadingListener() {
-				@Override
-				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-					// 图片处理
-					// head_pic.setImageBitmap(loadedImage);
-					System.out.println("加载图片成功:" + imageUri);
-					i++;
-					for (StoreData info : infos) {
-						if (info.getPictures().equals(imageUri)) {
-							// 位置
-							latLng = new LatLng(info.getLatitude(), info.getLongitude());
-							// 构建Marker图标
-							View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform,
-									null);
-							BitmapDescriptor bitmap = BitmapDescriptorFactory
-									.fromView(getInfoWindowView(linlayout, info, loadedImage));
-							overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(14);
-							list.add(overlayOptions);
-							System.out.println("list.add" + i);
-							marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-							Bundle bundle = new Bundle();
-							bundle.putSerializable("info", info);
-							marker.setExtraInfo(bundle);
-						}
-					}
-				}
-			});
 			// // 构建Marker图标
 			// View linlayout =
 			// MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform,
 			// null);
-			// BitmapDescriptor bitmap =
-			// BitmapDescriptorFactory.fromView(getInfoWindowView(linlayout,
-			// info,null));
+			// BitmapDescriptor bitmap = BitmapDescriptorFactory
+			// .fromView(getInfoWindowView(linlayout, info, loadedImage));
 			// overlayOptions = new
-			// MarkerOptions().position(latLng).icon(bitmap).zIndex(18);
-			// list.add(overlayOptions);
-			// System.out.println("list.add");
+			// MarkerOptions().position(latLng).icon(bitmap).zIndex(14);
+			// overlayOptionsList.add(overlayOptions);
+			// System.out.println("list.add" + i);
 			// marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-			// // marker.setIcon(bitmap);
 			// Bundle bundle = new Bundle();
 			// bundle.putSerializable("info", info);
 			// marker.setExtraInfo(bundle);
+			// }
+			// }
+			// }
+			// });
+			// 构建Marker图标
+			latLng = new LatLng(info.getLatitude(), info.getLongitude());
+			View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
+			BitmapDescriptor bitmap = BitmapDescriptorFactory.fromView(getInfoWindowView(linlayout, info, null));
+			overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(18);
+			// list.add(overlayOptions);
+			System.out.println("list.add");
+			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+			markers.add(marker);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("info", info);
+			marker.setExtraInfo(bundle);
 		}
 		LatLng myLL = new LatLng(mCurrentLantitude, mCurrentLongitude);
 		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
@@ -203,31 +224,17 @@ public class MapActivity extends BaseActivity
 			public boolean onMarkerClick(final Marker marker) {
 				// 将marker所在的经纬度的信息转化成屏幕上的坐标
 				final LatLng ll = marker.getPosition();
-				if (mBaiduMap.getMapStatus().zoom != 18) {
+				boolean isAlone = (boolean) marker.getExtraInfo().get("isAlone");
+				if (!isAlone) {
 					showCurrtenStroeOnMap(ll, 18);
 				} else {
-					// showCurrtenStroeOnMap(ll, maxRoom);
 					// 获得marker中的数据
 					StoreData info = (StoreData) marker.getExtraInfo().get("info");
-					// View linlayout =
-					// MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform,
-					// null);
-					// //
-					// linlayout.setBackgroundResource(R.drawable.ic_map_popup_bg);
-					// Point p = mBaiduMap.getProjection().toScreenLocation(ll);
-					// p.y -= 60;
-					// LatLng llInfo =
-					// mBaiduMap.getProjection().fromScreenLocation(p);
-					// // 为弹出的InfoWindow添加点击事件
-					// mInfoWindow = new InfoWindow(getInfoWindowView(linlayout,
-					// info), llInfo, 1);
-					// // 显示InfoWindow
-					// mBaiduMap.showInfoWindow(mInfoWindow);
+
 					Bundle pBundle = new Bundle();
 					pBundle.putSerializable("data", info);
 					openActivity(StoreInformationActivity.class, pBundle);
 				}
-
 				return true;
 			}
 		});
@@ -310,9 +317,11 @@ public class MapActivity extends BaseActivity
 		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
 		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
 		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-		option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-		option.setIsNeedLocationDescribe(true);// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-		option.setIsNeedLocationPoiList(true);// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+		// option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+		// option.setIsNeedLocationDescribe(true);//
+		// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+		// option.setIsNeedLocationPoiList(true);//
+		// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
 		mLocationClient.setLocOption(option);
 	}
 
@@ -381,12 +390,39 @@ public class MapActivity extends BaseActivity
 	@Override
 	public void onMapStatusChange(MapStatus arg0) {
 		// TODO 自动生成的方法存根
-		curCenterLatLng = mBaiduMap.getMapStatus().target;
+
 	}
 
 	@Override
 	public void onMapStatusChangeFinish(MapStatus arg0) {
 		// TODO 自动生成的方法存根
+		if (isFirstChange)
+			isFirstChange = false;
+		else {
+			if (timerSyncNef != null)
+				timerSyncNef.cancel();
+			syncNef = null;
+			syncNef = new TimerTask() {
+				@Override
+				public void run() {
+					try {
+						curCenterLatLng = mBaiduMap.getMapStatus().target;
+						System.out.println("地图状态改变:" + curCenterLatLng);
+						mCurrentLongitude = curCenterLatLng.longitude;
+						mCurrentLantitude = curCenterLatLng.latitude;
+						getData();
+						syncNef = null;
+						timerSyncNef.cancel();
+						this.cancel();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			timerSyncNef = null;
+			timerSyncNef = new Timer(true);
+			timerSyncNef.schedule(syncNef, eDaoClientConfig.mapRefresh, 1);// 拖动地图停止3秒钟后执行
+		}
 	}
 
 	@Override
@@ -429,7 +465,6 @@ public class MapActivity extends BaseActivity
 	 */
 	public void resetOverlay(View view) {
 		clearOverlay(null);
-		// initOverlay();
 	}
 
 	@Override
@@ -460,7 +495,6 @@ public class MapActivity extends BaseActivity
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bizName", "30000");
 		data.put("method", "30007");
-
 		data.put("longitude", mCurrentLongitude);
 		data.put("latitude", mCurrentLantitude);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
@@ -474,34 +508,75 @@ public class MapActivity extends BaseActivity
 					public void run() {
 						// TODO 自动生成的方法存根
 						if (responseData.getRsCode() == 1 && responseData.getJsonData().length() > 0) {
+							mBaiduMap.clear();
 							try {
 								JSONObject result = new JSONObject(responseData.getJsonData().toString());
 
 								JSONArray data = result.getJSONArray("records");
+
+								list.clear();
 								int length = data.length();
 								for (int i = 0; i < length; i++) {
 									StoreData storeData = new StoreData();
 									storeData = gson.fromJson(data.getJSONObject(i).toString(), StoreData.class);
 									list.add(storeData);
 								}
-								// StoreData storeData = new StoreData();
-								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119121849495_2.jpg");
-								// storeData.setLatitude(26.612613);
-								// storeData.setLongitude(106.634157);
-								// storeData.setShopName("测试1");
-								// storeData.setRealName("测试人1");
-								// list.add(storeData);
-								//
-								// storeData = new StoreData();
-								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
-								// storeData.setLatitude(26.613008);
-								// storeData.setLongitude(106.633726);
-								// storeData.setShopName("测试2");
-								// storeData.setRealName("测试人2");
-								// list.add(storeData);
+								StoreData storeData = new StoreData();
+								storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119121849495_2.jpg");
+								storeData.setLatitude(26.612613);
+								storeData.setLongitude(106.634157);
+								storeData.setShopName("测试1");
+								storeData.setRealName("测试人1");
+								list.add(storeData);
 
+								storeData = new StoreData();
+								storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
+								storeData.setLatitude(26.613008);
+								storeData.setLongitude(106.633726);
+								storeData.setShopName("测试2");
+								storeData.setRealName("测试人2");
+								list.add(storeData);
 								addInfosOverlay(list);
-								initMarkerClickEvent();
+								System.out.println("当前图层级别:" + mBaiduMap.getMapStatus().zoom);
+								if (mBaiduMap.getMapStatus().zoom >= 18) {
+									mBaiduMap.clear();
+									refreshVersionClusterMarker(markers);
+								} else {
+									System.out.println("重新绘制");
+									mBaiduMap.clear();
+									switch ((int) mBaiduMap.getMapStatus().zoom) {
+									case 17:
+										mDistance = 50;
+										break;
+									case 16:
+										mDistance = 100;
+										break;
+									case 15:
+										mDistance = 200;
+										break;
+									case 14:
+										mDistance = 500;
+										break;
+									case 13:
+										mDistance = 1000;
+										break;
+									case 12:
+										mDistance = 2000;
+										break;
+									case 11:
+										mDistance = 5000;
+										break;
+									default:
+										mDistance = 10000;
+										break;
+									}
+									mCluster.setmDistance(mDistance);
+									mCluster.setmBaiduMap(mBaiduMap);
+									mCluster.setInfos(list);
+									mCluster.createCluster(refreshVersionClusterMarker(markers));
+								}
+
+								// initMarkerClickEvent();
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
@@ -530,4 +605,24 @@ public class MapActivity extends BaseActivity
 		});
 	}
 
+	private ArrayList<Marker> refreshVersionClusterMarker(ArrayList<Marker> list) {
+		northEast = mBaiduMap.getMapStatus().bound.northeast;
+		southWest = mBaiduMap.getMapStatus().bound.southwest;
+		System.out.println("东北角:" + northEast + "  西南角:" + southWest);
+
+		LatLngBounds bounds = new LatLngBounds.Builder().include(northEast).include(southWest).build();
+
+		ArrayList<Marker> result = new ArrayList<Marker>();
+		System.out.println("marker list大小 删除前:" + list.size());
+		for (int i = 0; i < list.size(); i++) {
+			if (bounds.contains(list.get(i).getPosition())) {
+				result.add(list.get(i));
+			} else {
+				list.get(i).remove();// 从地图上删除后该marker是否还在内存?
+			}
+		}
+		System.out.println("marker list大小 删除后:" + list.size());
+		return result;
+
+	}
 }

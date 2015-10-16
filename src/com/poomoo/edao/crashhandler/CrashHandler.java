@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.poomoo.edao.activity.NavigationActivity;
 import com.poomoo.edao.util.Utity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -85,12 +87,12 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			// Sleep一会后结束程序
 			// 来让线程停止一会是为了显示Toast信息给用户，然后Kill程序
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(3 * 1000);
 			} catch (InterruptedException e) {
 
 			}
+			NavigationActivity.instance.finish();
 			android.os.Process.killProcess(android.os.Process.myPid());
-			System.exit(10);
 		}
 	}
 

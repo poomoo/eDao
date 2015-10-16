@@ -124,6 +124,7 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 			// 商户角色
 			else {
 				holder.textView_lable.setText("客户姓名:　");
+				holder.button_pay.setVisibility(View.INVISIBLE);
 			}
 		}
 		System.out.println("getview完成"+ "position:" + position);
