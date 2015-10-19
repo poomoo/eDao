@@ -121,7 +121,7 @@
             </intent-filter>
         </receiver>
         <!-- 微信支付 -->
-        
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

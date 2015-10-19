@@ -3,21 +3,21 @@ package com.poomoo.edao.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.poomoo.edao.model.StoreData;
 
 import android.util.Log;
 
 public class ClusterMarker {
 	private LatLng mCenter;
-	private List<Marker> mMarkers;
+	private List<StoreData> mStoreDatas;
 	private MBound mGridBounds;
 	private OverlayOptions overlayOptions = null;
 
 	public ClusterMarker(LatLng ll) {
 		this.mCenter = ll;
-		mMarkers = new ArrayList<Marker>();
+		mStoreDatas = new ArrayList<StoreData>();
 	}
 
 	/**
@@ -27,13 +27,13 @@ public class ClusterMarker {
 	 */
 	private LatLng calAverageCenter() {
 		double latitude = 0, longitude = 0;
-		int len = mMarkers.size() == 0 ? 1 : mMarkers.size();
+		int len = mStoreDatas.size() == 0 ? 1 : mStoreDatas.size();
 
 		Log.e("calAverageCenter:", "calAverageCenter：------>" + len);
 
 		for (int i = 0; i < len; i++) {
-			latitude = latitude + mMarkers.get(i).getPosition().latitude;
-			longitude = longitude + mMarkers.get(i).getPosition().longitude;
+			latitude = latitude + mStoreDatas.get(i).getLatitude();
+			longitude = longitude + mStoreDatas.get(i).getLongitude();
 		}
 
 		return new LatLng((int) (latitude / len), (int) (longitude / len));
@@ -46,12 +46,14 @@ public class ClusterMarker {
 	 * @param marker
 	 * @param isAverageCenter
 	 */
-	public void AddMarker(Marker marker, Boolean isAverageCenter) {
-		mMarkers.add(marker);
+	public void AddInfo(StoreData storeData, Boolean isAverageCenter) {
+		mStoreDatas.add(storeData);
 
 		if (!isAverageCenter) {
-			if (mCenter == null)
-				this.mCenter = mMarkers.get(0).getPosition();
+			if (mCenter == null) {
+				LatLng latLng = new LatLng(storeData.getLatitude(), storeData.getLongitude());
+				this.mCenter = latLng;
+			}
 		} else {
 			this.mCenter = calAverageCenter();
 		}
@@ -73,15 +75,16 @@ public class ClusterMarker {
 		this.overlayOptions = overlayOptions;
 	}
 
-	public List<Marker> getmMarkers() {
-		return mMarkers;
+	public List<StoreData> getmStoreDatas() {
+		return mStoreDatas;
 	}
 
-	public void setmMarkers(List<Marker> mMarkers, Boolean isAverageCenter) {
-		this.mMarkers.addAll(mMarkers);
+	public void setmStoreDatas(List<StoreData> mStoreDatas, Boolean isAverageCenter) {
+		this.mStoreDatas.addAll(mStoreDatas);
 		if (!isAverageCenter) {
 			if (mCenter == null) {
-				this.mCenter = mMarkers.get(0).getPosition();
+				LatLng latLng = new LatLng(mStoreDatas.get(0).getLatitude(), mStoreDatas.get(0).getLongitude());
+				this.mCenter = latLng;
 			}
 		} else
 			this.mCenter = calAverageCenter();

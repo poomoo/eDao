@@ -19,7 +19,7 @@ public class eDaoClientConfig {
 	// 时间
 	public static final int timeout = 1 * 5 * 1000;// 网络通讯超时
 	public static final int advTime = 1 * 5 * 1000;// 广告轮播时间
-	public static final int mapRefresh = 1 * 2 * 1000;// 地图刷新时间
+	public static final int mapRefresh = 1 * 2 * 600;// 地图刷新时间
 
 	/* 提示信息 */
 	public static final String checkNet = "请检查网络后重试";

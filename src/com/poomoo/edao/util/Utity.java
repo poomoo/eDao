@@ -22,7 +22,12 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.http.conn.util.InetAddressUtils;
 import org.litepal.crud.DataSupport;
 
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.Projection;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 import com.poomoo.edao.application.eDaoClientApplication;
+import com.poomoo.edao.map.MBound;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
@@ -31,6 +36,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
@@ -638,5 +644,68 @@ public class Utity {
 
 	private static void appendHex(StringBuffer sb, byte b) {
 		sb.append(HEX.charAt((b >> 4) & 0x0f)).append(HEX.charAt(b & 0x0f));
+	}
+
+	/**
+	 * 判断坐标点是否在MBound 覆盖区域内
+	 * 
+	 * @param markerGeo
+	 * @param bound
+	 * @return
+	 */
+	public static Boolean isMarkersInCluster(LatLng markerGeo, MBound bound) {
+		System.out.println("markerGeo.latitude:" + markerGeo.latitude + ":" + bound.getLeftBottomLat() + ","
+				+ bound.getRightTopLat() + "/n" + "markerGeo.longitude:" + markerGeo.longitude + ":"
+				+ bound.getLeftBottomLng() + "," + bound.getRightTopLng());
+		if (markerGeo.latitude > bound.getLeftBottomLat() && markerGeo.latitude < bound.getRightTopLat()
+				&& markerGeo.longitude > bound.getLeftBottomLng() && markerGeo.longitude < bound.getRightTopLng()) {
+			// System.out.println("markerGeo:" + markerGeo + "在范围内");
+			return true;
+		}
+		// System.out.println("markerGeo:" + markerGeo + "不在范围内");
+		return false;
+
+	}
+
+	public static double getRange(double i, double min, double max) {
+		i = Math.max(i, min);
+		i = Math.min(i, max);
+		return i;
+	}
+
+	public static MBound getExtendedBounds(BaiduMap map, MBound bound, Integer gridSize) {
+		// Log.d("getExtendBounds", "size:"+gridSize);
+		MBound tbounds = cutBoundsInRange(bound);
+
+		Projection projection = map.getProjection();
+		Point pixelNE = new Point();
+		Point pixelSW = new Point();
+
+		pixelNE = projection.toScreenLocation(tbounds.getRightTop());
+		pixelSW = projection.toScreenLocation(tbounds.getLeftBottom());
+
+		pixelNE.x += gridSize;
+		pixelNE.y -= gridSize;
+		pixelSW.x -= gridSize;
+		pixelSW.y += gridSize;
+		LatLng rightTop = projection.fromScreenLocation(pixelNE);
+		LatLng leftBottom = projection.fromScreenLocation(pixelSW);
+		System.out.println("rightTop:" + rightTop + "leftBottom:" + leftBottom);
+
+		return new MBound(rightTop, leftBottom);
+	}
+
+	public static MBound cutBoundsInRange(MBound bounds) {
+		double maxX = getRange(bounds.getRightTopLat(), -74000000, 74000000);
+		double minX = getRange(bounds.getRightTopLat(), -74000000, 74000000);
+		double maxY = getRange(bounds.getRightTopLng(), -180000000, 180000000);
+		double minY = getRange(bounds.getLeftBottomLng(), -180000000, 180000000);
+		return new MBound(minX, minY, maxX, maxY);
+	}
+
+	public static Boolean isMarkerInBounds(LatLng latLng, LatLngBounds bounds) {
+		if (bounds.contains(latLng))
+			return true;
+		return false;
 	}
 }

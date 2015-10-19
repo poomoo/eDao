@@ -21,43 +21,32 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMapStatusChangeListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
-import com.baidu.mapapi.overlayutil.OverlayManager;
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.map.Cluster;
+import com.poomoo.edao.map.MBound;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MapActivity extends BaseActivity
@@ -67,27 +56,21 @@ public class MapActivity extends BaseActivity
 	 */
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
-	private InfoWindow mInfoWindow;
-
 	private LinearLayout layout_store;
 	private TextView textView_curCity;
-
-	// 初始化全局 bitmap 信息，不用时及时 recycle
-	// private BitmapDescriptor bd;
+	private ImageView imageView_mylocation;
 
 	public LocationClient mLocationClient = null;
-	public BDLocationListener myListener = new MyLocationListener();;
-
+	public BDLocationListener myListener = new MyLocationListener();
 	boolean isFirstLoc = true;// 是否首次定位
 	boolean isFirstChange = true;// 是否首次改变地图状态
-
-	private ImageView imageView_center_dot, imageView_mylocation;
 	// 图层最大级别
-	private final float maxRoom = 14;
+	private final float maxZoom = 14;
+	private float curZoom = 0;
+	private float lastZoom = 0;
 	// 当前图层中心点经纬度
-	private LatLng curCenterLatLng = null;
-	private OverlayManager overlayManager;
-
+	private LatLng curMapCenterLatLng = null;
+	private LatLng lastMapCenterLatLng = null;
 	/**
 	 * 最新一次的经纬度
 	 */
@@ -97,23 +80,15 @@ public class MapActivity extends BaseActivity
 	private String curCity = "定位中...";
 	private Gson gson = new Gson();
 	private List<StoreData> list;
-	private ImageView head_pic;
-	private int i = 0;
-	private LatLng latLng = null;
-	private OverlayOptions overlayOptions = null;
-	private Marker marker = null;
-	private ArrayList<Marker> markers;
 
-	private long betweenTime = 0;// 两次操作地图的间隔时间
 	private Timer timerSyncNef = null;// 定时
 	private TimerTask syncNef = null;// 定时任务
-
-	private LatLng northEast = null, southWest = null;// 当前地图的东北角、西南角
 
 	private Cluster mCluster;
 	private Integer mGridSize = 60;
 	private Boolean isAverageCenter = false;
-	private double mDistance = 100;
+	private double mDistance = 100;// 聚合距离
+	private boolean allow = false;
 
 	public static MapActivity instance = null;
 
@@ -125,24 +100,19 @@ public class MapActivity extends BaseActivity
 		setImmerseLayout(findViewById(R.id.map_layout));
 		instance = this;
 
+		init();
+
 		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
 		initLocation();
 		mLocationClient.start();
 
-		mMapView = (MapView) findViewById(R.id.bmapView);
-		imageView_center_dot = (ImageView) findViewById(R.id.map_imageView_center_dot);
-		imageView_mylocation = (ImageView) findViewById(R.id.map_imageView_mylocaiton);
-		imageView_mylocation.setOnClickListener(this);
-
-		mBaiduMap = mMapView.getMap();
-
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(maxRoom);
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(maxZoom);
 		mBaiduMap.setMapStatus(msu);
 		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setOnMapClickListener(this);
 		mBaiduMap.setOnMapStatusChangeListener(this);
 
-		init();
+		initMarkerClickEvent();
 	}
 
 	private void init() {
@@ -150,71 +120,17 @@ public class MapActivity extends BaseActivity
 		textView_curCity = (TextView) findViewById(R.id.map_textView_curcity);
 		layout_store = (LinearLayout) findViewById(R.id.map_layout_store);
 
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		imageView_mylocation = (ImageView) findViewById(R.id.map_imageView_mylocaiton);
+
 		textView_curCity.setText(curCity);
+		mBaiduMap = mMapView.getMap();
 		layout_store.setOnClickListener(this);
+		imageView_mylocation.setOnClickListener(this);
 
 		list = new ArrayList<StoreData>();
 
 		mCluster = new Cluster(this, mBaiduMap, mGridSize, isAverageCenter, mGridSize, mDistance);
-	}
-
-	/**
-	 * 初始化图层
-	 */
-	public void addInfosOverlay(final List<StoreData> infos) {
-		mBaiduMap.clear();
-		markers = new ArrayList<Marker>();
-		// final List<OverlayOptions> overlayOptionsList = new
-		// ArrayList<OverlayOptions>();
-		for (StoreData info : infos) {
-			// ImageLoader imageLoader = ImageLoader.getInstance();
-			// imageLoader.loadImage(info.getPictures(), new
-			// SimpleImageLoadingListener() {
-			// @Override
-			// public void onLoadingComplete(String imageUri, View view, Bitmap
-			// loadedImage) {
-			// // 图片处理
-			// // head_pic.setImageBitmap(loadedImage);
-			// System.out.println("加载图片成功:" + imageUri);
-			// i++;
-			// for (StoreData info : infos) {
-			// if (info.getPictures().equals(imageUri)) {
-			// // 位置
-			// latLng = new LatLng(info.getLatitude(), info.getLongitude());
-			// // 构建Marker图标
-			// View linlayout =
-			// MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform,
-			// null);
-			// BitmapDescriptor bitmap = BitmapDescriptorFactory
-			// .fromView(getInfoWindowView(linlayout, info, loadedImage));
-			// overlayOptions = new
-			// MarkerOptions().position(latLng).icon(bitmap).zIndex(14);
-			// overlayOptionsList.add(overlayOptions);
-			// System.out.println("list.add" + i);
-			// marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-			// Bundle bundle = new Bundle();
-			// bundle.putSerializable("info", info);
-			// marker.setExtraInfo(bundle);
-			// }
-			// }
-			// }
-			// });
-			// 构建Marker图标
-			latLng = new LatLng(info.getLatitude(), info.getLongitude());
-			View linlayout = MapActivity.this.getLayoutInflater().inflate(R.layout.popup_map_inform, null);
-			BitmapDescriptor bitmap = BitmapDescriptorFactory.fromView(getInfoWindowView(linlayout, info, null));
-			overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(18);
-			// list.add(overlayOptions);
-			System.out.println("list.add");
-			marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-			markers.add(marker);
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("info", info);
-			marker.setExtraInfo(bundle);
-		}
-		LatLng myLL = new LatLng(mCurrentLantitude, mCurrentLongitude);
-		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(myLL);
-		mBaiduMap.setMapStatus(u);
 	}
 
 	private void initMarkerClickEvent() {
@@ -223,10 +139,14 @@ public class MapActivity extends BaseActivity
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
 				// 将marker所在的经纬度的信息转化成屏幕上的坐标
+				System.out.println("点击marker:" + marker.getPosition() + marker.toString());
 				final LatLng ll = marker.getPosition();
-				boolean isAlone = (boolean) marker.getExtraInfo().get("isAlone");
-				if (!isAlone) {
-					showCurrtenStroeOnMap(ll, 18);
+				int index = marker.getZIndex();
+				if (index == 2) {
+					float tempZoom = 18;
+					if (curZoom != 17)
+						tempZoom = curZoom + 1.0f;
+					showCurrtenStroeOnMap(ll, tempZoom);
 				} else {
 					// 获得marker中的数据
 					StoreData info = (StoreData) marker.getExtraInfo().get("info");
@@ -240,72 +160,6 @@ public class MapActivity extends BaseActivity
 		});
 	}
 
-	private View getInfoWindowView(View mMarkerLy, final StoreData store, Bitmap bitmap) {
-		ViewHolder viewHolder = null;
-		if (mMarkerLy.getTag() == null) {
-			viewHolder = new ViewHolder();
-			viewHolder.storeImg = (ImageView) mMarkerLy.findViewById(R.id.popup_map_inform_imageView_pic);
-			viewHolder.storeRatingBar = (RatingBar) mMarkerLy.findViewById(R.id.popup_map_inform_ratingbar);
-			viewHolder.storeName = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_name);
-			viewHolder.storeOwner = (TextView) mMarkerLy.findViewById(R.id.popup_map_inform_textView_owner);
-			// viewHolder.storeScore = (TextView)
-			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_score);
-			// viewHolder.storeDistance = (TextView)
-			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_distance);
-			// viewHolder.storeInfo = (TextView)
-			// mMarkerLy.findViewById(R.id.popup_map_inform_textView_inform);
-
-			mMarkerLy.setTag(viewHolder);
-		}
-		viewHolder = (ViewHolder) mMarkerLy.getTag();
-		head_pic = (ImageView) mMarkerLy.findViewById(R.id.popup_map_inform_imageView_pic);
-		// 使用ImageLoader加载网络图片
-		DisplayImageOptions options = new DisplayImageOptions.Builder()//
-				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
-				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
-				.cacheInMemory(true) // 内存缓存
-				.cacheOnDisk(true) // sdcard缓存
-				.bitmapConfig(Config.RGB_565)// 设置最低配置
-				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
-				.build();
-		System.out.println("加载图片:" + store.getPictures());
-		if (bitmap != null)
-			viewHolder.storeImg.setImageBitmap(bitmap);
-		// ImageLoader.getInstance().loadImageSync(store.getPictures());
-		// ImageLoader.getInstance().displayImage(store.getPictures(),
-		// viewHolder.storeImg, options);
-		System.out.println("加载图片完成");
-
-		viewHolder.storeRatingBar.setRating(store.getAvgScore());
-		viewHolder.storeName.setText(store.getShopName());
-		viewHolder.storeOwner.setText(store.getRealName());
-		// viewHolder.storeScore.setText(store.getAvgScore() + "");
-		// viewHolder.storeDistance.setText(store.getDistance());
-		// viewHolder.storeInfo.setText(store.getAddress());
-		mMarkerLy.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO 自动生成的方法存根
-				Bundle pBundle = new Bundle();
-				pBundle.putSerializable("data", store);
-				openActivity(StoreInformationActivity.class, pBundle);
-			}
-		});
-		return mMarkerLy;
-	}
-
-	/**
-	 * 复用弹出面板mMarkerLy的控件
-	 * 
-	 * @author
-	 * 
-	 */
-	private class ViewHolder {
-		ImageView storeImg;
-		TextView storeName, storeOwner;
-		RatingBar storeRatingBar;
-	}
-
 	private void initLocation() {
 		LocationClientOption option = new LocationClientOption();
 		option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
@@ -317,11 +171,6 @@ public class MapActivity extends BaseActivity
 		option.setOpenGps(true);// 可选，默认false,设置是否使用gps
 		option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
 		option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-		// option.setEnableSimulateGps(false);// 可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-		// option.setIsNeedLocationDescribe(true);//
-		// 可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-		// option.setIsNeedLocationPoiList(true);//
-		// 可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
 		mLocationClient.setLocOption(option);
 	}
 
@@ -334,6 +183,8 @@ public class MapActivity extends BaseActivity
 				return;
 			mCurrentLantitude = location.getLatitude();
 			mCurrentLongitude = location.getLongitude();
+			// mCurrentLatLng = new LatLng(mCurrentLantitude,
+			// mCurrentLongitude);
 			curCity = location.getCity();
 			textView_curCity.setText(curCity);
 			MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
@@ -341,13 +192,6 @@ public class MapActivity extends BaseActivity
 					.direction(100).latitude(mCurrentLantitude).longitude(mCurrentLongitude).build();
 			// 设置定位数据
 			mBaiduMap.setMyLocationData(locData);
-			// 设置自定义图标
-			// BitmapDescriptor mCurrentMarker =
-			// BitmapDescriptorFactory.fromResource(R.drawable.ic_map_icon);
-			// MyLocationConfiguration config = new
-			// MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
-			// false, mCurrentMarker);
-			// mBaiduMap.setMyLocationConfigeration(config);
 			if (isFirstLoc) {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
@@ -369,8 +213,8 @@ public class MapActivity extends BaseActivity
 		// 定义地图状态
 		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(zoom).build();
 		// 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+		allow = true;
 		// 改变地图状态
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
 	}
@@ -391,11 +235,22 @@ public class MapActivity extends BaseActivity
 	public void onMapStatusChange(MapStatus arg0) {
 		// TODO 自动生成的方法存根
 
+		// if (allow) {
+		// System.out.println("onMapStatusChange");
+		// reFreshMapData();
+		// }
+		//
+		// allow = false;
 	}
 
 	@Override
 	public void onMapStatusChangeFinish(MapStatus arg0) {
 		// TODO 自动生成的方法存根
+		System.out.println("onMapStatusChangeFinish");
+		reFreshMapData();
+	}
+
+	private void reFreshMapData() {
 		if (isFirstChange)
 			isFirstChange = false;
 		else {
@@ -406,11 +261,21 @@ public class MapActivity extends BaseActivity
 				@Override
 				public void run() {
 					try {
-						curCenterLatLng = mBaiduMap.getMapStatus().target;
-						System.out.println("地图状态改变:" + curCenterLatLng);
-						mCurrentLongitude = curCenterLatLng.longitude;
-						mCurrentLantitude = curCenterLatLng.latitude;
-						getData();
+						curMapCenterLatLng = mBaiduMap.getMapStatus().target;
+
+						lastZoom = curZoom;
+						curZoom = mBaiduMap.getMapStatus().zoom;
+						System.out.println("地图状态改变:" + lastMapCenterLatLng + ":" + curMapCenterLatLng);
+						mCurrentLongitude = curMapCenterLatLng.longitude;
+						mCurrentLantitude = curMapCenterLatLng.latitude;
+
+						if (isRefresh()) {
+							lastMapCenterLatLng = curMapCenterLatLng;
+							Message msg = new Message();
+							msg.what = 1;
+							myHandler.sendMessage(msg);
+						}
+
 						syncNef = null;
 						timerSyncNef.cancel();
 						this.cancel();
@@ -421,13 +286,14 @@ public class MapActivity extends BaseActivity
 			};
 			timerSyncNef = null;
 			timerSyncNef = new Timer(true);
-			timerSyncNef.schedule(syncNef, eDaoClientConfig.mapRefresh, 1);// 拖动地图停止3秒钟后执行
+			timerSyncNef.schedule(syncNef, eDaoClientConfig.mapRefresh, 1);// 拖动地图停止2秒钟后执行
 		}
 	}
 
 	@Override
 	public void onMapStatusChangeStart(MapStatus arg0) {
 		// TODO 自动生成的方法存根
+		System.out.println("onMapStatusChangeStart");
 	}
 
 	@Override
@@ -436,8 +302,12 @@ public class MapActivity extends BaseActivity
 		switch (v.getId()) {
 		case R.id.map_imageView_mylocaiton:
 			LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
+			// float zoom = mBaiduMap.getMapStatus().zoom;
+			// // showCurrtenStroeOnMap(ll, zoom);
+			// System.out.println("点击定位:" + ll);
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
+			Utity.showToast(getApplicationContext(), "正在定位中...");
 			break;
 		case R.id.map_layout_store:
 			Bundle pBundle = new Bundle();
@@ -447,24 +317,6 @@ public class MapActivity extends BaseActivity
 			break;
 		}
 
-	}
-
-	/**
-	 * 清除所有Overlay
-	 * 
-	 * @param view
-	 */
-	public void clearOverlay(View view) {
-		mBaiduMap.clear();
-	}
-
-	/**
-	 * 重新添加Overlay
-	 * 
-	 * @param view
-	 */
-	public void resetOverlay(View view) {
-		clearOverlay(null);
 	}
 
 	@Override
@@ -486,7 +338,6 @@ public class MapActivity extends BaseActivity
 		mMapView.removeAllViews();
 		mMapView.onDestroy();
 		super.onDestroy(); // 回收 bitmap 资源 bdA.recycle();
-		// bd.recycle();
 	}
 
 	private void getData() {
@@ -521,26 +372,26 @@ public class MapActivity extends BaseActivity
 									storeData = gson.fromJson(data.getJSONObject(i).toString(), StoreData.class);
 									list.add(storeData);
 								}
-								StoreData storeData = new StoreData();
-								storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119121849495_2.jpg");
-								storeData.setLatitude(26.612613);
-								storeData.setLongitude(106.634157);
-								storeData.setShopName("测试1");
-								storeData.setRealName("测试人1");
-								list.add(storeData);
-
-								storeData = new StoreData();
-								storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
-								storeData.setLatitude(26.613008);
-								storeData.setLongitude(106.633726);
-								storeData.setShopName("测试2");
-								storeData.setRealName("测试人2");
-								list.add(storeData);
-								addInfosOverlay(list);
+								// StoreData storeData = new StoreData();
+								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119121849495_2.jpg");
+								// storeData.setLatitude(26.612613);
+								// storeData.setLongitude(106.634157);
+								// storeData.setShopName("测试1");
+								// storeData.setRealName("测试人1");
+								// list.add(storeData);
+								//
+								// storeData = new StoreData();
+								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
+								// storeData.setLatitude(26.613008);
+								// storeData.setLongitude(106.633726);
+								// storeData.setShopName("测试2");
+								// storeData.setRealName("测试人2");
+								// list.add(storeData);
+								// addInfosOverlay(list);
 								System.out.println("当前图层级别:" + mBaiduMap.getMapStatus().zoom);
 								if (mBaiduMap.getMapStatus().zoom >= 18) {
-									mBaiduMap.clear();
-									refreshVersionClusterMarker(markers);
+									// mBaiduMap.clear();
+									// refreshVersionClusterMarker(markers);
 								} else {
 									System.out.println("重新绘制");
 									mBaiduMap.clear();
@@ -570,13 +421,13 @@ public class MapActivity extends BaseActivity
 										mDistance = 10000;
 										break;
 									}
+
 									mCluster.setmDistance(mDistance);
 									mCluster.setmBaiduMap(mBaiduMap);
 									mCluster.setInfos(list);
-									mCluster.createCluster(refreshVersionClusterMarker(markers));
+									// mCluster.createCluster(refreshVersionClusterMarker(markers));
+									mCluster.createCluster(list);
 								}
-
-								// initMarkerClickEvent();
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
@@ -605,24 +456,33 @@ public class MapActivity extends BaseActivity
 		});
 	}
 
-	private ArrayList<Marker> refreshVersionClusterMarker(ArrayList<Marker> list) {
-		northEast = mBaiduMap.getMapStatus().bound.northeast;
-		southWest = mBaiduMap.getMapStatus().bound.southwest;
-		System.out.println("东北角:" + northEast + "  西南角:" + southWest);
+	private Boolean isRefresh() {
+		if (curZoom != lastZoom) {// 图层改变
+			return true;
+		} else {
+			MBound bound = new MBound(lastMapCenterLatLng, lastMapCenterLatLng);
+			bound = Utity.getExtendedBounds(mBaiduMap, bound, 255);
+			if (!Utity.isMarkersInCluster(curMapCenterLatLng, bound)) {
+				System.out.println("当前图层中心坐标不在范围内时刷新");
+				return true;
+			} else
+				System.out.println("当前图层中心坐标在范围内");
+		}
 
-		LatLngBounds bounds = new LatLngBounds.Builder().include(northEast).include(southWest).build();
+		return false;
+	}
 
-		ArrayList<Marker> result = new ArrayList<Marker>();
-		System.out.println("marker list大小 删除前:" + list.size());
-		for (int i = 0; i < list.size(); i++) {
-			if (bounds.contains(list.get(i).getPosition())) {
-				result.add(list.get(i));
-			} else {
-				list.get(i).remove();// 从地图上删除后该marker是否还在内存?
+	Handler myHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO 自动生成的方法存根
+			super.handleMessage(msg);
+			if (msg.what == 1) {
+				showProgressDialog("加载中...");
+				getData();
 			}
 		}
-		System.out.println("marker list大小 删除后:" + list.size());
-		return result;
 
-	}
+	};
 }

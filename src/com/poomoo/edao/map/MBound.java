@@ -20,7 +20,6 @@ public class MBound {
 		rightTopLng = rightTop.longitude;
 		leftBottomLat = leftBottom.latitude;
 		leftBottomLng = leftBottom.longitude;
-		System.out.println("MBound范围  rightTop:" + rightTop + "  leftBottom:" + leftBottom);
 
 	}
 
