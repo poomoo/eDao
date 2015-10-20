@@ -26,7 +26,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -51,7 +53,6 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
 	private String patternCoder = "(?<!\\d)\\d{6}(?!\\d)";
 	private Gson gson = new Gson();
 	private String tel = "", identyNum = "", passWord1 = "", passWord2 = "";
-	private ProgressDialog progressDialog = null;
 	private static final String address = "10690529100103";
 
 	@Override
@@ -81,6 +82,35 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
 		button_regist.setOnClickListener(this);
 
 		button_identity_code.setClickable(false);
+
+		editText_phone.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				tel = s.toString().trim();
+				if (tel.length() == 11)
+					checkTel();
+				else {
+					textView_isUsed.setText("");
+					button_identity_code.setBackgroundResource(R.drawable.style_identy_button_no_frame);
+					button_identity_code.setTextColor(Color.parseColor("#808080"));
+					button_identity_code.setClickable(false);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -329,47 +359,57 @@ public class RegistrationActivity extends BaseActivity implements OnClickListene
 			// v.requestFocus();
 		}
 		if (!hasFocus && tel.length() == 11) {
-			Map<String, String> data = new HashMap<String, String>();
-			data.put("bizName", "10000");
-			data.put("method", "10002");
-			data.put("tel", tel);
-
-			HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
-
-				@Override
-				public void onFinish(final ResponseData responseData) {
-					// TODO 自动生成的方法存根
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							// TODO 自动生成的方法存根
-							if (responseData.getRsCode() == 1) {
-								button_identity_code.setBackgroundResource(R.drawable.style_identy_button_yes_frame);
-								button_identity_code.setTextColor(Color.parseColor("#0079ff"));
-								button_identity_code.setClickable(true);
-								textView_isUsed.setText("可以使用");
-							} else {
-								textView_isUsed.setText("*已注册");
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onError(Exception e) {
-					// TODO 自动生成的方法存根
-					runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							// TODO 自动生成的方法存根
-							Utity.showToast(getApplicationContext(), "手机号验证失败");
-						}
-					});
-				}
-			});
+			checkTel();
 
 		}
+	}
+
+	private void checkTel() {
+		showProgressDialog("正在验证该手机号是否注册...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10002");
+		data.put("tel", tel);
+
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							button_identity_code.setBackgroundResource(R.drawable.style_identy_button_yes_frame);
+							button_identity_code.setTextColor(Color.parseColor("#0079ff"));
+							button_identity_code.setClickable(true);
+							textView_isUsed.setText("可以使用");
+						} else {
+							textView_isUsed.setText("*已注册");
+							button_identity_code.setBackgroundResource(R.drawable.style_identy_button_no_frame);
+							button_identity_code.setTextColor(Color.parseColor("#808080"));
+							button_identity_code.setClickable(false);
+						}
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), "手机号验证失败");
+					}
+				});
+			}
+		});
 	}
 
 	@Override

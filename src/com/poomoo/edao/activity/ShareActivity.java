@@ -37,10 +37,9 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	private Button button_share;
 
 	// 首先在您的Activity中添加如下成员变量
-	final UMSocialService mController = UMServiceFactory
-			.getUMSocialService("com.umeng.share");
-	private static final String content = "乐意道。http://www.yidao7.com";
-	private static final String website = "http://www.yidao7.com";
+	final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+	private static final String content = "乐意道官网:http://www.leyidao.com";
+	private static final String website = "http://www.leyidao.com/yidao/appDownLoad/wap.html";
 	private static final String title = "扫描二维码下载注册乐意道";
 
 	@Override
@@ -155,8 +154,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 		qqSsoHandler.addToSocialSDK();
 
 		// 添加QZone平台
-		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, appId,
-				appKey);
+		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, appId, appKey);
 		qZoneSsoHandler.addToSocialSDK();
 	}
 
@@ -203,10 +201,8 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.share_button:
 			// 是否只有已登录用户才能打开分享选择页
-			mController.getConfig().setPlatforms(SHARE_MEDIA.QQ,
-					SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
-					SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
-					SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
+			mController.getConfig().setPlatforms(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
+					SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
 			mController.openShare(this, false);
 			break;
 		}
@@ -216,8 +212,7 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		/** 使用SSO授权必须添加如下代码 */
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
-				requestCode);
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}

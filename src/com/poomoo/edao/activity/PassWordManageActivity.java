@@ -34,7 +34,6 @@ public class PassWordManageActivity extends BaseActivity implements OnClickListe
 	private eDaoClientApplication application;
 	private Gson gson = new Gson();
 	private String type = "", tel = "", identyNum = "", oldPassWord = "", passWord1 = "", passWord2 = "";
-	private ProgressDialog progressDialog = null;
 	private boolean isNeedOldPW = true;
 
 	@Override
