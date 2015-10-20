@@ -42,7 +42,6 @@ public class AllianceApplyActivity extends BaseActivity implements OnClickListen
 	private LinearLayout layout_zone;
 	private Button button_confirm;
 
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String zone = "", merchant_num = "", merchant_name = "", referrerUserId = "", referrerName = "",
 			curProvince = "", curCity = "", curArea = "", money = "";
@@ -156,7 +155,6 @@ public class AllianceApplyActivity extends BaseActivity implements OnClickListen
 	 */
 	private void getMoney() {
 		// TODO 自动生成的方法存根
-		progressDialog = null;
 		showProgressDialog("查询费用......");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
@@ -262,7 +260,6 @@ public class AllianceApplyActivity extends BaseActivity implements OnClickListen
 			Utity.showToast(getApplicationContext(), "手机号长度不对");
 			return;
 		}
-		progressDialog = null;
 		showProgressDialog("查询服务商户名...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");

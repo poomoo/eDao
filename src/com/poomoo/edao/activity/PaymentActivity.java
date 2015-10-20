@@ -10,8 +10,6 @@ import java.util.Random;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import com.google.gson.Gson;
@@ -34,7 +32,6 @@ import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -81,16 +78,17 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	private eDaoClientApplication application = null;
 	private String money = "", payType = "1", payPwd = "", remark = "", orderId = "", referrerTel = "",
 			referrerUserId = "", referrerName = "", joinType = "", areaId = "";
-	private static final String[] channel = new String[] { "意币支付", "微信支付" };
+	private static final String[] channel = new String[] { "意币支付", "现金支付" };// 1-意币
+																			// 2-现金
+																			// 3-微信
 	private boolean needPassword = true, isBalanceEnough = true;
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
 	private MessageBox_YESNO box_YESNO;
 	private PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	private Map<String, String> resultunifiedorder;
-	public static PaymentActivity instance = null;
+	// public static PaymentActivity instance = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +99,9 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		getIntentData();
 		application = (eDaoClientApplication) getApplication();
-		instance = this;
+		// instance = this;
 		init();
-		weixin();
+		// weixin();
 	}
 
 	private void getIntentData() {
@@ -272,7 +270,6 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	 *             2015-8-17下午4:53:39
 	 */
 	private void apply() {
-		progressDialog = null;
 		showProgressDialog("提交申请中...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
@@ -347,21 +344,23 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 							box_YES.showDialog(responseData.getMsg(), null);
 						} else {
 							Utity.showToast(getApplicationContext(), responseData.getMsg());
-							if (payType.equals("1")) {
-								closeProgressDialog();
-								startService(new Intent(PaymentActivity.this, Get_UserInfo_Service.class));
-								finish();
-							} else {
-								try {
-									JSONObject result = new JSONObject(responseData.getJsonData().toString());
-									orderId = result.getString("ordersId");
-									GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
-									getPrepayId.execute();
-								} catch (JSONException e) {
-									// TODO 自动生成的 catch 块
-									e.printStackTrace();
-								}
-							}
+							// if (payType.equals("1")) {
+							closeProgressDialog();
+							startService(new Intent(PaymentActivity.this, Get_UserInfo_Service.class));
+							finish();
+							// } else {
+							// try {
+							// JSONObject result = new
+							// JSONObject(responseData.getJsonData().toString());
+							// orderId = result.getString("ordersId");
+							// GetPrepayIdTask getPrepayId = new
+							// GetPrepayIdTask();
+							// getPrepayId.execute();
+							// } catch (JSONException e) {
+							// // TODO 自动生成的 catch 块
+							// e.printStackTrace();
+							// }
+							// }
 
 						}
 
@@ -382,6 +381,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 					}
 				});
 			}
+
 		});
 	}
 

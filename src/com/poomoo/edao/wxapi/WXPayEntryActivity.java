@@ -61,8 +61,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
 		if (RechargeActivity.instance != null)
 			RechargeActivity.instance.finish();
-		if (PaymentActivity.instance != null)
-			PaymentActivity.instance.finish();
+		// if (PaymentActivity.instance != null)
+		// PaymentActivity.instance.finish();
 		if (BuyKeyActivity.instance != null)
 			BuyKeyActivity.instance.finish();
 		api.handleIntent(getIntent(), this);

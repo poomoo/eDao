@@ -162,6 +162,12 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 			Utity.showToast(getApplicationContext(), "请输入身份证号");
 			return false;
 		}
+		if (idNum.length() != 18) {
+			editText_idNum.setFocusable(true);
+			editText_idNum.requestFocus();
+			Utity.showToast(getApplicationContext(), "请输入18位有效号码");
+			return false;
+		}
 
 		return true;
 	}

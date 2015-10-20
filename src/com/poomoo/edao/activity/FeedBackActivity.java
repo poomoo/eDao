@@ -36,7 +36,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
 
 	private String content = "";
 	private Gson gson = new Gson();
-	private int num = 300;
+	private int num = 200;
 	private eDaoClientApplication application = null;
 
 	@Override
