@@ -63,6 +63,7 @@
         <activity android:name=".activity.DealerApplyActivity" />
         <activity android:name=".activity.DealDetailActivity" />
         <activity android:name=".activity.EvaluationListActivity" />
+        <activity android:name=".activity.FeedBackActivity" />
         <!-- <activity android:name=".activity.GetDetailActivity" /> -->
 
         <activity android:name=".activity.GetIdentityCodeActivity" />

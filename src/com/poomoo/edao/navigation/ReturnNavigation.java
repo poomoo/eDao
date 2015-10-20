@@ -177,6 +177,9 @@ public class ReturnNavigation extends Fragment {
 		case "ProtocolActivity":
 			textView_title.setText("注册协议");
 			break;
+		case "FeedBackActivity":
+			textView_title.setText("意见反馈");
+			break;
 		}
 
 	}

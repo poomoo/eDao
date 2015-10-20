@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.poomoo.edao"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.poomoo.edao.navigation.ReturnNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F2F2F2"
+        android:orientation="vertical"
+        android:padding="@dimen/margin10" >
+
+        <EditText
+            android:id="@+id/feed_back_editText_content"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="感谢您提出的宝贵意见和建议"
+            android:inputType="textMultiLine"
+            android:textSize="@dimen/textsize16" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/feed_back_textView_canNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right"
+            android:text="还能输入100字"
+            android:textColor="@color/lightgray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:padding="@dimen/margin10" >
+
+        <Button
+            android:id="@+id/feed_back_btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/style_btn_yes_background"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16" />
+    </LinearLayout>
+
+</LinearLayout>

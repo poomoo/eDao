@@ -304,7 +304,7 @@ public class MapActivity extends BaseActivity
 			LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
 			// float zoom = mBaiduMap.getMapStatus().zoom;
 			// // showCurrtenStroeOnMap(ll, zoom);
-			// System.out.println("点击定位:" + ll);
+			System.out.println("点击定位:" + ll);
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
 			Utity.showToast(getApplicationContext(), "正在定位中...");

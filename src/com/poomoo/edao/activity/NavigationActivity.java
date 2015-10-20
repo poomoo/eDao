@@ -182,7 +182,7 @@ public class NavigationActivity extends BaseActivity implements OnClickListener 
 			// openActivity(OrderListActivity.class);
 			break;
 		case R.id.sidebar_layout_feed_back:
-			// openActivity(OrderListActivity.class);
+			openActivity(FeedBackActivity.class);
 			break;
 		case R.id.sidebar_layout_help_center:
 			Bundle pBundle = new Bundle();
