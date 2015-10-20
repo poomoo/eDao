@@ -38,9 +38,9 @@ public class ShareActivity extends BaseActivity implements OnClickListener {
 
 	// 首先在您的Activity中添加如下成员变量
 	final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-	private static final String content = "乐意道官网:http://www.leyidao.com";
+	private static final String content = "贵州意道科技有限公司"+"\n"+"www.leyidao.com";
 	private static final String website = "http://www.leyidao.com/yidao/appDownLoad/wap.html";
-	private static final String title = "扫描二维码下载注册乐意道";
+	private static final String title = "下载注册乐意道";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
