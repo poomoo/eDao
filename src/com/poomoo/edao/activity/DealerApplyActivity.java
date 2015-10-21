@@ -16,7 +16,6 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +40,6 @@ public class DealerApplyActivity extends BaseActivity implements OnClickListener
 	private Button button_confirm;
 
 	private eDaoClientApplication application = null;
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String merchant_phone = "", referrerUserId = "", referrerName = "", merchant_name = "", money = "";
 
@@ -115,7 +113,6 @@ public class DealerApplyActivity extends BaseActivity implements OnClickListener
 	 */
 	private void getMoney() {
 		// TODO 自动生成的方法存根
-		progressDialog = null;
 		showProgressDialog("查询费用...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
@@ -174,64 +171,66 @@ public class DealerApplyActivity extends BaseActivity implements OnClickListener
 	 * @throws @date
 	 *             2015-8-17下午4:53:39
 	 */
-	private void apply() {
-		progressDialog = null;
-		showProgressDialog("提交申请中...");
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("bizName", "20000");
-		data.put("method", "20003");
-		SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-		data.put("userId", sp.getString("userId", ""));
-		data.put("joinType", "1");
-		data.put("address", "");
-		data.put("referrerTel", merchant_phone);
-		data.put("referrerUserId", referrerUserId);
-		data.put("referrerName", referrerName);
-
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
-
-			@Override
-			public void onFinish(final ResponseData responseData) {
-				// TODO 自动生成的方法存根
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						if (responseData.getRsCode() == 1) {
-							PayInfoData payInfo = gson.fromJson(responseData.getJsonData(), PayInfoData.class);
-							Bundle pBundle = new Bundle();
-							pBundle.putString("userId", payInfo.getUserId());
-							pBundle.putString("realName", payInfo.getRealName());
-							pBundle.putString("tel", payInfo.getTel());
-							pBundle.putString("money", textView_money.getText().toString());
-							pBundle.putString("payType", "");
-							openActivity(PaymentActivity.class, pBundle);
-							finish();
-						} else {
-							Utity.showToast(getApplicationContext(), responseData.getMsg());
-						}
-
-					}
-				});
-			}
-
-			@Override
-			public void onError(Exception e) {
-				// TODO 自动生成的方法存根
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
-					}
-				});
-			}
-		});
-	}
+	// private void apply() {
+	// showProgressDialog("提交申请中...");
+	// Map<String, String> data = new HashMap<String, String>();
+	// data.put("bizName", "20000");
+	// data.put("method", "20003");
+	// SharedPreferences sp = getSharedPreferences("userInfo",
+	// Context.MODE_PRIVATE);
+	// data.put("userId", sp.getString("userId", ""));
+	// data.put("joinType", "2");
+	// data.put("address", "");
+	// data.put("referrerTel", merchant_phone);
+	// data.put("referrerUserId", referrerUserId);
+	// data.put("referrerName", referrerName);
+	//
+	// HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new
+	// HttpCallbackListener() {
+	//
+	// @Override
+	// public void onFinish(final ResponseData responseData) {
+	// // TODO 自动生成的方法存根
+	// runOnUiThread(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// // TODO 自动生成的方法存根
+	// closeProgressDialog();
+	// if (responseData.getRsCode() == 1) {
+	// PayInfoData payInfo = gson.fromJson(responseData.getJsonData(),
+	// PayInfoData.class);
+	// Bundle pBundle = new Bundle();
+	// pBundle.putString("userId", payInfo.getUserId());
+	// pBundle.putString("realName", payInfo.getRealName());
+	// pBundle.putString("tel", payInfo.getTel());
+	// pBundle.putString("money", textView_money.getText().toString());
+	// pBundle.putString("payType", "");
+	// openActivity(PaymentActivity.class, pBundle);
+	// finish();
+	// } else {
+	// Utity.showToast(getApplicationContext(), responseData.getMsg());
+	// }
+	//
+	// }
+	// });
+	// }
+	//
+	// @Override
+	// public void onError(Exception e) {
+	// // TODO 自动生成的方法存根
+	// runOnUiThread(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// // TODO 自动生成的方法存根
+	// closeProgressDialog();
+	// Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+	// }
+	// });
+	// }
+	// });
+	// }
 
 	/**
 	 * 
@@ -283,12 +282,12 @@ public class DealerApplyActivity extends BaseActivity implements OnClickListener
 			Utity.showToast(getApplicationContext(), "手机号长度不对");
 			return;
 		}
-		progressDialog = null;
 		showProgressDialog("查询服务商户名...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20002");
 		data.put("referrerTel", merchant_phone);
+		data.put("joinType", "2");
 
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 

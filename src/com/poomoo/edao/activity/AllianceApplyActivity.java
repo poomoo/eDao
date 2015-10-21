@@ -17,7 +17,6 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.CityPicker;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -265,6 +264,7 @@ public class AllianceApplyActivity extends BaseActivity implements OnClickListen
 		data.put("bizName", "20000");
 		data.put("method", "20002");
 		data.put("referrerTel", merchant_num);
+		data.put("joinType", "1");
 
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 

@@ -44,7 +44,6 @@ public class PartnerApplyActivity extends BaseActivity implements OnClickListene
 
 	private Select_City_PopupWindow select_City_PopupWindow;
 	private eDaoClientApplication application = null;
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private String merchant_phone = "", merchant_name = "", referrerUserId = "", referrerName = "", curProvince = "",
 			curCity = "", curArea = "", money = "";
@@ -158,7 +157,6 @@ public class PartnerApplyActivity extends BaseActivity implements OnClickListene
 	 */
 	private void getMoney() {
 		// TODO 自动生成的方法存根
-		progressDialog = null;
 		showProgressDialog("查询费用......");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
@@ -263,12 +261,12 @@ public class PartnerApplyActivity extends BaseActivity implements OnClickListene
 			Utity.showToast(getApplicationContext(), "手机号长度不对");
 			return;
 		}
-		progressDialog = null;
 		showProgressDialog("查询服务商户名");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20002");
 		data.put("referrerTel", merchant_phone);
+		data.put("joinType", "3");
 
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
