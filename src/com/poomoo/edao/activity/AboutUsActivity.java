@@ -14,7 +14,6 @@ import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
@@ -30,7 +29,6 @@ public class AboutUsActivity extends BaseActivity {
 	private TextView textView_tel, textView_web, textView_weixin;
 
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
