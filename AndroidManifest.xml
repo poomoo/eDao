@@ -33,7 +33,7 @@
 
     <application
         android:name=".application.eDaoClientApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_about_us_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -46,66 +46,174 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AllianceApplyActivity" />
-        <activity android:name=".activity.AboutUsActivity" />
-        <activity android:name=".activity.BuyKeyActivity" />
-        <activity android:name=".activity.BankCardManageActivity" />
-        <activity android:name=".activity.CertificationActivity" />
-        <activity android:name=".activity.CommodityInfomationActivity" />
-        <activity android:name=".activity.CommodityListActivity" />
-        <activity android:name=".activity.CreditCollectionActivity" />
-        <activity android:name=".activity.CreditManageActivity" />
-        <activity android:name=".activity.CreditPayActivity" />
-        <activity android:name=".activity.CreditPayByPhoneActivity" />
-        <activity android:name=".activity.CooperationActivity" />
-        <activity android:name=".activity.ConfirmOrderActivity" />
-        <activity android:name=".activity.CommodityEvaluateActivity" />
-        <activity android:name=".activity.DealerApplyActivity" />
-        <activity android:name=".activity.DealDetailActivity" />
-        <activity android:name=".activity.EvaluationListActivity" />
-        <activity android:name=".activity.FeedBackActivity" />
+        <activity
+            android:name=".activity.AllianceApplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BuyKeyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BankCardManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CertificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommodityInfomationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommodityListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CreditCollectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CreditManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CreditPayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CreditPayByPhoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CooperationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ConfirmOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommodityEvaluateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DealerApplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DealDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EvaluationListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FeedBackActivity"
+            android:exported="false" />
         <!-- <activity android:name=".activity.GetDetailActivity" /> -->
 
-        <activity android:name=".activity.GetIdentityCodeActivity" />
-        <activity android:name=".activity.KeyAndOperateActivity" />
-        <activity android:name=".activity.KeyManageActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.MyOrderActivity" />
-        <activity android:name=".activity.MywalletActivity" />
-        <activity android:name=".activity.My2DimenCodeActivity" />
-        <activity android:name=".activity.NavigationActivity" />
-        <activity android:name=".activity.OrderInformationActivity" />
-        <activity android:name=".activity.OperateManageActivity" />
-        <activity android:name=".activity.PassWordManageActivity" />
-        <activity android:name=".activity.PartnerApplyActivity" />
-        <activity android:name=".activity.PaymentActivity" />
-        <activity android:name=".activity.PersonalCenterActivity" />
-        <activity android:name=".activity.ProtocolActivity" />
-        <activity android:name=".activity.PubActivity" />
-        <activity android:name=".activity.PurchaseAndGetDetailActivity" />
-        <activity android:name=".activity.RebateActivity" />
-        <activity android:name=".activity.RepayManageActivity" />
-        <activity android:name=".activity.RechargeActivity" />
-        <activity android:name=".activity.RegistrationActivity" />
-        <activity android:name=".activity.ResetPasswrodActivity" />
-        <activity android:name=".activity.StoreEvaluateActivity" />
-        <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.StoreInformationActivity" />
-        <activity android:name=".activity.StoreManageActivity" />
-        <activity android:name=".activity.SideBarActivity" />
-        <activity android:name=".activity.ShopListActivity" />
-        <activity android:name=".activity.TransferActivity1" />
-        <activity android:name=".activity.TransferActivity2" />
-        <activity android:name=".activity.UploadPicsActivity" />
-        <activity android:name=".activity.LoveFundActivity" />
-        <activity android:name=".activity.WebViewActivity" />
-        <activity android:name="com.zbar.lib.CaptureActivity" />
-        <activity android:name=".widget.PhotoView.ImagePagerActivity" />
+        <activity
+            android:name=".activity.GetIdentityCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.KeyAndOperateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.KeyManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MyOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MywalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.My2DimenCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NavigationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.OrderInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.OperateManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PassWordManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PartnerApplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PersonalCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ProtocolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PubActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PurchaseAndGetDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RebateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RepayManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RechargeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RegistrationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ResetPasswrodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StoreEvaluateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StoreInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StoreManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SideBarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ShopListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TransferActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TransferActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".activity.UploadPicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoveFundActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.zbar.lib.CaptureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".widget.PhotoView.ImagePagerActivity"
+            android:exported="false" />
         <!-- 微信支付 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTop" />
 
         <intent-filter>
@@ -116,7 +224,9 @@
             <data android:scheme="wx55e834ca0a0327a6" />
         </intent-filter>
 
-        <receiver android:name="com.poomoo.edao.weixinpay.AppRegister" >
+        <receiver
+            android:name="com.poomoo.edao.weixinpay.AppRegister"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
@@ -126,6 +236,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
+            android:exported="false"
             android:process=":remote" >
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" >
@@ -162,6 +273,7 @@
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
             android:configChanges="orientation|keyboard"
+            android:exported="false"
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
@@ -169,11 +281,13 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <service android:name=".service.Get_UserInfo_Service" />
+        <service
+            android:name=".service.Get_UserInfo_Service"
+            android:exported="false" />
     </application>
 
 </manifest>
