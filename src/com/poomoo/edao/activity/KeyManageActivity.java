@@ -353,7 +353,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 				check(position, 1);
 				break;
 			case R.id.item_key_manage_apply_button_refuse:
-				check(position, 0);
+				check(position, 2);
 				break;
 
 			}
