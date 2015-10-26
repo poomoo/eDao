@@ -245,8 +245,19 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 			});
 			return false;
 		}
+		if (payType.equals("1")) {// 意币支付时不能超过上限
+			// double money = Double.parseDouble(s.toString().trim());
+			if (Double.parseDouble(money) > (double) application.getTotalEb()) {
+				textView_isEnough.setVisibility(View.VISIBLE);
+				textView_isEnough.setText(eDaoClientConfig.balanceIsNotEnough);
+				isBalanceEnough = false;
+			} else {
+				isBalanceEnough = true;
+				textView_isEnough.setVisibility(View.GONE);
+			}
+		} else
+			isBalanceEnough = true;
 		if (!isBalanceEnough) {
-			Utity.showToast(getApplicationContext(), eDaoClientConfig.balanceIsNotEnough);
 			return false;
 		}
 		payPwd = editText_pay_password.getText().toString().trim();
