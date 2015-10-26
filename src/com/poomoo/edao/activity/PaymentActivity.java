@@ -442,6 +442,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 
 				} else {
 					needPassword = false;
+					textView_isEnough.setVisibility(View.GONE);
 					layout_balance.setVisibility(View.GONE);
 					layout_pay_password.setVisibility(View.GONE);
 					textView_between1.setVisibility(View.GONE);
