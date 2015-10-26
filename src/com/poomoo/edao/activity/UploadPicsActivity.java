@@ -153,19 +153,23 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		switch (v.getId()) {
 		case R.id.uploadpics_layout_identitycard_front:
 			flag = 1;
-			select_pics();
+			// select_pics();
+			getPicByCamera();
 			break;
 		case R.id.uploadpics_layout_identitycard_back:
 			flag = 2;
-			select_pics();
+			// select_pics();
+			getPicByCamera();
 			break;
 		case R.id.uploadpics_layout_identitycard_inhand:
 			flag = 3;
-			select_pics();
+			// select_pics();
+			getPicByCamera();
 			break;
 		case R.id.uploadpics_layout_businesss_license:
 			flag = 4;
-			select_pics();
+			// select_pics();
+			getPicByCamera();
 			break;
 		case R.id.uploadpics_btn_upload:
 
@@ -231,9 +235,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			upload_Pics_PopupWindow.dismiss();
 			switch (view.getId()) {
 			case R.id.popup_select_pic_res_camera:
-				Intent intent1 = new Intent("android.media.action.IMAGE_CAPTURE");
-				intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(image_capture_path)));
-				startActivityForResult(intent1, PHOTOHRAPH);
+				getPicByCamera();
 				break;
 
 			case R.id.popup_select_pic_res_photograph:
@@ -389,6 +391,12 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 			client.getConnectionManager().shutdown(); // 释放连接所有资源
 			myHandler.sendMessage(message);
 		}
+	}
+
+	private void getPicByCamera() {
+		Intent intent1 = new Intent("android.media.action.IMAGE_CAPTURE");
+		intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(image_capture_path)));
+		startActivityForResult(intent1, PHOTOHRAPH);
 	}
 
 	Handler myHandler = new Handler() {
