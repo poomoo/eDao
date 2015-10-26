@@ -74,6 +74,7 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		ImageLoader.getInstance().displayImage(listData.getPictures(), imageView, options);
 
 		textView_more.setOnClickListener(this);
+		imageView.setOnClickListener(this);
 		// textView_info.setText(data.getShopName());
 		// list = new ArrayList<StoreEvaluationData>();
 	}
@@ -82,13 +83,18 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
+		case R.id.store_information_imageView_pic:
+			Bundle pBundle=new Bundle();
+			pBundle.putString("path", listData.getPictures());
+			openActivity(CatBigPictureActivity.class, pBundle);
+			break;
 		case R.id.store_information_textView_more:
-			Bundle pBundle = new Bundle();
+			Bundle pBundle2 = new Bundle();
 			// pBundle.putSerializable("list", (Serializable) list);
 			System.out.println("listData.getAvgScore():" + listData.getAvgScore());
-			pBundle.putFloat("score", listData.getAvgScore());
-			pBundle.putString("shopId", listData.getShopId());
-			openActivity(EvaluationListActivity.class, pBundle);
+			pBundle2.putFloat("score", listData.getAvgScore());
+			pBundle2.putString("shopId", listData.getShopId());
+			openActivity(EvaluationListActivity.class, pBundle2);
 			break;
 		}
 	}

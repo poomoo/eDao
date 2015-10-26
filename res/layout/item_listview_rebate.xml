@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="张*玲"
-            android:textColor="@color/gray"
+            android:textColor="#1995EB"
             android:textSize="@dimen/textsize14" />
 
         <TextView

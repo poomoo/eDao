@@ -21,7 +21,6 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.RatingBar;
 import android.widget.TextView;

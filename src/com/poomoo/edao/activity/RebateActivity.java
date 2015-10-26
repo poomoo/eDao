@@ -21,7 +21,6 @@ import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewStub;
@@ -40,7 +39,6 @@ public class RebateActivity extends BaseActivity {
 	private List<UserRebateData> list;
 
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
 	private boolean isFirst = true;// 是否第一次加载
 	private boolean isFresh = false;// 是否刷新

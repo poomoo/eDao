@@ -10,11 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <com.poomoo.edao.widget.RoundImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_head" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_about_us_logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +34,7 @@
                 android:layout_weight="1"
                 android:text="张三三"
                 android:textColor="#5477A7"
-                android:textSize="@dimen/textsize16"
+                android:textSize="@dimen/textsize14"
                 android:textStyle="bold" />
 
             <RatingBar
@@ -61,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:text="2015-05-21 16:41"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize12" />
         </LinearLayout>
 
         <TextView
@@ -77,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="卖家服务很好，东西很好，物有所值，好评，下次还来哦~"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize12" />
         </LinearLayout>
     </LinearLayout>
 

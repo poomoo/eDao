@@ -58,6 +58,9 @@
         <activity
             android:name=".activity.BankCardManageActivity"
             android:exported="false" />
+                <activity
+            android:name=".activity.CatBigPictureActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.CertificationActivity"
             android:exported="false" />
