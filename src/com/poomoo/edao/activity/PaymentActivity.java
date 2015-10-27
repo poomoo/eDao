@@ -220,7 +220,8 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.payment_btn_pay:
 			if (checkInput()) {
-				apply();
+				confirm();
+				// apply();
 			}
 			break;
 		}
@@ -281,7 +282,6 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 	 *             2015-8-17下午4:53:39
 	 */
 	private void apply() {
-		showProgressDialog("提交申请中...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "20000");
 		data.put("method", "20003");
@@ -304,7 +304,9 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 						// TODO 自动生成的方法存根
 						closeProgressDialog();
 						if (responseData.getRsCode() == 1) {
-							confirm();
+							// confirm();
+							startService(new Intent(PaymentActivity.this, Get_UserInfo_Service.class));
+							finish();
 						} else {
 							Utity.showToast(getApplicationContext(), responseData.getMsg());
 						}
@@ -331,6 +333,7 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 
 	private void confirm() {
 		// TODO 自动生成的方法存根
+		showProgressDialog("提交申请中...");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("bizName", "50000");
 		data.put("method", "50010");
@@ -354,11 +357,13 @@ public class PaymentActivity extends BaseActivity implements OnClickListener {
 							box_YES = new MessageBox_YES(PaymentActivity.this);
 							box_YES.showDialog(responseData.getMsg(), null);
 						} else {
-							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							apply();
+							// Utity.showToast(getApplicationContext(),
+							// responseData.getMsg());
 							// if (payType.equals("1")) {
-							closeProgressDialog();
-							startService(new Intent(PaymentActivity.this, Get_UserInfo_Service.class));
-							finish();
+							// startService(new Intent(PaymentActivity.this,
+							// Get_UserInfo_Service.class));
+							// finish();
 							// } else {
 							// try {
 							// JSONObject result = new
