@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:padding="@dimen/margin5" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/shop_list_item_textView_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:paddingTop="@dimen/margin10"
         android:text="贵阳世纪城店铺"
         android:textColor="@color/green"
         android:textSize="@dimen/textsize16" />
@@ -27,7 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center" >
+            android:gravity="center" 
+            android:paddingBottom="@dimen/margin2">
 
             <ImageView
                 android:id="@+id/shop_list_item_imageView"
@@ -41,8 +45,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="@dimen/margin5" >
+            android:paddingLeft="@dimen/margin5"
+            android:paddingRight="@dimen/margin5" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,7 +114,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <RatingBar
@@ -120,15 +126,27 @@
                     android:numStars="5"
                     android:rating="5"
                     android:stepSize="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="距离:"
+                    android:textSize="@dimen/textsize10" />
 
                 <TextView
                     android:id="@+id/shop_list_item_textView_distance"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="距离:100m"
-                    android:textSize="@dimen/textsize8" />
+                    android:gravity="center_vertical"
+                    android:text="100m"
+                    android:textSize="@dimen/textsize10" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

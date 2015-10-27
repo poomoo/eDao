@@ -46,7 +46,6 @@ public class OperateManageActivity extends BaseActivity {
 	private List<OperateManageData> list;
 
 	private Gson gson = new Gson();
-	private ProgressDialog progressDialog = null;
 	private int curPage = 1, pageSize = 10;
 	private boolean isFirst = true;// 是否第一次加载
 	private eDaoClientApplication application = null;
