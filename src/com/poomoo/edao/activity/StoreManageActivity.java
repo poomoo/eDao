@@ -141,7 +141,7 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		curProvince = application.getCurProvince();
 		curCity = application.getCurCity();
 		curArea = application.getCurArea();
-
+		textView_zone.setText(curProvince + "-" + curCity + "-" + curArea);
 		CityPicker.province_name = curProvince;
 		CityPicker.city_name = curCity;
 		CityPicker.area_name = curArea;
@@ -175,8 +175,7 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		// 店铺审核没有通过时回显
 		if (!TextUtils.isEmpty(application.getShopId())) {
 			getData();
-		} else {
-			textView_zone.setText(curProvince + "-" + curCity + "-" + curArea);
+			layout_logo.setOnClickListener(this);
 		}
 	}
 
@@ -184,6 +183,12 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
+		case R.id.store_manage_layout_logo:
+			Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT, null);
+			intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+			intent1.putExtra("return-data", true);
+			startActivityForResult(intent1, PHOTORESOULT);
+			break;
 		case R.id.store_manage_layout_logo_center:
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
 			intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
