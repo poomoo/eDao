@@ -43,12 +43,14 @@ public class eDaoClientApplication extends LitePalApplication {
 	private String joinType = "";// 加盟类型 1-加盟商 2-经销商 3-合作商
 	private String joinStatus = "";// 加盟审核 0,"默认值，未审核" 1,"审核通过" 2,"审核未通过"
 	private String shopIsExists = "";// true-店铺已经添加
+	private String shopId = "";
+
 	private int totalEb = 0;// 总的意币
 	private int totalGold = 0;// 总金币
 	private int totalIntegral = 0;// 总的积分
 	private double curlongitude = 0;
 	private double curlatitude = 0;
-	
+
 	private List<Activity> activity;
 	private static eDaoClientApplication instance;
 
@@ -228,6 +230,14 @@ public class eDaoClientApplication extends LitePalApplication {
 		this.shopIsExists = shopIsExists;
 	}
 
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+
 	public int getTotalEb() {
 		return this.totalEb;
 	}
@@ -267,14 +277,14 @@ public class eDaoClientApplication extends LitePalApplication {
 	public void setCurlatitude(double curlatitude) {
 		this.curlatitude = curlatitude;
 	}
-	
+
 	public static eDaoClientApplication getInstance() {
 		if (instance == null) {
 			instance = new eDaoClientApplication();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * 得到activity栈
 	 * 
@@ -286,6 +296,7 @@ public class eDaoClientApplication extends LitePalApplication {
 		}
 		return activity;
 	}
+
 	/**
 	 * 清除所有Activity
 	 */
@@ -295,7 +306,7 @@ public class eDaoClientApplication extends LitePalApplication {
 		}
 		eDaoClientApplication.getInstance().getActivity().clear();
 	}
-	
+
 	@Override
 	public void onCreate() {
 		// TODO 自动生成的方法存根
@@ -312,10 +323,10 @@ public class eDaoClientApplication extends LitePalApplication {
 				.discCacheSize(50 * 1024 * 1024).discCacheFileCount(100)// 缓存一百张图片
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
-	 
-		 CrashHandler crashHandler = CrashHandler.getInstance();    
-		 // 注册crashHandler    
-		 crashHandler.init(getApplicationContext());
+
+		CrashHandler crashHandler = CrashHandler.getInstance();
+		// 注册crashHandler
+		crashHandler.init(getApplicationContext());
 	}
 
 }

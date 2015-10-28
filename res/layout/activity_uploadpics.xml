@@ -35,6 +35,42 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/uploadpics_textView_example1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="点击查看示例"
+                android:textColor="@color/green"
+                android:textSize="@dimen/textsize8" >
+            </TextView>
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/uploadpics_textView_example2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="点击查看示例"
+                android:textColor="@color/green"
+                android:textSize="@dimen/textsize8" >
+            </TextView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal" >
@@ -59,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="手持身份证正面" />
+                    android:text="身份证正面" />
             </FrameLayout>
 
             <TextView
@@ -86,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="手持身份证反面" />
+                    android:text="手持身份证正面" />
             </FrameLayout>
         </LinearLayout>
 

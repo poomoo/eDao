@@ -24,6 +24,8 @@ public class StoreData implements Serializable {
 	private float avgScore = 0;
 	private String tel = "";
 	private String distance = "";
+	private String categoryId = "";
+	private String categoryName = "";
 
 	public String getShopId() {
 		return this.shopId;
@@ -111,6 +113,22 @@ public class StoreData implements Serializable {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	@Override

@@ -20,16 +20,17 @@ import org.apache.http.params.CoreConnectionPNames;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.popupwindow.Upload_Pics_Example_PopupWindow;
 import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
 import com.poomoo.edao.util.Utity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -54,20 +55,19 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private ImageView imageView_identitycard_front, imageView_identitycard_back, imageView_identitycard_inhand,
 			imageView_business_license;
 	private TextView textView_identitycard_front, textView_identitycard_back, textView_identitycard_inhand,
-			textView_business_license;
+			textView_business_license, textView_example1, textView_example2;
 
 	private Upload_Pics_PopupWindow upload_Pics_PopupWindow;
+	private Upload_Pics_Example_PopupWindow pics_Example_PopupWindow;
 
 	private static final int NONE = 0;
 	private static final int PHOTOHRAPH = 1;// 拍照
 	private static final int PHOTORESOULT = 2;// 结果
 
 	private static final String IMAGE_UNSPECIFIED = "image/*";
-	private Bitmap photo;
 	private int flag = 0;
 
 	private String userId = "", path1 = "", path2 = "", path3 = "", path4 = "";
-	private ProgressDialog progressDialog;
 	private File file1 = null, file2 = null, file3 = null, file4 = null;
 	private Bitmap bitmap = null;
 	private int uploadCount = 0;
@@ -76,6 +76,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
 	private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "edao.temp";
+	private final static int res[] = { R.drawable.ic_example1, R.drawable.ic_example2 };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		textView_identitycard_back = (TextView) findViewById(R.id.uploadpics_textView_identitycard_back);
 		textView_identitycard_inhand = (TextView) findViewById(R.id.uploadpics_textView_identitycard_inhand);
 		textView_business_license = (TextView) findViewById(R.id.uploadpics_textView_businesss_license);
+		textView_example1 = (TextView) findViewById(R.id.uploadpics_textView_example1);
+		textView_example2 = (TextView) findViewById(R.id.uploadpics_textView_example2);
 
 		button_upload = (Button) findViewById(R.id.uploadpics_btn_upload);
 
@@ -112,6 +115,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		frameLayout_identitycard_inhand.setOnClickListener(this);
 		frameLayout_business_license.setOnClickListener(this);
 		button_upload.setOnClickListener(this);
+		textView_example1.setOnClickListener(this);
+		textView_example2.setOnClickListener(this);
 
 		userId = applicaiton.getUserId();
 
@@ -151,6 +156,12 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
+		case R.id.uploadpics_textView_example1:
+			show_example(res[0]);
+			break;
+		case R.id.uploadpics_textView_example2:
+			show_example(res[1]);
+			break;
 		case R.id.uploadpics_layout_identitycard_front:
 			flag = 1;
 			// select_pics();
@@ -224,6 +235,14 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		upload_Pics_PopupWindow = new Upload_Pics_PopupWindow(UploadPicsActivity.this, itemsOnClick);
 		// 显示窗口
 		upload_Pics_PopupWindow.showAtLocation(UploadPicsActivity.this.findViewById(R.id.activity_uploadpics_layout),
+				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+	}
+
+	private void show_example(int res) {
+		// 实例化SelectPicPopupWindow
+		pics_Example_PopupWindow = new Upload_Pics_Example_PopupWindow(UploadPicsActivity.this, res, itemsOnClick);
+		// 显示窗口
+		pics_Example_PopupWindow.showAtLocation(UploadPicsActivity.this.findViewById(R.id.activity_uploadpics_layout),
 				Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
 	}
 
@@ -308,7 +327,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	}
 
 	private void setImage(String path) {
-		photo = null;
+		// photo = null;
 		switch (flag) {
 		case 1:
 			textView_identitycard_front.setText("");

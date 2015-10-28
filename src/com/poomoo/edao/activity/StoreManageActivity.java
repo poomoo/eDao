@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,22 +18,34 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.StoreData;
+import com.poomoo.edao.model.StoreEvaluationData;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
 import com.poomoo.edao.popupwindow.Select_City_PopupWindow;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.CityPicker;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -87,13 +100,11 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 	private static final int PHOTORESOULT = 1;// 结果
 	private File file = null;
 	private Bitmap bitmap = null;
-	// private final String[] list_name = { "金银首饰", "酒店娱乐", "餐饮美食", "服装鞋类",
-	// "生活超市", "旅游度假", "美容保健", "宣传广告", "数码电器", "皮具箱包", "酒类服务", "休闲户外",
-	// "汽车服务", "教育培训", "农副产品", "医药服务", "交通运输", "办公家居", "房产建材", "机械设备" };
-	private ProgressDialog progressDialog = null;
 	private ArrayList<ProvinceInfo> provinceList = new ArrayList<ProvinceInfo>();
 	private ArrayList<CityInfo> cityList = new ArrayList<CityInfo>();
 	private ArrayList<AreaInfo> areaList = new ArrayList<AreaInfo>();
+
+	private Gson gson = new Gson();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,11 +136,12 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		layout_logo_center.setOnClickListener(this);
 		layout_store_class.setOnClickListener(this);
 		button_confirm.setOnClickListener(this);
+
 		// 取当前定位
 		curProvince = application.getCurProvince();
 		curCity = application.getCurCity();
 		curArea = application.getCurArea();
-		textView_zone.setText(curProvince + "-" + curCity + "-" + curArea);
+
 		CityPicker.province_name = curProvince;
 		CityPicker.city_name = curCity;
 		CityPicker.area_name = curArea;
@@ -159,6 +171,13 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 			list.add(data);
 		}
 		adapter = new ChannelSpinnerAdapter(this, list);
+
+		// 店铺审核没有通过时回显
+		if (!TextUtils.isEmpty(application.getShopId())) {
+			getData();
+		} else {
+			textView_zone.setText(curProvince + "-" + curCity + "-" + curArea);
+		}
 	}
 
 	@Override
@@ -347,6 +366,84 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 		}
+	}
+
+	private void getData() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "30000");
+		data.put("method", "30004");
+		data.put("shopId", application.getShopId());
+		showProgressDialog("请稍后...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						if (responseData.getRsCode() == 1) {
+							try {
+								JSONObject result = new JSONObject(responseData.getJsonData().toString());
+								StoreData storeData = new StoreData();
+								storeData = gson.fromJson(result.toString(), StoreData.class);
+								editText_store_name.setText(storeData.getShopName());
+								editText_address.setText(storeData.getAddress());
+								textView_store_class.setText(storeData.getCategoryName());
+								store_class_id = storeData.getCategoryId();
+
+								// 使用ImageLoader加载网络图片
+								DisplayImageOptions options = new DisplayImageOptions.Builder()//
+										.cacheInMemory(false) // 内存缓存
+										.cacheOnDisk(true) // sdcard缓存
+										.bitmapConfig(Config.RGB_565)// 设置最低配置
+										.build();
+								ImageLoader.getInstance().loadImage(storeData.getPictures(),
+										new SimpleImageLoadingListener() {
+
+									@Override
+									public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+										// TODO Auto-generated method stub
+										super.onLoadingComplete(imageUri, view, loadedImage);
+										bitmap = loadedImage;
+										Drawable drawable = new BitmapDrawable(bitmap);
+										layout_logo_center.setVisibility(View.GONE);
+										layout_logo.setBackground(drawable);
+										path = Environment.getExternalStorageDirectory() + "/" + "edaoStore.jpg";
+										file = saveBitmap(bitmap, path);
+									}
+								});
+
+							} catch (JSONException e) {
+								// TODO 自动生成的 catch 块
+								e.printStackTrace();
+							}
+						} else {
+							finish();
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+						}
+					}
+
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				closeProgressDialog();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						finish();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
 	}
 
 	@SuppressWarnings("deprecation")

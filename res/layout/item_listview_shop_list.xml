@@ -30,8 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center" 
-            android:paddingBottom="@dimen/margin2">
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin2" >
 
             <ImageView
                 android:id="@+id/shop_list_item_imageView"
@@ -107,7 +107,9 @@
                     android:id="@+id/shop_list_item_textView_address"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="世纪城龙禧苑"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑世纪城龙禧苑"
                     android:textSize="@dimen/textsize12" />
             </LinearLayout>
 
