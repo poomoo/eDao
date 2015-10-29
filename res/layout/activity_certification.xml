@@ -92,7 +92,6 @@
                 android:background="@drawable/style_background"
                 android:digits="0123456789xyzXYZ"
                 android:hint="请输入身份证号"
-                android:inputType="number"
                 android:maxLength="18"
                 android:paddingLeft="8dp"
                 android:textSize="@dimen/textsize14" />
