@@ -29,6 +29,8 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.config.eDaoClientConfig;
@@ -88,6 +90,7 @@ public class MapActivity extends BaseActivity
 	private Integer mGridSize = 60;
 	private Boolean isAverageCenter = false;
 	private double mDistance = 100;// 聚合距离
+	private double radius = 5000;// 搜索半径
 	private boolean allow = false;
 
 	public static MapActivity instance = null;
@@ -181,10 +184,9 @@ public class MapActivity extends BaseActivity
 			// map view 销毁后不在处理新接收的位置
 			if (location == null || mMapView == null)
 				return;
+			curMapCenterLatLng = mBaiduMap.getMapStatus().target;
 			mCurrentLantitude = location.getLatitude();
 			mCurrentLongitude = location.getLongitude();
-			// mCurrentLatLng = new LatLng(mCurrentLantitude,
-			// mCurrentLongitude);
 			curCity = location.getCity();
 			textView_curCity.setText(curCity);
 			MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
@@ -348,6 +350,8 @@ public class MapActivity extends BaseActivity
 		data.put("method", "30007");
 		data.put("longitude", mCurrentLongitude);
 		data.put("latitude", mCurrentLantitude);
+		calcRadius();
+		data.put("radius", radius);
 		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
 
 			@Override
@@ -417,8 +421,29 @@ public class MapActivity extends BaseActivity
 									case 11:
 										mDistance = 5000;
 										break;
+									case 10:
+										mDistance = 10*1000;
+										break;
+									case 9:
+										mDistance = 20*1000;
+										break;
+									case 8:
+										mDistance = 25*1000;
+										break;
+									case 7:
+										mDistance = 50*1000;
+										break;
+									case 6:
+										mDistance = 100*1000;
+										break;
+									case 5:
+										mDistance = 200*1000;
+										break;
+									case 4:
+										mDistance = 500*1000;
+										break;
 									default:
-										mDistance = 10000;
+										mDistance = 1000*1000;
 										break;
 									}
 
@@ -485,4 +510,13 @@ public class MapActivity extends BaseActivity
 		}
 
 	};
+
+	private void calcRadius() {
+		LatLngBounds bounds = mBaiduMap.getMapStatus().bound;
+		LatLng NE = bounds.northeast;
+		LatLng SW = bounds.southwest;
+		double neDis = DistanceUtil.getDistance(curMapCenterLatLng, NE);
+		double swDis = DistanceUtil.getDistance(curMapCenterLatLng, SW);
+		radius = Math.min(neDis, swDis);
+	}
 }
