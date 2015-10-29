@@ -30,7 +30,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -67,12 +66,12 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private static final String IMAGE_UNSPECIFIED = "image/*";
 	private int flag = 0;
 
-	private String userId = "", path1 = "", path2 = "", path3 = "", path4 = "";
+	private String userId = "", path1 = "", path2 = "", path3 = "", path4 = "", realName = "", idNum = "";
 	private File file1 = null, file2 = null, file3 = null, file4 = null;
 	private Bitmap bitmap = null;
 	private int uploadCount = 0;
 	private List<File> filelist = null;
-	private eDaoClientApplication applicaiton = null;
+	private eDaoClientApplication application = null;
 	private SharedPreferences sharedPreferences_certificaitonInfo = null;
 	private Editor editor = null;
 	private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "edao.temp";
@@ -85,7 +84,9 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		setContentView(R.layout.activity_uploadpics);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
-		applicaiton = (eDaoClientApplication) getApplication();
+		application = (eDaoClientApplication) getApplication();
+		realName=getIntent().getStringExtra("realName");
+		idNum=getIntent().getStringExtra("idNum");
 		init();
 	}
 
@@ -118,7 +119,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		textView_example1.setOnClickListener(this);
 		textView_example2.setOnClickListener(this);
 
-		userId = applicaiton.getUserId();
+		userId = application.getUserId();
 
 		sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo", Context.MODE_PRIVATE);
 		path1 = sharedPreferences_certificaitonInfo.getString("imagepath1", "");
@@ -437,7 +438,11 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 					editor.putString("imagepath2", path2);
 					editor.putString("imagepath3", path3);
 					editor.putString("imagepath4", path4);
+
+					editor.putString("realName", realName);
+					editor.putString("idCardNum", idNum);
 					editor.commit();
+					application.setRealName(realName);
 					Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_LONG).show();
 					finish();
 				}

@@ -9,13 +9,12 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
-import com.baidu.mapapi.model.LatLngBounds.Builder;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
@@ -25,7 +24,6 @@ import com.poomoo.edao.util.Utity;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +36,7 @@ public class Cluster {
 	private MapActivity context;
 	private BaiduMap mBaiduMap;
 	private Boolean isAverageCenter;
-	private int mGridSize;
+	// private int mGridSize;
 	private double mDistance;
 	private BitmapDescriptor bitmap = null;
 	private List<ClusterMarker> mClusterMarkers;
@@ -53,7 +51,7 @@ public class Cluster {
 		this.context = context;
 		this.mBaiduMap = mBaiduMap;
 		this.isAverageCenter = isAverageCenter;
-		this.mGridSize = mGridSize;
+		// this.mGridSize = mGridSize;
 		this.mDistance = mDistance;
 
 		mClusterMarkers = new ArrayList<ClusterMarker>();
@@ -71,7 +69,9 @@ public class Cluster {
 
 		for (int i = 0; i < mClusterMarkers.size(); i++) {
 			ClusterMarker cm = mClusterMarkers.get(i);
+			System.out.println("i:" + i + cm.getmStoreDatas().get(0).getPictures());
 			setClusterDrawable(cm);
+			System.out.println("isAlone:" + isAlone);
 			if (!isAlone) {
 				if (Utity.isMarkerInBounds(cm.getmCenter(), bounds)) {
 					Marker marker = (Marker) mBaiduMap.addOverlay(cm.getOverlayOptions());
@@ -92,9 +92,9 @@ public class Cluster {
 			ClusterMarker clusterMarker = new ClusterMarker(latLng);
 			clusterMarker.AddInfo(storeData, isAverageCenter);
 
-			MBound bound = new MBound(latLng, latLng);
-			bound = Utity.getExtendedBounds(mBaiduMap, bound, mGridSize);
-			clusterMarker.setmGridBounds(bound);
+			// MBound bound = new MBound(latLng, latLng);
+			// bound = Utity.getExtendedBounds(mBaiduMap, bound, mGridSize);
+			// clusterMarker.setmGridBounds(bound);
 			mClusterMarkers.add(clusterMarker);
 		} else {
 			ClusterMarker clusterContain = null;
@@ -104,25 +104,31 @@ public class Cluster {
 				ClusterMarker clusterMarker = mClusterMarkers.get(i);
 				LatLng center = clusterMarker.getmCenter();
 				double d = DistanceUtil.getDistance(center, latLng);
+				System.out.println("相距:" + d + "设定距离:" + distance);
 				if (d < distance) {
-					distance = d;
+					// distance = d;
 					clusterContain = clusterMarker;
-				} else {
+					System.out.println("满足距离条件:" + clusterContain);
+					break;
 				}
+
 			}
 			// 现存的clusterMarker 没有符合条件的
-			if (clusterContain == null || !Utity.isMarkersInCluster(latLng, clusterContain.getmGridBounds())) {
-				// "======clusterContain=======================--------------");
+			// if (clusterContain == null || !Utity.isMarkersInCluster(latLng,
+			// clusterContain.getmGridBounds())) {
+			// 暂时去掉边界判断，如果出现问题再修改
+			if (clusterContain == null) {
+				System.out.println("没有符合条件的");
 				ClusterMarker clusterMarker = new ClusterMarker(latLng);
 				clusterMarker.AddInfo(storeData, isAverageCenter);
 
-				MBound bound = new MBound(latLng, latLng);
-				bound = Utity.getExtendedBounds(mBaiduMap, bound, mGridSize);
-				clusterMarker.setmGridBounds(bound);
+				// MBound bound = new MBound(latLng, latLng);
+				// bound = Utity.getExtendedBounds(mBaiduMap, bound, mGridSize);
+				// clusterMarker.setmGridBounds(bound);
 				mClusterMarkers.add(clusterMarker);
 			} else {
+				System.out.println("符合条件");
 				clusterContain.AddInfo(storeData, isAverageCenter);
-
 			}
 		}
 	}
@@ -155,7 +161,9 @@ public class Cluster {
 			// 获得marker中的数据
 			StoreData info = clusterMarker.getmStoreDatas().get(0);
 			LatLng latLngTmp = new LatLng(info.getLatitude(), info.getLongitude());
+			System.out.println(info.getPictures() + "LatLng:" + latLngTmp + "bounds:" + bounds);
 			if (Utity.isMarkerInBounds(latLngTmp, bounds)) {
+				System.out.println("在范围内");
 				ImageLoader imageLoader = ImageLoader.getInstance();
 				imageLoader.loadImage(info.getPictures(), new SimpleImageLoadingListener() {
 					@Override
@@ -181,6 +189,31 @@ public class Cluster {
 							}
 						}
 					}
+
+					@Override
+					public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+						// TODO Auto-generated method stub
+						System.out.println("加载图片失败:" + imageUri);
+						for (StoreData info : infos) {
+							if (info.getPictures().equals(imageUri)) {
+								// 位置
+								latLng = new LatLng(info.getLatitude(), info.getLongitude());
+								// 构建Marker图标
+								View linlayout = MapActivity.instance.getLayoutInflater()
+										.inflate(R.layout.popup_map_inform, null);
+								BitmapDescriptor bitmap = BitmapDescriptorFactory
+										.fromView(getInfoWindowView(linlayout, info, null));
+
+								overlayOptions = new MarkerOptions().position(latLng).icon(bitmap).zIndex(1);
+								Marker marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+								System.out.println("添加marker:" + marker.toString());
+								Bundle bundle = new Bundle();
+								bundle.putSerializable("info", info);
+								marker.setExtraInfo(bundle);
+							}
+						}
+					}
+
 				});
 			}
 			isAlone = true;
@@ -214,25 +247,14 @@ public class Cluster {
 				.bitmapConfig(Config.RGB_565)// 设置最低配置
 				.imageScaleType(ImageScaleType.EXACTLY)// 缩放图片
 				.build();
-		// System.out.println("加载图片:" + store.getPictures());
-		viewHolder.storeImg.setImageBitmap(bitmap);
-		// System.out.println("加载图片完成");
+		if (bitmap != null)
+			viewHolder.storeImg.setImageBitmap(bitmap);
+		else
+			ImageLoader.getInstance().displayImage(store.getPictures(), viewHolder.storeImg, options);
 
 		viewHolder.storeRatingBar.setRating(store.getAvgScore());
 		viewHolder.storeName.setText(store.getShopName());
 		viewHolder.storeOwner.setText(store.getRealName());
-		// mMarkerLy.setOnClickListener(new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// // TODO 自动生成的方法存根
-		// Bundle pBundle = new Bundle();
-		// pBundle.putSerializable("data", store);
-		// Intent intent = new Intent(MapActivity.instance,
-		// StoreInformationActivity.class);
-		// intent.putExtras(pBundle);
-		// MapActivity.instance.startActivity(intent);
-		// }
-		// });
 		return mMarkerLy;
 	}
 

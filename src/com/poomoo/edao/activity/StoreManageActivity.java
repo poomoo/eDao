@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.edao.R;
 import com.poomoo.edao.adapter.ChannelSpinnerAdapter;
@@ -32,7 +31,6 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
-import com.poomoo.edao.model.StoreEvaluationData;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
@@ -223,6 +221,11 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 
 	private boolean checkInput() {
 		// TODO 自动生成的方法存根
+		if (Double.toString(application.getCurlongitude()).contains("4.9E-324")
+				|| Double.toString(application.getCurlatitude()).contains("4.9E-324")) {
+			Utity.showToast(getApplicationContext(), "定位失败!请允许该应用获取定位权限,并重新启动应用!");
+			return false;
+		}
 		if (file == null) {
 			Utity.showToast(getApplication(), "请选择图片");
 			return false;

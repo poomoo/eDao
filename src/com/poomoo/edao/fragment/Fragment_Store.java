@@ -15,6 +15,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.activity.MapActivity;
 import com.poomoo.edao.activity.ShopListActivity;
 import com.poomoo.edao.adapter.Fragment_Store_GridViewAdapter;
+import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
@@ -52,7 +53,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 public class Fragment_Store extends Fragment implements OnItemClickListener, OnClickListener {
-	private TextView textView_indicator;
+	private TextView textView_indicator, textView_curCity;
 	private EditText editText_keywords;
 	private LinearLayout layout_position, layout_map;
 	private ViewFlipper flipper;
@@ -72,6 +73,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 	private int advCount = 0;// 广告数量
 	public boolean hasPics = false;// 广告图片加载标志
 	public static Fragment_Store instance = null;
+	private eDaoClientApplication application = null;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 		super.onActivityCreated(savedInstanceState);
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(getView().findViewById(R.id.fragment_store_layout));
+		application = (eDaoClientApplication) getActivity().getApplication();
 		instance = this;
 		init();
 		// 查询广告
@@ -94,6 +97,7 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 	private void init() {
 		// TODO 自动生成的方法存根
 		textView_indicator = (TextView) getView().findViewById(R.id.fragment_store_indicator);
+		textView_curCity = (TextView) getView().findViewById(R.id.fragment_store_textView_curCity);
 		flipper = (ViewFlipper) getView().findViewById(R.id.fragment_store_viewFlipper);
 		layout_position = (LinearLayout) getView().findViewById(R.id.fragment_store_layout_position);
 		layout_map = (LinearLayout) getView().findViewById(R.id.fragment_store_layout_map);
@@ -105,6 +109,8 @@ public class Fragment_Store extends Fragment implements OnItemClickListener, OnC
 		gridView.setAdapter(gridViewAdapter);
 		gridView.setOnItemClickListener(this);
 		layout_map.setOnClickListener(this);
+
+		textView_curCity.setText(application.getCurCity());
 	}
 
 	public void getAdvData() {

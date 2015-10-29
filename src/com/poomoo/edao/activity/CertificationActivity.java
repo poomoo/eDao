@@ -182,19 +182,18 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 							box_YES = new MessageBox_YES(CertificationActivity.this);
 							box_YES.showDialog(responseData.getMsg(), null);
 						} else {
-							sharedPreferences_certificaitonInfo = getSharedPreferences("certificaitonInfo",
-									Context.MODE_PRIVATE);
-							editor = sharedPreferences_certificaitonInfo.edit();
-							editor.putString("realName", realName);
-							editor.putString("idCardNum", idNum);
-							// editor.putString("bankProvince",
-							// province);
-							// editor.putString("bankCity", city);
-							// editor.putString("bankName", bank);
-							// editor.putString("bankCardId", account1);
-							// editor.putBoolean("uploadStatus", true);
-							editor.commit();
-							openActivity(UploadPicsActivity.class);
+												// sharedPreferences_certificaitonInfo =
+							// getSharedPreferences("certificaitonInfo",
+							// Context.MODE_PRIVATE);
+							// editor =
+							// sharedPreferences_certificaitonInfo.edit();
+							// editor.putString("realName", realName);
+							// editor.putString("idCardNum", idNum);
+							// editor.commit();
+							Bundle pBundle=new Bundle();
+							pBundle.putString("realName", realName);
+							pBundle.putString("idNum", idNum);
+							openActivity(UploadPicsActivity.class, pBundle);
 							CertificationActivity.this.finish();
 						}
 					}

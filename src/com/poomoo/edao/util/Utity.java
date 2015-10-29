@@ -655,14 +655,14 @@ public class Utity {
 	 */
 	public static Boolean isMarkersInCluster(LatLng markerGeo, MBound bound) {
 		System.out.println("markerGeo.latitude:" + markerGeo.latitude + ":" + bound.getLeftBottomLat() + ","
-				+ bound.getRightTopLat() + "/n" + "markerGeo.longitude:" + markerGeo.longitude + ":"
+				+ bound.getRightTopLat() + "\n" + "markerGeo.longitude:" + markerGeo.longitude + ":"
 				+ bound.getLeftBottomLng() + "," + bound.getRightTopLng());
 		if (markerGeo.latitude > bound.getLeftBottomLat() && markerGeo.latitude < bound.getRightTopLat()
 				&& markerGeo.longitude > bound.getLeftBottomLng() && markerGeo.longitude < bound.getRightTopLng()) {
-			// System.out.println("markerGeo:" + markerGeo + "在范围内");
+			System.out.println("markerGeo:" + markerGeo + "在范围内");
 			return true;
 		}
-		// System.out.println("markerGeo:" + markerGeo + "不在范围内");
+		System.out.println("markerGeo:" + markerGeo + "不在范围内");
 		return false;
 
 	}
@@ -676,6 +676,7 @@ public class Utity {
 	public static MBound getExtendedBounds(BaiduMap map, MBound bound, Integer gridSize) {
 		// Log.d("getExtendBounds", "size:"+gridSize);
 		MBound tbounds = cutBoundsInRange(bound);
+		System.out.println("getExtendedBounds---" + tbounds.getRightTop() + tbounds.getLeftBottom());
 
 		Projection projection = map.getProjection();
 		Point pixelNE = new Point();
@@ -683,14 +684,16 @@ public class Utity {
 
 		pixelNE = projection.toScreenLocation(tbounds.getRightTop());
 		pixelSW = projection.toScreenLocation(tbounds.getLeftBottom());
+		System.out.println("前pixelNE:"+pixelNE+"pixelSW:"+pixelSW);
 
 		pixelNE.x += gridSize;
-		pixelNE.y -= gridSize;
+		pixelNE.y += gridSize;
 		pixelSW.x -= gridSize;
-		pixelSW.y += gridSize;
+		pixelSW.y -= gridSize;
+		System.out.println("后pixelNE:"+pixelNE+"pixelSW:"+pixelSW);
 		LatLng rightTop = projection.fromScreenLocation(pixelNE);
 		LatLng leftBottom = projection.fromScreenLocation(pixelSW);
-		System.out.println("rightTop:" + rightTop + "leftBottom:" + leftBottom);
+		System.out.println("getExtendedBounds---" + "rightTop:" + rightTop + "leftBottom:" + leftBottom);
 
 		return new MBound(rightTop, leftBottom);
 	}

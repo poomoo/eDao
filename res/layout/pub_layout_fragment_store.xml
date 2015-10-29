@@ -20,6 +20,7 @@
             android:gravity="center" >
 
             <TextView
+                android:id="@+id/fragment_store_textView_curCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -30,7 +31,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_xiala" />
+                android:src="@drawable/ic_xiala"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
