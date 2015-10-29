@@ -92,8 +92,8 @@ public class PartnerApplyActivity extends BaseActivity implements OnClickListene
 		// TODO 自动生成的方法存根
 		if (!application.getRealNameAuth().equals("1")) {
 			openActivity(CertificationActivity.class);
-			startActivity(new Intent(this, CertificationActivity.class));
 			finish();
+			return;
 		}
 		switch (v.getId()) {
 		case R.id.partner_layout_zone:

@@ -8,6 +8,7 @@ import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
+import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
@@ -49,6 +50,10 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
+		// 名字存在说明进行过实名认证申请,需要同步数据查看审核状态
+		if (!TextUtils.isEmpty(application.getRealName())) {
+			getUserInfoData();
+		}
 		init();
 	}
 
@@ -85,6 +90,73 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 			// }
 			break;
 		}
+	}
+
+	private void getUserInfoData() {
+		showProgressDialog("查看审核状态中...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10013");
+		data.put("userId", application.getUserId());
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							UserInfoData infoData = new UserInfoData();
+							infoData = gson.fromJson(responseData.getJsonData(), UserInfoData.class);
+							String realName = infoData.getRealName();
+							String realNameAuth = infoData.getRealNameAuth();
+							System.out.println("realName:" + realName + "realNameAuth:" + realNameAuth);
+							application.setRealNameAuth(realNameAuth);
+							application.setRealName(realName);
+
+							editor = getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit();
+							editor.putString("realName", realName);
+							editor.putString("realNameAuth", realNameAuth);
+							editor.commit();
+							if (application.getRealNameAuth().equals("0")) {
+								Utity.showToast(getApplicationContext(), "实名认证审核中...");
+								finish();
+							} else if (application.getRealNameAuth().equals("1")) {
+								Utity.showToast(getApplicationContext(), "实名认证通过!");
+								finish();
+							} else {
+								Utity.showToast(getApplicationContext(), "实名认证审核失败,请重新认证!");
+							}
+
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							finish();
+						}
+
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+						finish();
+					}
+
+				});
+			}
+		});
 	}
 
 	private void certificate() {

@@ -89,8 +89,8 @@ public class AllianceApplyActivity extends BaseActivity implements OnClickListen
 		// TODO 自动生成的方法存根
 		if (!application.getRealNameAuth().equals("1")) {
 			openActivity(CertificationActivity.class);
-			startActivity(new Intent(this, CertificationActivity.class));
 			finish();
+			return;
 		}
 		switch (v.getId()) {
 		case R.id.alliance_layout_zone:
