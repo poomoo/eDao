@@ -78,7 +78,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(list.get(position).getPictures(), holder.imageView, options);
 
 		holder.textView_shopname.setText(list.get(position).getShopName());
-		holder.textView_owner.setText(Utity.addStarByName(list.get(position).getRealName()));
+		holder.textView_owner.setText(Utity.addStarByNameWithLastOne(list.get(position).getRealName()));
 		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position).getTel()));
 		holder.textView_address.setText(list.get(position).getAddress());
 		holder.textView_distance.setText(list.get(position).getDistance());

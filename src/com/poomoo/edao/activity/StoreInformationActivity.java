@@ -58,7 +58,7 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		ratingBar_all = (RatingBar) findViewById(R.id.store_information_ratingBar);
 
 		textView_store_name.setText(listData.getShopName());
-		textView_owner_name.setText(Utity.addStarByName(listData.getRealName()));
+		textView_owner_name.setText(Utity.addStarByNameWithLastOne(listData.getRealName()));
 		textView_distance.setText("距离:" + listData.getDistance());
 		textView_address.setText(listData.getAddress());
 		textView_tel.setText(Utity.addStarByNum(3, 7, listData.getTel()));

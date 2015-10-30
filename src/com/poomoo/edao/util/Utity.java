@@ -419,6 +419,25 @@ public class Utity {
 	/**
 	 * 
 	 * 
+	 * @Title: addStarByNameWithLastOne
+	 * @Description: TODO 隐藏名字的最后一个字
+	 * @author 李苜菲
+	 * @return
+	 * @return String
+	 * @throws @date
+	 *             2015年10月30日下午1:39:15
+	 */
+	public static String addStarByNameWithLastOne(String str) {
+		if (TextUtils.isEmpty(str))
+			return "";
+		String temp = "";
+		temp = str.substring(0, str.length() - 1) + "*";
+		return temp;
+	}
+
+	/**
+	 * 
+	 * 
 	 * @Title: getLocalHostIp
 	 * @Description: TODO 获取设备IP地址
 	 * @author 李苜菲
@@ -684,13 +703,13 @@ public class Utity {
 
 		pixelNE = projection.toScreenLocation(tbounds.getRightTop());
 		pixelSW = projection.toScreenLocation(tbounds.getLeftBottom());
-		System.out.println("前pixelNE:"+pixelNE+"pixelSW:"+pixelSW);
+		System.out.println("前pixelNE:" + pixelNE + "pixelSW:" + pixelSW);
 
 		pixelNE.x += gridSize;
 		pixelNE.y += gridSize;
 		pixelSW.x -= gridSize;
 		pixelSW.y -= gridSize;
-		System.out.println("后pixelNE:"+pixelNE+"pixelSW:"+pixelSW);
+		System.out.println("后pixelNE:" + pixelNE + "pixelSW:" + pixelSW);
 		LatLng rightTop = projection.fromScreenLocation(pixelNE);
 		LatLng leftBottom = projection.fromScreenLocation(pixelSW);
 		System.out.println("getExtendedBounds---" + "rightTop:" + rightTop + "leftBottom:" + leftBottom);

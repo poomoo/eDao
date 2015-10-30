@@ -19,6 +19,8 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
@@ -51,6 +53,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 	private String status = "1";// ：1临时订单（未支付），2正式订单（已支付），3历史订单（删除）
 	private boolean isFirst = true;// 是否第一次加载
 	private boolean isFresh = false;// 是否刷新标志
+	private MessageBox_YESNO message_yesno = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 
 		MyOrder_ListViewAdapter.type = "1";
 		list = new ArrayList<OrderListData>();
+
 		adapter = new MyOrder_ListViewAdapter(this, list);
 		listView.setAdapter(adapter);
 
@@ -140,7 +144,18 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener {
 				pBundle.putString("ordersId", list.get(position).getOrdersId());
 				openActivityForResult(StoreEvaluateActivity.class, pBundle, 1);
 			} else {
-				confirm(position);
+				message_yesno = new MessageBox_YESNO(MyOrderActivity.this);
+				message_yesno.showDialog("确认收款?", new DialogResultListener() {
+
+					@Override
+					public void onFinishDialogResult(int result) {
+						// TODO Auto-generated method stub
+						if (result == 1) {
+							confirm(position);
+						}
+					}
+				});
+
 			}
 		}
 

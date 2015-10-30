@@ -20,6 +20,8 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.DialogResultListener;
+import com.poomoo.edao.widget.MessageBox_YESNO;
 import com.poomoo.edao.widget.MyListView;
 import com.poomoo.edao.widget.MyListView.OnRefreshListener;
 
@@ -56,6 +58,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 	private List<KeyManageData> list_apply, list_used;
 	private String content = "", tel = "", realName = "";
 	private boolean isFresh = false;// 是否刷新标志
+	private MessageBox_YESNO message_yesno = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +255,7 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 								}
 								adapter_used.notifyDataSetChanged();
 								used_curPage += 1;
-						
+
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
@@ -353,7 +356,17 @@ public class KeyManageActivity extends BaseActivity implements OnClickListener {
 				check(position, 1);
 				break;
 			case R.id.item_key_manage_apply_button_refuse:
-				check(position, 2);
+				message_yesno = new MessageBox_YESNO(KeyManageActivity.this);
+				message_yesno.showDialog("确定拒绝?", new DialogResultListener() {
+
+					@Override
+					public void onFinishDialogResult(int result) {
+						// TODO Auto-generated method stub
+						if (result == 1) {
+							check(position, 2);
+						}
+					}
+				});
 				break;
 
 			}
