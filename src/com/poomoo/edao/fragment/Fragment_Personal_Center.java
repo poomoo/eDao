@@ -138,11 +138,10 @@ public class Fragment_Personal_Center extends Fragment implements OnClickListene
 			if (application.getType().equals("2")) {
 				if (application.getJoinType().equals("3")) {
 					if (application.getJoinStatus().equals("1")) {
-						if (application.getShopIsExists().equals("false")
-								|| TextUtils.isEmpty(application.getShopIsExists()))
+						if (!application.getShopStatus().equals("1"))
 							startActivity(new Intent(getActivity(), StoreManageActivity.class));
-						else if (application.getShopIsExists().equals("true"))
-							Utity.showToast(getActivity().getApplicationContext(), "已经添加过店铺!");
+						else
+							Utity.showToast(getActivity().getApplicationContext(), "店铺添加成功!");
 					} else {
 						Utity.showToast(getActivity().getApplication(), "审核未通过或未审核");
 					}

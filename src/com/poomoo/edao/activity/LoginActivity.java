@@ -152,13 +152,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								editor.putString("type", loginResData.getType());
 								editor.putString("realNameAuth", loginResData.getRealNameAuth());
 								editor.putString("payPwdValue", loginResData.getPayPwdValue());
-								editor.putString("shopIsExists", loginResData.getShopIsExists());
-								try {
-									passWord = Utity.encrypt(eDaoClientConfig.key, passWord);
-								} catch (Exception e) {
-									Utity.showToast(getApplicationContext(), "密码加密错误:" + e.getMessage());
-									passWord = "";
-								}
+								editor.putString("shopId", loginResData.getShopId());
+								editor.putString("shopStatus", loginResData.getShopStatus());
+								// try {
+								// passWord =
+								// Utity.encrypt(eDaoClientConfig.key,
+								// passWord);
+								// } catch (Exception e) {
+								// Utity.showToast(getApplicationContext(),
+								// "密码加密错误:" + e.getMessage());
+								// passWord = "";
+								// }
 								// editor.putString("passWord", passWord);
 								editor.putString("quickmarkPic", loginResData.getQuickmarkPic());
 								editor.putBoolean("isLogin", true);
@@ -170,7 +174,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								application.setRealNameAuth(loginResData.getRealNameAuth());
 								application.setPayPwdValue(loginResData.getPayPwdValue());
 								application.setQuickmarkPic(loginResData.getQuickmarkPic());
-								application.setShopIsExists(loginResData.getShopIsExists());
+								application.setShopId(loginResData.getShopId());
+								application.setShopStatus(loginResData.getShopStatus());
 								startService(new Intent(LoginActivity.this, Get_UserInfo_Service.class));
 								LoginActivity.this
 										.startActivity(new Intent(LoginActivity.this, NavigationActivity.class));

@@ -254,7 +254,7 @@ public class Cluster {
 
 		viewHolder.storeRatingBar.setRating(store.getAvgScore());
 		viewHolder.storeName.setText(store.getShopName());
-		viewHolder.storeOwner.setText(store.getRealName());
+		viewHolder.storeOwner.setText(Utity.addStarByName(store.getRealName()));
 		return mMarkerLy;
 	}
 

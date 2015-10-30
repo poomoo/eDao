@@ -23,7 +23,8 @@ public class UserInfoData {
 	private String payPwdValue = "";// 是否设置过支付密码
 	private String joinType = "";// 加盟类型 1-加盟商 2-经销商 3-合作商
 	private String joinStatus = "";// 加盟审核 0,"默认值，未审核" 1,"审核通过" 2,"审核未通过"
-	private String shopIsExists = "";// true-店铺已经添加
+	// private String shopIsExists = "";// true-店铺已经添加
+	private String shopStatus = "";// 店铺审核状态 0-审核中 1-通过 2-拒绝
 	private String shopId = "";
 
 	private int totalEb = 0;// 总的意币
@@ -142,12 +143,20 @@ public class UserInfoData {
 		this.joinStatus = joinStatus;
 	}
 
-	public String getShopIsExists() {
-		return shopIsExists;
+	// public String getShopIsExists() {
+	// return shopIsExists;
+	// }
+	//
+	// public void setShopIsExists(String shopIsExists) {
+	// this.shopIsExists = shopIsExists;
+	// }
+
+	public String getShopStatus() {
+		return shopStatus;
 	}
 
-	public void setShopIsExists(String shopIsExists) {
-		this.shopIsExists = shopIsExists;
+	public void setShopStatus(String shopStatus) {
+		this.shopStatus = shopStatus;
 	}
 
 	public int getTotalEb() {

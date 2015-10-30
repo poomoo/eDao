@@ -7,6 +7,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
 import com.poomoo.edao.model.StoreData;
+import com.poomoo.edao.util.Utity;
 
 import android.content.Context;
 import android.graphics.Bitmap.Config;
@@ -77,8 +78,8 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(list.get(position).getPictures(), holder.imageView, options);
 
 		holder.textView_shopname.setText(list.get(position).getShopName());
-		holder.textView_owner.setText(list.get(position).getRealName());
-		holder.textView_tel.setText(list.get(position).getTel());
+		holder.textView_owner.setText(Utity.addStarByName(list.get(position).getRealName()));
+		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position).getTel()));
 		holder.textView_address.setText(list.get(position).getAddress());
 		holder.textView_distance.setText(list.get(position).getDistance());
 		holder.bar.setRating(list.get(position).getAvgScore());

@@ -31,6 +31,7 @@ import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.model.StoreData;
+import com.poomoo.edao.model.UserInfoData;
 import com.poomoo.edao.model.database.AreaInfo;
 import com.poomoo.edao.model.database.CityInfo;
 import com.poomoo.edao.model.database.ProvinceInfo;
@@ -40,7 +41,9 @@ import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
 import com.poomoo.edao.widget.CityPicker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -103,6 +106,7 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 	private ArrayList<AreaInfo> areaList = new ArrayList<AreaInfo>();
 
 	private Gson gson = new Gson();
+	private Editor editor = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,12 +173,11 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 			list.add(data);
 		}
 		adapter = new ChannelSpinnerAdapter(this, list);
-
-		// 店铺审核没有通过时回显
+		// 已经添加过店铺时要检查店铺状态
 		if (!TextUtils.isEmpty(application.getShopId())) {
-			getData();
-			layout_logo.setOnClickListener(this);
+			checkShopStatus();
 		}
+
 	}
 
 	@Override
@@ -509,6 +512,7 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 			closeProgressDialog();
 			if (msg.what == 1) {
 				Utity.showToast(getApplication(), "上传成功");
+				application.setShopId("success");// 上传成功了设置shopid不为空
 				finish();
 			} else {
 				Utity.showToast(getApplication(), "上传失败");
@@ -517,4 +521,73 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		}
 	};
 
+	private void checkShopStatus() {
+		showProgressDialog("查看审核状态中...");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10013");
+		data.put("userId", application.getUserId());
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						closeProgressDialog();
+						if (responseData.getRsCode() == 1) {
+							UserInfoData infoData = new UserInfoData();
+							infoData = gson.fromJson(responseData.getJsonData(), UserInfoData.class);
+							String shopId = infoData.getShopId();
+							String shopStatus = infoData.getShopStatus();
+							application.setShopId(shopId);
+							application.setShopStatus(shopStatus);
+
+							editor = getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit();
+							editor.putString("shopStatus", shopStatus);
+							editor.putString("shopId", shopId);
+							editor.commit();
+
+							if (application.getShopStatus().equals("0")) {
+								Utity.showToast(getApplicationContext(), "店铺正在审核中...");
+								finish();
+							} else if (application.getShopStatus().equals("1")) {
+								Utity.showToast(getApplicationContext(), "店铺添加成功!");
+								finish();
+							} else {
+								// 店铺审核没有通过时回显
+								getData();
+								layout_logo.setOnClickListener(StoreManageActivity.this);
+								Utity.showToast(getApplicationContext(), "店铺审核失败,请重新添加!");
+							}
+
+						} else {
+							Utity.showToast(getApplicationContext(), responseData.getMsg());
+							finish();
+						}
+
+					}
+				});
+			}
+
+			@Override
+			public void onError(Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						closeProgressDialog();
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+						finish();
+					}
+
+				});
+			}
+		});
+	}
 }

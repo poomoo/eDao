@@ -5,6 +5,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
 import com.poomoo.edao.model.StoreData;
+import com.poomoo.edao.util.Utity;
 
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
@@ -57,10 +58,10 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		ratingBar_all = (RatingBar) findViewById(R.id.store_information_ratingBar);
 
 		textView_store_name.setText(listData.getShopName());
-		textView_owner_name.setText(listData.getRealName());
+		textView_owner_name.setText(Utity.addStarByName(listData.getRealName()));
 		textView_distance.setText("距离:" + listData.getDistance());
 		textView_address.setText(listData.getAddress());
-		textView_tel.setText(listData.getTel());
+		textView_tel.setText(Utity.addStarByNum(3, 7, listData.getTel()));
 		ratingBar_all.setRating(listData.getAvgScore());
 		// 使用ImageLoader加载网络图片
 		DisplayImageOptions options = new DisplayImageOptions.Builder()//
@@ -84,7 +85,7 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.store_information_imageView_pic:
-			Bundle pBundle=new Bundle();
+			Bundle pBundle = new Bundle();
 			pBundle.putString("path", listData.getPictures());
 			openActivity(CatBigPictureActivity.class, pBundle);
 			break;

@@ -90,7 +90,8 @@ public class SplashActivity extends BaseActivity {
 					application.setJoinType(loginsp.getString("joinType", ""));
 					application.setJoinStatus(loginsp.getString("joinStatus", ""));
 					application.setQuickmarkPic(loginsp.getString("quickmarkPic", ""));
-					application.setShopIsExists(loginsp.getString("shopId", ""));
+					application.setShopId(loginsp.getString("shopId", ""));
+					application.setShopStatus(loginsp.getString("shopStatus", ""));
 					openActivity(NavigationActivity.class);
 					startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
 				} else
