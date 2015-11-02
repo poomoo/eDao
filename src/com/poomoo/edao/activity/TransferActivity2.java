@@ -122,7 +122,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 				data = new HashMap<String, String>();
 				data.put("name", channel[i]);
 				data.put("id", i + 1 + "");
-				list.add(data);
+		 		list.add(data);
 			}
 		}
 
