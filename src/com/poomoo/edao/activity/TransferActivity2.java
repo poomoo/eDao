@@ -19,7 +19,6 @@ import com.poomoo.edao.widget.DialogResultListener;
 import com.poomoo.edao.widget.MessageBox_YES;
 import com.poomoo.edao.widget.MessageBox_YESNO;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -65,7 +64,6 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 	private String userId = "", realName = "", tel = "", money = "", payType = "1", payPwd = "", remark = "";
 	private static final String[] channel = new String[] { "意币支付", "现金支付" };
 	private boolean needPassword = false, isBalanceEnough = true;
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YESNO box_YESNO;
 	private MessageBox_YES box_YES;
@@ -114,7 +112,7 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 
 		textView_channel.setText(channel[0]);
 		needPassword = true;
-		// 转账
+		// 购买支付
 		if (transferType.equals("2")) {
 			layout_channel.setOnClickListener(this);
 			list = new ArrayList<HashMap<String, String>>();
@@ -227,8 +225,15 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		}
 		money = editText_pay_money.getText().toString().trim();
 		if (TextUtils.isEmpty(money)) {
-			Utity.showToast(getApplicationContext(), "请输入转账金额");
+			Utity.showToast(getApplicationContext(), "请输入金额");
 			return false;
+		}
+		// 购买支付时金额不能超过5W
+		if (transferType.equals("2")) {
+			if (Double.parseDouble(money) > 50000) {
+				Utity.showToast(getApplicationContext(), "不能超过5万!");
+				return false;
+			}
 		}
 		payPwd = editText_pay_password.getText().toString().trim();
 		if (needPassword && TextUtils.isEmpty(payPwd)) {

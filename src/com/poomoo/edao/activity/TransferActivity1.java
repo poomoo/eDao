@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.poomoo.edao.R;
-import com.poomoo.edao.R.color;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
 import com.poomoo.edao.model.ResponseData;
@@ -18,7 +17,6 @@ import com.poomoo.edao.util.Utity;
 import com.zbar.lib.CaptureActivity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
