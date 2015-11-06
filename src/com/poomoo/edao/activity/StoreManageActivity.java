@@ -185,13 +185,13 @@ public class StoreManageActivity extends BaseActivity implements OnClickListener
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.store_manage_layout_logo:
-			Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT, null);
+			Intent intent1 = new Intent(Intent.ACTION_PICK, null);
 			intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
 			intent1.putExtra("return-data", true);
 			startActivityForResult(intent1, PHOTORESOULT);
 			break;
 		case R.id.store_manage_layout_logo_center:
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+			Intent intent = new Intent(Intent.ACTION_PICK, null);
 			intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
 			intent.putExtra("return-data", true);
 			startActivityForResult(intent, PHOTORESOULT);
