@@ -39,7 +39,6 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 	private Editor editor = null;
 	private String realName = "", idNum = "";
 	private Gson gson = new Gson();
-	private MessageBox_YES box_YES;
 	private eDaoClientApplication application = null;
 
 	@Override
@@ -81,13 +80,13 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 		switch (v.getId()) {
 
 		case R.id.registration_btn_confirm:
-			// if (isUpload) {
-			// openActivity(UploadPicsActivity.class);
-			// finish();
-			// } else if (checkInput()) {
-			if (checkInput())
-				certificate();
-			// }
+			if (checkInput()) {
+				Bundle pBundle = new Bundle();
+				pBundle.putString("realName", realName);
+				pBundle.putString("idNum", idNum);
+				openActivity(UploadPicsActivity.class, pBundle);
+				finish();
+			}
 			break;
 		}
 	}
@@ -152,64 +151,6 @@ public class CertificationActivity extends BaseActivity implements OnClickListen
 						closeProgressDialog();
 						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
 						finish();
-					}
-
-				});
-			}
-		});
-	}
-
-	private void certificate() {
-		// TODO 自动生成的方法存根
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("bizName", "10000");
-		data.put("method", "10017");
-		data.put("userId", application.getUserId());
-		data.put("realName", realName);
-		data.put("idCardNum", idNum);
-
-		showProgressDialog("认证中...");
-		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
-			@Override
-			public void onFinish(final ResponseData responseData) {
-				// TODO 自动生成的方法存根
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						// TODO 自动生成的方法存根
-						closeProgressDialog();
-						if (responseData.getRsCode() != 1) {
-							box_YES = new MessageBox_YES(CertificationActivity.this);
-							box_YES.showDialog(responseData.getMsg(), null);
-						} else {
-												// sharedPreferences_certificaitonInfo =
-							// getSharedPreferences("certificaitonInfo",
-							// Context.MODE_PRIVATE);
-							// editor =
-							// sharedPreferences_certificaitonInfo.edit();
-							// editor.putString("realName", realName);
-							// editor.putString("idCardNum", idNum);
-							// editor.commit();
-							Bundle pBundle=new Bundle();
-							pBundle.putString("realName", realName);
-							pBundle.putString("idNum", idNum);
-							openActivity(UploadPicsActivity.class, pBundle);
-							CertificationActivity.this.finish();
-						}
-					}
-				});
-
-			}
-
-			@Override
-			public void onError(final Exception e) {
-				// TODO 自动生成的方法存根
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						closeProgressDialog();
-						// TODO 自动生成的方法存根
-						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
 					}
 
 				});

@@ -61,7 +61,7 @@ public class StoreInformationActivity extends BaseActivity implements OnClickLis
 		textView_owner_name.setText(Utity.addStarByNameWithLastOne(listData.getRealName()));
 		textView_distance.setText("距离:" + listData.getDistance());
 		textView_address.setText(listData.getAddress());
-		textView_tel.setText(Utity.addStarByNum(3, 7, listData.getTel()));
+		textView_tel.setText(listData.getTel());
 		ratingBar_all.setRating(listData.getAvgScore());
 		// 使用ImageLoader加载网络图片
 		DisplayImageOptions options = new DisplayImageOptions.Builder()//

@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,12 +19,17 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 
+import com.google.gson.Gson;
 import com.poomoo.edao.R;
 import com.poomoo.edao.application.eDaoClientApplication;
 import com.poomoo.edao.config.eDaoClientConfig;
+import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.popupwindow.Upload_Pics_Example_PopupWindow;
 import com.poomoo.edao.popupwindow.Upload_Pics_PopupWindow;
+import com.poomoo.edao.util.HttpCallbackListener;
+import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
+import com.poomoo.edao.widget.MessageBox_YES;
 
 import android.content.Context;
 import android.content.Intent;
@@ -76,6 +83,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 	private Editor editor = null;
 	private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "edao.temp";
 	private final static int res[] = { R.drawable.ic_example1, R.drawable.ic_example2 };
+	private Gson gson = new Gson();
+	private MessageBox_YES box_YES;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +94,8 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		// 实现沉浸式状态栏效果
 		setImmerseLayout(findViewById(R.id.navigation_fragment));
 		application = (eDaoClientApplication) getApplication();
-		realName=getIntent().getStringExtra("realName");
-		idNum=getIntent().getStringExtra("idNum");
+		realName = getIntent().getStringExtra("realName");
+		idNum = getIntent().getStringExtra("idNum");
 		init();
 	}
 
@@ -432,19 +441,7 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 						}
 					}).start();
 				else {
-					closeProgressDialog();
-					editor = sharedPreferences_certificaitonInfo.edit();
-					editor.putString("imagepath1", path1);
-					editor.putString("imagepath2", path2);
-					editor.putString("imagepath3", path3);
-					editor.putString("imagepath4", path4);
-
-					editor.putString("realName", realName);
-					editor.putString("idCardNum", idNum);
-					editor.commit();
-					application.setRealName(realName);
-					Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_LONG).show();
-					finish();
+					certificate();
 				}
 
 			} else {
@@ -455,4 +452,61 @@ public class UploadPicsActivity extends BaseActivity implements OnClickListener 
 		}
 	};
 
+	private void certificate() {
+		// TODO 自动生成的方法存根
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("bizName", "10000");
+		data.put("method", "10017");
+		data.put("userId", application.getUserId());
+		data.put("realName", realName);
+		data.put("idCardNum", idNum);
+
+		showProgressDialog("认证中...");
+		HttpUtil.SendPostRequest(gson.toJson(data), eDaoClientConfig.url, new HttpCallbackListener() {
+			@Override
+			public void onFinish(final ResponseData responseData) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						closeProgressDialog();
+						if (responseData.getRsCode() != 1) {
+							box_YES = new MessageBox_YES(UploadPicsActivity.this);
+							box_YES.showDialog(responseData.getMsg(), null);
+						} else {
+							closeProgressDialog();
+							editor = sharedPreferences_certificaitonInfo.edit();
+							editor.putString("imagepath1", path1);
+							editor.putString("imagepath2", path2);
+							editor.putString("imagepath3", path3);
+							editor.putString("imagepath4", path4);
+
+							editor.putString("realName", realName);
+							editor.putString("idCardNum", idNum);
+							editor.commit();
+							application.setRealName(realName);
+							Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_LONG).show();
+							finish();
+						}
+					}
+				});
+
+			}
+
+			@Override
+			public void onError(final Exception e) {
+				// TODO 自动生成的方法存根
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						closeProgressDialog();
+						// TODO 自动生成的方法存根
+						Utity.showToast(getApplicationContext(), eDaoClientConfig.checkNet);
+					}
+
+				});
+			}
+		});
+	}
 }

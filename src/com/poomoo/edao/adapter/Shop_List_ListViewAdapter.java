@@ -79,7 +79,7 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 
 		holder.textView_shopname.setText(list.get(position).getShopName());
 		holder.textView_owner.setText(Utity.addStarByNameWithLastOne(list.get(position).getRealName()));
-		holder.textView_tel.setText(Utity.addStarByNum(3, 7, list.get(position).getTel()));
+		holder.textView_tel.setText(list.get(position).getTel());
 		holder.textView_address.setText(list.get(position).getAddress());
 		holder.textView_distance.setText(list.get(position).getDistance());
 		holder.bar.setRating(list.get(position).getAvgScore());

@@ -393,66 +393,75 @@ public class MapActivity extends BaseActivity
 								// list.add(storeData);
 								// addInfosOverlay(list);
 								System.out.println("当前图层级别:" + mBaiduMap.getMapStatus().zoom);
-								if (mBaiduMap.getMapStatus().zoom >= 18) {
-									// mBaiduMap.clear();
-									// refreshVersionClusterMarker(markers);
-								} else {
-									System.out.println("重新绘制");
-									mBaiduMap.clear();
-									switch ((int) mBaiduMap.getMapStatus().zoom) {
-									case 17:
-										mDistance = 50;
-										break;
-									case 16:
-										mDistance = 100;
-										break;
-									case 15:
-										mDistance = 200;
-										break;
-									case 14:
-										mDistance = 500;
-										break;
-									case 13:
-										mDistance = 1000;
-										break;
-									case 12:
-										mDistance = 2000;
-										break;
-									case 11:
-										mDistance = 5000;
-										break;
-									case 10:
-										mDistance = 10*1000;
-										break;
-									case 9:
-										mDistance = 20*1000;
-										break;
-									case 8:
-										mDistance = 25*1000;
-										break;
-									case 7:
-										mDistance = 50*1000;
-										break;
-									case 6:
-										mDistance = 100*1000;
-										break;
-									case 5:
-										mDistance = 200*1000;
-										break;
-									case 4:
-										mDistance = 500*1000;
-										break;
-									default:
-										mDistance = 1000*1000;
-										break;
-									}
-
-									mCluster.setmDistance(mDistance);
-									mCluster.setmBaiduMap(mBaiduMap);
-									mCluster.setInfos(list);
-									// mCluster.createCluster(refreshVersionClusterMarker(markers));
-									mCluster.createCluster(list);
+								// if (mBaiduMap.getMapStatus().zoom >= 18) {
+								// mBaiduMap.clear();
+								// refreshVersionClusterMarker(markers);
+								// } else {
+								System.out.println("重新绘制");
+								mBaiduMap.clear();
+								switch ((int) mBaiduMap.getMapStatus().zoom) {
+								case 20:
+									mDistance = 5;
+									break;
+								case 19:
+									mDistance = 10;
+									break;
+								case 18:
+									mDistance = 20;
+									break;
+								case 17:
+									mDistance = 50;
+									break;
+								case 16:
+									mDistance = 100;
+									break;
+								case 15:
+									mDistance = 200;
+									break;
+								case 14:
+									mDistance = 500;
+									break;
+								case 13:
+									mDistance = 1000;
+									break;
+								case 12:
+									mDistance = 2000;
+									break;
+								case 11:
+									mDistance = 5000;
+									break;
+								case 10:
+									mDistance = 10 * 1000;
+									break;
+								case 9:
+									mDistance = 20 * 1000;
+									break;
+								case 8:
+									mDistance = 25 * 1000;
+									break;
+								case 7:
+									mDistance = 50 * 1000;
+									break;
+								case 6:
+									mDistance = 100 * 1000;
+									break;
+								case 5:
+									mDistance = 200 * 1000;
+									break;
+								case 4:
+									mDistance = 500 * 1000;
+									break;
+								default:
+									mDistance = 1000 * 1000;
+									break;
 								}
+
+								mCluster.setmDistance(mDistance);
+								mCluster.setmBaiduMap(mBaiduMap);
+								mCluster.setInfos(list);
+								// mCluster.createCluster(refreshVersionClusterMarker(markers));
+								mCluster.createCluster(list);
+								// }
 							} catch (JSONException e) {
 								// TODO 自动生成的 catch 块
 								e.printStackTrace();
@@ -478,6 +487,7 @@ public class MapActivity extends BaseActivity
 
 				});
 			}
+
 		});
 	}
 
