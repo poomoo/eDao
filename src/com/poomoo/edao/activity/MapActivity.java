@@ -376,14 +376,7 @@ public class MapActivity extends BaseActivity
 									storeData = gson.fromJson(data.getJSONObject(i).toString(), StoreData.class);
 									list.add(storeData);
 								}
-								// StoreData storeData = new StoreData();
-								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119121849495_2.jpg");
-								// storeData.setLatitude(26.612613);
-								// storeData.setLongitude(106.634157);
-								// storeData.setShopName("测试1");
-								// storeData.setRealName("测试人1");
-								// list.add(storeData);
-								//
+								
 								// storeData = new StoreData();
 								// storeData.setPictures("http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg");
 								// storeData.setLatitude(26.613008);

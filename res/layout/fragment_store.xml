@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECECEC"
@@ -13,8 +13,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5" >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragment_store_gridView"
+        android:layout_below="@+id/fragment_store_layout" >
 
         <ViewFlipper
             android:id="@+id/fragment_store_viewFlipper"
@@ -26,7 +27,7 @@
             android:id="@+id/fragment_store_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:text="@string/viewpager_indicator"
@@ -38,8 +39,8 @@
     <GridView
         android:id="@+id/fragment_store_gridView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="#E6E6E6"
         android:horizontalSpacing="1dp"
         android:numColumns="4"
@@ -48,4 +49,4 @@
         android:verticalSpacing="1dp" >
     </GridView>
 
-</LinearLayout>
+</RelativeLayout>
