@@ -216,7 +216,7 @@
         <!-- 微信支付 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTop" />
 
         <intent-filter>

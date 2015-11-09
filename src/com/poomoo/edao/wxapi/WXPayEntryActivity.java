@@ -3,7 +3,6 @@ package com.poomoo.edao.wxapi;
 import com.poomoo.edao.R;
 import com.poomoo.edao.activity.BaseActivity;
 import com.poomoo.edao.activity.BuyKeyActivity;
-import com.poomoo.edao.activity.PaymentActivity;
 import com.poomoo.edao.activity.RechargeActivity;
 import com.poomoo.edao.service.Get_UserInfo_Service;
 import com.poomoo.edao.weixinpay.Constants;
