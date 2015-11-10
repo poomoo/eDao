@@ -21,8 +21,8 @@ import com.poomoo.edao.model.ResponseData;
 import com.poomoo.edao.util.HttpCallbackListener;
 import com.poomoo.edao.util.HttpUtil;
 import com.poomoo.edao.util.Utity;
-import com.poomoo.edao.widget.PhotoView.ImagePagerActivity;
-import com.poomoo.edao.widget.PhotoView.MyGestureListener;
+import com.poomoo.edao.widget.MyGestureListener;
+import com.poomoo.edao.widget.photoview.ImagePagerActivity;
 
 import android.app.Fragment;
 import android.content.Context;

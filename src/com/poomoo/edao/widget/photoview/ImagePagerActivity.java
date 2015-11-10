@@ -1,4 +1,4 @@
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget.photoview;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 /**
- * 
- * @ClassName ImagePagerActivity
- * @Description TODO 大图展示界面
- * @author 李苜菲
- * @date 2015-8-26 上午10:10:44
+ * 图片查看器
  */
 public class ImagePagerActivity extends FragmentActivity {
 	private static final String STATE_POSITION = "STATE_POSITION";
@@ -32,22 +28,23 @@ public class ImagePagerActivity extends FragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// 去掉默认标题栏
-		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		Window window = getWindow();
+		window.requestFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.image_detail_pager);
-
+		
 		pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
-		ArrayList<String> urls = getIntent().getStringArrayListExtra(
-				EXTRA_IMAGE_URLS);
+		ArrayList<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
+		// pagerPosition=0;
+		// ArrayList<String> urls =new ArrayList<String>();
+		// urls.add("http://www.leyidao.com:80/yidao/upload/shop/1446896665492.jpg");
+		System.out.println("url地址大小为" + urls.size());
 
 		mPager = (HackyViewPager) findViewById(R.id.pager);
-		ImagePagerAdapter mAdapter = new ImagePagerAdapter(
-				getSupportFragmentManager(), urls);
+		ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), urls);
 		mPager.setAdapter(mAdapter);
 		indicator = (TextView) findViewById(R.id.indicator);
 
-		CharSequence text = getString(R.string.viewpager_indicator, 1, mPager
-				.getAdapter().getCount());
+		CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
 		indicator.setText(text);
 		// 更新下标
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -62,8 +59,7 @@ public class ImagePagerActivity extends FragmentActivity {
 
 			@Override
 			public void onPageSelected(int arg0) {
-				CharSequence text = getString(R.string.viewpager_indicator,
-						arg0 + 1, mPager.getAdapter().getCount());
+				CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1, mPager.getAdapter().getCount());
 				indicator.setText(text);
 			}
 

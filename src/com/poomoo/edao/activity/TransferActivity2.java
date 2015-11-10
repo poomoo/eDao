@@ -230,8 +230,8 @@ public class TransferActivity2 extends BaseActivity implements OnClickListener {
 		}
 		// 购买支付时金额不能超过5W
 		if (transferType.equals("2")) {
-			if (Double.parseDouble(money) > 50000) {
-				Utity.showToast(getApplicationContext(), "不能超过5万!");
+			if (Double.parseDouble(money) > 5000) {
+				Utity.showToast(getApplicationContext(), "不能超过5000!");
 				return false;
 			}
 		}

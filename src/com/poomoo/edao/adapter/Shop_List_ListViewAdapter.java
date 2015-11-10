@@ -2,15 +2,12 @@ package com.poomoo.edao.adapter;
 
 import java.util.List;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.poomoo.edao.R;
 import com.poomoo.edao.model.StoreData;
 import com.poomoo.edao.util.Utity;
 
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,15 +64,15 @@ public class Shop_List_ListViewAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		// 使用ImageLoader加载网络图片
-		DisplayImageOptions options = new DisplayImageOptions.Builder()//
-				.showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
-				.showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
-				.cacheInMemory(true) // 内存缓存
-				.cacheOnDisk(true) // sdcard缓存
-				.bitmapConfig(Config.RGB_565)// 设置最低配置
-				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
-				.build();
-		ImageLoader.getInstance().displayImage(list.get(position).getPictures(), holder.imageView, options);
+		// DisplayImageOptions options = new DisplayImageOptions.Builder()//
+		// .showImageOnLoading(R.drawable.ic_launcher) // 加载中显示的默认图片
+		// .showImageOnFail(R.drawable.ic_launcher) // 设置加载失败的默认图片
+		// .cacheInMemory(true) // 内存缓存
+		// .cacheOnDisk(true) // sdcard缓存
+		// .bitmapConfig(Config.RGB_565)// 设置最低配置
+		// .imageScaleType(ImageScaleType.IN_SAMPLE_INT)// 缩放图片
+		// .build();
+		ImageLoader.getInstance().displayImage(list.get(position).getPictures(), holder.imageView);
 
 		holder.textView_shopname.setText(list.get(position).getShopName());
 		holder.textView_owner.setText(Utity.addStarByNameWithLastOne(list.get(position).getRealName()));

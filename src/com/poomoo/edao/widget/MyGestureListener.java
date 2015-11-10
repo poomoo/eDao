@@ -1,4 +1,4 @@
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget;
 
 import com.poomoo.edao.R;
 

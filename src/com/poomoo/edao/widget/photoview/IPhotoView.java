@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget.photoview;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

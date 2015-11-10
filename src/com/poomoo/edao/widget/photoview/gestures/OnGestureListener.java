@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget.photoview.gestures;
 
-import android.view.MotionEvent;
+public interface OnGestureListener {
 
-public interface GestureDetector {
+    public void onDrag(float dx, float dy);
 
-    public boolean onTouchEvent(MotionEvent ev);
+    public void onFling(float startX, float startY, float velocityX,
+                        float velocityY);
 
-    public boolean isScaling();
-
-    public void setOnGestureListener(OnGestureListener listener);
+    public void onScale(float scaleFactor, float focusX, float focusY);
 
 }

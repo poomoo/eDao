@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget.photoview.log;
 
-public interface OnGestureListener {
+import android.util.Log;
 
-    public void onDrag(float dx, float dy);
+/**
+ * class that holds the {@link Logger} for this library, defaults to {@link LoggerDefault} to send logs to android {@link Log}
+ */
+public final class LogManager {
 
-    public void onFling(float startX, float startY, float velocityX,
-                        float velocityY);
+    private static Logger logger = new LoggerDefault();
 
-    public void onScale(float scaleFactor, float focusX, float focusY);
+    public static void setLogger(Logger newLogger) {
+        logger = newLogger;
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
 
 }

@@ -1,8 +1,9 @@
-package com.poomoo.edao.widget.PhotoView;
+package com.poomoo.edao.widget.photoview;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -35,8 +36,12 @@ public class HackyViewPager extends ViewPager {
 		try {
 			return super.onInterceptTouchEvent(ev);
 		} catch (IllegalArgumentException e) {
+			// 不理会
+			Log.e(TAG, "hacky viewpager error1");
 			return false;
 		} catch (ArrayIndexOutOfBoundsException e) {
+			// 不理会
+			Log.e(TAG, "hacky viewpager error2");
 			return false;
 		}
 	}

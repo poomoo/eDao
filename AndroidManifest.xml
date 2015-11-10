@@ -211,7 +211,7 @@
             android:name="com.zbar.lib.CaptureActivity"
             android:exported="false" />
         <activity
-            android:name=".widget.PhotoView.ImagePagerActivity"
+            android:name=".widget.photoview.ImagePagerActivity"
             android:exported="false" />
         <!-- 微信支付 -->
         <activity
