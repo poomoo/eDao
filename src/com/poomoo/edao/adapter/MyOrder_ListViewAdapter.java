@@ -111,15 +111,15 @@ public class MyOrder_ListViewAdapter extends BaseAdapter {
 				if (list.get(position).getIsAppraise().equals("0")) {
 					holder.button_pay.setVisibility(View.VISIBLE);
 					holder.button_pay.setText("去评价");
+					holder.button_pay.setBackgroundResource(R.drawable.style_btn_yes_background);
+					holder.button_pay.setOnClickListener(listener);
+					holder.button_pay.setTag("evaluate");
 				} else {
 					holder.button_pay.setVisibility(View.VISIBLE);
 					holder.button_pay.setText("已评价");
 					holder.button_pay.setClickable(false);
 					holder.button_pay.setBackgroundResource(R.drawable.style_btn_no_background);
 				}
-
-				holder.button_pay.setOnClickListener(listener);
-				holder.button_pay.setTag("evaluate");
 			}
 			// 商户角色
 			else {

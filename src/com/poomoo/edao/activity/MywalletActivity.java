@@ -17,7 +17,6 @@ import com.poomoo.edao.widget.MessageBox_YES;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -46,7 +45,6 @@ public class MywalletActivity extends BaseActivity implements OnClickListener {
 
 	private String money = "";
 	private eDaoClientApplication application = null;
-	private ProgressDialog progressDialog;
 	private Gson gson = new Gson();
 	private MessageBox_YES box_YES;
 	private final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
